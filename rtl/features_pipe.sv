@@ -1,7 +1,7 @@
 // Exact pipelined feature extraction: banks P13-P19 of the A2 candidate pipeline (guide §7.2).
 //   P13  fixed-wiring transpose; per 4-bit column group: local height code (0 empty, else highest
 //        occupied position + 1, range 1-4) and occupied count (0-4)
-//   P14  height = 4*g + code_g of the highest nonempty group (balanced maximum of encoded values),
+//   P14  height = 4*g + code_g of the highest nonempty group (one-hot priority select, U12 revision),
 //        occupied = balanced sum of the five group counts (<= 20)
 //   P15  holes = height - occupied (exact: every occupied cell lies at or below the column top),
 //        adjacent |h[c] - h[c-1]| in signed 7-bit arithmetic
@@ -57,16 +57,25 @@ module features_pipe (
     logic [49:0] heights_w, occupied_w;
     generate
         for (genvar c = 0; c < 10; c++) begin : g_h
-            logic [4:0] v [5];           // encoded 4g + code, or 0 for an empty group
-            logic [4:0] m43, m21, m4321;
+            // U12 revision: the highest nonempty group is chosen by a one-hot priority select on the
+            // five nonempty flags (AND-OR), replacing the comparator maximum tree that formed the
+            // measured worst path of the first route (docs/timing_journal.md)
+            logic [4:0] ne;              // nonempty flags per group
+            logic [4:0] sel;             // one-hot: highest nonempty group
+            logic [4:0] v [5];           // encoded 4g + code (valid only where ne[g])
             logic [4:0] s01, s23, s0123;
             for (genvar g = 0; g < 5; g++) begin : g_v
-                assign v[g] = (code13[3 * (5 * c + g) +: 3] != 3'd0) ? (5'(4 * g) + {2'b00, code13[3 * (5 * c + g) +: 3]}) : 5'd0;
+                assign ne[g] = (code13[3 * (5 * c + g) +: 3] != 3'd0);
+                assign v[g]  = 5'(4 * g) + {2'b00, code13[3 * (5 * c + g) +: 3]};
             end
-            assign m43   = (v[4] > v[3]) ? v[4] : v[3];
-            assign m21   = (v[2] > v[1]) ? v[2] : v[1];
-            assign m4321 = (m43 > m21) ? m43 : m21;
-            assign heights_w[5 * c +: 5] = (m4321 > v[0]) ? m4321 : v[0];
+            assign sel[4] = ne[4];
+            assign sel[3] = ne[3] & ~ne[4];
+            assign sel[2] = ne[2] & ~ne[3] & ~ne[4];
+            assign sel[1] = ne[1] & ~ne[2] & ~ne[3] & ~ne[4];
+            assign sel[0] = ne[0] & ~ne[1] & ~ne[2] & ~ne[3] & ~ne[4];
+            assign heights_w[5 * c +: 5] = ((v[4] & {5{sel[4]}}) | (v[3] & {5{sel[3]}})) |
+                                           ((v[2] & {5{sel[2]}}) | (v[1] & {5{sel[1]}})) |
+                                           (v[0] & {5{sel[0]}});
             assign s01   = {2'b00, count13[3 * (5 * c + 0) +: 3]} + {2'b00, count13[3 * (5 * c + 1) +: 3]};
             assign s23   = {2'b00, count13[3 * (5 * c + 2) +: 3]} + {2'b00, count13[3 * (5 * c + 3) +: 3]};
             assign s0123 = s01 + s23;

@@ -33,7 +33,7 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-compactor-pipe synth-compactor-pipe test-drop-merge-pipe test-features-pipe test-score-pipe \
         test-a2-stream test-a2-metadata test-a2-reset test-a2-pipe synth-a2-pipe \
         test-a2-core-extra test-request-interval corpus-v2-dev \
-        test-reducer verify-a2-release formal-a2-control mutation-check-a2 regress-a0-a1
+        test-reducer verify-a2-release formal-a2-control mutation-check-a2 regress-a0-a1 route-a2-dev
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -268,6 +268,12 @@ formal-a2-control: ## U11: control-conservation (abstract pipeline) and best-red
 	$(PY) tools/formal.py reducer_cover
 mutation-check-a2: ## U11: twelve deliberate mutations, each killed by a named behavioural test, sources restored
 	$(PY) tools/run_mutations.py
+
+# ---------------------------------------------------------------- U12 (route A2)
+route-a2-dev: ## U12: synthesize the A2 wrapper (-nodsp), inspect the hierarchy, one development route at FREQ MHz seed SEED
+	$(PY) tools/synth.py --top stream_wrapper --arch 2 --board-repr 1 --dsp-policy nodsp
+	$(PY) tools/synth_module.py --top stream_wrapper --files-f rtl/files.f --param ARCH=2 --param BOARD_REPR=1 --param LANES=1 --param DEPTH=1 --param PRECISION=0 --noflatten --expect-no-latch --expect-no-dsp --expect-module-live candidate_pipe --expect-module-live search_pipeline
+	$(PY) tools/pnr.py --arch 2 --board-repr 1 --seed $(SEED) --freq $(FREQ) --dsp-policy nodsp --timeout 600
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04: stage manifest, configuration identity, abstract cycle contract, A2 elaboration rejected
