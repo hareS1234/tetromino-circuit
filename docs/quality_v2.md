@@ -96,10 +96,55 @@ pointed at P1 after the `pilot` suite identified it as the strongest development
 held-out suite itself was not changed. Every record carries the protocol hash of the file it was
 run under; the earlier development records were removed rather than mixed.
 
-## 5. What U16 does
+## 5. Held-out study `bag50k` (U16) — 100 paired streams, cap 50,000
 
-Freeze (`MODE=freeze`), run `bag50k` (600 games, summary mode, resumable), `check-quality-v2`
-(every expected record present and consistent with the freeze), `analyze-quality-v2` (restricted
-means, lines, cap hits, survival curves with "not reached" medians, paired intervals). Results are
-published as `results/v2/summary/quality.json` and `results/v2/figures/survival_bag50k.png`; see
-`docs/results.md` once U16 has run.
+Frozen 2026-09-05T18:23:11Z at commit `b9200a5` (protocol `12e05937e613…`, model closure
+`ea02300144a0…`, 120 stream hashes; `results/v2/protocol/freeze_quality-v2-bag50k.json`), then
+`make bench-v2 MODE=run SUITE=bag50k`: 600 games in summary mode, 622 s wall, process peak RSS
+23 MB, 0 failed jobs, every record under its identity; `make check-quality-v2 SUITE=bag50k`
+600/600 records, paired set complete and consistent with the freeze. Analysis:
+`results/v2/summary/quality.json` (= `analysis_bag50k.json`), figure
+`results/v2/figures/survival_bag50k.png`.
+
+| Policy | restricted mean pieces (to C = 50,000) | mean lines | median lines [IQR] | cap hit | median survival | duration quartiles |
+|---|---|---|---|---|---|---|
+| P0 exact | **11,846** | **4,722** | 3,192 [1,613, 6,390] | 2/100 | 7,880 | [4,075, 8,022, 16,018] |
+| P1 powers_of_two | **22,675** | **9,055** | 8,620 [2,186, 14,809] | 13/100 | 21,563 | [5,509, 21,591, 37,066] |
+| P5 coeff_u4 | 11,085 | 4,417 | 2,992 [1,514, 5,460] | 2/100 | 7,337 | [3,826, 7,522, 13,692] |
+| P6 coeff_u3 | 2,226 | 873 | 723 [358, 1,140] | 0/100 | 1,843 | [938, 1,849, 2,893] |
+| P7 coeff_u2 | 680 | 255 | 225 [143, 354] | 0/100 | 601 | [400, 604, 928] |
+| random_legal | 25.6 | 0.09 | 0 | 0/100 | 26 | [24, 26, 27] |
+
+Every median is reached within the horizon (the cap censors 2 % of P0/P5 games and 13 % of P1
+games, so the restricted means are means to 50,000, not unbounded expectations). Paired against
+P0 (stream-level bootstrap, 5,000 resamples, seed 20260905):
+
+| Policy vs P0 | Δ restricted mean pieces [CI95] | Δ mean lines [CI95] | Δ cap-hit fraction [CI95] | streams won / lost / tied (pieces) |
+|---|---|---|---|---|
+| P1 powers_of_two | **+10,829 [7,082, 14,719]** | **+4,333 [2,784, 5,879]** | +0.11 [0.05, 0.18] | 64 / 35 / 1 |
+| P5 coeff_u4 | −762 [−3,255, 1,856] | −305 [−1,278, 779] | 0.00 [−0.04, 0.04] | 31 / 39 / 30 |
+| P6 coeff_u3 | −9,621 [−11,793, −7,538] | −3,849 [−4,729, −2,971] | −0.02 [−0.05, 0.00] | 12 / 88 / 0 |
+| P7 coeff_u2 | −11,167 [−13,297, −9,091] | −4,467 [−5,330, −3,620] | −0.02 [−0.05, 0.00] | 1 / 99 / 0 |
+| random_legal | −11,821 [−13,969, −9,746] | −4,722 [−5,574, −3,888] | −0.02 [−0.05, 0.00] | 0 / 100 / 0 |
+
+What the study shows, and what it does not:
+
+* **P1 (64, 64, 32, 16) plays about twice as long as the exact baseline (76, 51, 36, 18)** on these
+  streams — a large, well-separated paired effect (interval far from zero, 64 of 100 streams). The
+  "exact" coefficients are the attributed baseline the repository never tuned; the powers-of-two
+  profile weights the aggregate height more heavily relative to line clears (A/L = 1.0 against
+  0.67; holes and bumpiness keep almost the same relative weight, 0.50/0.25 against 0.47/0.24),
+  and over a 50,000-piece horizon keeping the stack low survives longer. v1's 2,000-piece study could not see this
+  (most games hit its cap). This is an observation about these two fixed policies on seven-bag
+  streams; it is not a tuning result and no coefficient search was done.
+* **P5 (four-bit magnitudes) is indistinguishable from P0**: 30 of 100 games are move-for-move
+  identical (equal outcomes), and the paired interval on pieces spans −3,255 to +1,856. The 0.1 %
+  common-state disagreement rate of U14 translates into no measurable outcome difference here —
+  an inconclusive comparison, kept as such.
+* **P6 and P7 collapse**: three-bit magnitudes lose 81 % of the restricted mean pieces, two-bit
+  92 %. The common-state rates (2.5 %, 8.9 % changed decisions) understate the trajectory effect
+  because the changed decisions (small exact gaps, holes tolerated) compound.
+* Depth two is not part of this study (the v1 depth results remain historical, `docs/design.md`).
+  No i.i.d. suite was run. The held-out streams were never used for any development decision; the
+  development pilot (§4) is reported separately and was used only to size the study and choose the
+  `pilot50k` policy.

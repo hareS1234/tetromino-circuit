@@ -15,10 +15,10 @@
  "live_model_closure": "ea02300144a03bd2605ebbdab5fd629cf41f2231f6b4a535757a3fe695f9be81",
  "sources_changed_since_study": false,
  "freeze": {
-  "present": false,
-  "protocol_sha256": null,
-  "matches_protocol": false,
-  "frozen_utc": null
+  "present": true,
+  "protocol_sha256": "12e05937e613e64fc618b7b3a6f2d329cbe0cef37485fdf356cde609b39415b4",
+  "matches_protocol": true,
+  "frozen_utc": "2026-09-05T18:23:11Z"
  },
  "definitions": {
   "primary": [
@@ -1779,5 +1779,5 @@
   }
  },
  "baseline": "heuristic-d1-p0",
- "recorded_utc": "2026-09-05T18:21:35Z"
+ "recorded_utc": "2026-09-05T18:35:30Z"
 }

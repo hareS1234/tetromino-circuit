@@ -80,6 +80,7 @@ struct Harness {
     bool have_prev = false; int p_legal, p_last, p_id, p_tag, p_y; int32_t p_score;
     int next_tag = 1;
     std::mt19937_64 rng;
+    uint64_t occ_max = 0, occ_sum = 0, occ_samples = 0;      // occupancy (set valid banks) after every edge
 
     explicit Harness(uint64_t seed) : rng(seed) {
         top = new Vcandidate_pipe; top->clk = 0; top->rst = 1; top->m_ready = 1; top->s_valid = 0; top->eval();
@@ -99,6 +100,22 @@ struct Harness {
 #endif
         edge++;
         if (top->m_valid) { int t = top->m_tag; if (!first_visible.count(t)) first_visible[t] = edge - 1; }
+        uint64_t occ = __builtin_popcount((unsigned)top->occupancy_o);
+        if (occ > occ_max) occ_max = occ;
+        occ_sum += occ; occ_samples++;
+    }
+    static void minmax(const std::vector<uint64_t>& v, uint64_t& lo, uint64_t& hi) {
+        lo = hi = v.empty() ? 0 : v[0];
+        for (auto e : v) { if (e < lo) lo = e; if (e > hi) hi = e; }
+    }
+    void stats(const char* phase, uint64_t tokens) const {
+        uint64_t a0, a1, r0, r1, v0, v1, t0, t1;
+        minmax(accept_spacing, a0, a1); minmax(retire_spacing, r0, r1); minmax(visible_latency, v0, v1); minmax(transfer_latency, t0, t1);
+        std::printf("STATS {\"phase\":\"%s\",\"tokens\":%llu,\"accept_spacing\":[%llu,%llu],\"retire_spacing\":[%llu,%llu],"
+                    "\"visible_latency\":[%llu,%llu],\"transfer_latency\":[%llu,%llu],\"occupancy_max\":%llu,\"occupancy_mean\":%.3f,\"edges\":%llu}\n",
+                    phase, (unsigned long long)tokens, (unsigned long long)a0, (unsigned long long)a1, (unsigned long long)r0, (unsigned long long)r1,
+                    (unsigned long long)v0, (unsigned long long)v1, (unsigned long long)t0, (unsigned long long)t1, (unsigned long long)occ_max,
+                    occ_samples ? (double)occ_sum / (double)occ_samples : 0.0, (unsigned long long)edge);
     }
     void reset_pulse() { top->rst = 1; top->s_valid = 0; top->eval(); tick(); top->rst = 0; top->eval(); queue.clear(); have_prev = false; first_visible.clear(); }
 
@@ -188,6 +205,7 @@ int main(int argc, char** argv) {
         std::printf("native: stream %llu tokens: acceptance spacing %s, retirement spacing %s, visible latency %s, transfer latency %s\n",
                     (unsigned long long)h.retired, all_equal(h.accept_spacing, 1) ? "1" : "NOT 1", all_equal(h.retire_spacing, 1) ? "1" : "NOT 1",
                     all_equal(h.visible_latency, BANKS - 1) ? "22" : "NOT 22", all_equal(h.transfer_latency, BANKS) ? "23" : "NOT 23");
+        h.stats("stream", stream_n);
         report("stream", ok, stream_n);
     }
     // ---- traffic: every context, bubbles and stalls, illegal tokens, illegal final token --------
@@ -215,6 +233,7 @@ int main(int argc, char** argv) {
         std::printf("native: traffic %llu tokens over %zu contexts (bubbles %d%%, stalls %d%%): %llu mismatches, %llu stability, %llu spurious, %d illegal final tokens\n",
                     (unsigned long long)total, ctxs.size(), bubbles, stalls, (unsigned long long)h.mismatches, (unsigned long long)h.stability,
                     (unsigned long long)h.spurious, illegal_last);
+        h.stats("traffic", total);
         report("traffic", ok, total);
     }
     // ---- metadata: identical candidates with distinct tags; rotation/x changing every cycle ------

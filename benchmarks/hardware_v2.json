@@ -1,0 +1,29 @@
+{
+ "schema": "hardware-matrix-v2",
+ "name": "hardware-v2",
+ "note": "Release architecture/timing matrix (U17, guide §10.1): six exact configurations X0-X5 at four clock targets and three route seeds (72 jobs) plus the precision study P1/P5/P6/P7 at 50 MHz on the same seeds (12 jobs; P0 overlaps X2) = 84 unique route jobs. One synthesis per configuration (-nodsp), reused across targets and seeds. Timeouts are observed resource limits under the declared budget, never proof that a design cannot route; four lanes get a larger budget after the U13 pilots (seed 1 timed out at 1,200 s and 3,600 s, seed 2 routed in 214 s).",
+ "device": {"device": "LFE5U-85F", "flag": "--85k", "package": "CABGA381", "speed": "6"},
+ "top": "stream_wrapper",
+ "dsp_policy": "nodsp",
+ "route_timeout_s": 600,
+ "route_timeout_overrides": {"a1-cache-d1-p0-l4": 1200},
+ "configurations": ["a0-bitmap-d1-p0-l1", "a1-bitmap-d1-p0-l1", "a1-cache-d1-p0-l1", "a1-cache-d1-p0-l2", "a1-cache-d1-p0-l4", "a2-cache-d1-p0-l1"],
+ "targets_mhz": [50, 60, 80, 100],
+ "seeds": [11, 12, 13],
+ "extra_jobs": [
+  {"configuration": "a1-cache-d1-p1-l1", "target_mhz": 50, "seed": 11},
+  {"configuration": "a1-cache-d1-p1-l1", "target_mhz": 50, "seed": 12},
+  {"configuration": "a1-cache-d1-p1-l1", "target_mhz": 50, "seed": 13},
+  {"configuration": "a1-cache-d1-p5-l1", "target_mhz": 50, "seed": 11},
+  {"configuration": "a1-cache-d1-p5-l1", "target_mhz": 50, "seed": 12},
+  {"configuration": "a1-cache-d1-p5-l1", "target_mhz": 50, "seed": 13},
+  {"configuration": "a1-cache-d1-p6-l1", "target_mhz": 50, "seed": 11},
+  {"configuration": "a1-cache-d1-p6-l1", "target_mhz": 50, "seed": 12},
+  {"configuration": "a1-cache-d1-p6-l1", "target_mhz": 50, "seed": 13},
+  {"configuration": "a1-cache-d1-p7-l1", "target_mhz": 50, "seed": 11},
+  {"configuration": "a1-cache-d1-p7-l1", "target_mhz": 50, "seed": 12},
+  {"configuration": "a1-cache-d1-p7-l1", "target_mhz": 50, "seed": 13}
+ ],
+ "decisions": {"configurations": ["a0-bitmap-d1-p0-l1", "a1-bitmap-d1-p0-l1", "a1-cache-d1-p0-l1", "a1-cache-d1-p0-l2", "a1-cache-d1-p0-l4", "a2-cache-d1-p0-l1"], "count": 1000, "driver": "native"},
+ "resource_policy": "sequential runner (one nextpnr process), heartbeat <= 60 s, resume by full route identity, failures and timeouts retained as outcomes, retries only as declared attempts with a reason"
+}

@@ -35,7 +35,8 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-a2-core-extra test-request-interval corpus-v2-dev \
         test-reducer verify-a2-release formal-a2-control mutation-check-a2 regress-a0-a1 route-a2-dev \
         test-precision-v2 analyze-precision-v2 synth-scorer-study \
-        streams-v2 test-benchmark-v2 test-statistics-v2 bench-v2 check-quality-v2 analyze-quality-v2
+        streams-v2 test-benchmark-v2 test-statistics-v2 bench-v2 check-quality-v2 analyze-quality-v2 \
+        measure-v2 check-hardware-v2 a2-stream-stats plots-v2
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -310,6 +311,21 @@ check-quality-v2: ## U16: every expected paired record present, consistent and m
 	$(PY) tools/analyze_quality_v2.py --config $(PROTOCOL_V2) --suite $(SUITE) --check
 analyze-quality-v2: ## U16: restricted means, lines, cap hits, survival curves, paired bootstrap intervals (SUITE=bag50k)
 	$(PY) tools/analyze_quality_v2.py --config $(PROTOCOL_V2) --suite $(SUITE)
+
+# ---------------------------------------------------------------- U17 (v2 hardware matrix)
+HARDWARE_V2 ?= benchmarks/hardware_v2.json
+measure-v2: ## U17: MODE=dry-run (plan: 84 unique jobs, no synthesis) | MODE=run (resumable release matrix, one runner) on $(HARDWARE_V2)
+	@case "$(MODE)" in dry-run|run|plan) ;; *) echo "usage: make measure-v2 MODE=dry-run|run"; exit 2;; esac
+	$(if $(filter dry-run,$(MODE)),$(PY) tools/measure_matrix.py plan --manifest $(HARDWARE_V2) --no-synth,)
+	$(if $(filter plan,$(MODE)),$(PY) tools/measure_matrix.py plan --manifest $(HARDWARE_V2),)
+	$(if $(filter run,$(MODE)),$(PY) tools/measure_matrix.py run --manifest $(HARDWARE_V2),)
+check-hardware-v2: ## U17: every declared route job has an outcome record under its identity; decisions matched; CSV current
+	$(PY) tools/check_hardware_v2.py --manifest $(HARDWARE_V2)
+a2-stream-stats: ## U17: A2 candidate acceptance spacing, latencies and occupancy from the native pipeline harness
+	$(PY) tools/a2_native.py --phase all --out results/v2/raw/intervals/a2_candidate_stream.json
+	$(PY) tools/request_interval.py --arch 2 --board-repr 1 --count 200
+plots-v2: ## U17: architecture figures from raw records with per-point job keys (results/v2/figures/)
+	$(PY) tools/plots_v2.py --manifest $(HARDWARE_V2)
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04/U13: stage manifest, configuration identity, cycle contract, A2 and four-lane elaboration guards

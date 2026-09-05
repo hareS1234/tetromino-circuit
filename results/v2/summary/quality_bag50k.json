@@ -1,0 +1,186 @@
+{
+ "cap": 50000,
+ "derived_csv": "results/v2/summary/quality.csv",
+ "execution": {
+  "counts": {
+   "failed": 0,
+   "reused": 600,
+   "run": 0,
+   "skipped": 600
+  },
+  "mode": "summary",
+  "per_policy": {
+   "heuristic-d1-p0": {
+    "games_run": 0,
+    "peak_rss_mb_process": 25.6,
+    "wall_seconds": 0.27
+   },
+   "heuristic-d1-p1": {
+    "games_run": 0,
+    "peak_rss_mb_process": 25.6,
+    "wall_seconds": 0.27
+   },
+   "heuristic-d1-p5": {
+    "games_run": 0,
+    "peak_rss_mb_process": 25.6,
+    "wall_seconds": 0.28
+   },
+   "heuristic-d1-p6": {
+    "games_run": 0,
+    "peak_rss_mb_process": 25.6,
+    "wall_seconds": 0.27
+   },
+   "heuristic-d1-p7": {
+    "games_run": 0,
+    "peak_rss_mb_process": 25.6,
+    "wall_seconds": 0.27
+   },
+   "random_legal-d1-p0": {
+    "games_run": 0,
+    "peak_rss_mb_process": 25.6,
+    "wall_seconds": 0.27
+   }
+  }
+ },
+ "git_commit": "b9200a5af523c7743c135b9e89d9537d016d2cc7-dirty",
+ "n_streams": 100,
+ "note": "quick lines summary; the censoring-aware analysis is tools/analyze_quality_v2.py",
+ "policies": {
+  "heuristic-d1-p0": {
+   "cap_hit_fraction": 0.02,
+   "games": 100,
+   "iqr": [
+    1612.5,
+    6390.25
+   ],
+   "max_lines": 19999,
+   "mean_lines": 4721.76,
+   "mean_pieces": 11846.49,
+   "median_lines": 3191.5,
+   "min_lines": 234,
+   "status": "complete",
+   "top_out_fraction": 0.98
+  },
+  "heuristic-d1-p1": {
+   "cap_hit_fraction": 0.13,
+   "games": 100,
+   "iqr": [
+    2186.25,
+    14808.75
+   ],
+   "max_lines": 19999,
+   "mean_lines": 9054.71,
+   "mean_pieces": 22674.97,
+   "median_lines": 8619.5,
+   "min_lines": 12,
+   "status": "complete",
+   "top_out_fraction": 0.87,
+   "vs_baseline": {
+    "ci95": [
+     3082.14,
+     5763.71
+    ],
+    "mean_diff": 4332.95
+   }
+  },
+  "heuristic-d1-p5": {
+   "cap_hit_fraction": 0.02,
+   "games": 100,
+   "iqr": [
+    1513.5,
+    5459.75
+   ],
+   "max_lines": 19998,
+   "mean_lines": 4416.91,
+   "mean_pieces": 11084.54,
+   "median_lines": 2991.5,
+   "min_lines": 234,
+   "status": "complete",
+   "top_out_fraction": 0.98,
+   "vs_baseline": {
+    "ci95": [
+     -1247.6,
+     813.59
+    ],
+    "mean_diff": -304.85
+   }
+  },
+  "heuristic-d1-p6": {
+   "cap_hit_fraction": 0.0,
+   "games": 100,
+   "iqr": [
+    357.75,
+    1139.75
+   ],
+   "max_lines": 3405,
+   "mean_lines": 873.08,
+   "mean_pieces": 2225.67,
+   "median_lines": 722.5,
+   "min_lines": 73,
+   "status": "complete",
+   "top_out_fraction": 1.0,
+   "vs_baseline": {
+    "ci95": [
+     -4681.01,
+     -3007.73
+    ],
+    "mean_diff": -3848.68
+   }
+  },
+  "heuristic-d1-p7": {
+   "cap_hit_fraction": 0.0,
+   "games": 100,
+   "iqr": [
+    143.0,
+    354.25
+   ],
+   "max_lines": 947,
+   "mean_lines": 254.88,
+   "mean_pieces": 679.98,
+   "median_lines": 224.5,
+   "min_lines": 50,
+   "status": "complete",
+   "top_out_fraction": 1.0,
+   "vs_baseline": {
+    "ci95": [
+     -5311.36,
+     -3609.35
+    ],
+    "mean_diff": -4466.88
+   }
+  },
+  "random_legal-d1-p0": {
+   "cap_hit_fraction": 0.0,
+   "games": 100,
+   "iqr": [
+    0.0,
+    0.0
+   ],
+   "max_lines": 1,
+   "mean_lines": 0.09,
+   "mean_pieces": 25.59,
+   "median_lines": 0.0,
+   "min_lines": 0,
+   "status": "complete",
+   "top_out_fraction": 1.0,
+   "vs_baseline": {
+    "ci95": [
+     -5571.87,
+     -3862.67
+    ],
+    "mean_diff": -4721.67
+   }
+  }
+ },
+ "protocol_path": "benchmarks/config_v2.json",
+ "protocol_sha256": "12e05937e613e64fc618b7b3a6f2d329cbe0cef37485fdf356cde609b39415b4",
+ "recorded_utc": "2026-09-05T18:36:44Z",
+ "schema": "quality-summary-v2",
+ "source": "ea02300144a03bd2605ebbdab5fd629cf41f2231f6b4a535757a3fe695f9be81",
+ "source_sha256": "840dc0706bfeb199e959bbe65cf4887d56cdb9b8f281bb2b7067be51face89fa",
+ "streams": [
+  20000,
+  20099
+ ],
+ "suite": "bag50k"
+}

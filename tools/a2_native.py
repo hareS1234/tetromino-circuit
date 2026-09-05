@@ -29,6 +29,7 @@ def main() -> int:
     ap.add_argument("--bubbles", type=int, default=20)
     ap.add_argument("--trace", default=None, help="write a bounded VCD of the stall/reset scenario (builds with --trace)")
     ap.add_argument("--jobs", type=int, default=2)
+    ap.add_argument("--out", default=None, help="write the harness STATS lines (acceptance/retirement spacing, latencies, occupancy) as JSON")
     args = ap.parse_args()
     vec = ROOT / "build" / "a2_vectors" / f"ctx{args.contexts}_seed{args.seed}.txt"
     info = write_vectors(vec, args.contexts, args.seed, 6)
@@ -44,6 +45,20 @@ def main() -> int:
     sys.stdout.write(proc.stdout)
     sys.stderr.write(proc.stderr)
     print(f"({time.perf_counter() - t0:.1f}s wall, {exe.relative_to(ROOT)})")
+    if args.out:
+        import json
+        from tools.identity import source_closure_sha256, toolchain_identity
+        stats = [json.loads(line[len("STATS "):]) for line in proc.stdout.splitlines() if line.startswith("STATS ")]
+        checks = [line for line in proc.stdout.splitlines() if line.startswith("CHECK ")]
+        doc = {"schema": "a2-candidate-stream-v1", "configuration_id": "a2-cache-d1-p0-l1", "harness": "sim/candidate_pipe_main.cpp",
+               "phase": args.phase, "contexts": args.contexts, "seed": args.seed, "stream_tokens": args.stream, "stalls_pct": args.stalls,
+               "bubbles_pct": args.bubbles, "stats": stats, "checks": checks, "exit_code": proc.returncode,
+               "toolchain_id": toolchain_identity(), "source_sha256": source_closure_sha256(),
+               "note": "acceptance spacing = edges between candidate handshakes (II), occupancy = set valid banks of the 23-bank pipeline"}
+        out = ROOT / args.out
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(doc, indent=1) + "\n")
+        print(f"-> {out.relative_to(ROOT)}")
     return proc.returncode
 
 

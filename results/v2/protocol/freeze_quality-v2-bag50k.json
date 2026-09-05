@@ -1,0 +1,834 @@
+{
+ "analysis": {
+  "analysis_tool": "tools/analyze_quality_v2.py",
+  "execution": {
+   "checkpoint_every_pieces": 1000,
+   "failure_handling": "a crash or missing result is a failed job to repair and resume; it is never a censoring event or a top-out; summaries reject incomplete paired sets",
+   "mode": "summary",
+   "resume": "exact identity match of the checkpoint (protocol hash, policy, stream hash, cap, model closure) only"
+  },
+  "outcomes": {
+   "comparisons": "every policy against the baseline (P0), paired by stream id",
+   "event_time": "T = successfully locked pieces before the first top-out decision; a game stopped at the cap C reports duration C with event_observed = false",
+   "primary": [
+    "restricted_mean_pieces",
+    "mean_lines",
+    "cap_hit_fraction"
+   ],
+   "restricted_mean": "mean(min(T, C)) over the paired streams; an estimate of the restricted mean to C, not of unbounded survival",
+   "survival": "discrete product-limit survival S(t) = P(T > t) with the cap and censoring marked; the median is reported only if S crosses 1/2 within [0, C), otherwise 'not reached by C'"
+  },
+  "statistics": {
+   "bootstrap_resamples": 5000,
+   "bootstrap_seed": 20260905,
+   "interval": "2.5/97.5 percentiles of the resampled mean paired difference",
+   "resampling_unit": "stream id, jointly across compared policies (whole streams, never individual moves)"
+  }
+ },
+ "frozen_utc": "2026-09-05T18:23:11Z",
+ "git_commit": "b9200a5af523c7743c135b9e89d9537d016d2cc7",
+ "model_closure": "ea02300144a03bd2605ebbdab5fd629cf41f2231f6b4a535757a3fe695f9be81",
+ "protocol": {
+  "backend": "python-fast",
+  "execution": {
+   "checkpoint_every_pieces": 1000,
+   "failure_handling": "a crash or missing result is a failed job to repair and resume; it is never a censoring event or a top-out; summaries reject incomplete paired sets",
+   "mode": "summary",
+   "resume": "exact identity match of the checkpoint (protocol hash, policy, stream hash, cap, model closure) only"
+  },
+  "name": "quality-v2-bag50k",
+  "note": "v2 long-horizon quality protocol (U15/U16). The v1 protocol benchmarks/config.json and its results are frozen and separate. Policies are depth-one software policies whose decisions passed their own-reference RTL tests (P0-P7 core corpora, results/v2/raw/decisions). Development suites use seeds 10000-10019; the held-out suite uses seeds 20000-20099 and is run only after `bench-v2 MODE=freeze` recorded this file's hash.",
+  "outcomes": {
+   "comparisons": "every policy against the baseline (P0), paired by stream id",
+   "event_time": "T = successfully locked pieces before the first top-out decision; a game stopped at the cap C reports duration C with event_observed = false",
+   "primary": [
+    "restricted_mean_pieces",
+    "mean_lines",
+    "cap_hit_fraction"
+   ],
+   "restricted_mean": "mean(min(T, C)) over the paired streams; an estimate of the restricted mean to C, not of unbounded survival",
+   "survival": "discrete product-limit survival S(t) = P(T > t) with the cap and censoring marked; the median is reported only if S crosses 1/2 within [0, C), otherwise 'not reached by C'"
+  },
+  "policies_all": [
+   {
+    "depth": 1,
+    "policy": "heuristic",
+    "precision": 0
+   },
+   {
+    "depth": 1,
+    "policy": "heuristic",
+    "precision": 1
+   },
+   {
+    "depth": 1,
+    "policy": "heuristic",
+    "precision": 5
+   },
+   {
+    "depth": 1,
+    "policy": "heuristic",
+    "precision": 6
+   },
+   {
+    "depth": 1,
+    "policy": "heuristic",
+    "precision": 7
+   },
+   {
+    "depth": 1,
+    "policy": "random_legal",
+    "precision": 0
+   }
+  ],
+  "schema": "quality-protocol-v2",
+  "spec": "drop-v1.1",
+  "statistics": {
+   "bootstrap_resamples": 5000,
+   "bootstrap_seed": 20260905,
+   "interval": "2.5/97.5 percentiles of the resampled mean paired difference",
+   "resampling_unit": "stream id, jointly across compared policies (whole streams, never individual moves)"
+  },
+  "streams_manifest": "benchmarks/streams_v2/manifest.json",
+  "suites": {
+   "bag50k": {
+    "baseline": {
+     "depth": 1,
+     "policy": "heuristic",
+     "precision": 0
+    },
+    "cap": 50000,
+    "policies": [
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 0
+     },
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 1
+     },
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 5
+     },
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 6
+     },
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 7
+     },
+     {
+      "depth": 1,
+      "policy": "random_legal",
+      "precision": 0
+     }
+    ],
+    "purpose": "primary study: six depth-one policies on 100 paired held-out seven-bag streams, cap 50,000 locked pieces",
+    "role": "held-out",
+    "streams": {
+     "seeds": [
+      20000,
+      20099
+     ],
+     "split": "v2_heldout"
+    }
+   },
+   "pilot": {
+    "baseline": {
+     "depth": 1,
+     "policy": "heuristic",
+     "precision": 0
+    },
+    "cap": 10000,
+    "policies": [
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 0
+     },
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 1
+     },
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 5
+     },
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 6
+     },
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 7
+     },
+     {
+      "depth": 1,
+      "policy": "random_legal",
+      "precision": 0
+     }
+    ],
+    "purpose": "wall time, memory and cap-hit estimates per policy on 20 development streams at a 10,000-piece cap",
+    "role": "development",
+    "streams": {
+     "seeds": [
+      10000,
+      10019
+     ],
+     "split": "v2_development"
+    }
+   },
+   "pilot50k": {
+    "baseline": {
+     "depth": 1,
+     "policy": "heuristic",
+     "precision": 0
+    },
+    "cap": 50000,
+    "policies": [
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 0
+     },
+     {
+      "depth": 1,
+      "policy": "heuristic",
+      "precision": 1
+     }
+    ],
+    "purpose": "P0 and the strongest development policy at the 10,000 cap (P1: cap-hit 0.70 vs 0.40 for P0 in the pilot suite) to the full 50,000 cap before freezing the primary protocol",
+    "role": "development",
+    "streams": {
+     "seeds": [
+      10000,
+      10019
+     ],
+     "split": "v2_development"
+    }
+   }
+  }
+ },
+ "protocol_name": "quality-v2-bag50k",
+ "protocol_path": "benchmarks/config_v2.json",
+ "protocol_sha256": "12e05937e613e64fc618b7b3a6f2d329cbe0cef37485fdf356cde609b39415b4",
+ "schema": "quality-freeze-v1",
+ "source_sha256": "4ff6080a637411652a2f94d31a0691c2d54b1cbd99c75a0d61930b45fb57b3ac",
+ "statement": "reproducibility record: protocol, inputs, source and analysis definition fixed before held-out outcomes; not proof that nobody looked at data",
+ "streams": {
+  "10000": {
+   "length": 50001,
+   "sha256": "06ed0a8335c2502ed7ba9a073329cea9770dfb8f908237bae7265ed1567621d0",
+   "split": "v2_development"
+  },
+  "10001": {
+   "length": 50001,
+   "sha256": "26924a12a6dbb17532e9cdca6c28505940bedfb47a8318bf1bcdbcf3ddb9bdea",
+   "split": "v2_development"
+  },
+  "10002": {
+   "length": 50001,
+   "sha256": "0c8f8ef4f0b2d7eaaa415e7b7424b631586e0c1c2474e665ee48dd5a470db793",
+   "split": "v2_development"
+  },
+  "10003": {
+   "length": 50001,
+   "sha256": "b866cddd14ef7a6af94ffe2fa91a8aff3f1979fa633f770dd35d2918e2cec20b",
+   "split": "v2_development"
+  },
+  "10004": {
+   "length": 50001,
+   "sha256": "672f993cd08e5ae9886dd785d7938778022d052b000044293d2105e3cec30a76",
+   "split": "v2_development"
+  },
+  "10005": {
+   "length": 50001,
+   "sha256": "5e72721988363eccc85605a83a0833952009569565d88e66f924ac5e158289c6",
+   "split": "v2_development"
+  },
+  "10006": {
+   "length": 50001,
+   "sha256": "aa3e7c06987dbfc267ef63d4171c29e326fae529d31627f35d20d956b5ab0334",
+   "split": "v2_development"
+  },
+  "10007": {
+   "length": 50001,
+   "sha256": "5638e05d930dc08f3db97674e88b7375c253931cf8a879a0f817fbd3358d6646",
+   "split": "v2_development"
+  },
+  "10008": {
+   "length": 50001,
+   "sha256": "1dace9f116db9bdcedaaf91ec50eda100281d4c6d91f79ef2c075e30ac7d2055",
+   "split": "v2_development"
+  },
+  "10009": {
+   "length": 50001,
+   "sha256": "422cbf7971bae3e3955aeeb6deb290820a167b42030c0ab78b2f74c59006afca",
+   "split": "v2_development"
+  },
+  "10010": {
+   "length": 50001,
+   "sha256": "9c68182fb9cc7aae420035c47da0f68f9e3049709b9c4a10703318efc78694a7",
+   "split": "v2_development"
+  },
+  "10011": {
+   "length": 50001,
+   "sha256": "13667fb31e53ec57bdedd21989c004580a0c214115a10f0966968395e3497d9b",
+   "split": "v2_development"
+  },
+  "10012": {
+   "length": 50001,
+   "sha256": "e8ac57208a2e63a0c04547c3432926df3b3d621c3bc5f882a5c0dc8483fb8c94",
+   "split": "v2_development"
+  },
+  "10013": {
+   "length": 50001,
+   "sha256": "a46a8bdacdb71d7956db4d0f1c41e18b1fcedbb02b7ff59c504ef3401ed0b6a6",
+   "split": "v2_development"
+  },
+  "10014": {
+   "length": 50001,
+   "sha256": "f4567d3484cfc6aa2a018489c63d7f246c789f32033b29b82626217c2adcf65f",
+   "split": "v2_development"
+  },
+  "10015": {
+   "length": 50001,
+   "sha256": "ee66b819b1d8b674164fcc83718b7eeee7e5f673ff81ad68f9958779b8261e81",
+   "split": "v2_development"
+  },
+  "10016": {
+   "length": 50001,
+   "sha256": "476fead0fc61df995f972cf01e9be03f4fd56229b76e5b5ee51d733f3ba9ba86",
+   "split": "v2_development"
+  },
+  "10017": {
+   "length": 50001,
+   "sha256": "7b39471278ec0b132fb6c7fab6b599339ebf7c3fc66b6958bc165bbd5b5a0b92",
+   "split": "v2_development"
+  },
+  "10018": {
+   "length": 50001,
+   "sha256": "64ed5c06c4e0a8b6085baa7a9dce7c664a2be54349be28231856e180aa6c5bc0",
+   "split": "v2_development"
+  },
+  "10019": {
+   "length": 50001,
+   "sha256": "cee6774528d041679a5861bfb65d3de28c80fa9406682993f2394c0756c87101",
+   "split": "v2_development"
+  },
+  "20000": {
+   "length": 50001,
+   "sha256": "457b35bb33331c8f625db7a9198ee566a1982750994493feccebd5ca569e6a5d",
+   "split": "v2_heldout"
+  },
+  "20001": {
+   "length": 50001,
+   "sha256": "a52d9254c4e01272d6de77c1945e36e98aab0723c059b4923a3bd636e3d61ac2",
+   "split": "v2_heldout"
+  },
+  "20002": {
+   "length": 50001,
+   "sha256": "953a92450b7e7e987e726e113ca56df23812ce839c9fa5d16c6c0a30dd1c19b4",
+   "split": "v2_heldout"
+  },
+  "20003": {
+   "length": 50001,
+   "sha256": "3119830bd573d9354b2e32478faf187e5c0ea6d377ff861080b0b2a23619e683",
+   "split": "v2_heldout"
+  },
+  "20004": {
+   "length": 50001,
+   "sha256": "1f7f995d4b2a7929d3a96dcdbbfb23d4579e4ba8425b5531cdf624723e31fd9e",
+   "split": "v2_heldout"
+  },
+  "20005": {
+   "length": 50001,
+   "sha256": "d99bdfaec413f5bd748184e9da1f682c9d1c7594e563fc8c8e915137f9678df5",
+   "split": "v2_heldout"
+  },
+  "20006": {
+   "length": 50001,
+   "sha256": "59d6d5c12b37507ecbe77a0e22e79b5996a61ce2e045f23ccf95cf876ee92a06",
+   "split": "v2_heldout"
+  },
+  "20007": {
+   "length": 50001,
+   "sha256": "dcfbf68816b96f5dce4727bc2ea7e76575e86c01ad5da6c6a401c3f9ccd0b243",
+   "split": "v2_heldout"
+  },
+  "20008": {
+   "length": 50001,
+   "sha256": "8eba5f25ca4eb93b8d31f0efb458e78f090a7b36b07b5d220fad92f9067d7305",
+   "split": "v2_heldout"
+  },
+  "20009": {
+   "length": 50001,
+   "sha256": "f8968abb0e84e3ab23145235583c31eda9c5fec83377a7a9a4d86dad12a34f29",
+   "split": "v2_heldout"
+  },
+  "20010": {
+   "length": 50001,
+   "sha256": "3ce8d3604c439bdcbe959fd55eadde0b6f4492cb3bbeda150360adc02034e326",
+   "split": "v2_heldout"
+  },
+  "20011": {
+   "length": 50001,
+   "sha256": "d14e32cef79cc3b5e95d57e8d036c1402a76c79acb7060b978e858451d857826",
+   "split": "v2_heldout"
+  },
+  "20012": {
+   "length": 50001,
+   "sha256": "e33e614f76236d62960dce6aa019ee0c84a2e4584510ef629c585fd61ed5e696",
+   "split": "v2_heldout"
+  },
+  "20013": {
+   "length": 50001,
+   "sha256": "2b7a6be9dce8e24d2bcbd7def0290067e360bb57710234fe97201a2e91148c1a",
+   "split": "v2_heldout"
+  },
+  "20014": {
+   "length": 50001,
+   "sha256": "862d9031c0959a2d837c24db0b428b36314ae1e950b11f7e9e9399c47f14c0ce",
+   "split": "v2_heldout"
+  },
+  "20015": {
+   "length": 50001,
+   "sha256": "043811e9ee6ab030dad65b4f9f2eb6bfd757e53d95503be1ed58fb9df422ee58",
+   "split": "v2_heldout"
+  },
+  "20016": {
+   "length": 50001,
+   "sha256": "73fe55939753c3f33ef44477774a6e95b85da142fbb9ffdd705568e05cbb75b5",
+   "split": "v2_heldout"
+  },
+  "20017": {
+   "length": 50001,
+   "sha256": "b1cdb99fe01b93f0785c1fbcfba3396124eba56d278aa88f4f9b5b0de34d24c2",
+   "split": "v2_heldout"
+  },
+  "20018": {
+   "length": 50001,
+   "sha256": "cb8e3313f9a74104aa1cd72f727bcb97921d795fd98411329ee362abec6bb811",
+   "split": "v2_heldout"
+  },
+  "20019": {
+   "length": 50001,
+   "sha256": "e7589ad871bbc87dab02625bdfa56222eb1828c5f5b763d6917138a4e9c2dc5e",
+   "split": "v2_heldout"
+  },
+  "20020": {
+   "length": 50001,
+   "sha256": "3fb5ebf548d659d90f4e0670159945de6c6ec01723b524e711cccf9d63c6c129",
+   "split": "v2_heldout"
+  },
+  "20021": {
+   "length": 50001,
+   "sha256": "f00ace91f2d21efa5ec38b764fb2ed6335d0e119686c75fdf0245dc90512300c",
+   "split": "v2_heldout"
+  },
+  "20022": {
+   "length": 50001,
+   "sha256": "ca94c245ac8e26068faf7af212482ef077884ceddd2204e0806155d8460f14ad",
+   "split": "v2_heldout"
+  },
+  "20023": {
+   "length": 50001,
+   "sha256": "ad6eca772c8d04be516f8b2675120e09e1539ad9f68354804f05503377063769",
+   "split": "v2_heldout"
+  },
+  "20024": {
+   "length": 50001,
+   "sha256": "e592ae359a570a69c1778988e8219891aa1620fbc2171f9afe897a8ea819ebdd",
+   "split": "v2_heldout"
+  },
+  "20025": {
+   "length": 50001,
+   "sha256": "0eee359fe5c5cda080329b646e307358a0830209fd4ed56f0780b3be92047dea",
+   "split": "v2_heldout"
+  },
+  "20026": {
+   "length": 50001,
+   "sha256": "3b122b2dce179f1ba72e18268dc72031f294759cf799e4c7b42c172b2f0e845d",
+   "split": "v2_heldout"
+  },
+  "20027": {
+   "length": 50001,
+   "sha256": "ef7b44efbcd26aa1dcf4b44be0ad10a573b6ee49e674673a20ec9aa84e9ffff5",
+   "split": "v2_heldout"
+  },
+  "20028": {
+   "length": 50001,
+   "sha256": "80988b825cb41f54cd2636ccfe1b744c49f40b51f4361cf216f6ca82cf1dead3",
+   "split": "v2_heldout"
+  },
+  "20029": {
+   "length": 50001,
+   "sha256": "dc1eb228019a37f4a86ec7915b4a63475986f8b969292d3c71579cc05d2c4390",
+   "split": "v2_heldout"
+  },
+  "20030": {
+   "length": 50001,
+   "sha256": "8b97d13a0858dba0851cf9870a923e6cbb04eaff3ed94f7aa2748fb02ed9b39e",
+   "split": "v2_heldout"
+  },
+  "20031": {
+   "length": 50001,
+   "sha256": "7e3318c85e9e78660374b6e8a1ea4851651dc073836b54c3946c3c706fb92856",
+   "split": "v2_heldout"
+  },
+  "20032": {
+   "length": 50001,
+   "sha256": "402ae09e4f7d4008081fad6c649a368bc8f74caabe1376e5f18adc0544c83429",
+   "split": "v2_heldout"
+  },
+  "20033": {
+   "length": 50001,
+   "sha256": "8cf896711f470e4638dd90e75807be71bc09e92d677ea28dbe0dd8257616adb2",
+   "split": "v2_heldout"
+  },
+  "20034": {
+   "length": 50001,
+   "sha256": "d38a3c7a848c0eb718c30ae9fdab6c60929d68f37239288c8d5d588393bf3beb",
+   "split": "v2_heldout"
+  },
+  "20035": {
+   "length": 50001,
+   "sha256": "c30c56e1a55c8aebdf6d8ca6ee3d4519a3b5133594dc04653c44a7fc05206932",
+   "split": "v2_heldout"
+  },
+  "20036": {
+   "length": 50001,
+   "sha256": "d647804eb824b047ee6526a73fd95ec2a3d91363cccb4dbba3da7d94b7183ccf",
+   "split": "v2_heldout"
+  },
+  "20037": {
+   "length": 50001,
+   "sha256": "a5d7c74be070b62768d683f5e48b2f9528bd18dcfc60ddad9acdab8ac0d5aa0e",
+   "split": "v2_heldout"
+  },
+  "20038": {
+   "length": 50001,
+   "sha256": "55d1519a209d5450bebf5113135ed0f76f735118ea840370c48c10e1eb559a56",
+   "split": "v2_heldout"
+  },
+  "20039": {
+   "length": 50001,
+   "sha256": "bbbc0c68f3704e4b18d849390d3579506a18442d9fc80f6b780e775b8662ec97",
+   "split": "v2_heldout"
+  },
+  "20040": {
+   "length": 50001,
+   "sha256": "1b24e8a368e7faa75dbf66bb4bc0e62d33e7fd2337794f34b46229897f9c282b",
+   "split": "v2_heldout"
+  },
+  "20041": {
+   "length": 50001,
+   "sha256": "26de03a74aab50b57acf71f292972ed80db84754b9cb12a6e325d9cb2a2c627b",
+   "split": "v2_heldout"
+  },
+  "20042": {
+   "length": 50001,
+   "sha256": "5c7d1584160b9d0674180e88a9d9a882cbb93edff39e550182083c6f7ae72dda",
+   "split": "v2_heldout"
+  },
+  "20043": {
+   "length": 50001,
+   "sha256": "4604e32ef141906fe92cd408dab92e4391b8fb2777aeb94620eaa06cff51bc6b",
+   "split": "v2_heldout"
+  },
+  "20044": {
+   "length": 50001,
+   "sha256": "a7ae0493b3623fa4aef58c7f4c081834e4522d0bb0593535361464b2ed5d2d1b",
+   "split": "v2_heldout"
+  },
+  "20045": {
+   "length": 50001,
+   "sha256": "e02f1acd61c0e8190457d0fd553d7544852551be8acb9b1726c29bd893b57e0a",
+   "split": "v2_heldout"
+  },
+  "20046": {
+   "length": 50001,
+   "sha256": "fef8aeda3a0a2772cc118aba4122e4c054a1062536f4cf50dea5b8ca59419603",
+   "split": "v2_heldout"
+  },
+  "20047": {
+   "length": 50001,
+   "sha256": "79799c313b98d64d50c31548e0ff1507cf7de5d0675f010fa65096f842897d21",
+   "split": "v2_heldout"
+  },
+  "20048": {
+   "length": 50001,
+   "sha256": "6ae87328c502b876069303a123152ac074247cee57e975cb18afc7768e716493",
+   "split": "v2_heldout"
+  },
+  "20049": {
+   "length": 50001,
+   "sha256": "83924a7eab4f479a3bf70f74ef1f60facb0f054101d8e9e1552c32c96c3d529c",
+   "split": "v2_heldout"
+  },
+  "20050": {
+   "length": 50001,
+   "sha256": "4ef272adafe2ac3f7e250b983e5c9e247057d3ff04b6a31f51917df34d7d4589",
+   "split": "v2_heldout"
+  },
+  "20051": {
+   "length": 50001,
+   "sha256": "46fce0c64f43fcfe72e10947ef8babb0e824fc286cf7c331bc2feed5e8851d01",
+   "split": "v2_heldout"
+  },
+  "20052": {
+   "length": 50001,
+   "sha256": "8c9285bef59ffe52ebcc9f0cb61000e8f90a607ad8b00c59d3e75614a081de52",
+   "split": "v2_heldout"
+  },
+  "20053": {
+   "length": 50001,
+   "sha256": "430ca1f0b6929139fc7df14bd5e3fa5f041512754c12aa41442cff1e634a38c6",
+   "split": "v2_heldout"
+  },
+  "20054": {
+   "length": 50001,
+   "sha256": "1daab2256b45db26a2a7f82e9ed3354c278f976a05e6ee3ca16c0ee97a6ab78a",
+   "split": "v2_heldout"
+  },
+  "20055": {
+   "length": 50001,
+   "sha256": "4c2418d36a73f67be16e3b942a9a750aee034fd529f0fa96ae948ab88412356b",
+   "split": "v2_heldout"
+  },
+  "20056": {
+   "length": 50001,
+   "sha256": "08aa6af04891323c20a9418d780e57b9bca99f9f3e647ef617b096b71a71f455",
+   "split": "v2_heldout"
+  },
+  "20057": {
+   "length": 50001,
+   "sha256": "9b1e0843619742d1bc58b3c4f0ab5a58b3abfa65c58c160f9c199e32f518aeba",
+   "split": "v2_heldout"
+  },
+  "20058": {
+   "length": 50001,
+   "sha256": "434c6c7fe294403d0dc40cd44497eb4ff0ef89a3fa1cb1a6e7cf407700db01b1",
+   "split": "v2_heldout"
+  },
+  "20059": {
+   "length": 50001,
+   "sha256": "5ab8c7bb021142bae1ceffcb4648e8331176d7f080238d04f06bef6829e5492b",
+   "split": "v2_heldout"
+  },
+  "20060": {
+   "length": 50001,
+   "sha256": "28486abe71558a18ddd9d9bc5183a062ea39d3b57094dfc0485eab44b5c4b8a4",
+   "split": "v2_heldout"
+  },
+  "20061": {
+   "length": 50001,
+   "sha256": "35fade3bb7db9f2540695921ea137e6597002a8f89d35f0283e6b99872f498ad",
+   "split": "v2_heldout"
+  },
+  "20062": {
+   "length": 50001,
+   "sha256": "2bc43b1e75a7fb087554a783c3f021787239f44a45a2b0250209d9740b0606eb",
+   "split": "v2_heldout"
+  },
+  "20063": {
+   "length": 50001,
+   "sha256": "02dc2388aad014b75595799b6564d2f5c0f8d65f15b3dde3882247e3cf07330a",
+   "split": "v2_heldout"
+  },
+  "20064": {
+   "length": 50001,
+   "sha256": "9128bad6b56c36840fbaa822867f581d3748c2f2668c06a941eef74663a6e5e3",
+   "split": "v2_heldout"
+  },
+  "20065": {
+   "length": 50001,
+   "sha256": "a83237607cd6c5564c29f28b944ca48e3d02a8ac030d713d78c1c33da471fdc6",
+   "split": "v2_heldout"
+  },
+  "20066": {
+   "length": 50001,
+   "sha256": "b2fa31da9fbb23788c0e030034147756f2cf1b29e0ae77185932f4e02239a755",
+   "split": "v2_heldout"
+  },
+  "20067": {
+   "length": 50001,
+   "sha256": "92a9ccbf973c75fb765431d63138bac631286ac4e542c3d8f71d76cbf7e2fae6",
+   "split": "v2_heldout"
+  },
+  "20068": {
+   "length": 50001,
+   "sha256": "b5f0a910249c7e37d719e64323ef954c228ed134e72220da876829665cd042eb",
+   "split": "v2_heldout"
+  },
+  "20069": {
+   "length": 50001,
+   "sha256": "de2e19c96a47edb2890257b145516ac6b32c891d5e49fc730e3aaa4793e860bf",
+   "split": "v2_heldout"
+  },
+  "20070": {
+   "length": 50001,
+   "sha256": "6d3ff3284d9c2b1cc0fe5d2ddb4468ef7ef490fda74ad78a715d9fea6d5d42c1",
+   "split": "v2_heldout"
+  },
+  "20071": {
+   "length": 50001,
+   "sha256": "633876c65248805693b4d70b430c4c1652ebaad4cb2b992e41cd334456531cff",
+   "split": "v2_heldout"
+  },
+  "20072": {
+   "length": 50001,
+   "sha256": "1939ceaa0efbe2446b03240c56198478c155ddff7171c8a053e51a007f40ac11",
+   "split": "v2_heldout"
+  },
+  "20073": {
+   "length": 50001,
+   "sha256": "995f23c7784a64e02fefaa2d0b622dfb2f3cf122181a5bd6546abe4fb18d835f",
+   "split": "v2_heldout"
+  },
+  "20074": {
+   "length": 50001,
+   "sha256": "afb4c91f0b6a620a381d74e4ce8a15a3f094984bf0821397a4341cff33f3b658",
+   "split": "v2_heldout"
+  },
+  "20075": {
+   "length": 50001,
+   "sha256": "b8374d9871e393be1297b23c499d2068e29cf6c01a28b0b9369a7ea471474d49",
+   "split": "v2_heldout"
+  },
+  "20076": {
+   "length": 50001,
+   "sha256": "edc49c3643135650facdb943351412484a694c65d453104780b7c70a02b14d44",
+   "split": "v2_heldout"
+  },
+  "20077": {
+   "length": 50001,
+   "sha256": "0cb189edc742688ee684141dcbdd6bd29b28ce1fc9f1a05aa02c5e0e287eec27",
+   "split": "v2_heldout"
+  },
+  "20078": {
+   "length": 50001,
+   "sha256": "4d9ac8c3890f5d9d906431405c9edaabc86b5f0ef28af67db710ff8ca9117131",
+   "split": "v2_heldout"
+  },
+  "20079": {
+   "length": 50001,
+   "sha256": "04dd3a2256f89f4a357cf495069b183f2ccfda9298824dc0585bf45752a21c23",
+   "split": "v2_heldout"
+  },
+  "20080": {
+   "length": 50001,
+   "sha256": "1dee8e56942ba5c311f1ca281fa1b3aa4ab8ad7b6026cf4ab4dddd37c7980623",
+   "split": "v2_heldout"
+  },
+  "20081": {
+   "length": 50001,
+   "sha256": "47e7152fca605445b896fb592991dd622bc0e6ea528002cda7cb38bd76206d14",
+   "split": "v2_heldout"
+  },
+  "20082": {
+   "length": 50001,
+   "sha256": "a45f9eeccc29005807cd8f0a6111ed701a86bf8cbf6b4b0e1bfd2a0e989ce7cc",
+   "split": "v2_heldout"
+  },
+  "20083": {
+   "length": 50001,
+   "sha256": "37906a4efec945a8950ad6c18b455be6d5855fe2e3b1be018b84be28319b4a50",
+   "split": "v2_heldout"
+  },
+  "20084": {
+   "length": 50001,
+   "sha256": "c05367b70e5460a462b972b89a2cf400ce97d16b77758e4876c6912078dfc4b5",
+   "split": "v2_heldout"
+  },
+  "20085": {
+   "length": 50001,
+   "sha256": "47f25256ae04d347366d825b0a4f49b13b46f188b6f712f5ebbb3a22d249ba9f",
+   "split": "v2_heldout"
+  },
+  "20086": {
+   "length": 50001,
+   "sha256": "f3265eec5df3cbe8289208e91e79eadda8c06b26b93726ebd0806bac1aa4c410",
+   "split": "v2_heldout"
+  },
+  "20087": {
+   "length": 50001,
+   "sha256": "ad4da02353496ddf46ba783e90554968d6f74ca50f51337d0455f1745f4420ac",
+   "split": "v2_heldout"
+  },
+  "20088": {
+   "length": 50001,
+   "sha256": "4e0158645407f7f66734616c141d3e374f5ff01236abf5a844f7a4c975bd5213",
+   "split": "v2_heldout"
+  },
+  "20089": {
+   "length": 50001,
+   "sha256": "70b7efe034f7657dbbca4cd5050fb3ddff18ad1f3dc3fae765c4df379da319ed",
+   "split": "v2_heldout"
+  },
+  "20090": {
+   "length": 50001,
+   "sha256": "ffecc55ee889c01fc71e06f820ef8690bb2b0bda33dec227ad3592d976f7b0ce",
+   "split": "v2_heldout"
+  },
+  "20091": {
+   "length": 50001,
+   "sha256": "ea7142fdef5cc7424b746f86c373e9e669d5301b44bee526e272e3792b3fb251",
+   "split": "v2_heldout"
+  },
+  "20092": {
+   "length": 50001,
+   "sha256": "97d712e101e46d26286dba4949be755c5094887e3b66da60c2e12994fefd04de",
+   "split": "v2_heldout"
+  },
+  "20093": {
+   "length": 50001,
+   "sha256": "44044dc663fa99928d89f91b248d5d572e50cf47ea85cc666b0b53bef760d912",
+   "split": "v2_heldout"
+  },
+  "20094": {
+   "length": 50001,
+   "sha256": "35898ea72f259752818ff801b2351d3c9b59efa4e147252c19f66bbfb238930d",
+   "split": "v2_heldout"
+  },
+  "20095": {
+   "length": 50001,
+   "sha256": "ae29c386acd7468d8da8f4455988f9c9b25a45b58f83747714dbffb9f5bf1b56",
+   "split": "v2_heldout"
+  },
+  "20096": {
+   "length": 50001,
+   "sha256": "27c2219e0708f69f49efd2e8d871d040575a6cd373b918c95259c92672cb0d95",
+   "split": "v2_heldout"
+  },
+  "20097": {
+   "length": 50001,
+   "sha256": "2f9bc41827419e7c859334bb6140ef7ac4aebe82950bcc4c2ad52a29e4ac0e26",
+   "split": "v2_heldout"
+  },
+  "20098": {
+   "length": 50001,
+   "sha256": "347175e868ee0837c8374676a02d15f83ace74d0d4bc5d8d3d60406c60e2bf43",
+   "split": "v2_heldout"
+  },
+  "20099": {
+   "length": 50001,
+   "sha256": "3bea2f65534b3a435117b491956b6c9084ba979c13fe5a0fe9a1caaf5fa0343d",
+   "split": "v2_heldout"
+  }
+ },
+ "streams_manifest": "benchmarks/streams_v2/manifest.json",
+ "streams_manifest_sha256": "e1f2d57f6fbdb2cf4b4e7563d4d8a8acb3b628f2144185a67866a7e2b0d6df65",
+ "toolchain_id": "oss-cad-suite-2026-09-04"
+}

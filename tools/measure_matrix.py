@@ -8,7 +8,8 @@
     python tools/measure_matrix.py decisions --config a1-cache-d1-p5-l1 --count 1000   # one decision record
 
 Manifest (schema hardware-matrix-v2): configurations x targets_mhz x seeds plus extra_jobs,
-one dsp_policy, top, route_timeout_s, and an optional decisions block.  Each route is keyed by its
+one dsp_policy, top, route_timeout_s (optionally per-configuration route_timeout_overrides) and an
+optional decisions block.  Each route is keyed by its
 full route_key (tools/identity.py); a job whose latest record exists under that key is reused
 whatever its status (success or failure), and an intentional retry adds a distinct attempt with a
 reason.  Records are one atomic JSON per job under results/v2/raw/routes/; aggregate CSVs are
@@ -66,6 +67,10 @@ def load_manifest(path: Path) -> dict:
     doc.setdefault("dsp_policy", "default")
     doc.setdefault("top", "stream_wrapper")
     doc.setdefault("route_timeout_s", ROUTE_TIMEOUT_S)
+    doc.setdefault("route_timeout_overrides", {})
+    for cid, t in doc["route_timeout_overrides"].items():
+        if cid not in SUPPORTED_IDS or int(t) <= 0:
+            raise SystemExit(f"{path}: bad route_timeout_overrides entry {cid}: {t}")
     doc["_path"] = str(path.relative_to(ROOT)) if path.is_absolute() and path.is_relative_to(ROOT) else str(path)
     doc["_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
     return doc
@@ -86,6 +91,11 @@ def expand_jobs(m: dict) -> list[dict]:
 
 def job_label(j: dict) -> str:
     return f"{j['configuration']}:{j['target_mhz']:g}:{j['seed']}"
+
+
+def job_timeout(m: dict, cid: str) -> int:
+    """Route budget for a configuration: the manifest default or its declared override (part of the route identity)."""
+    return int(m.get("route_timeout_overrides", {}).get(cid, m["route_timeout_s"]))
 
 
 # ---- lock / heartbeat --------------------------------------------------------------------------------------
@@ -259,7 +269,7 @@ def plan(m: dict, only: set[str] | None, retry: str | None, do_synth: bool = Tru
         if sdoc is None:
             out.append({**j, "label": label, "route_key": None, "existing": None, "action": "synthesis pending"})
             continue
-        p = plan_route(cfg, j["seed"], j["target_mhz"], m["route_timeout_s"], m["dsp_policy"], m["top"], sdoc)
+        p = plan_route(cfg, j["seed"], j["target_mhz"], job_timeout(m, j["configuration"]), m["dsp_policy"], m["top"], sdoc)
         rec = existing_record(p["route_key"])
         action = "run" if rec is None else ("retry" if retry else "reuse")
         out.append({**j, "label": label, "route_key": p["route_key"], "synth_key": sdoc["synth_key"],
@@ -273,7 +283,10 @@ def cmd_plan(args) -> int:
     m = load_manifest(ROOT / args.manifest)
     only = set(args.only.split(",")) if args.only else None
     items = plan(m, only, args.retry, do_synth=not args.no_synth)
-    print(f"[matrix] manifest {m['_path']} ({m['_sha256'][:12]}): {len(items)} jobs, dsp {m['dsp_policy']}, timeout {m['route_timeout_s']} s")
+    print(f"[matrix] manifest {m['_path']} ({m['_sha256'][:12]}): {len(items)} jobs, dsp {m['dsp_policy']}, timeout {m['route_timeout_s']} s"
+          + (f", overrides {m['route_timeout_overrides']}" if m.get("route_timeout_overrides") else ""))
+    print(f"[matrix] unique route jobs: {len(items)} ({len({(it['configuration']) for it in items})} configurations, "
+          f"targets {sorted({it['target_mhz'] for it in items})}, seeds {sorted({it['seed'] for it in items})})")
     counts = {}
     for it in items:
         counts[it["action"]] = counts.get(it["action"], 0) + 1
@@ -316,7 +329,7 @@ def cmd_run(args) -> int:
                 print(f"[matrix] … {h['config_id']} seed {h['seed']} @ {h['target_mhz']:g} MHz running {h['elapsed_s']:.0f} s, "
                       f"rss {h['peak_rss_mb']} MB ({_state['completed']}/{_state['total']} done)", flush=True)
 
-            rec = route(cfg, it["seed"], it["target_mhz"], m["route_timeout_s"], m["dsp_policy"], m["top"], heartbeat=beat,
+            rec = route(cfg, it["seed"], it["target_mhz"], job_timeout(m, it["configuration"]), m["dsp_policy"], m["top"], heartbeat=beat,
                         heartbeat_s=min(HEARTBEAT_S, 30), retry_reason=args.retry if it["action"] == "retry" else None, quiet=True)
             if rec.get("reused"):
                 state["reused"] += 1

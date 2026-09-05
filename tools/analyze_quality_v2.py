@@ -187,7 +187,7 @@ def plot_survival(doc: dict, path: Path) -> None:
         if p["cap_hit_fraction"]["value"] > 0:     # censoring marks at the cap
             ax.plot([cap], [ys[-1]], marker="+", color=line.get_color(), markersize=10)
     ax.axvline(cap, color="grey", linestyle="--", linewidth=1)
-    ax.text(cap * 0.995, 0.93, f"cap C = {cap:,} (censoring, '+' marks)", ha="right", va="top", fontsize=8, color="grey")
+    ax.text(cap * 0.995, 0.60, f"cap C = {cap:,}\n(censoring, '+' marks)", ha="right", va="top", fontsize=8, color="grey")
     ax.axhline(0.5, color="lightgrey", linestyle=":", linewidth=1)
     ax.text(cap * 0.01, 0.51, "S = 1/2 (median)", fontsize=7, color="grey", va="bottom")
     ax.set_xlabel("locked pieces t (event: first top-out decision)")
@@ -195,7 +195,7 @@ def plot_survival(doc: dict, path: Path) -> None:
     ax.set_ylim(0, 1.05)
     ax.set_xlim(0, cap * 1.02)
     ax.set_title(f"{doc['protocol_name']} / {doc['suite']} ({doc.get('role')}): product-limit survival, {doc['n_streams']} paired streams", fontsize=10)
-    ax.legend(loc="lower right", bbox_to_anchor=(0.98, 0.08), fontsize=7.5, framealpha=0.9)
+    ax.legend(loc="upper right", bbox_to_anchor=(0.985, 0.90), fontsize=7.5, framealpha=0.9)
     fig.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, dpi=120)

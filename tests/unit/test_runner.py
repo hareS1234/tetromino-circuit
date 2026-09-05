@@ -170,3 +170,30 @@ def test_manifest_validation(sandbox):
     (root / "bad.json").write_text(json.dumps(dict(MANIFEST, configurations=["a2-bitmap-d1-p0-l1"])))
     with pytest.raises(SystemExit, match="unsupported configuration"):
         mm.load_manifest(root / "bad.json")
+
+
+def test_per_configuration_timeout_override_is_part_of_the_identity(sandbox):
+    root, calls = sandbox
+    m = dict(MANIFEST, configurations=["a0-bitmap-d1-p0-l1", "a1-cache-d1-p0-l4"], targets_mhz=[50],
+             route_timeout_overrides={"a1-cache-d1-p0-l4": 1200})
+    (root / "m.json").write_text(json.dumps(m))
+    loaded = mm.load_manifest(root / "m.json")
+    assert mm.job_timeout(loaded, "a1-cache-d1-p0-l4") == 1200 and mm.job_timeout(loaded, "a0-bitmap-d1-p0-l1") == 600
+    items = mm.plan(loaded, None, None)
+    keys = {it["configuration"]: it["route_key"] for it in items}
+    m2 = dict(m, route_timeout_overrides={"a1-cache-d1-p0-l4": 2400})
+    (root / "m.json").write_text(json.dumps(m2))
+    items2 = mm.plan(mm.load_manifest(root / "m.json"), None, None)
+    keys2 = {it["configuration"]: it["route_key"] for it in items2}
+    assert keys["a0-bitmap-d1-p0-l1"] == keys2["a0-bitmap-d1-p0-l1"] and keys["a1-cache-d1-p0-l4"] != keys2["a1-cache-d1-p0-l4"]
+    bad = dict(m, route_timeout_overrides={"nope": 5})
+    (root / "m.json").write_text(json.dumps(bad))
+    with pytest.raises(SystemExit):
+        mm.load_manifest(root / "m.json")
+    # the release manifest expands to the declared 84 unique jobs
+    real = mm.load_manifest(Path(__file__).resolve().parents[2] / "benchmarks" / "hardware_v2.json")
+    jobs = mm.expand_jobs(real)
+    assert len(jobs) == 84 and len({mm.job_label(j) for j in jobs}) == 84
+    assert sum(1 for j in jobs if j["configuration"].startswith("a1-cache-d1-p") and j["configuration"] not in ("a1-cache-d1-p0-l1",)
+               and "-l1" in j["configuration"]) == 12
+    assert real["dsp_policy"] == "nodsp" and mm.job_timeout(real, "a1-cache-d1-p0-l4") == 1200 and mm.job_timeout(real, "a2-cache-d1-p0-l1") == 600
