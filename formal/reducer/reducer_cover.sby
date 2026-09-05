@@ -1,0 +1,15 @@
+[options]
+timeout 3600
+mode cover
+depth 8
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -sv best_reducer.sv reducer_proof.sv
+prep -top reducer_proof
+
+[files]
+rtl/best_reducer.sv
+formal/reducer/reducer_proof.sv

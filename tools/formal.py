@@ -31,6 +31,10 @@ TARGETS = {
     "smoke": "formal/smoke/smoke.sby",
     "compactor": "formal/compactor/compactor.sby",
     "compactor_cover": "formal/compactor/compactor_cover.sby",
+    "reducer": "formal/reducer/reducer.sby",
+    "reducer_cover": "formal/reducer/reducer_cover.sby",
+    "control": "formal/control/control.sby",
+    "control_cover": "formal/control/control_cover.sby",
 }
 
 

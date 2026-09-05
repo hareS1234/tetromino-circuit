@@ -1,0 +1,15 @@
+# Control conservation on the abstract pipeline (5 banks): k-induction proof
+[options]
+timeout 3600
+mode prove
+depth 8
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -sv abstract_pipe.sv
+prep -top abstract_pipe
+
+[files]
+formal/control/abstract_pipe.sv

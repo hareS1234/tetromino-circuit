@@ -1,0 +1,16 @@
+# Best reduction: dominance over an arbitrary witness, provenance, monotonicity (k-induction)
+[options]
+timeout 3600
+mode prove
+depth 4
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -sv best_reducer.sv reducer_proof.sv
+prep -top reducer_proof
+
+[files]
+rtl/best_reducer.sv
+formal/reducer/reducer_proof.sv

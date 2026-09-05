@@ -1,0 +1,14 @@
+[options]
+timeout 3600
+mode cover
+depth 16
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -sv abstract_pipe.sv
+prep -top abstract_pipe
+
+[files]
+formal/control/abstract_pipe.sv

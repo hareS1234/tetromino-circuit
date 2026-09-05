@@ -1,0 +1,50 @@
+{
+ "schema": "mutation-results-v1",
+ "set": "tests/mutations/a2_mutations.json",
+ "recorded_utc": "2026-09-05T16:07:07Z",
+ "results": [
+  {
+   "name": "drop_stride16_prefix_level",
+   "family": "V02",
+   "file": "rtl/row_rank20.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "MISMATCH mask #1: count 20 exp 19; rows: 001 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff",
+   "test": "python tools/compactor_native.py --mode exhaustive",
+   "elapsed_s": 8.4
+  },
+  {
+   "name": "drop_illegal_tokens_before_last",
+   "family": "V09/V10",
+   "file": "rtl/search_pipeline.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "RuntimeError: malformed native response: '[1005] %Error: search_pipeline.sv:104: Assertion failed in TOP.tetris_core.g_a2.u_search: search_pipeline: token order violated (tag 4, retired 3)\\n'",
+   "test": "python tools/test_core.py --arch 2 --board-repr 1 --count 300 --driver native --corpus benchmarks/states/corpus_d1_upgrade_dev.jsonl --out build/decisions/mutant.csv",
+   "elapsed_s": 0.2
+  },
+  {
+   "name": "compare_score_as_unsigned",
+   "family": "V10/V16",
+   "file": "rtl/best_reducer.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "AssertionError: assert (1, -5, 39, 9) == (1, 304, 38, 10)",
+   "test": "python tools/run_rtl.py --top best_reducer --test tb_best_reducer --files-f rtl/files_reducer.f --build-tag mutant",
+   "elapsed_s": 9.1
+  },
+  {
+   "name": "prefer_larger_id_on_tie",
+   "family": "V10/V15",
+   "file": "rtl/best_reducer.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "AssertionError: assert (1, -299, 20, 5) == (1, -299, 3, 6)",
+   "test": "python tools/run_rtl.py --top best_reducer --test tb_best_reducer --files-f rtl/files_reducer.f --build-tag mutant",
+   "elapsed_s": 9.0
+  }
+ ],
+ "killed": 4,
+ "total": 4,
+ "tree_restored": true
+}

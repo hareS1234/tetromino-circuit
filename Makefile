@@ -32,7 +32,8 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         print-cfg-id check-a2-spec test-prefix test-compactor-native formal-compactor formal-smoke \
         test-compactor-pipe synth-compactor-pipe test-drop-merge-pipe test-features-pipe test-score-pipe \
         test-a2-stream test-a2-metadata test-a2-reset test-a2-pipe synth-a2-pipe \
-        test-a2-core-extra test-request-interval corpus-v2-dev
+        test-a2-core-extra test-request-interval corpus-v2-dev \
+        test-reducer verify-a2-release formal-a2-control mutation-check-a2 regress-a0-a1
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -226,6 +227,47 @@ test-a2-core-extra: ## U10: A2 whole-core equivalence on the 2,000-state develop
 	$(PY) tools/test_core.py --arch 2 --board-repr 1 --count 2000 --driver native --corpus benchmarks/states/corpus_d1_upgrade_dev.jsonl --out build/decisions/a2-cache-d1-p0-l1_native_dev2000.csv
 test-request-interval: ## U10: two real acceptance edges per pair (batch mode) vs the inferred interval and, for A2, D(N)=N+29 / R(N)=N+31
 	$(PY) tools/request_interval.py $(CFG) --count 200
+
+# ---------------------------------------------------------------- U11 (verification and mutations)
+test-reducer: ## U11 (V10): reducer winner hazards in cocotb (all illegal, one legal, last wins, ties, signed, shadow model)
+	$(RUN_RTL) --top best_reducer --test tb_best_reducer --files-f rtl/files_reducer.f
+regress-a0-a1: ## U11: targeted regression of the v1 configurations after the top-level change
+	$(MAKE) test-rtl
+	$(PY) tools/test_core.py --arch 1 --board-repr 1 --lanes 2 --count 200 --driver native
+	$(PY) tools/test_core.py --arch 1 --board-repr 1 --depth 2 --count 100 --driver native
+	$(MAKE) test-cache
+	$(MAKE) test-lanes
+	$(MAKE) test-lookahead-rtl
+verify-a2-release: ## U11: V01-V14 for A2 (spec, compactor, front end, features, scorer, streams, core, protocol, drivers, replays) + A0/A1 regression
+	$(MAKE) check-a2-spec
+	$(MAKE) test-prefix
+	$(MAKE) test-compactor-native MODE=exhaustive
+	$(MAKE) test-compactor-native MODE=random COUNT=100000 SEED=3
+	$(MAKE) test-compactor-pipe
+	$(MAKE) test-compactor-native MODE=stream COUNT=4096 SEED=1
+	$(MAKE) test-drop-merge-pipe
+	$(MAKE) test-features-pipe
+	$(MAKE) test-score-pipe
+	$(MAKE) test-a2-stream
+	$(MAKE) test-a2-metadata
+	$(MAKE) test-a2-reset
+	$(MAKE) test-reducer
+	$(MAKE) test-core ARCH=2 BOARD_REPR=1 LANES=1 DEPTH=1 PRECISION=0 COUNT=1000 DRIVER=native
+	$(MAKE) test-a2-core-extra
+	$(MAKE) test-protocol ARCH=2 BOARD_REPR=1
+	$(MAKE) test-wrapper ARCH=2 BOARD_REPR=1
+	$(MAKE) test-driver ARCH=2 BOARD_REPR=1 COUNT=50
+	$(MAKE) test-request-interval ARCH=2 BOARD_REPR=1
+	$(MAKE) replay-suite ARCH=2 BOARD_REPR=1 LANES=1 DEPTH=1 PRECISION=0 CAP=250
+	$(MAKE) regress-a0-a1
+formal-a2-control: ## U11: control-conservation (abstract pipeline) and best-reduction proofs with covers
+	$(PY) tools/formal.py smoke
+	$(PY) tools/formal.py control
+	$(PY) tools/formal.py control_cover
+	$(PY) tools/formal.py reducer
+	$(PY) tools/formal.py reducer_cover
+mutation-check-a2: ## U11: twelve deliberate mutations, each killed by a named behavioural test, sources restored
+	$(PY) tools/run_mutations.py
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04: stage manifest, configuration identity, abstract cycle contract, A2 elaboration rejected

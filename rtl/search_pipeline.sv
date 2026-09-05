@@ -62,21 +62,20 @@ module search_pipeline (
         .m_valid(m_valid), .m_ready(1'b1), .m_legal(m_legal), .m_last(m_last), .m_candidate_id(m_id), .m_tag(m_tag), .m_y(m_y),
         .m_score(m_score), .occupancy_o(occupancy));
 
-    // ---- running best -----------------------------------------------------------------------
-    logic take;
-    assign take = m_valid && m_legal && (!best_valid_o || m_score > best_score_o ||
-                                         (m_score == best_score_o && m_id < best_id_o));
+    // ---- running best (best_reducer: signed score, lower id on ties, last token included) --------
+    logic accept_start;
+    assign accept_start = !active && start_i;
+    best_reducer u_best (.clk, .rst, .clear_i(accept_start), .valid_i(m_valid), .legal_i(m_legal), .score_i(m_score), .id_i(m_id),
+                         .y_i(m_y), .best_valid_o, .best_score_o, .best_id_o, .best_y_o);
     assign busy_o = active;
 
     always_ff @(posedge clk) begin
         if (rst) begin
-            active <= 1'b0; j <= 6'd0; n_q <= 6'd0; done_o <= 1'b0; best_valid_o <= 1'b0; best_score_o <= 32'sd0;
-            best_id_o <= 6'd0; best_y_o <= 5'd0; issued_o <= 6'd0; retired_o <= 6'd0;
+            active <= 1'b0; j <= 6'd0; n_q <= 6'd0; done_o <= 1'b0; issued_o <= 6'd0; retired_o <= 6'd0;
         end else begin
             done_o <= 1'b0;
-            if (!active && start_i) begin
-                active <= 1'b1; j <= 6'd0; n_q <= count_i; best_valid_o <= 1'b0; best_score_o <= 32'sd0; best_id_o <= 6'd0;
-                best_y_o <= 5'd0; issued_o <= 6'd0; retired_o <= 6'd0;
+            if (accept_start) begin
+                active <= 1'b1; j <= 6'd0; n_q <= count_i; issued_o <= 6'd0; retired_o <= 6'd0;
             end
             if (s_valid && s_ready) begin
                 j <= j + 6'd1;
@@ -84,9 +83,6 @@ module search_pipeline (
             end
             if (m_valid) begin               // m_ready is 1: every visible token retires this edge
                 retired_o <= retired_o + 6'd1;
-                if (take) begin
-                    best_valid_o <= 1'b1; best_score_o <= m_score; best_id_o <= m_id; best_y_o <= m_y;
-                end
                 if (m_last) begin
                     done_o <= 1'b1;
                     active <= 1'b0;

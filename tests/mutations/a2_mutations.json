@@ -1,0 +1,269 @@
+{
+ "schema": "mutation-set-v1",
+ "note": "Guide \u00a78.4: each mutation is applied to a working copy of the named production file, the named test must fail for a behavioural reason (kill signature), and the file is restored. A tool/compile error is not a kill.",
+ "mutations": [
+  {
+   "name": "rank_compare_d_not_d_plus_1",
+   "family": "V02/V03",
+   "file": "rtl/rank_match.sv",
+   "edits": [
+    [
+     "(rank_i[5 * s +: 5] == 5'(d + 1))",
+     "(rank_i[5 * s +: 5] == 5'(d))"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/compactor_native.py",
+    "--mode",
+    "exhaustive"
+   ],
+   "kill": "MISMATCH|CHECK compactor_exhaustive (?!1048576/)"
+  },
+  {
+   "name": "empty_row_treated_as_deleted",
+   "family": "V03",
+   "file": "rtl/line_clear_parallel.sv",
+   "edits": [
+    [
+     "assign keep[s] = (board_i[10 * s +: 10] != 10'h3FF);",
+     "assign keep[s] = (board_i[10 * s +: 10] != 10'h3FF) && (board_i[10 * s +: 10] != 10'd0);"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/compactor_native.py",
+    "--mode",
+    "random",
+    "--count",
+    "20000",
+    "--seed",
+    "5"
+   ],
+   "kill": "MISMATCH|CHECK compactor_random (?!20000/)"
+  },
+  {
+   "name": "drop_stride16_prefix_level",
+   "family": "V02",
+   "file": "rtl/row_rank20.sv",
+   "edits": [
+    [
+     "rank_level #(.STRIDE(16)) u_l5 (.prev_i(p4), .next_o(p5));",
+     "assign p5 = p4;   // MUTANT: stride-16 level dropped"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/compactor_native.py",
+    "--mode",
+    "exhaustive"
+   ],
+   "kill": "MISMATCH|CHECK compactor_exhaustive (?!1048576/)"
+  },
+  {
+   "name": "board_delayed_one_fewer_than_rank",
+   "family": "V03/V09",
+   "file": "rtl/line_clear_pipe.sv",
+   "edits": [
+    [
+     "match10 <= match_w; board10 <= board[5];",
+     "match10 <= match_w; board10 <= board[4];"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/compactor_native.py",
+    "--mode",
+    "stream",
+    "--count",
+    "1024"
+   ],
+   "kill": "MISMATCH|CHECK compactor_stream_\\w+ 0/"
+  },
+  {
+   "name": "stale_valid_on_input_bubble",
+   "family": "V07",
+   "file": "rtl/line_clear_pipe.sv",
+   "edits": [
+    [
+     "            valid[0] <= s_valid_i;",
+     "            valid[0] <= s_valid_i || valid[0];"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/compactor_native.py",
+    "--mode",
+    "stream",
+    "--count",
+    "1024"
+   ],
+   "kill": "SPURIOUS|CHECK compactor_stream_random 0/"
+  },
+  {
+   "name": "metadata_held_apart_from_data",
+   "family": "V07/V09",
+   "file": "rtl/score_pipe.sv",
+   "edits": [
+    [
+     "            if (valid[1]) begin\n                score22 <= score_w; meta[2] <= meta[1];\n            end",
+     "            if (valid[1]) score22 <= score_w;\n            if (valid[1] && s_valid_i) meta[2] <= meta[1];"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/a2_native.py",
+    "--phase",
+    "traffic",
+    "--contexts",
+    "12"
+   ],
+   "kill": "MISMATCH|CHECK a2_traffic 0/"
+  },
+  {
+   "name": "drop_illegal_tokens_before_last",
+   "family": "V09/V10",
+   "file": "rtl/search_pipeline.sv",
+   "edits": [
+    [
+     "            if (m_valid) begin               // m_ready is 1: every visible token retires this edge",
+     "            if (m_valid && m_legal) begin    // MUTANT: illegal tokens dropped before carrying last"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/test_core.py",
+    "--arch",
+    "2",
+    "--board-repr",
+    "1",
+    "--count",
+    "300",
+    "--driver",
+    "native",
+    "--corpus",
+    "benchmarks/states/corpus_d1_upgrade_dev.jsonl",
+    "--out",
+    "build/decisions/mutant.csv"
+   ],
+   "kill": "MISMATCH|timeout|disagree|native driver|search_pipeline:|native response out of range"
+  },
+  {
+   "name": "publish_old_best_when_last_wins",
+   "family": "V10",
+   "file": "rtl/search_pipeline.sv",
+   "edits": [
+    [
+     ".clear_i(accept_start), .valid_i(m_valid),",
+     ".clear_i(accept_start), .valid_i(m_valid && !m_last),"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/test_core.py",
+    "--arch",
+    "2",
+    "--board-repr",
+    "1",
+    "--count",
+    "300",
+    "--driver",
+    "native",
+    "--corpus",
+    "benchmarks/states/corpus_d1_upgrade_dev.jsonl",
+    "--out",
+    "build/decisions/mutant.csv"
+   ],
+   "kill": "MISMATCH|disagree"
+  },
+  {
+   "name": "compare_score_as_unsigned",
+   "family": "V10/V16",
+   "file": "rtl/best_reducer.sv",
+   "edits": [
+    [
+     "assign take = valid_i && legal_i && (!best_valid_o || score_i > best_score_o ||",
+     "assign take = valid_i && legal_i && (!best_valid_o || $unsigned(score_i) > $unsigned(best_score_o) ||"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/run_rtl.py",
+    "--top",
+    "best_reducer",
+    "--test",
+    "tb_best_reducer",
+    "--files-f",
+    "rtl/files_reducer.f",
+    "--build-tag",
+    "mutant"
+   ],
+   "kill": "AssertionError|failed"
+  },
+  {
+   "name": "prefer_larger_id_on_tie",
+   "family": "V10/V15",
+   "file": "rtl/best_reducer.sv",
+   "edits": [
+    [
+     "                                         (score_i == best_score_o && id_i < best_id_o));",
+     "                                         (score_i == best_score_o && id_i > best_id_o));"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/run_rtl.py",
+    "--top",
+    "best_reducer",
+    "--test",
+    "tb_best_reducer",
+    "--files-f",
+    "rtl/files_reducer.f",
+    "--build-tag",
+    "mutant"
+   ],
+   "kill": "AssertionError|failed"
+  },
+  {
+   "name": "stage_valid_survives_reset",
+   "family": "V08",
+   "file": "rtl/score_pipe.sv",
+   "edits": [
+    [
+     "        if (rst) begin\n            valid <= '0;\n        end else if (advance_i) begin\n            valid[0] <= s_valid_i;\n            valid[1] <= valid[0];\n            valid[2] <= valid[1];",
+     "        if (rst) begin\n            valid <= {valid[2], 2'b00};   // MUTANT: the last bank keeps its valid bit across reset\n        end else if (advance_i) begin\n            valid[0] <= s_valid_i;\n            valid[1] <= valid[0];\n            valid[2] <= valid[1];"
+    ]
+   ],
+   "test": [
+    "python",
+    "tools/a2_native.py",
+    "--phase",
+    "reset",
+    "--contexts",
+    "12"
+   ],
+   "kill": "SPURIOUS|RESET|CHECK a2_reset 0/|not empty"
+  },
+  {
+   "name": "reuse_50mhz_result_for_80mhz",
+   "family": "V17",
+   "file": "tools/identity.py",
+   "edits": [
+    [
+     "\"target_mhz\": float(freq_mhz),",
+     "\"target_mhz\": 50.0,"
+    ]
+   ],
+   "test": [
+    "python",
+    "-m",
+    "pytest",
+    "tests/unit/test_identity.py",
+    "tests/unit/test_runner.py",
+    "-q",
+    "-x"
+   ],
+   "kill": "failed|FAILED"
+  }
+ ]
+}

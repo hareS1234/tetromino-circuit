@@ -23,5 +23,6 @@ rtl/line_clear_pipe.sv
 rtl/features_pipe.sv
 rtl/score_pipe.sv
 rtl/candidate_pipe.sv
+rtl/best_reducer.sv
 rtl/search_pipeline.sv
 rtl/tetris_core.sv
