@@ -30,7 +30,7 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         check-report check-release reproduce clean \
         test-identities test-result-schemas check-v1-results upgrade-smoke matrix-plan matrix-status \
         print-cfg-id check-a2-spec test-prefix test-compactor-native formal-compactor formal-smoke \
-        test-compactor-pipe synth-compactor-pipe test-drop-merge-pipe
+        test-compactor-pipe synth-compactor-pipe test-drop-merge-pipe test-features-pipe test-score-pipe
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -193,6 +193,14 @@ synth-compactor-pipe: ## U06: micro-synthesis of line_clear_pipe: no latch/DSP, 
 test-drop-merge-pipe: ## U07: P0-P3 geometry (40,500 corpus tokens), fixtures, stream/stall/reset; smoke synthesis without latch/DSP
 	$(RUN_RTL) --top drop_merge_pipe_harness --test tb_drop_merge_pipe --files-f rtl/files_drop_merge_pipe.f
 	$(PY) tools/synth_module.py --top drop_merge_pipe --files-f rtl/files_drop_merge_pipe.f --expect-no-latch --expect-no-dsp --expect-ff-min 200
+
+# ---------------------------------------------------------------- U08 (feature and score pipelines)
+test-features-pipe: ## U08: P13-P19 vs direct hole counting (one-hots, height-20 columns, 10,000 boards), stalls, reset; smoke synthesis
+	$(RUN_RTL) --top features_pipe_harness --test tb_features_pipe --files-f rtl/files_features_pipe.f
+	$(PY) tools/synth_module.py --top features_pipe --files-f rtl/files_features_pipe.f --expect-no-latch --expect-no-dsp --expect-ff-min 300
+test-score-pipe: ## U08: P20-P22 at every bound, 10,000 tuples, signed scores, illegal canonicalization; smoke synthesis
+	$(RUN_RTL) --top score_pipe_harness --test tb_score_pipe --files-f rtl/files_score_pipe.f
+	$(PY) tools/synth_module.py --top score_pipe --files-f rtl/files_score_pipe.f --expect-no-latch --expect-no-dsp --expect-ff-min 100
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04: stage manifest, configuration identity, abstract cycle contract, A2 elaboration rejected
