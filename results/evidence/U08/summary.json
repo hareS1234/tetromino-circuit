@@ -1,0 +1,85 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U08",
+ "status": "passed",
+ "git_commit": "2662ae390237849cbfbf56ba4f694686e1c707bd",
+ "git_modified_tracked": [],
+ "git_untracked": [],
+ "source_sha256": "165e10e6e252f09f70c76127d7187123996d478b8b8f109f4b2d95f8cd432e38",
+ "configuration_id": null,
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T15:42:24Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-features-pipe"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 5.93,
+   "log": "results/evidence/U08/cmd00.log",
+   "counts": {
+    "pytest_failed": 0,
+    "rtl_total": 3,
+    "rtl_failed": 0,
+    "check_synth_features_pipe": "3/3"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-score-pipe"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 2.96,
+   "log": "results/evidence/U08/cmd01.log",
+   "counts": {
+    "pytest_failed": 0,
+    "rtl_total": 3,
+    "rtl_failed": 0,
+    "check_synth_score_pipe": "3/3"
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "cocotb",
+   "count_key": "rtl_total",
+   "values": [
+    3,
+    3
+   ],
+   "ok": true
+  },
+  {
+   "name": "synth_features",
+   "count_key": "check_synth_features_pipe",
+   "values": [
+    "3/3"
+   ],
+   "ok": true
+  },
+  {
+   "name": "synth_score",
+   "count_key": "check_synth_score_pipe",
+   "values": [
+    "3/3"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "rtl/features_pipe.sv",
+   "exists": true,
+   "bytes": 9627
+  },
+  {
+   "path": "rtl/score_pipe.sv",
+   "exists": true,
+   "bytes": 3513
+  }
+ ],
+ "limitations": [],
+ "note": "features_pipe 824 LUT4 / 989 FF / 278 CCU2C, score_pipe 43 LUT4 / 219 FF / 54 CCU2C, no DSP, no latch; -Wall lint clean for both new files (no waivers)"
+}
