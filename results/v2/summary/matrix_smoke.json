@@ -4,8 +4,8 @@
  "manifest_sha256": "c894066030fa714fcd82674fc553984004eaf773206845b631d4ca82de33ee6c",
  "name": "smoke",
  "toolchain_id": "oss-cad-suite-2026-09-04",
- "source_sha256": "107032c70606c7da4d9eafd1def95f04c3f8758c7c79d5dc04f62c7f025e8522",
- "recorded_utc": "2026-09-05T14:52:50Z",
+ "source_sha256": "490b7833cf0d7aa2376076f081d66eded89032b6dd5178cc7a6defeacc2d4afd",
+ "recorded_utc": "2026-09-05T15:08:15Z",
  "expected_jobs": [
   "a0-bitmap-d1-p0-l1:50:1"
  ],

@@ -6,7 +6,8 @@
 cocotb: runs tb/tb_core.py inside the simulator.  native: drives the persistent C++ harness.
 both: runs both and requires every response field and cycle count to agree.  Depth-two
 configurations use the depth-two corpus and the depth-two reference.  Per-decision rows are
-written to results/decisions/<config>_<driver>.csv (manual Section 7 columns).
+written to build/decisions/<config>_<driver>_<count>.csv (manual Section 7 columns) unless --out
+names a path; the frozen v1 corpora live in results/decisions/ and are not rewritten.
 """
 from __future__ import annotations
 
@@ -117,7 +118,7 @@ def main() -> int:
     ap.add_argument("--count", type=int, default=50)
     ap.add_argument("--driver", default="native", choices=["native", "cocotb", "both"])
     ap.add_argument("--max-cycles", type=int, default=None)
-    ap.add_argument("--out", default=None, help="native decision CSV path (default results/decisions/<config>_native_<count>.csv)")
+    ap.add_argument("--out", default=None, help="native decision CSV path (default build/decisions/<config>_native_<count>.csv)")
     args = ap.parse_args()
     cfg = validate(Config(args.arch, args.board_repr, args.lanes, args.depth, args.precision))
     max_cycles = args.max_cycles or (4_000_000 if cfg.depth == 2 else (60_000 if cfg.arch == 0 else 10_000))
@@ -138,10 +139,10 @@ def main() -> int:
             raise SystemExit(f"native: {mism} of {len(corpus)} decisions disagree with the reference")
         cyc = sorted(r["cycles"] for r in native)
         print(f"native: all {len(corpus)} decisions match; cycles min {cyc[0]} median {cyc[len(cyc) // 2]} max {cyc[-1]}")
-        write_rows(cfg, "native", corpus, native, ROOT / args.out if args.out else ROOT / "results" / "decisions" / f"{cfg.id}_native_{args.count}.csv")
+        write_rows(cfg, "native", corpus, native, ROOT / args.out if args.out else ROOT / "build" / "decisions" / f"{cfg.id}_native_{args.count}.csv")
     if args.driver in ("cocotb", "both"):
         cocotb_rsp = run_cocotb(cfg, args.count)
-        write_rows(cfg, "cocotb", corpus, cocotb_rsp, ROOT / "results" / "decisions" / f"{cfg.id}_cocotb_{args.count}.csv")
+        write_rows(cfg, "cocotb", corpus, cocotb_rsp, ROOT / "build" / "decisions" / f"{cfg.id}_cocotb_{args.count}.csv")
     if args.driver == "both":
         diff = 0
         for rec, a, b in zip(corpus, native, cocotb_rsp):

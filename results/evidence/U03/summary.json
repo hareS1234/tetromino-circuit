@@ -1,0 +1,163 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U03",
+ "status": "blocked",
+ "git_commit": "b6d8715d4323da6073ce18b0c7308c15b4bd34d4",
+ "git_modified_tracked": [],
+ "git_untracked": [],
+ "source_sha256": "490b7833cf0d7aa2376076f081d66eded89032b6dd5178cc7a6defeacc2d4afd",
+ "configuration_id": null,
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T15:02:48Z",
+ "commands": [
+  {
+   "argv": [
+    "python",
+    "tools/ci_local.py",
+    "--validate"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.1,
+   "log": "results/evidence/U03/cmd00.log",
+   "counts": {
+    "check_ci_workflow": "3/3"
+   }
+  },
+  {
+   "argv": [
+    "python",
+    "tools/ci_local.py",
+    "--job",
+    "fast"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 50.53,
+   "log": "results/evidence/U03/cmd01.log",
+   "counts": {
+    "pytest_passed": 381,
+    "check_quality_jobs": "640/640",
+    "check_quality_summary_recomputed": "8/8",
+    "check_route_jobs": "45/45",
+    "check_decision_files": "9/9",
+    "check_v1_evidence": "20/20",
+    "check_ci_workflow": "3/3",
+    "check_ci_job_fast": "10/10"
+   }
+  },
+  {
+   "argv": [
+    "python",
+    "tools/ci_local.py",
+    "--job",
+    "hdl"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 272.41,
+   "log": "results/evidence/U03/cmd02.log",
+   "counts": {
+    "pytest_passed": 1576,
+    "pytest_failed": 0,
+    "rtl_total": 32,
+    "rtl_failed": 0,
+    "native_decisions": 350,
+    "check_ci_job_hdl": "11/11"
+   }
+  },
+  {
+   "argv": [
+    "python",
+    "tools/ci_local.py",
+    "--job",
+    "heavy",
+    "--event",
+    "workflow_dispatch"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 3.96,
+   "log": "results/evidence/U03/cmd03.log",
+   "counts": {
+    "native_decisions": 50,
+    "check_ci_job_heavy": "6/6"
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "workflow_validation",
+   "count_key": "check_ci_workflow",
+   "values": [
+    "3/3",
+    "3/3"
+   ],
+   "ok": true
+  },
+  {
+   "name": "fast_job",
+   "count_key": "check_ci_job_fast",
+   "values": [
+    "10/10"
+   ],
+   "ok": true
+  },
+  {
+   "name": "hdl_job",
+   "count_key": "check_ci_job_hdl",
+   "values": [
+    "11/11"
+   ],
+   "ok": true
+  },
+  {
+   "name": "heavy_job",
+   "count_key": "check_ci_job_heavy",
+   "values": [
+    "6/6"
+   ],
+   "ok": true
+  },
+  {
+   "name": "python_tests",
+   "count_key": "pytest_passed",
+   "values": [
+    381,
+    1576
+   ],
+   "ok": true
+  },
+  {
+   "name": "smoke_decisions",
+   "count_key": "native_decisions",
+   "values": [
+    350,
+    50
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": ".github/workflows/ci.yml",
+   "exists": true,
+   "bytes": 3823
+  },
+  {
+   "path": ".github/actions/bootstrap/action.yml",
+   "exists": true,
+   "bytes": 1920
+  },
+  {
+   "path": "docs/ci.md",
+   "exists": true,
+   "bytes": 3665
+  },
+  {
+   "path": "tools/ci_local.py",
+   "exists": true,
+   "bytes": 10179
+  }
+ ],
+ "limitations": [
+  "blocked: remote gate not executed: no GitHub remote, credentials or gh in this environment; the workflow was validated and its fast/hdl/heavy jobs were executed locally (recorded below); U20 must push, inspect the run and pin action SHAs"
+ ],
+ "note": null
+}

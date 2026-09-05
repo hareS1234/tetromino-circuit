@@ -15,5 +15,5 @@
  "verilator": "Verilator 5.051 devel rev v5.050-309-g228635918 (mod)",
  "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
  "nextpnr_ecp5": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
- "recorded_utc": "2026-09-05T15:02:40Z"
+ "recorded_utc": "2026-09-05T15:08:14Z"
 }
