@@ -30,7 +30,7 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         check-report check-release reproduce clean \
         test-identities test-result-schemas check-v1-results upgrade-smoke matrix-plan matrix-status \
         print-cfg-id check-a2-spec test-prefix test-compactor-native formal-compactor formal-smoke \
-        test-compactor-pipe synth-compactor-pipe
+        test-compactor-pipe synth-compactor-pipe test-drop-merge-pipe
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -188,6 +188,11 @@ test-compactor-pipe: ## U06: cocotb streaming/stall/bubble/reset tests of line_c
 synth-compactor-pipe: ## U06: micro-synthesis of line_clear_pipe: no latch/DSP, register scale, selection logic live
 	$(PY) tools/synth_module.py --top line_clear_pipe --files-f rtl/files_compactor_pipe.f --expect-no-latch --expect-no-dsp --expect-ff-min 3000 --expect-ff-max 4200 --expect-lut-min 2000
 	$(PY) tools/synth_module.py --top line_clear_pipe --files-f rtl/files_compactor_pipe.f --noflatten --expect-module-live rank_match --expect-module-live row_select_groups --expect-module-live row_select_final
+
+# ---------------------------------------------------------------- U07 (landing/merge front end)
+test-drop-merge-pipe: ## U07: P0-P3 geometry (40,500 corpus tokens), fixtures, stream/stall/reset; smoke synthesis without latch/DSP
+	$(RUN_RTL) --top drop_merge_pipe_harness --test tb_drop_merge_pipe --files-f rtl/files_drop_merge_pipe.f
+	$(PY) tools/synth_module.py --top drop_merge_pipe --files-f rtl/files_drop_merge_pipe.f --expect-no-latch --expect-no-dsp --expect-ff-min 200
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04: stage manifest, configuration identity, abstract cycle contract, A2 elaboration rejected
