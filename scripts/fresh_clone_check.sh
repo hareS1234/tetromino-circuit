@@ -21,7 +21,7 @@ make test-shapes
 make demo-python
 make plots
 bash scripts/env.sh python tools/write_report.py --check
-if grep -rn "/home/user\|/Users/harrysong" tools scripts tb model Makefile; then
+if grep -rn --include='*.py' --include='*.sh' --include=Makefile --exclude=check_release.py --exclude=fresh_clone_check.sh -E "/home/[a-z]+/|/Users/[a-z]+/" tools scripts tb model Makefile; then
   echo "[fresh] ERROR: absolute paths leaked"; exit 1
 fi
 echo "[fresh] OK: software demo, RTL smoke/ROM tests and plot regeneration passed in $TMP/tetromino-circuit"

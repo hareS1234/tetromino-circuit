@@ -43,7 +43,9 @@ def main() -> int:
     leaks = []
     for pat in ("tools/*.py", "scripts/*.sh", "tb/*.py", "model/*.py", "Makefile"):
         for p in ROOT.glob(pat):
-            if re.search(r"/home/user|/Users/harrysong", p.read_text()):
+            if p.name in ("check_release.py", "fresh_clone_check.sh"):
+                continue  # these two files contain the search pattern itself
+            if re.search(r"/home/[a-z]+/|/Users/[a-z]+/", p.read_text()):
                 leaks.append(str(p.relative_to(ROOT)))
     if leaks:
         problems.append(f"absolute paths leaked into {leaks}")
