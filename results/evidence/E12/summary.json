@@ -1,0 +1,38 @@
+{
+ "job": "E12",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "4847cf9e0fa16c93cfc9f9fbddad016bcf1ffb01-dirty",
+ "source_hash": "b56c75b5be8c49f3",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T05:01:49Z",
+ "note": "P1-P4 each pass scorer/features/evaluator/core tests vs own reference; disagreement with P0 on corpus: P1 4.2%, P2 0.0%, P3 5.9%, P4 43.6%; validation cap-500 lines: P0 195.95, P1 196.75, P2 195.95, P3 194.85, P4 14.40; LUT4 3942-4027, all routed >= 65 MHz",
+ "commands": [
+  {
+   "argv": [
+    "python",
+    "tools/test_precision.py",
+    "--skip-candidate"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 23.84,
+   "log": "results/evidence/E12/cmd00.log",
+   "tests": {
+    "pytest_failed": 0,
+    "rtl_total": 28,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "measure-precision"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 11.16,
+   "log": "results/evidence/E12/cmd01.log",
+   "tests": {}
+  }
+ ],
+ "elapsed_s": 35.0
+}

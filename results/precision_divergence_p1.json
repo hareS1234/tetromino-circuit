@@ -1,0 +1,423 @@
+{
+ "seed": 2000,
+ "move_index": 40,
+ "piece": 0,
+ "rows_before": [
+  959,
+  759,
+  38,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "exact_choice": {
+  "rotation": 0,
+  "x": 6,
+  "y": 2,
+  "lines": 0,
+  "score": -1488
+ },
+ "profile_choice": {
+  "rotation": 1,
+  "x": 0,
+  "y": 2,
+  "lines": 0,
+  "score": -1792
+ },
+ "candidates_exact": [
+  {
+   "candidate_id": 0,
+   "rotation": 0,
+   "x": 0,
+   "y": 3,
+   "lines": 0,
+   "A": 28,
+   "Q": 4,
+   "U": 6,
+   "score": -1680
+  },
+  {
+   "candidate_id": 1,
+   "rotation": 0,
+   "x": 1,
+   "y": 3,
+   "lines": 0,
+   "A": 28,
+   "Q": 4,
+   "U": 6,
+   "score": -1680
+  },
+  {
+   "candidate_id": 2,
+   "rotation": 0,
+   "x": 2,
+   "y": 3,
+   "lines": 0,
+   "A": 28,
+   "Q": 4,
+   "U": 6,
+   "score": -1680
+  },
+  {
+   "candidate_id": 3,
+   "rotation": 0,
+   "x": 3,
+   "y": 3,
+   "lines": 0,
+   "A": 29,
+   "Q": 5,
+   "U": 6,
+   "score": -1767
+  },
+  {
+   "candidate_id": 4,
+   "rotation": 0,
+   "x": 4,
+   "y": 3,
+   "lines": 0,
+   "A": 28,
+   "Q": 4,
+   "U": 10,
+   "score": -1752
+  },
+  {
+   "candidate_id": 5,
+   "rotation": 0,
+   "x": 5,
+   "y": 3,
+   "lines": 0,
+   "A": 29,
+   "Q": 5,
+   "U": 8,
+   "score": -1803
+  },
+  {
+   "candidate_id": 6,
+   "rotation": 0,
+   "x": 6,
+   "y": 2,
+   "lines": 0,
+   "A": 26,
+   "Q": 2,
+   "U": 5,
+   "score": -1488
+  },
+  {
+   "candidate_id": 10,
+   "rotation": 1,
+   "x": 0,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 10,
+   "score": -1491
+  },
+  {
+   "candidate_id": 11,
+   "rotation": 1,
+   "x": 1,
+   "y": 3,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 16,
+   "score": -1599
+  },
+  {
+   "candidate_id": 12,
+   "rotation": 1,
+   "x": 2,
+   "y": 3,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 16,
+   "score": -1599
+  },
+  {
+   "candidate_id": 13,
+   "rotation": 1,
+   "x": 3,
+   "y": 1,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 10,
+   "score": -1491
+  },
+  {
+   "candidate_id": 14,
+   "rotation": 1,
+   "x": 4,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 14,
+   "score": -1563
+  },
+  {
+   "candidate_id": 15,
+   "rotation": 1,
+   "x": 5,
+   "y": 3,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 16,
+   "score": -1599
+  },
+  {
+   "candidate_id": 16,
+   "rotation": 1,
+   "x": 6,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 14,
+   "score": -1563
+  },
+  {
+   "candidate_id": 17,
+   "rotation": 1,
+   "x": 7,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 16,
+   "score": -1599
+  },
+  {
+   "candidate_id": 18,
+   "rotation": 1,
+   "x": 8,
+   "y": 1,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 12,
+   "score": -1527
+  },
+  {
+   "candidate_id": 19,
+   "rotation": 1,
+   "x": 9,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q": 1,
+   "U": 12,
+   "score": -1527
+  }
+ ],
+ "candidates_profile": [
+  {
+   "candidate_id": 0,
+   "rotation": 0,
+   "x": 0,
+   "y": 3,
+   "lines": 0,
+   "A": 28,
+   "Q_used": 4,
+   "U_used": 6,
+   "score": -2016
+  },
+  {
+   "candidate_id": 1,
+   "rotation": 0,
+   "x": 1,
+   "y": 3,
+   "lines": 0,
+   "A": 28,
+   "Q_used": 4,
+   "U_used": 6,
+   "score": -2016
+  },
+  {
+   "candidate_id": 2,
+   "rotation": 0,
+   "x": 2,
+   "y": 3,
+   "lines": 0,
+   "A": 28,
+   "Q_used": 4,
+   "U_used": 6,
+   "score": -2016
+  },
+  {
+   "candidate_id": 3,
+   "rotation": 0,
+   "x": 3,
+   "y": 3,
+   "lines": 0,
+   "A": 29,
+   "Q_used": 5,
+   "U_used": 6,
+   "score": -2112
+  },
+  {
+   "candidate_id": 4,
+   "rotation": 0,
+   "x": 4,
+   "y": 3,
+   "lines": 0,
+   "A": 28,
+   "Q_used": 4,
+   "U_used": 10,
+   "score": -2080
+  },
+  {
+   "candidate_id": 5,
+   "rotation": 0,
+   "x": 5,
+   "y": 3,
+   "lines": 0,
+   "A": 29,
+   "Q_used": 5,
+   "U_used": 8,
+   "score": -2144
+  },
+  {
+   "candidate_id": 6,
+   "rotation": 0,
+   "x": 6,
+   "y": 2,
+   "lines": 0,
+   "A": 26,
+   "Q_used": 2,
+   "U_used": 5,
+   "score": -1808
+  },
+  {
+   "candidate_id": 10,
+   "rotation": 1,
+   "x": 0,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 10,
+   "score": -1792
+  },
+  {
+   "candidate_id": 11,
+   "rotation": 1,
+   "x": 1,
+   "y": 3,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 16,
+   "score": -1888
+  },
+  {
+   "candidate_id": 12,
+   "rotation": 1,
+   "x": 2,
+   "y": 3,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 16,
+   "score": -1888
+  },
+  {
+   "candidate_id": 13,
+   "rotation": 1,
+   "x": 3,
+   "y": 1,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 10,
+   "score": -1792
+  },
+  {
+   "candidate_id": 14,
+   "rotation": 1,
+   "x": 4,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 14,
+   "score": -1856
+  },
+  {
+   "candidate_id": 15,
+   "rotation": 1,
+   "x": 5,
+   "y": 3,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 16,
+   "score": -1888
+  },
+  {
+   "candidate_id": 16,
+   "rotation": 1,
+   "x": 6,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 14,
+   "score": -1856
+  },
+  {
+   "candidate_id": 17,
+   "rotation": 1,
+   "x": 7,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 16,
+   "score": -1888
+  },
+  {
+   "candidate_id": 18,
+   "rotation": 1,
+   "x": 8,
+   "y": 1,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 12,
+   "score": -1824
+  },
+  {
+   "candidate_id": 19,
+   "rotation": 1,
+   "x": 9,
+   "y": 2,
+   "lines": 0,
+   "A": 25,
+   "Q_used": 1,
+   "U_used": 12,
+   "score": -1824
+  }
+ ],
+ "replays": {
+  "exact": "results/divergence_seed2000_p0.jsonl",
+  "profile": "results/divergence_seed2000_p1.jsonl"
+ }
+}

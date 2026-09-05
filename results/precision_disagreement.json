@@ -1,0 +1,22 @@
+{
+ "1": {
+  "disagree_with_p0": 41,
+  "legal_states": 981,
+  "rate": 0.0418
+ },
+ "2": {
+  "disagree_with_p0": 0,
+  "legal_states": 981,
+  "rate": 0.0
+ },
+ "3": {
+  "disagree_with_p0": 58,
+  "legal_states": 981,
+  "rate": 0.0591
+ },
+ "4": {
+  "disagree_with_p0": 428,
+  "legal_states": 981,
+  "rate": 0.4363
+ }
+}
