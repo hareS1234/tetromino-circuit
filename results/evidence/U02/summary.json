@@ -1,0 +1,186 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U02",
+ "status": "passed",
+ "git_commit": "0fb5379e32d82378b88d2e0bc39d7a831b5d0ac2-dirty",
+ "git_modified_tracked": [
+  "results/v2/summary/matrix_smoke.json",
+  "results/v2/summary/quality_smoke.json",
+  "results/v2/summary/routes_smoke.csv"
+ ],
+ "git_untracked": [
+  "results/evidence/U02/summary.json"
+ ],
+ "source_sha256": "107032c70606c7da4d9eafd1def95f04c3f8758c7c79d5dc04f62c7f025e8522",
+ "configuration_id": null,
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T14:52:47Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-identities"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.35,
+   "log": "results/evidence/U02/cmd00.log",
+   "counts": {
+    "pytest_passed": 35
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-result-schemas"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.91,
+   "log": "results/evidence/U02/cmd01.log",
+   "counts": {
+    "pytest_passed": 30
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "check-v1-results"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.46,
+   "log": "results/evidence/U02/cmd02.log",
+   "counts": {
+    "check_quality_jobs": "640/640",
+    "check_quality_summary_recomputed": "8/8",
+    "check_route_jobs": "45/45",
+    "check_decision_files": "9/9",
+    "check_v1_evidence": "20/20"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "upgrade-smoke"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.48,
+   "log": "results/evidence/U02/cmd03.log",
+   "counts": {
+    "native_decisions": 50
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "identity_tests",
+   "count_key": "pytest_passed",
+   "values": [
+    35,
+    30
+   ],
+   "ok": true
+  },
+  {
+   "name": "schema_runner_bench_tests",
+   "count_key": "pytest_passed",
+   "values": [
+    35,
+    30
+   ],
+   "ok": true
+  },
+  {
+   "name": "v1_quality_jobs",
+   "count_key": "check_quality_jobs",
+   "values": [
+    "640/640"
+   ],
+   "ok": true
+  },
+  {
+   "name": "v1_summary_recomputed",
+   "count_key": "check_quality_summary_recomputed",
+   "values": [
+    "8/8"
+   ],
+   "ok": true
+  },
+  {
+   "name": "v1_route_jobs",
+   "count_key": "check_route_jobs",
+   "values": [
+    "45/45"
+   ],
+   "ok": true
+  },
+  {
+   "name": "v1_decision_files",
+   "count_key": "check_decision_files",
+   "values": [
+    "9/9"
+   ],
+   "ok": true
+  },
+  {
+   "name": "v1_evidence",
+   "count_key": "check_v1_evidence",
+   "values": [
+    "20/20"
+   ],
+   "ok": true
+  },
+  {
+   "name": "smoke_decisions",
+   "count_key": "native_decisions",
+   "values": [
+    50
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "tools/identity.py",
+   "exists": true,
+   "bytes": 11124
+  },
+  {
+   "path": "docs/identities.md",
+   "exists": true,
+   "bytes": 7175
+  },
+  {
+   "path": "results/v2/summary/matrix_smoke.json",
+   "exists": true,
+   "bytes": 1407
+  },
+  {
+   "path": "results/v2/summary/routes_smoke.csv",
+   "exists": true,
+   "bytes": 763
+  },
+  {
+   "path": "results/v2/summary/quality_smoke.json",
+   "exists": true,
+   "bytes": 1589
+  },
+  {
+   "path": "results/v2/raw/routes/e4d4c836d248ed90c8009f46530382970835bf8079fce2abf9f22671d39d9c85.json",
+   "exists": true,
+   "bytes": 2937
+  },
+  {
+   "path": "results/v2/raw/routes/b8150a4664789368add7379271cab9772f88e7d2119da08f87b0490e61d01695.json",
+   "exists": true,
+   "bytes": 3058
+  },
+  {
+   "path": "tests/fixtures/pnr_logs/timing_fail.log",
+   "exists": true,
+   "bytes": 11934
+  }
+ ],
+ "limitations": [
+  "v1 records carry only the v1 source/rtl hashes; they are validated by membership and recomputation, not re-keyed"
+ ],
+ "note": "smoke route a0-bitmap-d1-p0-l1 @50 MHz seed 1: routed_timing_met 66.49 MHz, 26.4 s, run once in this session and reused by identity in the gate; a real 200 MHz probe route recorded routed_timing_failed with return code 1 and the report present"
+}

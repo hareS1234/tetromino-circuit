@@ -1,7 +1,7 @@
 {
  "cap": 100,
  "derived_csv": "results/v2/summary/quality.csv",
- "git_commit": "2205499d3ff2089b826a7aa6ee6d468998dfda09-dirty",
+ "git_commit": "0fb5379e32d82378b88d2e0bc39d7a831b5d0ac2-dirty",
  "n_streams": 4,
  "policies": {
   "heuristic-d1-p0": {
@@ -66,10 +66,10 @@
  },
  "protocol_path": "benchmarks/quality_smoke_v2.json",
  "protocol_sha256": "0422500825ad2f9329a9dc4e365caa782ada01a37360f8b284660f211fbad809",
- "recorded_utc": "2026-09-05T14:48:39Z",
+ "recorded_utc": "2026-09-05T14:52:51Z",
  "schema": "quality-summary-v2",
  "source": "2e958a4cb280aec6051bd09f136a111b0c5467bdd3462cb5b2dc2d66c4229ae0",
- "source_sha256": "fc826a4b46e6bf8815ab6c6463efd5b399b6eb34b0dc5918c2c17d5e2d5a8012",
+ "source_sha256": "107032c70606c7da4d9eafd1def95f04c3f8758c7c79d5dc04f62c7f025e8522",
  "streams": [
   2000,
   2003
