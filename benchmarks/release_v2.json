@@ -1,0 +1,289 @@
+{
+ "schema": "release-manifest-v2",
+ "name": "tetromino-circuit v2 (A2 architecture study)",
+ "tag": "v2.0-a2",
+ "note": "Exact scope of the v2 release, validated by tools/check_release_v2.py (make check-release-v2). The validator creates nothing: every artifact listed here must already exist, every frozen input must hash as declared, every evidence record must carry real commands, and every expensive measurement must correspond to the checked-out sources through its identity. Blocked platforms and gates keep the release NOT RELEASABLE; the tag is created only when nothing is blocked.",
+ "scope": {
+  "configurations_verified": 14,
+  "v1_configurations_frozen": 9,
+  "hardware_matrix": "benchmarks/hardware_v2.json (84 route jobs: six exact configurations x {50, 60, 80, 100} MHz x seeds {11, 12, 13} + P1/P5/P6/P7 at 50 MHz; decisions on 1,000 states for six configurations)",
+  "quality_study": "benchmarks/config_v2.json suite bag50k (100 held-out seven-bag streams, 50,000-piece cap, six D1 policies, frozen before the run)",
+  "precision_ladder": "P5/P6/P7 on the development corpora (results/v2/precision/development/) and the scorer/core micro-synthesis",
+  "traces": "three a2-trace-v1 stories from the real RTL with GIFs and the bundled viewer",
+  "formal": "unbounded k-induction proofs of the compactor, the best reducer and the abstract control discipline"
+ },
+ "frozen_inputs": [
+  {
+   "path": "benchmarks/hardware_v2.json",
+   "sha256": "ce1704c0c55a3dd8e1acf2f8d31b296666671b34c403883014d5014577fef31d"
+  },
+  {
+   "path": "benchmarks/config_v2.json",
+   "sha256": "2c8bd2fbe1a0e4ec7fbb87ae93c38dc0512433b5833d7a646bed50c9f6f17141"
+  },
+  {
+   "path": "results/v2/protocol/freeze_quality-v2-bag50k.json",
+   "sha256": "b577af844751698ab718664c922ed2b7009754b6883c417b6b3b65ab504b8329"
+  },
+  {
+   "path": "benchmarks/streams_v2/manifest.json",
+   "sha256": "e1f2d57f6fbdb2cf4b4e7563d4d8a8acb3b628f2144185a67866a7e2b0d6df65"
+  },
+  {
+   "path": "architecture/a2_stages.json",
+   "sha256": "a726217b14c88c8ad4e38b88dd078147e250b7624745dae66e06fa4a546dd606"
+  }
+ ],
+ "required_artifacts": [
+  "README.md",
+  "LICENSE",
+  "NOTICE.md",
+  "PROJECT_NOTES.md",
+  "PROJECT_NOTES.md",
+  "docs/spec.md",
+  "docs/design.md",
+  "docs/design_a2.md",
+  "docs/lanes.md",
+  "docs/precision_v2.md",
+  "docs/quality_v2.md",
+  "docs/timing_journal.md",
+  "docs/verification_a2.md",
+  "docs/replay.md",
+  "docs/identities.md",
+  "docs/toolchain.md",
+  "docs/ci.md",
+  "docs/results.md",
+  "docs/research_report.md",
+  "docs/claims.json",
+  "docs/author_notes.md",
+  "docs/release_v2.md",
+  "docs/upgrade_progress.md",
+  "docs/history/README.md",
+  "docs/history/BUILD_MANUAL.md",
+  "docs/history/progress.md",
+  "docs/A2_UPGRADE_GUIDE.md",
+  "toolchains/oss_cad_suite.lock.json",
+  "requirements.lock",
+  ".github/workflows/ci.yml",
+  "results/v2/summary/matrix_hardware-v2.json",
+  "results/v2/summary/routes_hardware-v2.csv",
+  "results/v2/summary/quality.json",
+  "results/v2/summary/analysis_bag50k.json",
+  "results/v2/summary/report_facts.json",
+  "results/v2/raw/intervals/a2_candidate_stream.json",
+  "results/v2/raw/intervals/a2-cache-d1-p0-l1.json",
+  "results/v2/precision/development/summary.json",
+  "results/v2/precision/development/disagreement.csv",
+  "results/v2/precision/divergence_explanations.json",
+  "results/v2/precision/scorer_study.json",
+  "results/v2/lanes/synth_l1_l2_l4.json",
+  "results/v2/lanes/lanes4_stats.json",
+  "results/v2/lanes/lanes2_stats.json",
+  "results/formal/compactor.json",
+  "results/formal/reducer.json",
+  "results/formal/control.json",
+  "results/formal/control_cover.json",
+  "results/evidence/U11/mutations.json",
+  "results/traces/a2_normal_search.json",
+  "results/traces/a2_last_candidate_wins.json",
+  "results/traces/a2_stall_reset.json",
+  "assets/a2_pipeline.gif",
+  "assets/a2_last_candidate_wins.gif",
+  "assets/a2_stall_reset.gif",
+  "assets/diagrams/architecture.svg",
+  "assets/diagrams/fsm_a0_a1.svg",
+  "assets/diagrams/a2_pipeline.svg",
+  "assets/diagrams/compaction.svg",
+  "assets/diagrams/lanes.svg",
+  "viewer/index.html",
+  "viewer/app.js",
+  "viewer/style.css",
+  "viewer/demo.html",
+  "results/v2/figures/area_vs_latency.png",
+  "results/v2/figures/lane_scaling.png",
+  "results/v2/figures/cycles_by_family.png",
+  "results/v2/figures/timing_outcomes.png",
+  "results/v2/figures/fmax_by_seed.png",
+  "results/v2/figures/precision_quality.png",
+  "results/v2/figures/survival_bag50k.png",
+  "results/v2/figures/area_vs_latency.points.json",
+  "results/v2/figures/timing_outcomes.points.json",
+  "results/history/implementation_dev_history_consolidated.csv",
+  "scripts/bootstrap.sh",
+  "scripts/env.sh",
+  "scripts/fresh_clone_check.sh"
+ ],
+ "evidence": {
+  "U00": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U01": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U02": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U03": {
+   "status": [
+    "passed",
+    "blocked"
+   ],
+   "note": "U03's decisive step (a remote CI run) is blocked; its local evidence is recorded"
+  },
+  "U04": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U05": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U06": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U07": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U08": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U09": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U10": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U11": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U12": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U13": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U14": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U15": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U16": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U17": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U18": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U19": {
+   "status": [
+    "passed"
+   ]
+  },
+  "U20": {
+   "status": [
+    "passed",
+    "blocked"
+   ]
+  }
+ },
+ "expensive_measurements": {
+  "hardware": {
+   "manifest": "benchmarks/hardware_v2.json",
+   "summary": "results/v2/summary/matrix_hardware-v2.json",
+   "jobs": 84,
+   "identity": "route keys and native keys re-planned from the checked-out RTL by tools/check_hardware_v2.py"
+  },
+  "quality": {
+   "protocol": "benchmarks/config_v2.json",
+   "summary": "results/v2/summary/quality.json",
+   "freeze": "results/v2/protocol/freeze_quality-v2-bag50k.json",
+   "streams": 100,
+   "cap": 50000,
+   "identity": "protocol sha256 (canonical JSON) and model closure over model/*.py"
+  },
+  "traces": [
+   "results/traces/a2_normal_search.json",
+   "results/traces/a2_last_candidate_wins.json",
+   "results/traces/a2_stall_reset.json"
+  ]
+ },
+ "platforms": [
+  {
+   "family": "linux-x64",
+   "host": "Linux x86_64 (the sandbox that executed U00-U20)",
+   "status": "executed",
+   "evidence": "results/evidence/U20/fresh_clone_linux-x64.json"
+  },
+  {
+   "family": "darwin-arm64",
+   "host": "the maintainer's Apple-silicon Mac (demonstration machine)",
+   "status": "blocked",
+   "reason": "no Mac was reachable from the session that executed the jobs: the platform lock entry is unenrolled, and bootstrap, doctor, tests, smoke, the A2 native subset, the demo regeneration and the viewer/GIF inspection have not been run there"
+  },
+  {
+   "family": "remote-ci",
+   "host": "GitHub Actions at the release commit",
+   "status": "blocked",
+   "reason": "no remote repository was available to the session; .github/workflows/ci.yml validates locally (tools/ci_local.py) but no successful remote run URL/SHA exists"
+  }
+ ],
+ "gates": [
+  {
+   "name": "fresh-clone (linux-x64)",
+   "status": "executed",
+   "evidence": "results/evidence/U20/fresh_clone_linux-x64.json"
+  },
+  {
+   "name": "check-release-v2",
+   "status": "executed",
+   "evidence": "results/evidence/U20/summary.json"
+  },
+  {
+   "name": "mac-reproduction",
+   "status": "blocked",
+   "reason": "see platforms/darwin-arm64"
+  },
+  {
+   "name": "remote-ci-run",
+   "status": "blocked",
+   "reason": "see platforms/remote-ci"
+  }
+ ]
+}

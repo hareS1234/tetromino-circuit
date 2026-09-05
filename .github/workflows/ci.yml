@@ -1,4 +1,4 @@
-# Baseline checks for tetromino-circuit (U03).  Three tiers:
+# Checks for tetromino-circuit (U03, extended in U20 with the A2 smoke/protocol/compactor checks).  Three tiers:
 #   fast  - pure-Python checks, no HDL tools (every push / pull request)
 #   hdl   - the Linux HDL gate: pinned OSS CAD Suite, directed RTL tests, native corpus, one real route
 #   heavy - manually triggered experiments from an explicit manifest/protocol (never a full matrix by default)
@@ -38,7 +38,13 @@ jobs:
       - run: bash scripts/env.sh python tools/make_streams.py --check
       - run: make test-python PYTEST_ARGS="--junitxml=build/junit/python.xml"
       - run: make check-v1-results
+      - run: bash scripts/env.sh python tools/streams_v2.py --check
       - run: bash scripts/env.sh python tools/write_report.py --check
+      - run: bash scripts/env.sh python tools/write_report_v2.py --check
+      - run: make check-trace
+      - run: make check-viewer
+      - run: make check-links
+      - run: make check-claims
       - run: bash scripts/env.sh python tools/ci_local.py --validate
       - uses: actions/upload-artifact@v4
         if: always()
@@ -59,6 +65,13 @@ jobs:
       - run: make smoke
       - run: make test-rtl
       - run: make test-core ARCH=1 BOARD_REPR=1 COUNT=200 DRIVER=native
+      - run: make check-a2-spec
+      - run: make test-a2-stream
+      - run: make test-compactor-native MODE=random COUNT=20000
+      - run: make test-core ARCH=2 BOARD_REPR=1 COUNT=200 DRIVER=native
+      - run: make test-protocol ARCH=2 BOARD_REPR=1
+      - run: make trace-a2-demo
+      - run: make check-trace
       - run: make test-identities PYTEST_ARGS="--junitxml=build/junit/identities.xml"
       - run: make test-result-schemas PYTEST_ARGS="--junitxml=build/junit/result_schemas.xml"
       - run: make upgrade-smoke
