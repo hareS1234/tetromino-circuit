@@ -15,7 +15,7 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 | U07 landing/merge front end | passed | `rtl/drop_merge_pipe.sv` (P0–P3), harness, `tb/tb_drop_merge_pipe.py`; gate: cocotb 5/5 (40,500 corpus tokens + fixtures, stalls/bubbles, reset at every occupancy), smoke synthesis 1019 LUT4 / 420 FF / 0 DSP / no latch (`results/evidence/U07`) |
 | U08 feature/score pipes | passed | `rtl/features_pipe.sv` (P13–P19), `rtl/score_pipe.sv` (P20–P22), harnesses, `tb/tb_features_pipe.py` (200 one-hots, height-20 columns, checkerboards, 10,000 boards), `tb/tb_score_pipe.py` (bounds, 10,000 tuples, signed); gate cocotb 3/3 + 3/3, synthesis 824 LUT4/989 FF and 43 LUT4/219 FF, no DSP/latch (`results/evidence/U08`) |
 | U09 candidate pipeline | passed | `rtl/candidate_pipe.sv` (P0–P22, one advance), `tools/a2_vectors.py` + `sim/candidate_pipe_main.cpp` native harness, `tb/tb_candidate_pipe.py`; gate: cocotb 4/4, stream 4,096 tokens (spacing 1, **visible 22, transfer 23** measured), oracle traffic 1,733/1,733 (12,240/12,240 in a larger run), metadata 201/201, reset 50/50, trace `results/traces/a2_stall_reset.vcd.gz`, synthesis 5128 LUT4 / 5114 FF / 0 DSP (`results/evidence/U09`) |
-| U10 search + core integration | pending | |
+| U10 search + core integration | passed | `rtl/search_pipeline.sv`, `g_a2` in `rtl/tetris_core.sv`, A2 promoted to verified, `tools/make_corpus_v2.py` (2,000-state dev corpus, seeds 11000–11099), pair mode in `sim/main.cpp` + `tools/request_interval.py`; gate: core corpus 1000/1000 + dev 2000/2000 (min/median/max cycles 38/46/63 = N+29), tb_protocol 9/9, tb_wrapper 4/4, drivers agree 50/50, request interval 200/200 = N+31, check-a2-spec (`results/evidence/U10`) |
 | U11 verification + mutations | pending | |
 | U12 route A2 | pending | |
 | U13 four-lane A1 | pending | |
@@ -29,8 +29,8 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 
 ## Current
 
-* Last passing job: U09 (U03 is blocked on the remote run only; its local validation passed).
-* Current job: U10.
+* Last passing job: U10 (U03 is blocked on the remote run only; its local validation passed).
+* Current job: U11.
 * Active process/log: none.
-* Next command: `rtl/search_pipeline.sv` (dense enumeration + signed running best), `g_a2` branch in `rtl/tetris_core.sv`, `CFG_OK` for A2, file lists, promote `Config(2,1,1,1,0)` to SUPPORTED, 2,000-state dev corpus, batch request-interval mode in `sim/main.cpp`; gate `make test-core ARCH=2 … COUNT=1000`, `test-a2-core-extra`, `test-protocol/test-wrapper/test-driver ARCH=2`, `test-request-interval`.
+* Next command: `make verify-a2-release` (V01–V14 + A0/A1 regression), `make formal-a2-control` (control conservation + best reduction proofs), `make mutation-check-a2` (`tools/run_mutations.py`, twelve mutations), `make replay-suite ARCH=2 BOARD_REPR=1 CAP=250`, verification matrix.
 * Blockers: remote CI (U03/U20) and Mac execution (U20) are environment blockers; A2 work is not blocked.
