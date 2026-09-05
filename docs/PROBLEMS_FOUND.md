@@ -118,6 +118,12 @@ them.
 irrelevant to any other worker or to a human; the `PROJECT_NOTES.md` template was kept verbatim (a `PROJECT_NOTES.md`
 copy points to it) and the evidence/progress contracts were implemented as specified.
 
+**19. `pip freeze` drops the build backend the manual asks to pin.** E00 step 4 says to add
+`setuptools` and `wheel` to `requirements.in`, freeze, and later install the package with
+`--no-build-isolation`. `pip freeze` omits setuptools and wheel by default, so the lock produced by the
+manual's own procedure cannot drive that editable install on Python 3.12 (whose venvs no longer ship
+setuptools). Fix: freeze with `--all` and pin both explicitly (`requirements.lock`).
+
 ## Not problems (checked and confirmed)
 
 The seven numerical fixtures, the J high-overhang regression, the orientation table, the score bounds,
