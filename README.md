@@ -143,7 +143,9 @@ decisions and are measured against their own bit-exact references, then compared
 
 ## Limitations
 
-* The game is a simplification: no kicks, tucks, hold, gravity timing, or hidden rows; scores are not
+* The game is a simplification. Excluded mechanics: Super Rotation System and wall kicks, tucks and
+  spins, hold, lock delay and soft/hard-drop timing, gravity levels, hidden rows, level and bonus
+  scoring, back-to-back and combos, garbage and multiplayer (table in `docs/spec.md`). Scores are not
   comparable to published workers playing other rules.
 * Playing-strength numbers come from the Python bit-exact policy model, backed by RTL differential
   corpora and short full-RTL games; they are labelled as such wherever they appear.
