@@ -1,2 +1,5 @@
 commit,toolchain_id,arch,board_repr,lanes,depth,precision,target,package,speed_grade,route_seed,target_mhz,timing_met,reported_fmax_mhz,lut4,ff,bram,dsp,ccu2c,trellis_comb,trellis_ff,log_path,status,elapsed_s
-1ed48ff4bd89875d9f71523ebdba97ad16aff83b-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,0,0,1,1,0,LFE5U-85F,CABGA381,6,1,50.0,True,66.49,3070,2416,0,0,226,3744,2416,build/pnr_a0-bitmap-d1-p0-l1_s1/nextpnr.log,routed,30.8
+a74c8540fdcc2b83efca311065f3d0b66dbbbc06-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,1,0,1,1,0,LFE5U-85F,CABGA381,6,1,50.0,True,65.56,4108,2121,0,0,332,5062,2121,build/pnr_a1-bitmap-d1-p0-l1_s1/nextpnr.log,routed,49.0
+a74c8540fdcc2b83efca311065f3d0b66dbbbc06-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,1,1,1,1,0,LFE5U-85F,CABGA381,6,1,50.0,True,64.5,4027,2220,0,0,342,5001,2220,build/pnr_a1-cache-d1-p0-l1_s1/nextpnr.log,routed,95.8
+a74c8540fdcc2b83efca311065f3d0b66dbbbc06-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,1,0,1,1,0,LFE5U-85F,CABGA381,6,1,50.0,True,65.56,4108,2121,0,0,332,5062,2121,build/pnr_a1-bitmap-d1-p0-l1_s1/nextpnr.log,routed,43.3
+a74c8540fdcc2b83efca311065f3d0b66dbbbc06-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,1,1,1,1,0,LFE5U-85F,CABGA381,6,1,50.0,True,64.5,4027,2220,0,0,342,5001,2220,build/pnr_a1-cache-d1-p0-l1_s1/nextpnr.log,routed,95.5

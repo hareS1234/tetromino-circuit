@@ -1,0 +1,95 @@
+{
+ "job": "E10",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "a74c8540fdcc2b83efca311065f3d0b66dbbbc06-dirty",
+ "source_hash": "96df848b2eea209d",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T04:47:39Z",
+ "note": "A1 bitmap: 16,200 candidate cases + 1000/1000 corpus; median 790 cycles/decision vs A0 4720; drop_fast pipelined to 2 stages after a 43.5 MHz timing failure; routed 65.56 MHz (PASS at 50)",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-fast"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 3.81,
+   "log": "results/evidence/E10/cmd00.log",
+   "tests": {
+    "pytest_failed": 0,
+    "rtl_total": 4,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-candidate",
+    "ARCH=1",
+    "BOARD_REPR=0"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 35.51,
+   "log": "results/evidence/E10/cmd01.log",
+   "tests": {
+    "pytest_failed": 0,
+    "rtl_total": 5,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-core",
+    "ARCH=1",
+    "BOARD_REPR=0",
+    "COUNT=1000",
+    "DRIVER=native"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.56,
+   "log": "results/evidence/E10/cmd02.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "replay-suite",
+    "ARCH=1",
+    "BOARD_REPR=0",
+    "CAP=250"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.64,
+   "log": "results/evidence/E10/cmd03.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "synth",
+    "ARCH=1",
+    "BOARD_REPR=0"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 17.7,
+   "log": "results/evidence/E10/cmd04.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "pnr",
+    "ARCH=1",
+    "BOARD_REPR=0",
+    "SEED=1"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 43.42,
+   "log": "results/evidence/E10/cmd05.log",
+   "tests": {}
+  }
+ ],
+ "elapsed_s": 103.64
+}

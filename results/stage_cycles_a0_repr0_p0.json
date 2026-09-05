@@ -1,0 +1,59 @@
+{
+ "arch": 0,
+ "board_repr": 0,
+ "precision": 0,
+ "profiles": {
+  "legal_no_clear": {
+   "DECODE": 1,
+   "DROP_START": 1,
+   "DROP_WAIT": 25,
+   "MERGE_START": 1,
+   "MERGE_WAIT": 7,
+   "CLEAR_START": 1,
+   "CLEAR_WAIT": 23,
+   "FEAT_START": 1,
+   "FEAT_WAIT": 213,
+   "SCORE_START": 1,
+   "SCORE_WAIT": 2,
+   "FINISH": 1,
+   "total": 277
+  },
+  "legal_line_clear": {
+   "DECODE": 1,
+   "DROP_START": 1,
+   "DROP_WAIT": 25,
+   "MERGE_START": 1,
+   "MERGE_WAIT": 7,
+   "CLEAR_START": 1,
+   "CLEAR_WAIT": 23,
+   "FEAT_START": 1,
+   "FEAT_WAIT": 213,
+   "SCORE_START": 1,
+   "SCORE_WAIT": 2,
+   "FINISH": 1,
+   "total": 277
+  },
+  "illegal_blocked": {
+   "DECODE": 1,
+   "DROP_START": 1,
+   "DROP_WAIT": 5,
+   "FINISH": 1,
+   "total": 8
+  },
+  "tall_stack": {
+   "DECODE": 1,
+   "DROP_START": 1,
+   "DROP_WAIT": 25,
+   "MERGE_START": 1,
+   "MERGE_WAIT": 7,
+   "CLEAR_START": 1,
+   "CLEAR_WAIT": 23,
+   "FEAT_START": 1,
+   "FEAT_WAIT": 213,
+   "SCORE_START": 1,
+   "SCORE_WAIT": 2,
+   "FINISH": 1,
+   "total": 277
+  }
+ }
+}

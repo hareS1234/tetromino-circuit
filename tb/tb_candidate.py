@@ -4,7 +4,7 @@ Hand fixtures, all candidates on 100 mixed boards (16,200 cases), invalid rotati
 cycle guard."""
 import cocotb
 
-from common import cycle, load_fixtures, pack, pack_heights, param, reset, rows_of, run_transaction, signed32, unpack
+from common import ROOT, cycle, load_fixtures, pack, pack_heights, param, reset, rows_of, run_transaction, signed32, unpack
 from model.boards import mixed_boards
 from model.features import column_heights, features
 from model.game import drop_y, lock_and_clear, merged_board, physical_landing
@@ -109,3 +109,39 @@ async def scratch_state_is_reset_between_candidates(dut):
     check(rows, 1, 0, 8, b)
     await cycle(dut, 3)
     assert int(dut.done_o.value) == 0 and int(dut.busy_o.value) == 0
+
+
+@cocotb.test()
+async def stage_cycle_profile(dut):
+    """Trace the evaluator FSM for representative candidates and record cycles per stage."""
+    await reset(dut)
+    import json as _json
+    from pathlib import Path as _Path
+    names = ["IDLE", "DECODE", "PROFILE", "DROP_START", "DROP_WAIT", "MERGE_START", "MERGE_WAIT", "CLEAR_START",
+             "CLEAR_WAIT", "FEAT_START", "FEAT_WAIT", "SCORE_START", "SCORE_WAIT", "FINISH"]
+    profiles = {}
+    cases = {"legal_no_clear": (tuple([0] * 20), 1, 0, 0), "legal_line_clear": (tuple([1008] + [0] * 19), 0, 0, 0),
+             "illegal_blocked": (tuple([0] * 19 + [3]), 1, 0, 0), "tall_stack": (tuple([1023 & ~1] * 18 + [0, 0]), 0, 1, 0)}
+    for name, (rows, piece, rot, x) in cases.items():
+        dut.board_i.value = pack(rows)
+        dut.heights_i.value = pack_heights(column_heights(rows)) if CACHE else 0
+        dut.piece_i.value = piece; dut.rot_i.value = rot; dut.x_i.value = x
+        dut.start_i.value = 1
+        await cycle(dut)
+        dut.start_i.value = 0
+        counts = {}
+        n = 0
+        while True:
+            st = names[int(dut.state.value)]
+            counts[st] = counts.get(st, 0) + 1
+            await cycle(dut)
+            n += 1
+            if int(dut.done_o.value):
+                break
+            assert n < GUARD
+        counts["total"] = n
+        profiles[name] = counts
+    out = _Path(ROOT) / "results" / f"stage_cycles_a{ARCH}_repr{CACHE}_p{PREC}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(_json.dumps({"arch": ARCH, "board_repr": CACHE, "precision": PREC, "profiles": profiles}, indent=1) + "\n")
+    dut._log.info(f"stage profile: {profiles}")
