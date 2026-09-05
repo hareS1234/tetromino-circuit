@@ -85,7 +85,7 @@ if [ -f "$ROOT/requirements.lock" ]; then
 else
   log "resolving requirements.in for the first time (writes requirements.lock)"
   "$VPY" -m pip install --quiet -r "$ROOT/requirements.in"
-  "$VPY" -m pip freeze --exclude-editable | grep -v '^tetromino-circuit' > "$ROOT/requirements.lock"
+  "$VPY" -m pip freeze --exclude-editable --all | grep -v -E '^(tetromino-circuit|pip)==' > "$ROOT/requirements.lock"
 fi
 "$VPY" -m pip install --quiet --no-deps --no-build-isolation -e "$ROOT"
 
