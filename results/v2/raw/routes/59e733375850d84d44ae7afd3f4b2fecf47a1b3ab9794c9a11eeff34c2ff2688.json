@@ -1,0 +1,87 @@
+{
+ "analysis": {
+  "errors": [],
+  "parser_version": "pnr-parser-v2"
+ },
+ "analysis_key": "5d7e79b999a7acd64ab8738491ad7fa4bf79f003f8db7e4820d0268712f681d3",
+ "area": {
+  "bram": 0,
+  "carry": 1225,
+  "cells_total": 24196,
+  "dp16kd": 0,
+  "dsp": 0,
+  "ff": 6773,
+  "lut4": 14035,
+  "mult18x18d": 0,
+  "trellis_comb": 17551,
+  "trellis_ff": 6773
+ },
+ "attempt": {
+  "id": "59e733375850-a1",
+  "number": 1,
+  "previous_status": null,
+  "reason": null
+ },
+ "configuration_id": "a1-cache-d1-p0-l4",
+ "device": {
+  "device": "LFE5U-85F",
+  "flag": "--85k",
+  "package": "CABGA381",
+  "speed": "6"
+ },
+ "dsp_policy": "nodsp",
+ "files": {
+  "config": null,
+  "dir": "build/route/59e733375850d84d44ae7afd3f4b2fecf47a1b3ab9794c9a11eeff34c2ff2688",
+  "log": "build/route/59e733375850d84d44ae7afd3f4b2fecf47a1b3ab9794c9a11eeff34c2ff2688/nextpnr.log",
+  "report": null
+ },
+ "io_constraints": "auto-allocated (--lpf-allow-unconstrained)",
+ "netlist_sha256": "0a21af7ba84e5232013e2947c39053059b31e96e3375fdc897f3aac47c870d49",
+ "nextpnr": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
+ "options": [
+  "--lpf-allow-unconstrained"
+ ],
+ "params": {
+  "ARCH": 1,
+  "BOARD_REPR": 1,
+  "DEPTH": 1,
+  "LANES": 4,
+  "PRECISION": 0
+ },
+ "process": {
+  "cancelled": false,
+  "completed": false,
+  "elapsed_s": 1200.6,
+  "finished_utc": "2026-09-05T19:38:02Z",
+  "peak_rss_mb": 761.1,
+  "return_code": -9,
+  "started_utc": "2026-09-05T19:18:02Z",
+  "timed_out": true
+ },
+ "reused": false,
+ "route_key": "59e733375850d84d44ae7afd3f4b2fecf47a1b3ab9794c9a11eeff34c2ff2688",
+ "route_timeout_s": 1200,
+ "schema": "route-record-v2",
+ "script_version": "route-v2",
+ "seed": 11,
+ "source_sha256": "16fa195499530e34b2bdb11e48fc13f34f90dd31fb4c8a859e661707a8498144",
+ "status": "route_timeout",
+ "status_reason": "declared route budget exhausted (a resource limit, not proof the design cannot route)",
+ "synth_key": "1a9d7e5fb832b0ee9f66813c4fe24d11ee0c0ad193abec15c3747c1eec517459",
+ "target_mhz": 50.0,
+ "timing": {
+  "clock": null,
+  "freq_option_note": "--freq is nextpnr's default clock constraint for the selected clock",
+  "met": null,
+  "placement_estimate_mhz": 61.9,
+  "report_available": false,
+  "reported_fmax_mhz": null,
+  "requested_mhz": 50.0,
+  "source": null,
+  "worst_path": null
+ },
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "top": "stream_wrapper",
+ "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)"
+}

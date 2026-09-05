@@ -96,7 +96,9 @@ def main() -> int:
 
     # ---- 1. area vs decision latency at 50 MHz --------------------------------------------------------------
     points, missing = [], []
-    fig, ax = plt.subplots(figsize=(7.5, 4.5))
+    fig, ax = plt.subplots(figsize=(8.0, 4.8))
+    # label offsets so that near-coincident points (X1 and X2 differ by 13 LUT4) stay legible
+    offsets = {"a1-bitmap-d1-p0-l1": (6, 9), "a1-cache-d1-p0-l1": (6, -12)}
     for cid in dec_cfgs:
         d = decisions.get(cid)
         route = None
@@ -112,18 +114,19 @@ def main() -> int:
         met = rec["status"] == "routed_timing_met"
         lut = rec["area"]["lut4"]
         ax.scatter([lut], [d["median"]], s=60, marker="o" if met else "x")
-        ax.annotate(SHORT.get(cid, cid) + ("" if met else " (50 MHz not met)"), (lut, d["median"]), textcoords="offset points", xytext=(5, 4), fontsize=8)
+        ax.annotate(SHORT.get(cid, cid) + ("" if met else " (50 MHz not met)"), (lut, d["median"]), textcoords="offset points",
+                    xytext=offsets.get(cid, (6, 4)), fontsize=8)
         points.append({"configuration": cid, "route_key": key, "route_status": rec["status"], "lut4": lut, "ff": rec["area"]["ff"],
                        "median_cycles": d["median"], "decision_key": d["key"], "latency_us_at_50mhz": d["median"] / 50.0 if met else None})
     ax.set_yscale("log")
     ax.set_xlabel("LUT4 (routed, -nodsp)")
     ax.set_ylabel("median decision cycles (1,000-state corpus)")
     sec = ax.secondary_yaxis("right", functions=(lambda c: c / 50.0, lambda us: us * 50.0))
-    sec.set_ylabel("µs at 50 MHz — only where the 50 MHz route met timing (projection)")
-    ax.set_title("Area versus decision latency (exact configurations)")
+    sec.set_ylabel("projected µs at 50 MHz\n(only where the 50 MHz route met timing)", fontsize=9)
+    ax.set_title("Area versus decision latency (exact configurations; routed LUT4 of a completed 50 MHz route)", fontsize=10)
     ax.grid(True, which="both", alpha=0.3)
     fig.tight_layout()
-    fig.savefig(FIG / "area_vs_latency.png", dpi=120)
+    fig.savefig(FIG / "area_vs_latency.png", dpi=120, bbox_inches="tight")
     plt.close(fig)
     save_points("area_vs_latency", points, missing, m)
 
@@ -253,17 +256,73 @@ def main() -> int:
     fig.savefig(FIG / "fmax_by_seed.png", dpi=120)
     plt.close(fig)
     save_points("fmax_by_seed", points, missing, m)
+    precision_quality_figure(m)
     n_points = sum(len(json.loads((FIG / f"{n}.points.json").read_text())["points"]) for n in
-                   ("area_vs_latency", "lane_scaling", "cycles_by_family", "timing_outcomes", "fmax_by_seed"))
+                   ("area_vs_latency", "lane_scaling", "cycles_by_family", "timing_outcomes", "fmax_by_seed", "precision_quality"))
     print(f"figures written to {FIG.relative_to(ROOT)}: {n_points} plotted points with job keys")
     return verify()
+
+
+def precision_quality_figure(m: dict) -> None:
+    """F5: common-state disagreement of the quantized profiles (development corpus) beside the held-out
+    restricted means with paired intervals (results/v2/precision/development/summary.json, results/v2/summary/quality.json)."""
+    import matplotlib.pyplot as plt
+    sens = ROOT / "results" / "v2" / "precision" / "development" / "summary.json"
+    qual = ROOT / "results" / "v2" / "summary" / "quality.json"
+    points, missing = [], []
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.2), gridspec_kw={"width_ratios": [1, 1.4]})
+    if sens.is_file():
+        d = json.loads(sens.read_text())
+        c = d["corpora"][0]
+        names = [f"P{pp['precision']}\n{d['profiles'][k]['name']}" for k, pp in c["profiles"].items()]
+        rates = [100 * pp["changed_rate"] for pp in c["profiles"].values()]
+        cert = [100 * pp["certified_unchanged"] / pp["legal_states"] for pp in c["profiles"].values()]
+        x = range(len(names))
+        ax1.bar([i - 0.2 for i in x], rates, width=0.4, label="changed decisions (%)", color="tab:red")
+        ax1.bar([i + 0.2 for i in x], cert, width=0.4, label="certified unchanged (%)", color="tab:green")
+        for i, r in enumerate(rates):
+            ax1.annotate(f"{r:.2f}%", (i - 0.2, r), textcoords="offset points", xytext=(0, 3), ha="center", fontsize=7)
+        ax1.set_xticks(list(x)); ax1.set_xticklabels(names, fontsize=8)
+        ax1.set_ylabel("% of legal common states (corpus_d1, development)")
+        ax1.set_title("Quantized profiles vs exact decisions (development corpus)", fontsize=9)
+        ax1.legend(fontsize=7)
+        for k, pp in c["profiles"].items():
+            points.append({"figure": "F5-left", "profile": k, "changed": pp["changed"], "legal_states": pp["legal_states"], "certified": pp["certified_unchanged"],
+                           "source": str(sens.relative_to(ROOT)), "corpus_sha256": c["sha256"]})
+    else:
+        missing.append("precision sensitivity summary missing")
+    if qual.is_file():
+        q = json.loads(qual.read_text())
+        names, diffs, lo, hi = [], [], [], []
+        for k, comp in q["comparisons"].items():
+            p = q["policies"][k]
+            names.append(k.replace("heuristic-d1-", "").replace("random_legal-d1-p0", "random") + (f"\n{p['profile_name']}" if p.get("profile_name") else ""))
+            rm = comp["restricted_mean_pieces"]
+            diffs.append(rm["mean_diff"]); lo.append(rm["mean_diff"] - rm["ci95"][0]); hi.append(rm["ci95"][1] - rm["mean_diff"])
+            points.append({"figure": "F5-right", "policy": k, "delta_restricted_mean_pieces_vs_p0": rm["mean_diff"], "ci95": rm["ci95"],
+                           "source": str(qual.relative_to(ROOT)), "protocol_sha256": q["protocol_sha256"]})
+        colors = ["tab:green" if d > 0 else "tab:red" for d in diffs]
+        ax2.bar(range(len(names)), diffs, yerr=[lo, hi], capsize=4, color=colors, alpha=0.85)
+        ax2.axhline(0, color="black", linewidth=1)
+        base = q["policies"][q["baseline"]]["restricted_mean_pieces"]["value"]
+        ax2.text(0.02, 0.96, f"P0 baseline: {base:,.0f} pieces (restricted mean to C = {q['cap']:,})", transform=ax2.transAxes, fontsize=8, va="top")
+        ax2.set_xticks(range(len(names))); ax2.set_xticklabels(names, fontsize=8)
+        ax2.set_ylabel("Δ restricted mean locked pieces vs P0")
+        ax2.set_title(f"Held-out study: paired difference to P0, CI95 over {q['n_streams']} streams ({q['statistics']['bootstrap_resamples']:,} resamples)", fontsize=9)
+        ax2.grid(True, axis="y", alpha=0.3)
+    else:
+        missing.append("quality analysis missing")
+    fig.tight_layout()
+    fig.savefig(FIG / "precision_quality.png", dpi=120)
+    plt.close(fig)
+    save_points("precision_quality", points, missing, m)
 
 
 def verify() -> int:
     """Every plotted point re-opens its record(s) and re-checks the plotted value."""
     ok = total = 0
     problems = []
-    for name in ("area_vs_latency", "lane_scaling", "cycles_by_family", "timing_outcomes", "fmax_by_seed"):
+    for name in ("area_vs_latency", "lane_scaling", "cycles_by_family", "timing_outcomes", "fmax_by_seed", "precision_quality"):
         p = FIG / f"{name}.points.json"
         if not p.is_file():
             problems.append(f"{name}: no points file")
@@ -282,6 +341,9 @@ def verify() -> int:
                     good = False
                 if "lut4" in pt and rec["area"]["lut4"] != pt["lut4"]:
                     good = False
+            if "source" in pt and not (ROOT / pt["source"]).is_file():
+                good = False
+                problems.append(f"{name}: source {pt['source']} missing")
             if "decision_key" in pt:
                 cid, chash = pt["decision_key"].split("/")
                 meta_path = RAW_DECISIONS / cid / f"{chash}.json"

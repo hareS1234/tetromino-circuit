@@ -1,0 +1,91 @@
+{
+ "schema": "figure-points-v1",
+ "figure": "results/v2/figures/precision_quality.png",
+ "manifest": "benchmarks/hardware_v2.json",
+ "manifest_sha256": "ce1704c0c55a3dd8e1acf2f8d31b296666671b34c403883014d5014577fef31d",
+ "points": [
+  {
+   "figure": "F5-left",
+   "profile": "p5",
+   "changed": 1,
+   "legal_states": 981,
+   "certified": 237,
+   "source": "results/v2/precision/development/summary.json",
+   "corpus_sha256": "ef2285b9c599b16f973781917e0d2e1a87862bac3453b7841e6cd431697482b8"
+  },
+  {
+   "figure": "F5-left",
+   "profile": "p6",
+   "changed": 25,
+   "legal_states": 981,
+   "certified": 128,
+   "source": "results/v2/precision/development/summary.json",
+   "corpus_sha256": "ef2285b9c599b16f973781917e0d2e1a87862bac3453b7841e6cd431697482b8"
+  },
+  {
+   "figure": "F5-left",
+   "profile": "p7",
+   "changed": 87,
+   "legal_states": 981,
+   "certified": 141,
+   "source": "results/v2/precision/development/summary.json",
+   "corpus_sha256": "ef2285b9c599b16f973781917e0d2e1a87862bac3453b7841e6cd431697482b8"
+  },
+  {
+   "figure": "F5-right",
+   "policy": "heuristic-d1-p1",
+   "delta_restricted_mean_pieces_vs_p0": 10828.48,
+   "ci95": [
+    7082.38,
+    14718.87
+   ],
+   "source": "results/v2/summary/quality.json",
+   "protocol_sha256": "12e05937e613e64fc618b7b3a6f2d329cbe0cef37485fdf356cde609b39415b4"
+  },
+  {
+   "figure": "F5-right",
+   "policy": "heuristic-d1-p5",
+   "delta_restricted_mean_pieces_vs_p0": -761.95,
+   "ci95": [
+    -3255.03,
+    1855.59
+   ],
+   "source": "results/v2/summary/quality.json",
+   "protocol_sha256": "12e05937e613e64fc618b7b3a6f2d329cbe0cef37485fdf356cde609b39415b4"
+  },
+  {
+   "figure": "F5-right",
+   "policy": "heuristic-d1-p6",
+   "delta_restricted_mean_pieces_vs_p0": -9620.82,
+   "ci95": [
+    -11792.48,
+    -7538.42
+   ],
+   "source": "results/v2/summary/quality.json",
+   "protocol_sha256": "12e05937e613e64fc618b7b3a6f2d329cbe0cef37485fdf356cde609b39415b4"
+  },
+  {
+   "figure": "F5-right",
+   "policy": "heuristic-d1-p7",
+   "delta_restricted_mean_pieces_vs_p0": -11166.51,
+   "ci95": [
+    -13297.23,
+    -9091.44
+   ],
+   "source": "results/v2/summary/quality.json",
+   "protocol_sha256": "12e05937e613e64fc618b7b3a6f2d329cbe0cef37485fdf356cde609b39415b4"
+  },
+  {
+   "figure": "F5-right",
+   "policy": "random_legal-d1-p0",
+   "delta_restricted_mean_pieces_vs_p0": -11820.9,
+   "ci95": [
+    -13969.0,
+    -9746.2
+   ],
+   "source": "results/v2/summary/quality.json",
+   "protocol_sha256": "12e05937e613e64fc618b7b3a6f2d329cbe0cef37485fdf356cde609b39415b4"
+  }
+ ],
+ "missing": []
+}

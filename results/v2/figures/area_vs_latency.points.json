@@ -3,13 +3,67 @@
  "figure": "results/v2/figures/area_vs_latency.png",
  "manifest": "benchmarks/hardware_v2.json",
  "manifest_sha256": "ce1704c0c55a3dd8e1acf2f8d31b296666671b34c403883014d5014577fef31d",
- "points": [],
- "missing": [
-  "a0-bitmap-d1-p0-l1: no decision record no completed 50 MHz route",
-  "a1-bitmap-d1-p0-l1: no decision record no completed 50 MHz route",
-  "a1-cache-d1-p0-l1: no decision record no completed 50 MHz route",
-  "a1-cache-d1-p0-l2: no decision record no completed 50 MHz route",
-  "a1-cache-d1-p0-l4: no decision record no completed 50 MHz route",
-  "a2-cache-d1-p0-l1: no decision record no completed 50 MHz route"
- ]
+ "points": [
+  {
+   "configuration": "a0-bitmap-d1-p0-l1",
+   "route_key": "95f75dd09a5a4407a01b5774293b014788348ea85d0c4912aa7cdfcc8ccd33ca",
+   "route_status": "routed_timing_met",
+   "lut4": 3071,
+   "ff": 2416,
+   "median_cycles": 4719.0,
+   "decision_key": "a0-bitmap-d1-p0-l1/172f5d89635bcb4a",
+   "latency_us_at_50mhz": 94.38
+  },
+  {
+   "configuration": "a1-bitmap-d1-p0-l1",
+   "route_key": "e11b0294cf2da92879bafd0ae841babbb56b9b605ed378a69e3d37a47d5e6859",
+   "route_status": "routed_timing_met",
+   "lut4": 4043,
+   "ff": 2121,
+   "median_cycles": 790.0,
+   "decision_key": "a1-bitmap-d1-p0-l1/172f5d89635bcb4a",
+   "latency_us_at_50mhz": 15.8
+  },
+  {
+   "configuration": "a1-cache-d1-p0-l1",
+   "route_key": "1d9ecd15369012df89d40e7a7c5fd22abe4ff4361c2e2b33669d87c4ca6e9999",
+   "route_status": "routed_timing_met",
+   "lut4": 4030,
+   "ff": 2220,
+   "median_cycles": 773.0,
+   "decision_key": "a1-cache-d1-p0-l1/172f5d89635bcb4a",
+   "latency_us_at_50mhz": 15.46
+  },
+  {
+   "configuration": "a1-cache-d1-p0-l2",
+   "route_key": "1ee00db614a1bf8c7aea4aacc9543a99bffd46206fc017292a82d4080240c7d6",
+   "route_status": "routed_timing_met",
+   "lut4": 7345,
+   "ff": 3738,
+   "median_cycles": 414.0,
+   "decision_key": "a1-cache-d1-p0-l2/172f5d89635bcb4a",
+   "latency_us_at_50mhz": 8.28
+  },
+  {
+   "configuration": "a1-cache-d1-p0-l4",
+   "route_key": "95c6d3492549d195c702d71a8d67b7d9a0c261a892c4472117602f9b47ad5d55",
+   "route_status": "routed_timing_met",
+   "lut4": 14035,
+   "ff": 6773,
+   "median_cycles": 236.0,
+   "decision_key": "a1-cache-d1-p0-l4/172f5d89635bcb4a",
+   "latency_us_at_50mhz": 4.72
+  },
+  {
+   "configuration": "a2-cache-d1-p0-l1",
+   "route_key": "db2c64043a79d23c11f404182f7a3de6e6cb8a875ca9ce588651b936f4271fbd",
+   "route_status": "routed_timing_met",
+   "lut4": 6104,
+   "ff": 5489,
+   "median_cycles": 46.0,
+   "decision_key": "a2-cache-d1-p0-l1/172f5d89635bcb4a",
+   "latency_us_at_50mhz": 0.92
+  }
+ ],
+ "missing": []
 }

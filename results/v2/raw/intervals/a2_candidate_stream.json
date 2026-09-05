@@ -64,6 +64,6 @@
  ],
  "exit_code": 0,
  "toolchain_id": "oss-cad-suite-2026-09-04",
- "source_sha256": "aa537fea01684b1ab3473d70ed6e1560778f5bab34969093325933a548a60789",
+ "source_sha256": "d294a52ace0cc721bfca43d60ed07d94528d5bd69d337ba44713fd4d8a79f417",
  "note": "acceptance spacing = edges between candidate handshakes (II), occupancy = set valid banks of the 23-bank pipeline"
 }

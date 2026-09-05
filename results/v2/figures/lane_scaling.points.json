@@ -3,10 +3,34 @@
  "figure": "results/v2/figures/lane_scaling.png",
  "manifest": "benchmarks/hardware_v2.json",
  "manifest_sha256": "ce1704c0c55a3dd8e1acf2f8d31b296666671b34c403883014d5014577fef31d",
- "points": [],
- "missing": [
-  "a1-cache-d1-p0-l1: decisions missing, route missing",
-  "a1-cache-d1-p0-l2: decisions missing, route missing",
-  "a1-cache-d1-p0-l4: decisions missing, route missing"
- ]
+ "points": [
+  {
+   "configuration": "a1-cache-d1-p0-l1",
+   "lanes": 1,
+   "median_cycles": 773.0,
+   "decision_key": "a1-cache-d1-p0-l1/172f5d89635bcb4a",
+   "route_key": "1d9ecd15369012df89d40e7a7c5fd22abe4ff4361c2e2b33669d87c4ca6e9999",
+   "lut4": 4030,
+   "ff": 2220
+  },
+  {
+   "configuration": "a1-cache-d1-p0-l2",
+   "lanes": 2,
+   "median_cycles": 414.0,
+   "decision_key": "a1-cache-d1-p0-l2/172f5d89635bcb4a",
+   "route_key": "1ee00db614a1bf8c7aea4aacc9543a99bffd46206fc017292a82d4080240c7d6",
+   "lut4": 7345,
+   "ff": 3738
+  },
+  {
+   "configuration": "a1-cache-d1-p0-l4",
+   "lanes": 4,
+   "median_cycles": 236.0,
+   "decision_key": "a1-cache-d1-p0-l4/172f5d89635bcb4a",
+   "route_key": "59e733375850d84d44ae7afd3f4b2fecf47a1b3ab9794c9a11eeff34c2ff2688",
+   "lut4": 14035,
+   "ff": 6773
+  }
+ ],
+ "missing": []
 }

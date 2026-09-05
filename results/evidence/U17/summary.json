@@ -1,0 +1,314 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U17",
+ "status": "passed",
+ "git_commit": "04bb0dce55496755c5f291923a004addab66551f-dirty",
+ "git_modified_tracked": [
+  ".github/workflows/ci.yml",
+  "PROJECT_NOTES.md",
+  "PROJECT_NOTES.md",
+  "Makefile",
+  "README.md",
+  "docs/ci.md",
+  "docs/design.md",
+  "docs/design_a2.md",
+  "docs/BUILD_MANUAL.md -> docs/history/BUILD_MANUAL.md",
+  "docs/PROBLEMS_FOUND.md -> docs/history/PROBLEMS_FOUND.md",
+  "docs/audit_response.md -> docs/history/audit_response.md",
+  "docs/bugs.md -> docs/history/bugs.md",
+  "docs/progress.md -> docs/history/progress.md",
+  "docs/understanding.md -> docs/history/understanding.md",
+  "docs/lanes.md",
+  "results/implementation_dev_history.csv -> results/history/implementation_dev_history.csv",
+  "results/implementation_dev_history2.csv -> results/history/implementation_dev_history2.csv",
+  "results/v2/figures/area_vs_latency.png",
+  "results/v2/figures/area_vs_latency.points.json",
+  "results/v2/figures/cycles_by_family.png",
+  "results/v2/figures/cycles_by_family.points.json",
+  "results/v2/figures/fmax_by_seed.png",
+  "results/v2/figures/fmax_by_seed.points.json",
+  "results/v2/figures/lane_scaling.png",
+  "results/v2/figures/lane_scaling.points.json",
+  "results/v2/figures/timing_outcomes.png",
+  "results/v2/figures/timing_outcomes.points.json",
+  "results/v2/raw/intervals/a2_candidate_stream.json",
+  "scripts/fresh_clone_check.sh",
+  "tools/plots_v2.py",
+  "tools/write_report.py"
+ ],
+ "git_untracked": [
+  "LICENSE",
+  "NOTICE.md",
+  "benchmarks/release_v2.json",
+  "docs/author_notes.md",
+  "docs/claims.json",
+  "docs/hardware_v2.md",
+  "docs/history/README.md",
+  "docs/release_v2.md",
+  "docs/research_report.md",
+  "docs/results.md",
+  "results/evidence/U17/matrix_hardware-v2.run.json",
+  "results/evidence/U17/matrix_run.log",
+  "results/history/implementation_dev_history_consolidated.csv",
+  "results/history/implementation_dev_history_consolidated.json",
+  "results/v2/figures/precision_quality.png",
+  "results/v2/figures/precision_quality.points.json",
+  "results/v2/raw/decisions/a0-bitmap-d1-p0-l1/172f5d89635bcb4a.csv",
+  "results/v2/raw/decisions/a0-bitmap-d1-p0-l1/172f5d89635bcb4a.json",
+  "results/v2/raw/decisions/a1-bitmap-d1-p0-l1/172f5d89635bcb4a.csv",
+  "results/v2/raw/decisions/a1-bitmap-d1-p0-l1/172f5d89635bcb4a.json",
+  "results/v2/raw/decisions/a1-cache-d1-p0-l1/172f5d89635bcb4a.csv",
+  "results/v2/raw/decisions/a1-cache-d1-p0-l1/172f5d89635bcb4a.json",
+  "results/v2/raw/decisions/a1-cache-d1-p0-l2/172f5d89635bcb4a.csv",
+  "results/v2/raw/decisions/a1-cache-d1-p0-l2/172f5d89635bcb4a.json",
+  "results/v2/raw/decisions/a1-cache-d1-p0-l4/172f5d89635bcb4a.csv",
+  "results/v2/raw/decisions/a1-cache-d1-p0-l4/172f5d89635bcb4a.json",
+  "results/v2/raw/decisions/a2-cache-d1-p0-l1/172f5d89635bcb4a.csv",
+  "results/v2/raw/decisions/a2-cache-d1-p0-l1/172f5d89635bcb4a.json",
+  "results/v2/raw/routes/00552cf367687e5c9db372c7f1ddb38f25359567d8ae1749920fa12ca9b56997.json",
+  "results/v2/raw/routes/099ace246d2548dde2612f7cf432a4726b3313afe733e541313ae89a1a01832e.json",
+  "results/v2/raw/routes/0cc8cf10ef2cf8f0157cd6e5a5fd941ef962f17f19fd23798bcaeee139dcd989.json",
+  "results/v2/raw/routes/28218c6d054dd7b305fb80f8c2a1880c53fe0c2d441659c0dbfdf76a47408fb1.json",
+  "results/v2/raw/routes/28bee8fc39089e41e58cc30878717666e73dcfd1a41fcb0bfcce464c9d068f79.json",
+  "results/v2/raw/routes/2b986679c847dc60fc94617f285df7299a4c341345941d3910954d1f99d2320c.json",
+  "results/v2/raw/routes/356095c86ba25514c61f150c8e7001edf17f8a3e7ca963fe78cee9f25659f36c.json",
+  "results/v2/raw/routes/3b733da8ba39a77a9193a8fa70a588c081e3daad692fb3cbc12872701c9bb0e5.json",
+  "results/v2/raw/routes/438cc23be7b7c41eacbd5f3d287055f63186d4e07724ccafc97c1f86d584e015.json",
+  "results/v2/raw/routes/438ec97856891cc2c75a5de81febc46ff2c11c81743671ffd4c4d5a41e60585d.json",
+  "results/v2/raw/routes/5035750644c8084224ab990eab4c484d35384a0202ae732a8524a4f1bf81f55a.json",
+  "results/v2/raw/routes/55cbe9a97cf6c52870692ffa5359b7cb04f75cb8047ff11b08878ad9d1254ed4.json",
+  "results/v2/raw/routes/59e733375850d84d44ae7afd3f4b2fecf47a1b3ab9794c9a11eeff34c2ff2688.json",
+  "results/v2/raw/routes/5c3a50586d986bfc0ad2cf66857595202fa583b74f84f3b18304df7f929232fe.json",
+  "results/v2/raw/routes/66be414195bfb49e00fc1ff22a77707baea14df8fa43dd747635c29816b65503.json",
+  "results/v2/raw/routes/7e67e054116cbc98f7754f3650cd2b590c52a9d995188697812075751e2dc8fd.json",
+  "results/v2/raw/routes/8602307ad177b956ab354ae5ca86e07bb2454543589a7c4e79eaafc5862db54f.json",
+  "results/v2/raw/routes/8d61471ff5c7cd0c9155703ec637ec1b4011d8d75d15a6bc9c0f2b4ea72a11ab.json",
+  "results/v2/raw/routes/933f0f187366155df25963a3bcc5640a56f2b899508bdd571452aac299389d65.json",
+  "results/v2/raw/routes/95c6d3492549d195c702d71a8d67b7d9a0c261a892c4472117602f9b47ad5d55.json",
+  "results/v2/raw/routes/98177dde614c6d370847428c5b37a11b1a0ffba39f20e59ee68478788bfdc650.json",
+  "results/v2/raw/routes/a2893e80a4b55bbb377dd31b02673ea6cec9754cafae34cecd2276402a447b7d.json",
+  "results/v2/raw/routes/ae0c951c86155f854208843c0bc2406a51f93acc71186d85a29637e20faa2886.json",
+  "results/v2/raw/routes/ba0dda2cf5ec9f7626eb280b149ce6bbdbcb3666847ddfcb1d542f0145b79068.json",
+  "results/v2/raw/routes/cf84a79758af9e7206a7fca9715e3542029fb95b0883f3a2fd774a64ceeecc3e.json",
+  "results/v2/raw/routes/cfefeb67a3743a4d12933d4bddc16923d62522f712696d3d292b0acfe5836ab3.json",
+  "results/v2/raw/routes/db2c64043a79d23c11f404182f7a3de6e6cb8a875ca9ce588651b936f4271fbd.json",
+  "results/v2/raw/routes/e02fbccd9b04895087e23d9d21c533c91741c971ec8255a4efad95797dd481fb.json",
+  "results/v2/raw/routes/e32f27e725df1864d2825fe5e3bd38eb75fd534628f624bda0972ba6e0009119.json",
+  "results/v2/raw/routes/e81fe54205ce2e45ff683bf7adf95c668d7a09dbf04bbc13855cb720629e8503.json",
+  "results/v2/raw/routes/eb0bb6368cab8274275aad970c36a9cb055218a9e072a6e1f944ed952d5d2cc0.json",
+  "results/v2/raw/routes/eff035ba2f8e296bda7d77ce0c055a4070ff169cc9f56528e1428999e09d1d33.json",
+  "results/v2/raw/routes/f156355b9ee932d2a1739816c57de1c434058fa9e9dbb9f19ef9f582e1b476c4.json",
+  "results/v2/raw/routes/f3275875704c0ed944cbc62d9e87542ece5f1ed9a9683b178ef90d117412416e.json",
+  "results/v2/raw/routes/f393e4948f6a0699b201efb350e9b8dbcdf8f406956ea898d81ffd7346156fb8.json",
+  "results/v2/raw/routes/f9e9b0f64efbbd40ccf8474727b1dc8f35618e252b191bff69b99fd36a8df9e6.json",
+  "results/v2/raw/routes/fb52e1d4ff9fb20aa150a4f3caa2dace74306e87b36c4b05d116b472e720bac5.json",
+  "results/v2/raw/routes/fd9c85095cd5adfce6e0ce871b8f587b1943399f70b3fd9eab64abaf1eab7e92.json",
+  "results/v2/raw/routes/ff005ede07f88ce2101ce16a2ce8db4d8d5ce4dded4eeb134d01aa554eb7bd3a.json",
+  "results/v2/summary/matrix_hardware-v2.json",
+  "results/v2/summary/report_facts.json",
+  "results/v2/summary/routes_hardware-v2.csv",
+  "tests/unit/test_release_v2.py",
+  "tests/unit/test_report_checks.py",
+  "tools/check_claims.py",
+  "tools/check_links.py",
+  "tools/check_release_v2.py",
+  "tools/write_report_v2.py"
+ ],
+ "source_sha256": "d294a52ace0cc721bfca43d60ed07d94528d5bd69d337ba44713fd4d8a79f417",
+ "configuration_id": "a2-cache-d1-p0-l1",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T23:05:42Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "measure-v2",
+    "MODE=dry-run"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.15,
+   "log": "results/evidence/U17/cmd00.log",
+   "counts": {}
+  },
+  {
+   "argv": [
+    "make",
+    "check-hardware-v2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.76,
+   "log": "results/evidence/U17/cmd01.log",
+   "counts": {
+    "check_hardware_v2_jobs": "84/84",
+    "check_hardware_v2_decisions": "6/6",
+    "check_hardware_v2_csv_current": "84/84"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "a2-stream-stats"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.82,
+   "log": "results/evidence/U17/cmd02.log",
+   "counts": {
+    "check_a2_stream": "4096/4096",
+    "check_a2_traffic": "1733/1733",
+    "check_a2_metadata": "201/201",
+    "check_a2_reset": "50/50",
+    "check_request_interval_matches_inferred": "200/200",
+    "check_a2_latency_equation": "200/200"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "plots-v2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 3.73,
+   "log": "results/evidence/U17/cmd03.log",
+   "counts": {
+    "check_figure_points": "127/127"
+   }
+  },
+  {
+   "argv": [
+    "bash",
+    "scripts/env.sh",
+    "python",
+    "tools/plots_v2.py",
+    "--verify"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.16,
+   "log": "results/evidence/U17/cmd04.log",
+   "counts": {
+    "check_figure_points": "127/127"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "results-v2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.3,
+   "log": "results/evidence/U17/cmd05.log",
+   "counts": {}
+  },
+  {
+   "argv": [
+    "make",
+    "check-report-v2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.54,
+   "log": "results/evidence/U17/cmd06.log",
+   "counts": {
+    "check_links": "42/42",
+    "check_claims": "53/53"
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "matrix accounted",
+   "count_key": "check_hardware_v2_jobs",
+   "values": [
+    "84/84"
+   ],
+   "ok": true
+  },
+  {
+   "name": "decisions matched",
+   "count_key": "check_hardware_v2_decisions",
+   "values": [
+    "6/6"
+   ],
+   "ok": true
+  },
+  {
+   "name": "csv current",
+   "count_key": "check_hardware_v2_csv_current",
+   "values": [
+    "84/84"
+   ],
+   "ok": true
+  },
+  {
+   "name": "figure points verified",
+   "count_key": "check_figure_points",
+   "values": [
+    "127/127",
+    "127/127"
+   ],
+   "ok": true
+  },
+  {
+   "name": "request interval",
+   "count_key": "check_request_interval_matches_inferred",
+   "values": [
+    "200/200"
+   ],
+   "ok": true
+  },
+  {
+   "name": "claims resolve",
+   "count_key": "check_claims",
+   "values": [
+    "53/53"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "results/v2/summary/matrix_hardware-v2.json",
+   "exists": true,
+   "bytes": 21708
+  },
+  {
+   "path": "results/v2/summary/routes_hardware-v2.csv",
+   "exists": true,
+   "bytes": 40259
+  },
+  {
+   "path": "results/evidence/U17/matrix_run.log",
+   "exists": true,
+   "bytes": 70119
+  },
+  {
+   "path": "results/evidence/U17/matrix_hardware-v2.run.json",
+   "exists": true,
+   "bytes": 21708
+  },
+  {
+   "path": "results/v2/figures/area_vs_latency.png",
+   "exists": true,
+   "bytes": 57309
+  },
+  {
+   "path": "results/v2/figures/fmax_by_seed.png",
+   "exists": true,
+   "bytes": 60624
+  },
+  {
+   "path": "results/v2/raw/intervals/a2_candidate_stream.json",
+   "exists": true,
+   "bytes": 1255
+  },
+  {
+   "path": "docs/hardware_v2.md",
+   "exists": true,
+   "bytes": 8931
+  }
+ ],
+ "limitations": [
+  "the 84-job run itself was executed once in the background (log and first-run summary preserved under results/evidence/U17/); the gate re-plans and checks its records rather than re-running the routes",
+  "8 four-lane jobs (seeds 11 and 13 at every target) exhausted the 1,200 s budget: recorded outcomes, not proof the netlist cannot route; the four-lane 50 MHz projection is withheld",
+  "reported fmax is nextpnr's device-model timing analysis with auto-allocated I/O; nothing was measured on a board"
+ ],
+ "note": null
+}

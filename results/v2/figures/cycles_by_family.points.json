@@ -3,13 +3,61 @@
  "figure": "results/v2/figures/cycles_by_family.png",
  "manifest": "benchmarks/hardware_v2.json",
  "manifest_sha256": "ce1704c0c55a3dd8e1acf2f8d31b296666671b34c403883014d5014577fef31d",
- "points": [],
- "missing": [
-  "a0-bitmap-d1-p0-l1: no decision record",
-  "a1-bitmap-d1-p0-l1: no decision record",
-  "a1-cache-d1-p0-l1: no decision record",
-  "a1-cache-d1-p0-l2: no decision record",
-  "a1-cache-d1-p0-l4: no decision record",
-  "a2-cache-d1-p0-l1: no decision record"
- ]
+ "points": [
+  {
+   "configuration": "a0-bitmap-d1-p0-l1",
+   "decision_key": "a0-bitmap-d1-p0-l1/172f5d89635bcb4a",
+   "median_cycles_by_N": {
+    "9": 2472,
+    "17": 4686.0,
+    "34": 9375
+   }
+  },
+  {
+   "configuration": "a1-bitmap-d1-p0-l1",
+   "decision_key": "a1-bitmap-d1-p0-l1/172f5d89635bcb4a",
+   "median_cycles_by_N": {
+    "9": 422,
+    "17": 790.0,
+    "34": 1572
+   }
+  },
+  {
+   "configuration": "a1-cache-d1-p0-l1",
+   "decision_key": "a1-cache-d1-p0-l1/172f5d89635bcb4a",
+   "median_cycles_by_N": {
+    "9": 413,
+    "17": 773.0,
+    "34": 1538
+   }
+  },
+  {
+   "configuration": "a1-cache-d1-p0-l2",
+   "decision_key": "a1-cache-d1-p0-l2/172f5d89635bcb4a",
+   "median_cycles_by_N": {
+    "9": 234,
+    "17": 414.0,
+    "34": 774
+   }
+  },
+  {
+   "configuration": "a1-cache-d1-p0-l4",
+   "decision_key": "a1-cache-d1-p0-l4/172f5d89635bcb4a",
+   "median_cycles_by_N": {
+    "9": 146,
+    "17": 236.0,
+    "34": 416
+   }
+  },
+  {
+   "configuration": "a2-cache-d1-p0-l1",
+   "decision_key": "a2-cache-d1-p0-l1/172f5d89635bcb4a",
+   "median_cycles_by_N": {
+    "9": 38,
+    "17": 46.0,
+    "34": 63
+   }
+  }
+ ],
+ "missing": []
 }

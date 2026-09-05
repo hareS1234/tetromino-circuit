@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fill the measured-results blocks of README.md and docs/design.md from result files.
+"""Fill the measured v1 results blocks of docs/results.md and docs/design.md from the frozen result files.
 
 Every number between <!-- results:start --> and <!-- results:end --> is derived here from
 results/*.csv|json; tools/check_report.py regenerates the blocks and fails if the committed
@@ -167,7 +167,9 @@ def main() -> int:
     data = load()
     text = block(*data)
     bad = 0
-    for rel in ("README.md", "docs/design.md"):
+    # since U19 the generated v1 tables live in docs/results.md (and docs/design.md); the README keeps
+    # a short first screen and links here
+    for rel in ("docs/results.md", "docs/design.md"):
         path = ROOT / rel
         if not path.is_file():
             continue
