@@ -14,7 +14,7 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 | U06 pipelined compactor | passed | `rtl/line_clear_pipe.sv` (P4–P12, shared `advance_i`), `rtl/line_clear_pipe_harness.sv`, `sim/compactor_pipe_main.cpp`, `tb/tb_clear_pipe.py`, `tools/synth_module.py`; gate: cocotb 4/4, native stream continuous 4096 (spacing 1, transfer 9 edges), random 4096 (0 mismatch/stability/spurious), stalls 8/8, back-to-back 300, reset 22/22, micro-synthesis 3283 LUT4 / 3482 FF / 0 DSP / no latch with match+select modules live (`results/evidence/U06`) |
 | U07 landing/merge front end | passed | `rtl/drop_merge_pipe.sv` (P0–P3), harness, `tb/tb_drop_merge_pipe.py`; gate: cocotb 5/5 (40,500 corpus tokens + fixtures, stalls/bubbles, reset at every occupancy), smoke synthesis 1019 LUT4 / 420 FF / 0 DSP / no latch (`results/evidence/U07`) |
 | U08 feature/score pipes | passed | `rtl/features_pipe.sv` (P13–P19), `rtl/score_pipe.sv` (P20–P22), harnesses, `tb/tb_features_pipe.py` (200 one-hots, height-20 columns, checkerboards, 10,000 boards), `tb/tb_score_pipe.py` (bounds, 10,000 tuples, signed); gate cocotb 3/3 + 3/3, synthesis 824 LUT4/989 FF and 43 LUT4/219 FF, no DSP/latch (`results/evidence/U08`) |
-| U09 candidate pipeline | pending | |
+| U09 candidate pipeline | passed | `rtl/candidate_pipe.sv` (P0–P22, one advance), `tools/a2_vectors.py` + `sim/candidate_pipe_main.cpp` native harness, `tb/tb_candidate_pipe.py`; gate: cocotb 4/4, stream 4,096 tokens (spacing 1, **visible 22, transfer 23** measured), oracle traffic 1,733/1,733 (12,240/12,240 in a larger run), metadata 201/201, reset 50/50, trace `results/traces/a2_stall_reset.vcd.gz`, synthesis 5128 LUT4 / 5114 FF / 0 DSP (`results/evidence/U09`) |
 | U10 search + core integration | pending | |
 | U11 verification + mutations | pending | |
 | U12 route A2 | pending | |
@@ -29,8 +29,8 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 
 ## Current
 
-* Last passing job: U08 (U03 is blocked on the remote run only; its local validation passed).
-* Current job: U09.
+* Last passing job: U09 (U03 is blocked on the remote run only; its local validation passed).
+* Current job: U10.
 * Active process/log: none.
-* Next command: `rtl/candidate_pipe.sv` (P0–P22 under one advance), `sim/candidate_pipe_main.cpp` native harness (4,096 tokens, bubbles/stalls, reset at every occupancy), `tb/tb_candidate_pipe.py`; gate `make test-a2-stream`, `make test-a2-metadata`, `make test-a2-reset` with 22/23-cycle latencies.
+* Next command: `rtl/search_pipeline.sv` (dense enumeration + signed running best), `g_a2` branch in `rtl/tetris_core.sv`, `CFG_OK` for A2, file lists, promote `Config(2,1,1,1,0)` to SUPPORTED, 2,000-state dev corpus, batch request-interval mode in `sim/main.cpp`; gate `make test-core ARCH=2 … COUNT=1000`, `test-a2-core-extra`, `test-protocol/test-wrapper/test-driver ARCH=2`, `test-request-interval`.
 * Blockers: remote CI (U03/U20) and Mac execution (U20) are environment blockers; A2 work is not blocked.

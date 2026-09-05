@@ -1,0 +1,140 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U09",
+ "status": "passed",
+ "git_commit": "b8d85afddabab48a01d3be4233551b53d69776f6",
+ "git_modified_tracked": [],
+ "git_untracked": [],
+ "source_sha256": "4b0f4dc6aabbdfd529b25eadca6d18ec96df88fc84ac03555170581b2476eb89",
+ "configuration_id": null,
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T15:48:37Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-a2-stream"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.58,
+   "log": "results/evidence/U09/cmd00.log",
+   "counts": {
+    "pytest_failed": 0,
+    "rtl_total": 4,
+    "rtl_failed": 0,
+    "check_a2_stream": "4096/4096",
+    "check_a2_traffic": "1733/1733"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-a2-metadata"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.32,
+   "log": "results/evidence/U09/cmd01.log",
+   "counts": {
+    "check_a2_metadata": "201/201"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-a2-reset"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.61,
+   "log": "results/evidence/U09/cmd02.log",
+   "counts": {
+    "check_a2_reset": "50/50"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "synth-a2-pipe"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 16.94,
+   "log": "results/evidence/U09/cmd03.log",
+   "counts": {
+    "check_synth_candidate_pipe": "3/3"
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "cocotb",
+   "count_key": "rtl_total",
+   "values": [
+    4
+   ],
+   "ok": true
+  },
+  {
+   "name": "stream_4096",
+   "count_key": "check_a2_stream",
+   "values": [
+    "4096/4096"
+   ],
+   "ok": true
+  },
+  {
+   "name": "traffic",
+   "count_key": "check_a2_traffic",
+   "values": [
+    "1733/1733"
+   ],
+   "ok": true
+  },
+  {
+   "name": "metadata",
+   "count_key": "check_a2_metadata",
+   "values": [
+    "201/201"
+   ],
+   "ok": true
+  },
+  {
+   "name": "reset",
+   "count_key": "check_a2_reset",
+   "values": [
+    "50/50"
+   ],
+   "ok": true
+  },
+  {
+   "name": "synth",
+   "count_key": "check_synth_candidate_pipe",
+   "values": [
+    "3/3"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "rtl/candidate_pipe.sv",
+   "exists": true,
+   "bytes": 5271
+  },
+  {
+   "path": "sim/candidate_pipe_main.cpp",
+   "exists": true,
+   "bytes": 16534
+  },
+  {
+   "path": "results/traces/a2_stall_reset.vcd.gz",
+   "exists": true,
+   "bytes": 417296
+  },
+  {
+   "path": "build/synth_module/candidate_pipe/summary.json",
+   "exists": true,
+   "bytes": 577
+  }
+ ],
+ "limitations": [],
+ "note": "measured on the assembled pipeline: acceptance/retirement spacing 1, visible latency 22 edges, transfer latency 23 edges for 4,096 consecutive tokens (matches architecture/a2_stages.json); oracle traffic 1,733 tokens/60 contexts in the gate and 12,240 tokens/420 contexts in a larger run, 0 mismatches; micro-synthesis 5128 LUT4 / 5114 FF / 432 CCU2C / 0 DSP"
+}
