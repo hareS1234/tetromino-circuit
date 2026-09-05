@@ -1,0 +1,38 @@
+{
+  "spec": "drop-v1.1",
+  "note": "Rows are bottom-first; unlisted rows are zero. Scores use the post-clear convention with coefficients (76,51,36,18).",
+  "placements": [
+    {"name": "empty_O", "rows": {}, "piece": 1, "rotation": 0, "x": 0,
+     "expected": {"legal": true, "y": 0, "lines": 0, "A": 4, "Q": 0, "U": 2, "score": -240, "rows_after": {"0": 3, "1": 3}}},
+    {"name": "single_clear_I", "rows": {"0": 1008}, "piece": 0, "rotation": 0, "x": 0,
+     "expected": {"legal": true, "y": 0, "lines": 1, "A": 0, "Q": 0, "U": 0, "score": 76, "rows_after": {}}},
+    {"name": "double_clear_O", "rows": {"0": 1020, "1": 1020}, "piece": 1, "rotation": 0, "x": 0,
+     "expected": {"legal": true, "y": 0, "lines": 2, "A": 0, "Q": 0, "U": 0, "score": 152, "rows_after": {}}},
+    {"name": "quad_clear_I", "rows": {"0": 1022, "1": 1022, "2": 1022, "3": 1022}, "piece": 0, "rotation": 1, "x": 0,
+     "expected": {"legal": true, "y": 0, "lines": 4, "A": 0, "Q": 0, "U": 0, "score": 304, "rows_after": {}}},
+    {"name": "overhang_O", "rows": {"1": 3}, "piece": 1, "rotation": 0, "x": 0,
+     "expected": {"legal": true, "y": 2, "lines": 0, "A": 8, "Q": 2, "U": 4, "score": -552, "rows_after": {"1": 3, "2": 3, "3": 3}}},
+    {"name": "blocked_O", "rows": {"19": 3}, "piece": 1, "rotation": 0, "x": 0,
+     "expected": {"legal": false, "physical_y": 20}},
+    {"name": "spawn_under_overhang_J", "rows": {"15": 4, "18": 4}, "piece": 5, "rotation": 3, "x": 2,
+     "expected": {"legal": false, "physical_y": 19, "retired_rule_y": 16}},
+    {"name": "retain_row_I", "rows": {"0": 1008, "1": 16}, "piece": 0, "rotation": 0, "x": 0,
+     "expected": {"legal": true, "y": 0, "lines": 1, "A": 1, "Q": 0, "U": 2, "score": -11, "rows_after": {"0": 16}}}
+  ],
+  "feature_only": [
+    {"name": "single_cell_x0_y1", "rows": {"1": 1}, "expected": {"A": 2, "Q": 1, "U": 2}},
+    {"name": "full_column_x0", "rows": {"0": 1, "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1, "7": 1, "8": 1, "9": 1, "10": 1, "11": 1, "12": 1, "13": 1, "14": 1, "15": 1, "16": 1, "17": 1, "18": 1, "19": 1}, "expected": {"A": 20, "Q": 0, "U": 20}}
+  ],
+  "empty_board_best": [
+    {"piece": 0, "rotation": 0, "x": 0, "y": 0, "score": -222},
+    {"piece": 1, "rotation": 0, "x": 0, "y": 0, "score": -240},
+    {"piece": 2, "rotation": 0, "x": 0, "y": 0, "score": -258},
+    {"piece": 3, "rotation": 0, "x": 7, "y": 0, "score": -327},
+    {"piece": 4, "rotation": 0, "x": 0, "y": 0, "score": -327},
+    {"piece": 5, "rotation": 0, "x": 0, "y": 0, "score": -240},
+    {"piece": 6, "rotation": 0, "x": 7, "y": 0, "score": -240}
+  ],
+  "no_move": [
+    {"name": "O_on_341_341", "rows": {"18": 341, "19": 341}, "piece": 1}
+  ]
+}

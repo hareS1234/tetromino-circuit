@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tetromino-circuit"
+version = "0.1.0"
+description = "Drop-only Tetris decision engine: Python reference model and SystemVerilog circuit study"
+requires-python = ">=3.11,<3.13"
+
+[tool.setuptools]
+packages = ["model"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit"]

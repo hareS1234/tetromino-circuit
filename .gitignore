@@ -1,0 +1,10 @@
+.venv/
+.tools/
+build/
+__pycache__/
+.pytest_cache/
+*.vcd
+*.fst
+*.egg-info/
+sim_build/
+results/evidence/**/cmd*.log
