@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-"""Release validator (Appendix D): checks recorded evidence and artifacts; creates nothing."""
+"""v1 release validator (manual Appendix D): checks recorded evidence and artifacts; creates nothing.
+
+Exact expected-job membership of the frozen v1 experiment (quality, routes, decisions, evidence)
+comes from tools/check_v1_results.py; no minimum row counts are used.  The v2 upgrade release
+(U-jobs, v2 manifests) is validated by check_release_v2 (U20).
+"""
 from __future__ import annotations
 
-import csv
 import json
 import re
 import subprocess
@@ -10,6 +14,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from tools.check_v1_results import run_checks as v1_checks  # noqa: E402
 
 
 def run(cmd):
@@ -18,25 +25,19 @@ def run(cmd):
 
 def main() -> int:
     problems, notes = [], []
-    # E00-E19 evidence
-    for i in range(20):
-        p = ROOT / "results" / "evidence" / f"E{i:02d}" / "summary.json"
-        if not p.is_file():
-            if i == 19:
-                notes.append("E19 evidence not yet recorded (this validator is part of the E19 gate)")
-            else:
-                problems.append(f"E{i:02d}: no evidence summary")
-            continue
-        s = json.loads(p.read_text())
-        if s.get("status") != "passed":
-            problems.append(f"E{i:02d}: status {s.get('status')}")
+    # frozen v1 experiment: exact expected-job membership, single identities, recomputed summary, evidence
+    v1_problems, v1_checks_done = v1_checks()
+    problems += v1_problems
+    for name, ok, total in v1_checks_done:
+        notes.append(f"CHECK {name} {ok}/{total}")
     # deterministic generation and streams
     if run([sys.executable, "tools/gen_shapes.py", "--check"]).returncode != 0:
         problems.append("generated geometry is stale")
     if run([sys.executable, "tools/make_streams.py", "--check"]).returncode != 0:
         problems.append("committed streams differ from the generator")
     # locks and toolchain
-    for rel in ("requirements.lock", "toolchain.lock.json", "docs/toolchain.md", "benchmarks/config.json", ".github/workflows/ci.yml"):
+    for rel in ("requirements.lock", "toolchain.lock.json", "toolchains/oss_cad_suite.lock.json", "docs/toolchain.md",
+                "benchmarks/config.json", ".github/workflows/ci.yml"):
         if not (ROOT / rel).is_file():
             problems.append(f"missing {rel}")
     lock = (ROOT / "requirements.lock").read_text() if (ROOT / "requirements.lock").is_file() else ""
@@ -52,30 +53,11 @@ def main() -> int:
                 leaks.append(str(p.relative_to(ROOT)))
     if leaks:
         problems.append(f"absolute paths leaked into {leaks}")
-    # verification counts
-    dec = ROOT / "results" / "decisions" / "a0-bitmap-d1-p0-l1_native_1000.csv"
-    if not dec.is_file() or sum(1 for _ in open(dec)) < 1001:
-        problems.append("fewer than 1,000 exact-baseline differential decisions recorded")
-    replays = list((ROOT / "results" / "replays").glob("a0-bitmap-d1-p0-l1_seed200*_cap250.jsonl"))
-    if len(replays) < 3:
-        problems.append("fewer than three RTL baseline game replays")
-    impl = ROOT / "results" / "implementation.csv"
-    if impl.is_file():
-        rows = list(csv.DictReader(open(impl)))
-        cfgs = {(r["arch"], r["board_repr"], r["lanes"], r["depth"], r["precision"]) for r in rows}
-        notes.append(f"{len(rows)} routing attempts across {len(cfgs)} configurations; {sum(r['timing_met'] == 'True' for r in rows)} met timing")
-        if len(rows) < 45:
-            problems.append(f"implementation matrix has {len(rows)} attempts, expected 45")
-    else:
-        problems.append("missing results/implementation.csv")
-    q = ROOT / "results" / "quality.csv"
-    if q.is_file():
-        rows = [r for r in csv.DictReader(open(q)) if r["experiment"] in ("precision", "depth")]
-        notes.append(f"{len(rows)} held-out games recorded")
-        if len(rows) < 640:
-            problems.append(f"quality.csv has {len(rows)} held-out games, expected 640")
-    else:
-        problems.append("missing results/quality.csv")
+    # RTL replays: the three named baseline games (exact membership)
+    for seed in (2000, 2001, 2002):
+        rp = ROOT / "results" / "replays" / f"a0-bitmap-d1-p0-l1_seed{seed}_cap250.jsonl"
+        if not rp.is_file() or rp.stat().st_size == 0:
+            problems.append(f"missing or empty RTL baseline replay {rp.name}")
     # README statements
     readme = (ROOT / "README.md").read_text() if (ROOT / "README.md").is_file() else ""
     for needle in ("drop-only", "excluded", "RTL simulation", "Limitations", "References"):

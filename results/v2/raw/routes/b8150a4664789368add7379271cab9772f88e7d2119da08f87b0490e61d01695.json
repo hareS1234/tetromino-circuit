@@ -1,0 +1,96 @@
+{
+ "analysis": {
+  "errors": [
+   "ERROR: Max frequency for clock '$glbnet$clk$TRELLIS_IO_IN': 66.49 MHz (FAIL at 200.00 MHz)"
+  ],
+  "parser_version": "pnr-parser-v2"
+ },
+ "analysis_key": "e4ed930ef88711b053cef78877b530ba2db4ca549c8e900fe89d0df1d458b56a",
+ "area": {
+  "bram": 0,
+  "carry": 226,
+  "cells_total": 6072,
+  "dp16kd": 0,
+  "dsp": 0,
+  "ff": 2416,
+  "lut4": 3070,
+  "mult18x18d": 0,
+  "trellis_comb": 3744,
+  "trellis_ff": 2416
+ },
+ "attempt": {
+  "id": "b8150a466478-a1",
+  "number": 1,
+  "previous_status": null,
+  "reason": null
+ },
+ "configuration_id": "a0-bitmap-d1-p0-l1",
+ "device": {
+  "device": "LFE5U-85F",
+  "flag": "--85k",
+  "package": "CABGA381",
+  "speed": "6"
+ },
+ "dsp_policy": "default",
+ "files": {
+  "config": "build/route/b8150a4664789368add7379271cab9772f88e7d2119da08f87b0490e61d01695/routed.config",
+  "dir": "build/route/b8150a4664789368add7379271cab9772f88e7d2119da08f87b0490e61d01695",
+  "log": "build/route/b8150a4664789368add7379271cab9772f88e7d2119da08f87b0490e61d01695/nextpnr.log",
+  "report": "build/route/b8150a4664789368add7379271cab9772f88e7d2119da08f87b0490e61d01695/timing.json"
+ },
+ "io_constraints": "auto-allocated (--lpf-allow-unconstrained)",
+ "netlist_sha256": "e9c8b4c1fd8dbe734d8e966a8c26d776e4fb989ad51373e66290af01b6696138",
+ "nextpnr": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
+ "options": [
+  "--lpf-allow-unconstrained"
+ ],
+ "params": {
+  "ARCH": 0,
+  "BOARD_REPR": 0,
+  "DEPTH": 1,
+  "LANES": 1,
+  "PRECISION": 0
+ },
+ "process": {
+  "cancelled": false,
+  "completed": true,
+  "elapsed_s": 28.8,
+  "finished_utc": "2026-09-05T14:37:52Z",
+  "peak_rss_mb": 456.4,
+  "return_code": 1,
+  "started_utc": "2026-09-05T14:37:23Z",
+  "timed_out": false
+ },
+ "reused": false,
+ "route_key": "b8150a4664789368add7379271cab9772f88e7d2119da08f87b0490e61d01695",
+ "route_timeout_s": 600,
+ "schema": "route-record-v2",
+ "script_version": "route-v2",
+ "seed": 1,
+ "source_sha256": "45ddf9d8b13bcd98ea8284346d3dff1b926dd23c118b818379035f08effa8f05",
+ "status": "routed_timing_failed",
+ "status_reason": "final routed timing FAIL from report-json+final-log (return code 1)",
+ "synth_key": "81a87ac68c0a90ec00ae1cda22de9b22422eb5e0bb5939ab97649876a1725b73",
+ "target_mhz": 200.0,
+ "timing": {
+  "clock": "$glbnet$clk$TRELLIS_IO_IN",
+  "freq_option_note": "--freq is nextpnr's default clock constraint for the selected clock",
+  "met": false,
+  "placement_estimate_mhz": 63.25,
+  "report_available": true,
+  "reported_fmax_mhz": 66.49,
+  "requested_mhz": 200.0,
+  "source": "report-json+final-log",
+  "worst_path": {
+   "clock": "$glbnet$clk$TRELLIS_IO_IN",
+   "from": "u_core.g_d1.g_lane[0].u_lane.u_eval.g_a0.u_drop.y_q_TRELLIS_FF_Q_5.Q",
+   "logic_ns": 4.57,
+   "routing_ns": 10.47,
+   "to": "u_core.g_d1.g_lane[0].u_lane.u_eval.g_a0.u_drop.y_q_TRELLIS_FF_Q_4.CE",
+   "total_ns": 15.04
+  }
+ },
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "top": "stream_wrapper",
+ "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)"
+}

@@ -1,0 +1,19 @@
+{
+ "fmax": {
+  "$glbnet$clk$TRELLIS_IO_IN": {
+   "achieved": 66.49378204345703,
+   "constraint": 200
+  }
+ },
+ "utilization": {
+  "TRELLIS_COMB": {
+   "available": 83640,
+   "used": 3744
+  },
+  "TRELLIS_FF": {
+   "available": 83640,
+   "used": 2416
+  }
+ },
+ "critical_paths": []
+}

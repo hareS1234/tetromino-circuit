@@ -1,0 +1,20 @@
+{
+ "schema": "quality-protocol-v2",
+ "name": "quality-smoke",
+ "spec": "drop-v1.1",
+ "backend": "python-fast",
+ "note": "Development preset for `make upgrade-smoke`: validation streams only, tiny cap. Not an experiment; the release protocol is benchmarks/config_v2.json (U15).",
+ "suites": {
+  "smoke": {
+   "policies": [
+    {"policy": "heuristic", "depth": 1, "precision": 0},
+    {"policy": "heuristic", "depth": 1, "precision": 1},
+    {"policy": "random_legal", "depth": 1, "precision": 0}
+   ],
+   "streams": {"split": "validation", "seeds": [2000, 2003]},
+   "cap": 100,
+   "baseline": {"policy": "heuristic", "depth": 1, "precision": 0}
+  }
+ },
+ "statistics": {"bootstrap_resamples": 500, "bootstrap_seed": 12345, "resampling_unit": "stream id, jointly across compared policies"}
+}

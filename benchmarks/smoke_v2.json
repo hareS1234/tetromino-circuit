@@ -1,0 +1,14 @@
+{
+ "schema": "hardware-matrix-v2",
+ "name": "smoke",
+ "note": "Development preset for `make upgrade-smoke`: one small real route plus a short native decision corpus. Not an experiment; the release matrix is benchmarks/hardware_v2.json (U17).",
+ "device": {"device": "LFE5U-85F", "flag": "--85k", "package": "CABGA381", "speed": "6"},
+ "top": "stream_wrapper",
+ "dsp_policy": "default",
+ "route_timeout_s": 600,
+ "configurations": ["a0-bitmap-d1-p0-l1"],
+ "targets_mhz": [50],
+ "seeds": [1],
+ "extra_jobs": [],
+ "decisions": {"configurations": ["a0-bitmap-d1-p0-l1"], "count": 50, "driver": "native"}
+}

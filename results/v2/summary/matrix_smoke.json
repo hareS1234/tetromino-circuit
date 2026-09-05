@@ -1,0 +1,43 @@
+{
+ "schema": "matrix-summary-v2",
+ "manifest": "benchmarks/smoke_v2.json",
+ "manifest_sha256": "c894066030fa714fcd82674fc553984004eaf773206845b631d4ca82de33ee6c",
+ "name": "smoke",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "source_sha256": "2c0acf48e9d1161480734428984a204b29b566984b5f691b2857bd8d07f62f8f",
+ "recorded_utc": "2026-09-05T14:41:26Z",
+ "expected_jobs": [
+  "a0-bitmap-d1-p0-l1:50:1"
+ ],
+ "route_keys": {
+  "a0-bitmap-d1-p0-l1:50:1": "e4d4c836d248ed90c8009f46530382970835bf8079fce2abf9f22671d39d9c85"
+ },
+ "latest_status": {
+  "a0-bitmap-d1-p0-l1:50:1": "routed_timing_met"
+ },
+ "counts": {
+  "completed": 1,
+  "reused": 1,
+  "successes": 1,
+  "failures": 0,
+  "timeouts": 0,
+  "errors": 0
+ },
+ "decisions": {
+  "a0-bitmap-d1-p0-l1": {
+   "schema": "decision-record-v2",
+   "configuration_id": "a0-bitmap-d1-p0-l1",
+   "count": 50,
+   "corpus_hash": "563cc31eecfbb780",
+   "native_key": "38f4e5e693018ed131be2f313db92c5ae35b210b9ffcd3fd809d5cf1446af8f1",
+   "source_sha256": "2c0acf48e9d1161480734428984a204b29b566984b5f691b2857bd8d07f62f8f",
+   "status": "matched",
+   "result": "native: all 50 decisions match; cycles min 125 median 4701 max 9550",
+   "csv": "results/v2/raw/decisions/a0-bitmap-d1-p0-l1/563cc31eecfbb780.csv",
+   "elapsed_s": 8.7,
+   "recorded_utc": "2026-09-05T14:41:19Z",
+   "reused": true
+  }
+ },
+ "elapsed_s": 0.2
+}

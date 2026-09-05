@@ -33,9 +33,8 @@ STEPS = [
     ("lookahead-rtl", ["make", "test-lookahead-rtl"]),
     ("lanes", ["make", "test-lanes"]),
     ("bench-config", ["make", "check-benchmark-config"]),
-    ("bench-precision", ["make", "bench", "SUITE=precision"]),
-    ("bench-depth", ["make", "bench", "SUITE=depth"]),
-    ("measure-matrix", ["make", "measure-matrix"]),
+    # The v1 study (precision/depth suites, 45-route matrix) is frozen: it is validated, not re-run.
+    ("check-v1-results", ["make", "check-v1-results"]),
     ("tournament", ["make", "tournament"]),
     ("plots", ["make", "plots"]),
     ("report", ["python", "tools/write_report.py"]),

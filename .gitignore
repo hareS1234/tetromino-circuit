@@ -8,3 +8,6 @@ __pycache__/
 *.egg-info/
 sim_build/
 results/evidence/**/cmd*.log
+results/v2/runner.lock
+results/v2/runner.heartbeat.json
+*.part

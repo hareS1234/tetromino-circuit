@@ -11,6 +11,7 @@ LANES ?= 1
 DEPTH ?= 1
 PRECISION ?= 0
 SEED ?= 1
+FREQ ?= 50
 CAP ?= 250
 COUNT ?= 50
 DRIVER ?= native
@@ -24,10 +25,11 @@ CFG_ID := $(shell echo a$(ARCH)-$(if $(filter 1,$(BOARD_REPR)),cache,bitmap)-d$(
         test-core test-protocol native test-driver replay-suite demo-rtl test-wrapper synth pnr \
         test-fast test-cache test-precision measure-precision test-lookahead-reference test-lookahead-rtl \
         test-lanes test-rtl check-benchmark-config bench-pilot bench measure-matrix tournament plots \
-        check-report check-release reproduce clean
+        check-report check-release reproduce clean \
+        test-identities test-result-schemas check-v1-results upgrade-smoke matrix-plan matrix-status
 
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
 
 # ---------------------------------------------------------------- E00
 doctor: ## full toolchain check (hardware gate)
@@ -89,7 +91,7 @@ test-core: ## differential core tests, COUNT requests, DRIVER=cocotb|native
 	$(PY) tools/test_core.py $(CFG) --count $(COUNT) --driver $(DRIVER)
 test-protocol: ## ready/valid, stalls, resets, invalid piece
 	$(RUN_RTL) --top tetris_core --test tb_protocol --files-f rtl/files.f $(PARAMS)
-native: ## build the persistent C++ Verilator driver for the configuration
+native: ## build the persistent C++ Verilator driver (build/native/<native_key>, alias build/native_<id>)
 	$(PY) tools/build_native.py $(CFG) --out build/native_$(CFG_ID)
 test-driver: ## native vs cocotb equivalence on COUNT requests
 	$(PY) tools/test_core.py $(CFG) --count $(COUNT) --driver both
@@ -102,10 +104,10 @@ demo-rtl: ## default RTL replay GIF (A0, seed 2000)
 	$(PY) tools/render.py --replay results/rtl_demo.jsonl --out assets/rtl_demo.gif --png assets/rtl_demo_final.png
 test-wrapper: ## streaming wrapper framing, stalls, reset, back-to-back
 	$(RUN_RTL) --top stream_wrapper --test tb_wrapper --files-f rtl/files.f $(PARAMS)
-synth: ## Yosys synth_ecp5 of stream_wrapper for the configuration
+synth: ## Yosys synth_ecp5 of stream_wrapper (build/synth/<synth_key>, alias build/synth_<id>)
 	$(PY) tools/synth.py --top stream_wrapper $(CFG) --out build/synth_$(CFG_ID)
-pnr: ## nextpnr-ecp5 85k CABGA381 speed 6 at the recorded target
-	$(PY) tools/pnr.py $(CFG) --seed $(SEED) --json build/synth_$(CFG_ID)/netlist.json --out build/pnr_$(CFG_ID)_s$(SEED)
+pnr: ## nextpnr-ecp5 85k CABGA381 speed 6 at FREQ MHz, SEED; record under results/v2/raw/routes/<route_key>.json
+	$(PY) tools/pnr.py $(CFG) --seed $(SEED) --freq $(FREQ)
 
 # ---------------------------------------------------------------- E10–E15
 test-fast: ## A1 datapath modules vs oracle
@@ -133,8 +135,14 @@ bench-pilot:
 	$(PY) tools/bench.py --suite pilot
 bench: ## frozen software study, SUITE=precision|depth
 	$(PY) tools/bench.py --suite $(SUITE)
-measure-matrix: ## synth + route seeds 1-5 for the nine configurations, plus decision corpus
-	$(PY) tools/measure_matrix.py
+measure-matrix: ## v2 matrix runner: requires MANIFEST=benchmarks/<matrix>.json (never runs a full study by default)
+	@test -n "$(MANIFEST)" || { echo "usage: make measure-matrix MANIFEST=benchmarks/hardware_v2.json (smoke preset: make upgrade-smoke)"; exit 2; }
+	$(PY) tools/measure_matrix.py run --manifest $(MANIFEST)
+matrix-plan: ## dry run of MANIFEST: jobs, route keys, reuse
+	@test -n "$(MANIFEST)" || { echo "usage: make matrix-plan MANIFEST=benchmarks/<matrix>.json"; exit 2; }
+	$(PY) tools/measure_matrix.py plan --manifest $(MANIFEST)
+matrix-status: ## runner lock, heartbeat and raw record counts
+	$(PY) tools/measure_matrix.py status
 tournament: ## real RTL tournament replays and GIF
 	$(PY) tools/tournament.py
 plots:
@@ -143,6 +151,17 @@ check-report:
 	$(PY) tools/check_report.py
 check-release:
 	$(PY) tools/check_release.py
+
+# ---------------------------------------------------------------- U02 (identities, resume, summaries, gates)
+test-identities: ## U02: canonical identities and the invalidation matrix
+	$(PY) -m pytest tests/unit/test_identity.py -q
+test-result-schemas: ## U02: route/quality records, status classification, single-identity summaries, gates, runner
+	$(PY) -m pytest tests/unit/test_result_schemas.py tests/unit/test_runner.py tests/unit/test_bench_v2.py -q
+check-v1-results: ## U02: frozen v1 experiment validated by exact expected-job membership
+	$(PY) tools/check_v1_results.py
+upgrade-smoke: ## U02: short development preset — one real route + 50-state corpus + tiny v2 quality suite (resumable)
+	$(PY) tools/measure_matrix.py run --manifest benchmarks/smoke_v2.json
+	$(PY) tools/bench.py --suite smoke --config benchmarks/quality_smoke_v2.json --out-root results/v2
 reproduce: ## resumable orchestrator of the documented release pipeline
 	$(PY) tools/reproduce.py
 clean:

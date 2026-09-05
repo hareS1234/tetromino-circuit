@@ -1,0 +1,30 @@
+{
+ "backend": "python-fast",
+ "cap": 100,
+ "git_commit": "2205499d3ff2089b826a7aa6ee6d468998dfda09-dirty",
+ "lines": 36,
+ "model_closure": "2e958a4cb280aec6051bd09f136a111b0c5467bdd3462cb5b2dc2d66c4229ae0",
+ "pieces_locked": 100,
+ "policy": {
+  "depth": 1,
+  "policy": "heuristic",
+  "precision": 1
+ },
+ "protocol_name": "quality-smoke",
+ "protocol_path": "benchmarks/quality_smoke_v2.json",
+ "protocol_sha256": "0422500825ad2f9329a9dc4e365caa782ada01a37360f8b284660f211fbad809",
+ "quality_key": "da13b20cdd71cd1945076cfc44a049b25f8f4d78694787c3d054fbbba28dd806",
+ "recorded_utc": "2026-09-05T14:48:39Z",
+ "runtime": {
+  "python": "3.11.15"
+ },
+ "schema": "quality-record-v2",
+ "source_sha256": "fc826a4b46e6bf8815ab6c6463efd5b399b6eb34b0dc5918c2c17d5e2d5a8012",
+ "spec": "drop-v1.1",
+ "status": "complete",
+ "stream_seed": 2002,
+ "stream_sha256": "df4ab9dde76fae7ce5e8f21490af667b282e3f86e8bf70a18c5534cffe2bd7a8",
+ "suite": "smoke",
+ "terminal_reason": "cap_reached",
+ "wall_seconds": 0.015
+}

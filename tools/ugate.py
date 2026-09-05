@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 import re
 import subprocess
 import sys
@@ -24,6 +25,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+EVIDENCE = Path(os.environ.get("TETROMINO_EVIDENCE_DIR", ROOT / "results" / "evidence"))
 
 from tools.identity import source_closure_sha256, toolchain_identity  # noqa: E402
 
@@ -86,7 +88,7 @@ def run_command(job_dir: Path, index: int, argv):
             sys.stdout.write(line)
         proc.wait()
     return {"argv": argv, "exit_code": proc.returncode, "elapsed_s": round(time.perf_counter() - t0, 2),
-            "log": str(log.relative_to(ROOT)), "counts": parse_counts("".join(lines))}
+            "log": str(log.relative_to(ROOT)) if log.is_relative_to(ROOT) else str(log), "counts": parse_counts("".join(lines))}
 
 
 def main() -> int:
@@ -124,7 +126,7 @@ def main() -> int:
     if cur:
         groups.append(cur)
 
-    job_dir = ROOT / "results" / "evidence" / job
+    job_dir = EVIDENCE / job
     job_dir.mkdir(parents=True, exist_ok=True)
     git = git_state()
     record = {
@@ -167,7 +169,7 @@ def main() -> int:
         record["limitations"].append("no test counts were parsed from the command output")
     record["status"] = "passed" if ok else "failed"
     (job_dir / "summary.json").write_text(json.dumps(record, indent=1) + "\n")
-    print(f"[ugate] {job}: {record['status']} ({sum(r['elapsed_s'] for r in results):.1f}s) -> {job_dir.relative_to(ROOT)}/summary.json")
+    print(f"[ugate] {job}: {record['status']} ({sum(r['elapsed_s'] for r in results):.1f}s) -> {job_dir}/summary.json")
     return 0 if ok else 1
 
 
