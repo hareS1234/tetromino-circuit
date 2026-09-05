@@ -1,0 +1,100 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U04",
+ "status": "passed",
+ "git_commit": "034e3b98208aa5c2c438d46632efabea6552e8e2",
+ "git_modified_tracked": [],
+ "git_untracked": [],
+ "source_sha256": "59afec89727b0aa7313c652c91e52fc3980a690d154f70af6387855d95bdad21",
+ "configuration_id": "a2-cache-d1-p0-l1",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T15:16:37Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "check-a2-spec"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.29,
+   "log": "results/evidence/U04/cmd00.log",
+   "counts": {
+    "pytest_passed": 14,
+    "check_a2_stages": "39/39",
+    "check_a2_widths": "5/5",
+    "check_a2_identity": "13/13",
+    "check_a2_latency": "16/16",
+    "check_a2_elaboration": "2/2"
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "spec_tests",
+   "count_key": "pytest_passed",
+   "values": [
+    14
+   ],
+   "ok": true
+  },
+  {
+   "name": "stages",
+   "count_key": "check_a2_stages",
+   "values": [
+    "39/39"
+   ],
+   "ok": true
+  },
+  {
+   "name": "widths",
+   "count_key": "check_a2_widths",
+   "values": [
+    "5/5"
+   ],
+   "ok": true
+  },
+  {
+   "name": "identity",
+   "count_key": "check_a2_identity",
+   "values": [
+    "13/13"
+   ],
+   "ok": true
+  },
+  {
+   "name": "latency",
+   "count_key": "check_a2_latency",
+   "values": [
+    "16/16"
+   ],
+   "ok": true
+  },
+  {
+   "name": "elaboration_rejected",
+   "count_key": "check_a2_elaboration",
+   "values": [
+    "2/2"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "docs/design_a2.md",
+   "exists": true,
+   "bytes": 14458
+  },
+  {
+   "path": "architecture/a2_stages.json",
+   "exists": true,
+   "bytes": 16704
+  },
+  {
+   "path": "model/a2_token_model.py",
+   "exists": true,
+   "bytes": 7530
+  }
+ ],
+ "limitations": [],
+ "note": "A2 declared (Config(2,1,1,1,0) = a2-cache-d1-p0-l1), not verified: validate() rejects it, tetris_core elaboration with ARCH=2 fails; D(N)=N+29 and R(N)=N+31 are targets from the abstract model until U10 measures RTL"
+}
