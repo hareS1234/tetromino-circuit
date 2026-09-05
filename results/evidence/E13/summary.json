@@ -1,0 +1,25 @@
+{
+ "job": "E13",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "7d9988712aa33290df45ed9d9a0b578ff1b129eb-dirty",
+ "source_hash": "042e0a620907f7c1",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T05:09:59Z",
+ "note": "250 frozen D2 cases: reference == brute force == fast model; categories root_ties/all_terminal_fallback/no_current_move/differing_previews/late_root_winner",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-lookahead-reference"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 6.1,
+   "log": "results/evidence/E13/cmd00.log",
+   "tests": {
+    "pytest_passed": 255
+   }
+  }
+ ],
+ "elapsed_s": 6.1
+}
