@@ -38,7 +38,7 @@ jobs:
       - run: bash scripts/env.sh python tools/make_streams.py --check
       - run: make test-python PYTEST_ARGS="--junitxml=build/junit/python.xml"
       - run: make check-v1-results
-      - run: bash scripts/env.sh python tools/streams_v2.py --check
+      - run: bash scripts/env.sh python tools/streams_v2.py check
       - run: bash scripts/env.sh python tools/write_report.py --check
       - run: bash scripts/env.sh python tools/write_report_v2.py --check
       - run: make check-trace
