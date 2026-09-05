@@ -1,0 +1,68 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U00",
+ "status": "passed",
+ "git_commit": "c66ad9b137bdf1c82d80abf7e5b65b35cfd66250-dirty",
+ "source_sha256": "adb4ece401e1446ea5e732c429794ecc64f8c17c4c9ffe2026a5e34dedf8df14",
+ "configuration_id": null,
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T14:15:03Z",
+ "commands": [
+  {
+   "argv": [
+    "python",
+    "tools/inventory.py"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.29,
+   "log": "results/evidence/U00/cmd00.log",
+   "counts": {
+    "check_inventory_consistency": "1/1"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-python"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 18.15,
+   "log": "results/evidence/U00/cmd01.log",
+   "counts": {
+    "pytest_passed": 305
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "inventory",
+   "count_key": "check_inventory_consistency",
+   "values": [
+    "1/1"
+   ],
+   "ok": true
+  },
+  {
+   "name": "python_tests",
+   "count_key": "pytest_passed",
+   "values": [
+    305
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "results/evidence/U00/inventory.json",
+   "exists": true,
+   "bytes": 3953
+  },
+  {
+   "path": "docs/audit_response.md",
+   "exists": true,
+   "bytes": 4825
+  }
+ ],
+ "limitations": [],
+ "note": "baseline inventory and audit reconciliation; no new performance claims"
+}

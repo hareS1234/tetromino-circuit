@@ -1,0 +1,140 @@
+{
+ "schema": "u00-inventory-v1",
+ "git": {
+  "branch": "upgrade/a2",
+  "commit": "c66ad9b137bdf1c82d80abf7e5b65b35cfd66250",
+  "tags": [
+   "v0.1-python",
+   "v0.2-rtl",
+   "v0.3-implemented",
+   "v1.0"
+  ],
+  "remotes": [],
+  "dirty": true
+ },
+ "source_sha256": "adb4ece401e1446ea5e732c429794ecc64f8c17c4c9ffe2026a5e34dedf8df14",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "v1_toolchain_lock": {
+  "suite_release": "2026-09-04",
+  "asset": "oss-cad-suite-linux-x64-20260904.tgz",
+  "archive_sha256": "8fb2384c2f88126f8936fc8f680ed2ebdf0ce440a7457c8f5a21c5c6e3e2de44",
+  "os": "Linux",
+  "arch": "x86_64",
+  "python": "3.11",
+  "verilator": "Verilator 5.051 devel rev v5.050-309-g228635918 (mod)",
+  "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
+  "nextpnr_ecp5": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)"
+ },
+ "v1_protocol_sha256": "60021e452f276211f4fb623b826dd876d4c9d3e48c5ff9205f7280b1b5074a2e",
+ "routing": {
+  "rows": 45,
+  "unique_config_seed": 45,
+  "duplicates": [],
+  "status": {
+   "routed": 44,
+   "killed_no_convergence": 1
+  },
+  "timing_met": 44,
+  "non_routed": [
+   {
+    "config": "a1-cache-d1-p0-l2",
+    "seed": "3",
+    "status": "killed_no_convergence",
+    "elapsed_s": "1313.6"
+   }
+  ],
+  "manifest_summary": {
+   "routing_attempts": 45,
+   "timing_met": 44,
+   "elapsed_s": 19.3
+  },
+  "manifest_rtl_hash": "ae34d12e7803250b"
+ },
+ "quality": {
+  "rows": 680,
+  "by_experiment": {
+   "pilot_precision": 30,
+   "pilot_depth": 10,
+   "precision": 600,
+   "depth": 40
+  },
+  "held_out_rows": 640,
+  "held_out_unique_jobs": 640,
+  "source_hashes": {
+   "66a5deeeb0c72b61": 640
+  }
+ },
+ "p2_disagreement": {
+  "disagree_with_p0": 0,
+  "legal_states": 981,
+  "rate": 0.0
+ },
+ "decision_files": {
+  "a0-bitmap-d1-p0-l1": 1000,
+  "a1-bitmap-d1-p0-l1": 1000,
+  "a1-cache-d1-p0-l1": 1000,
+  "a1-cache-d1-p0-l2": 1000,
+  "a1-cache-d1-p1-l1": 1000,
+  "a1-cache-d1-p2-l1": 1000,
+  "a1-cache-d1-p3-l1": 1000,
+  "a1-cache-d1-p4-l1": 1000,
+  "a1-cache-d2-p0-l1": 250
+ },
+ "v1_evidence": {
+  "E00": "passed",
+  "E01": "passed",
+  "E02": "passed",
+  "E03": "passed",
+  "E04": "passed",
+  "E05": "passed",
+  "E06": "passed",
+  "E07": "passed",
+  "E08": "passed",
+  "E09": "passed",
+  "E10": "passed",
+  "E11": "passed",
+  "E12": "passed",
+  "E13": "passed",
+  "E14": "passed",
+  "E15": "passed",
+  "E16": "passed",
+  "E17": "passed",
+  "E18": "passed",
+  "E19": "passed"
+ },
+ "tracked_files": 409,
+ "tracked_inspection_pngs": [
+  "results/inspection/python_demo_first.png",
+  "results/inspection/python_demo_last.png",
+  "results/inspection/python_demo_middle.png",
+  "results/inspection/rtl_demo_first.png",
+  "results/inspection/rtl_demo_last.png",
+  "results/inspection/rtl_demo_middle.png",
+  "results/inspection/tournament_python_first.png",
+  "results/inspection/tournament_python_last.png",
+  "results/inspection/tournament_python_middle.png",
+  "results/inspection/tournament_rtl_first.png",
+  "results/inspection/tournament_rtl_last.png",
+  "results/inspection/tournament_rtl_middle.png"
+ ],
+ "delivered_archive": {
+  "path": "/mnt/user-data/outputs/tetromino-circuit.tar.gz",
+  "sha256": "48a4f256168c84d50aac5b28947781c8ebbcc0de5bdbdc3117536e6c4929ca50",
+  "files": 1088,
+  "tracked_files_missing_from_archive": [
+   "results/inspection/python_demo_first.png",
+   "results/inspection/python_demo_last.png",
+   "results/inspection/python_demo_middle.png",
+   "results/inspection/rtl_demo_first.png",
+   "results/inspection/rtl_demo_last.png",
+   "results/inspection/rtl_demo_middle.png",
+   "results/inspection/tournament_python_first.png",
+   "results/inspection/tournament_python_last.png",
+   "results/inspection/tournament_python_middle.png",
+   "results/inspection/tournament_rtl_first.png",
+   "results/inspection/tournament_rtl_last.png",
+   "results/inspection/tournament_rtl_middle.png"
+  ]
+ },
+ "problems": []
+}
