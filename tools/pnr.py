@@ -28,7 +28,7 @@ from model.replay import git_commit  # noqa: E402
 DEVICE = {"device": "LFE5U-85F", "flag": "--85k", "package": "CABGA381", "speed": "6"}
 CSV_FIELDS = ["commit", "toolchain_id", "arch", "board_repr", "lanes", "depth", "precision", "target", "package",
               "speed_grade", "route_seed", "target_mhz", "timing_met", "reported_fmax_mhz", "lut4", "ff", "bram", "dsp",
-              "ccu2c", "slices", "log_path", "status", "elapsed_s"]
+              "ccu2c", "trellis_comb", "trellis_ff", "log_path", "status", "elapsed_s"]
 
 
 def toolchain_id() -> str:
@@ -79,13 +79,13 @@ def route(cfg: Config, seed: int, netlist: Path, out: Path, freq: float = 50.0) 
         "timing_met": met if met is not None else False, "reported_fmax_mhz": fmax if fmax is not None else "",
         "lut4": synth_summary.get("lut4", ""), "ff": synth_summary.get("ff", ""), "bram": synth_summary.get("bram", ""),
         "dsp": synth_summary.get("dsp", ""), "ccu2c": synth_summary.get("ccu2c", ""),
-        "slices": util.get("TRELLIS_SLICE", util.get("TRELLIS_COMB", "")),
+        "trellis_comb": util.get("TRELLIS_COMB", ""), "trellis_ff": util.get("TRELLIS_FF", ""),
         "log_path": str(log.relative_to(ROOT)), "status": status, "elapsed_s": round(elapsed, 1),
     }
     (out / "summary.json").write_text(json.dumps(row, indent=1) + "\n")
     append_row(row)
     print(f"{cfg.id} seed {seed}: {status}, fmax {fmax} MHz vs {constraint} MHz, timing_met={met}, "
-          f"slices {row['slices']} ({elapsed:.0f}s)")
+          f"comb {row['trellis_comb']} ff {row['trellis_ff']} ({elapsed:.0f}s)")
     return row
 
 

@@ -1,0 +1,50 @@
+{
+ "job": "E09",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "1ed48ff4bd89875d9f71523ebdba97ad16aff83b-dirty",
+ "source_hash": "2287efec318768c1",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T04:30:19Z",
+ "note": "A0 wrapper: 3070 LUT4 / 2416 FF; routed 66.49 MHz (PASS at 50 MHz), seed 1",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-wrapper"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 5.87,
+   "log": "results/evidence/E09/cmd00.log",
+   "tests": {
+    "pytest_failed": 0,
+    "rtl_total": 4,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "synth",
+    "ARCH=0"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 15.07,
+   "log": "results/evidence/E09/cmd01.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "pnr",
+    "ARCH=0",
+    "SEED=1"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 30.91,
+   "log": "results/evidence/E09/cmd02.log",
+   "tests": {}
+  }
+ ],
+ "elapsed_s": 51.85
+}
