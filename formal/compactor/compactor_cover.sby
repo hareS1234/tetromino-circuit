@@ -1,0 +1,17 @@
+# Reachability of the extreme compactor cases (twenty full rows, no full rows, four full rows).
+[options]
+timeout 3600
+mode cover
+depth 1
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -sv row_rank20.sv line_clear_parallel.sv compactor_miter.sv
+prep -top compactor_miter
+
+[files]
+rtl/row_rank20.sv
+rtl/line_clear_parallel.sv
+formal/compactor/compactor_miter.sv

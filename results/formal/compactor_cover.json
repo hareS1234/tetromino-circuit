@@ -1,0 +1,33 @@
+{
+ "schema": "formal-result-v1",
+ "target": "compactor_cover",
+ "sby": "formal/compactor/compactor_cover.sby",
+ "mode": "cover",
+ "depth": 1,
+ "timeout_s": 3600,
+ "engine": "smtbmc boolector",
+ "status": "covered",
+ "reason": "all cover statements reached",
+ "return_code": 0,
+ "elapsed_s": 2.4,
+ "summary": [
+  "summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:02 (2)",
+  "summary: Elapsed process time [H:MM:SS (secs)]: 0:00:02 (2)",
+  "summary: engine_0 (smtbmc boolector) returned pass",
+  "summary: cover trace: /home/user/tetromino-circuit/build/formal/compactor_cover/engine_0/trace0.vcd",
+  "summary:   reached cover statement compactor_miter._witness_.check_cover_compactor_miter_sv_60_1639 at compactor_miter.sv:60.17-60.42",
+  "summary: cover trace: /home/user/tetromino-circuit/build/formal/compactor_cover/engine_0/trace1.vcd",
+  "summary:   reached cover statement compactor_miter._witness_.check_cover_compactor_miter_sv_59_1634 at compactor_miter.sv:59.17-59.61",
+  "summary: cover trace: /home/user/tetromino-circuit/build/formal/compactor_cover/engine_0/trace2.vcd",
+  "summary:   reached cover statement compactor_miter._witness_.check_cover_compactor_miter_sv_58_1631 at compactor_miter.sv:58.17-58.43",
+  "DONE (PASS, rc=0)"
+ ],
+ "traces": [
+  "summary: cover trace: /home/user/tetromino-circuit/build/formal/compactor_cover/engine_0/trace0.vcd",
+  "summary: cover trace: /home/user/tetromino-circuit/build/formal/compactor_cover/engine_0/trace1.vcd",
+  "summary: cover trace: /home/user/tetromino-circuit/build/formal/compactor_cover/engine_0/trace2.vcd"
+ ],
+ "workdir": "build/formal/compactor_cover",
+ "log": "build/formal/compactor_cover/logfile.txt",
+ "recorded_utc": "2026-09-05T15:23:48Z"
+}

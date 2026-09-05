@@ -83,6 +83,42 @@ def build(cfg: Config, out: Path | None = None, files_f: str = "rtl/files_core.f
     return exe
 
 
+def build_harness(top: str, files_f: str, driver: str, params: dict | None = None, jobs: int = 2, force: bool = False,
+                  quiet: bool = False, waivers: list | None = None) -> Path:
+    """Build a native micro-harness (top + driver) keyed by its complete identity, e.g. the compactor."""
+    params = params or {}
+    ident = native_identity(params, files_f, driver=driver, top=top)
+    key = ident["native_key"]
+    bdir = identity_dir(key)
+    exe = bdir / f"V{top}"
+    stamp = bdir / "build.json"
+    if exe.is_file() and stamp.is_file() and not force:
+        doc = json.loads(stamp.read_text())
+        if doc.get("native_key") == key and doc.get("status") == "built":
+            return exe
+    bdir.mkdir(parents=True, exist_ok=True)
+    (bdir / "identity.json").write_text(json.dumps(ident, indent=1) + "\n")
+    sources = [ROOT / s for s in ident["hdl"]["ordered"]]
+    cmd = ["bash", str(ROOT / "scripts" / "env.sh"), "verilator", "--cc", "--exe", "--build", "-j", str(jobs), "--assert",
+           "-O2", "--x-assign", "fast", "--x-initial", "fast", "--top-module", top, f"-I{ROOT / 'rtl'}",
+           "-Mdir", str(bdir), *(WARNING_WAIVERS if waivers is None else waivers), "-CFLAGS", "-O2 -std=c++17"]
+    for k, v in params.items():
+        cmd.append(f"-G{k}={v}")
+    cmd += [str(s) for s in sources] + [str(ROOT / driver)]
+    t0 = time.perf_counter()
+    proc = subprocess.run(cmd, capture_output=True, text=True)
+    (bdir / "build.log").write_text(proc.stdout + proc.stderr)
+    if proc.returncode != 0 or not exe.is_file():
+        stamp.write_text(json.dumps({"native_key": key, "top": top, "status": "failed", "exit_code": proc.returncode}, indent=1) + "\n")
+        print(proc.stdout[-3000:], proc.stderr[-3000:])
+        raise SystemExit(f"native harness build failed for {top}; see {bdir / 'build.log'}")
+    stamp.write_text(json.dumps({"native_key": key, "top": top, "params": params, "driver": driver, "files_f": files_f,
+                                 "status": "built", "elapsed_s": round(time.perf_counter() - t0, 1)}, indent=1) + "\n")
+    if not quiet:
+        print(f"built {exe.relative_to(ROOT)} ({top}, {time.perf_counter() - t0:.0f}s)")
+    return exe
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     add_config_arguments(ap)

@@ -1,0 +1,26 @@
+{
+ "schema": "formal-result-v1",
+ "target": "compactor",
+ "sby": "formal/compactor/compactor.sby",
+ "mode": "prove",
+ "depth": 2,
+ "timeout_s": 3600,
+ "engine": "smtbmc boolector",
+ "status": "unbounded",
+ "reason": "k-induction closed: holds for all inputs/states",
+ "return_code": 0,
+ "elapsed_s": 50.6,
+ "summary": [
+  "summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:50 (50)",
+  "summary: Elapsed process time [H:MM:SS (secs)]: 0:01:09 (69)",
+  "summary: engine_0 (smtbmc boolector) returned pass for basecase",
+  "summary: engine_0 (smtbmc boolector) returned pass for induction",
+  "summary: engine_0 did not produce any traces",
+  "summary: successful proof by k-induction.",
+  "DONE (PASS, rc=0)"
+ ],
+ "traces": [],
+ "workdir": "build/formal/compactor",
+ "log": "build/formal/compactor/logfile.txt",
+ "recorded_utc": "2026-09-05T15:24:42Z"
+}

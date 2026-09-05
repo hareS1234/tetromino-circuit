@@ -184,11 +184,11 @@ def analysis_identity(route_key: str, parser_version: str = PNR_PARSER_VERSION) 
 
 
 def native_identity(cfg, files_f: str = "rtl/files_core.f", root: Path = ROOT, tools: dict | None = None,
-                    flags: list | None = None) -> dict:
+                    flags: list | None = None, driver: str = "sim/main.cpp", top: str = "tetris_core") -> dict:
     root = Path(root)
     doc = {
-        "identity_version": IDENTITY_VERSION, "kind": "native", "params": _params(cfg), "hdl": hdl_closure(files_f, root=root),
-        "driver": file_record(root / "sim" / "main.cpp", root),
+        "identity_version": IDENTITY_VERSION, "kind": "native", "top": top, "params": _params(cfg), "hdl": hdl_closure(files_f, root=root),
+        "driver": file_record(root / driver, root),
         "builder": sha256_file(root / "tools" / "build_native.py") if (root / "tools" / "build_native.py").is_file() else None,
         "verilator": tool_identity("verilator", root, tools), "flags": list(flags or NATIVE_FLAGS),
     }

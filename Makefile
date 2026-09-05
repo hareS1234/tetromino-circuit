@@ -29,7 +29,7 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-lanes test-rtl check-benchmark-config bench-pilot bench measure-matrix tournament plots \
         check-report check-release reproduce clean \
         test-identities test-result-schemas check-v1-results upgrade-smoke matrix-plan matrix-status \
-        print-cfg-id check-a2-spec
+        print-cfg-id check-a2-spec test-prefix test-compactor-native formal-compactor formal-smoke
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -168,6 +168,18 @@ check-v1-results: ## U02: frozen v1 experiment validated by exact expected-job m
 upgrade-smoke: ## U02: short development preset — one real route + 50-state corpus + tiny v2 quality suite (resumable)
 	$(PY) tools/measure_matrix.py run --manifest benchmarks/smoke_v2.json
 	$(PY) tools/bench.py --suite smoke --config benchmarks/quality_smoke_v2.json --out-root results/v2
+
+# ---------------------------------------------------------------- U05 (parallel compactor)
+MODE ?= exhaustive
+test-prefix: ## U05: prefix/select reference vs local list filter, level structure, fixtures, random boards
+	$(PY) -m pytest tests/unit/test_compaction.py -q $(PYTEST_ARGS)
+test-compactor-native: ## U05/U06: native harness on the actual HDL, MODE=exhaustive|random|stream (COUNT, SEED)
+	$(PY) tools/compactor_native.py --mode $(MODE) --count $(COUNT) --seed $(SEED)
+formal-smoke: ## SBY/solver/syntax smoke proof with the pinned suite
+	$(PY) tools/formal.py smoke
+formal-compactor: formal-smoke ## U05: unbounded miter proof (DUT vs independent filter) and extreme-case covers
+	$(PY) tools/formal.py compactor
+	$(PY) tools/formal.py compactor_cover
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04: stage manifest, configuration identity, abstract cycle contract, A2 elaboration rejected

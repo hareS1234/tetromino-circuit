@@ -1,0 +1,14 @@
+[options]
+timeout 3600
+mode prove
+depth 4
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -sv smoke.sv
+prep -top smoke
+
+[files]
+formal/smoke/smoke.sv
