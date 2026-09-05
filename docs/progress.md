@@ -19,16 +19,16 @@
 | E14 lookahead RTL | passed | `results/evidence/E14` — 250/250; worst 52,469 cycles; cap-100 replays |
 | E15 two lanes | passed | `results/evidence/E15` — identical decisions; 1.87× speed-up |
 | E16 freeze the study | passed | `results/evidence/E16` — `benchmarks/config.json`, pilot estimate |
-| E17 run the study | see below | `results/quality.csv`, `results/implementation.csv`, `results/tournament_report.json` |
-| E18 portfolio and report | see below | `assets/plots/`, `README.md`, `docs/design.md` |
-| E19 fresh environment and CI | see below | `.github/workflows/ci.yml`, fresh-clone check |
+| E17 run the study | passed | `results/quality.csv`, `results/implementation.csv`, `results/tournament_report.json` |
+| E18 portfolio and report | passed | `assets/plots/`, `README.md`, `docs/design.md` |
+| E19 fresh environment and CI | passed (remote CI unverified) | `.github/workflows/ci.yml`, fresh-clone check |
 
 Last passing job, current job, next command and blockers are updated at the end of each session in
 the section below.
 
 ## Session log
 
-* Session 1 (2026-09-05): E00–E16 complete; E17 study launched (`results/logs/`). Next command:
+* Session 1 (2026-09-05): E00–E19 complete and recorded. Remote CI is unverified (no push was authorised in this session); `.github/workflows/ci.yml` uses the same bootstrap as local development. Next command for a maintainer: push and watch the `checks` workflow, then `make reproduce` on a second machine.
   `make tournament` after `make measure-matrix` finishes, then `make plots`, `python tools/write_report.py`,
   `make check-report`, `make check-release`. No blockers; the only environment restriction observed
   was that the GitHub REST API is unreachable (release assets are reachable), which the bootstrap
