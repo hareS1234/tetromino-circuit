@@ -17,7 +17,7 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 | U09 candidate pipeline | passed | `rtl/candidate_pipe.sv` (P0–P22, one advance), `tools/a2_vectors.py` + `sim/candidate_pipe_main.cpp` native harness, `tb/tb_candidate_pipe.py`; gate: cocotb 4/4, stream 4,096 tokens (spacing 1, **visible 22, transfer 23** measured), oracle traffic 1,733/1,733 (12,240/12,240 in a larger run), metadata 201/201, reset 50/50, trace `results/traces/a2_stall_reset.vcd.gz`, synthesis 5128 LUT4 / 5114 FF / 0 DSP (`results/evidence/U09`) |
 | U10 search + core integration | passed | `rtl/search_pipeline.sv`, `g_a2` in `rtl/tetris_core.sv`, A2 promoted to verified, `tools/make_corpus_v2.py` (2,000-state dev corpus, seeds 11000–11099), pair mode in `sim/main.cpp` + `tools/request_interval.py`; gate: core corpus 1000/1000 + dev 2000/2000 (min/median/max cycles 38/46/63 = N+29), tb_protocol 9/9, tb_wrapper 4/4, drivers agree 50/50, request interval 200/200 = N+31, check-a2-spec (`results/evidence/U10`) |
 | U11 verification + mutations | passed | `rtl/best_reducer.sv` + `tb/tb_best_reducer.py`, proofs `formal/reducer` and `formal/control` (**unbounded**, covers reached), `tools/run_mutations.py` 12/12 killed, `docs/verification_a2.md`; gate `verify-a2-release` (77 cocotb tests, 3,450 native decisions, exhaustive masks, streams, A0/A1 regression), `formal-a2-control`, `mutation-check-a2`, A2 replays 2000–2002 (`results/evidence/U11`, 556 s) |
-| U12 route A2 | pending | |
+| U12 route A2 | passed | `docs/timing_journal.md`: route 1 (50 MHz, seed 1, -nodsp) **met** at 71.77 MHz, worst path P14 comparator tree; P14 regrouped to a one-hot select (no bank/equation change), route 2 **met** at 76.36 MHz (LUT4 6,104, FF 5,489, CCU2C 418, 0 DSP), new worst path ROM→P0 height mux; pilots 60 MHz met, 80 MHz failed (76.36). Gate: hierarchy 4/4, block/stream/corpus re-verified (`results/evidence/U12`) |
 | U13 four-lane A1 | pending | |
 | U14 quantization ladder | pending | |
 | U15 v2 benchmarks/statistics | pending | |
@@ -29,8 +29,8 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 
 ## Current
 
-* Last passing job: U11 (U03 is blocked on the remote run only; its local validation passed).
-* Current job: U12.
+* Last passing job: U12 (U03 is blocked on the remote run only; its local validation passed).
+* Current job: U13.
 * Active process/log: none.
-* Next command: `make synth ARCH=2 BOARD_REPR=1` (inspect hierarchy/resources, no serial line_clear in the A2 path), `make pnr ARCH=2 BOARD_REPR=1 FREQ=50 SEED=1`, read the worst path, `docs/timing_journal.md`.
+* Next command: four-lane A1 (`Config(1,1,4,1,0)`, ownership counts O [3,2,2,2], N=17 [5,4,4,4], N=34 [9,9,8,8]), `tb/tb_lanes.py` extension, common 1,000-state corpus, lane analysis.
 * Blockers: remote CI (U03/U20) and Mac execution (U20) are environment blockers; A2 work is not blocked.

@@ -1,0 +1,139 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U12",
+ "status": "passed",
+ "git_commit": "0cb31033b190997b83d04703139868ce0301e7c5",
+ "git_modified_tracked": [],
+ "git_untracked": [],
+ "source_sha256": "ecb934b9a3af6e52304d5e07734c2fd721ed9e4a1d2209633557545fac4512ab",
+ "configuration_id": "a2-cache-d1-p0-l1",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T16:40:13Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "route-a2-dev",
+    "FREQ=50",
+    "SEED=1"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 19.57,
+   "log": "results/evidence/U12/cmd00.log",
+   "counts": {
+    "check_synth_stream_wrapper": "4/4"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-features-pipe"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 16.73,
+   "log": "results/evidence/U12/cmd01.log",
+   "counts": {
+    "pytest_failed": 0,
+    "rtl_total": 3,
+    "rtl_failed": 0,
+    "check_synth_features_pipe": "3/3"
+   }
+  },
+  {
+   "argv": [
+    "python",
+    "tools/a2_native.py",
+    "--phase",
+    "all"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 13.2,
+   "log": "results/evidence/U12/cmd02.log",
+   "counts": {
+    "check_a2_stream": "4096/4096",
+    "check_a2_traffic": "1733/1733",
+    "check_a2_metadata": "201/201",
+    "check_a2_reset": "50/50"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-core",
+    "ARCH=2",
+    "BOARD_REPR=1",
+    "COUNT=1000",
+    "DRIVER=native"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 14.23,
+   "log": "results/evidence/U12/cmd03.log",
+   "counts": {
+    "native_decisions": 1000
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "hierarchy",
+   "count_key": "check_synth_stream_wrapper",
+   "values": [
+    "4/4"
+   ],
+   "ok": true
+  },
+  {
+   "name": "features_block",
+   "count_key": "rtl_total",
+   "values": [
+    3
+   ],
+   "ok": true
+  },
+  {
+   "name": "streams",
+   "count_key": "check_a2_stream",
+   "values": [
+    "4096/4096"
+   ],
+   "ok": true
+  },
+  {
+   "name": "core_corpus",
+   "count_key": "native_decisions",
+   "values": [
+    1000
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "docs/timing_journal.md",
+   "exists": true,
+   "bytes": 4297
+  },
+  {
+   "path": "results/v2/raw/routes/89d1c15de8112bfa8025f34a391154591f10bf90b7fb44e8b37ffa402e4c2f71.json",
+   "exists": true,
+   "bytes": 2928
+  },
+  {
+   "path": "results/v2/raw/routes/8b0b4756e36fd3a3fdbdbfaa37afa1eebce12fa189a493abf1b438e50539d133.json",
+   "exists": true,
+   "bytes": 2896
+  },
+  {
+   "path": "results/v2/raw/routes/02580bd7544d5767b808429ae3634ef5c31308311b52e4d9ebd821fdcf456510.json",
+   "exists": true,
+   "bytes": 2896
+  },
+  {
+   "path": "results/v2/raw/routes/6a5af1f0758a8cd3d52903b605006593185102ea867d465b608022cfcb71b7f4.json",
+   "exists": true,
+   "bytes": 3014
+  }
+ ],
+ "limitations": [],
+ "note": "A2 50 MHz seed 1: routed_timing_met before (71.77 MHz) and after (76.36 MHz) the P14 regrouping; 60 MHz met, 80 MHz failed (76.36 MHz reported); the route-a2-dev command below reuses route 2 by identity (same source/toolchain/target/seed)"
+}
