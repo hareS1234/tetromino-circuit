@@ -31,7 +31,8 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-identities test-result-schemas check-v1-results upgrade-smoke matrix-plan matrix-status \
         print-cfg-id check-a2-spec test-prefix test-compactor-native formal-compactor formal-smoke \
         test-compactor-pipe synth-compactor-pipe test-drop-merge-pipe test-features-pipe test-score-pipe \
-        test-a2-stream test-a2-metadata test-a2-reset test-a2-pipe synth-a2-pipe
+        test-a2-stream test-a2-metadata test-a2-reset test-a2-pipe synth-a2-pipe \
+        test-a2-core-extra test-request-interval corpus-v2-dev
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -217,6 +218,14 @@ test-a2-reset: ## U09: reset at every occupancy (stalled and not), at last issue
 	$(PY) tools/a2_native.py --phase reset --contexts $(A2_CONTEXTS) --trace build/traces/a2_stall_reset.vcd
 synth-a2-pipe: ## U09: micro-synthesis of candidate_pipe (no latch/DSP)
 	$(PY) tools/synth_module.py --top candidate_pipe --files-f rtl/files_candidate_pipe.f --expect-no-latch --expect-no-dsp --expect-ff-min 4000
+
+# ---------------------------------------------------------------- U10 (search + core integration)
+corpus-v2-dev: ## U10: regenerate the 2,000-state development corpus (seeds 11000-11099) and its sidecar
+	$(PY) tools/make_corpus_v2.py --out benchmarks/states/corpus_d1_upgrade_dev.jsonl --seed-base 11000
+test-a2-core-extra: ## U10: A2 whole-core equivalence on the 2,000-state development corpus (native), with category coverage
+	$(PY) tools/test_core.py --arch 2 --board-repr 1 --count 2000 --driver native --corpus benchmarks/states/corpus_d1_upgrade_dev.jsonl --out build/decisions/a2-cache-d1-p0-l1_native_dev2000.csv
+test-request-interval: ## U10: two real acceptance edges per pair (batch mode) vs the inferred interval and, for A2, D(N)=N+29 / R(N)=N+31
+	$(PY) tools/request_interval.py $(CFG) --count 200
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04: stage manifest, configuration identity, abstract cycle contract, A2 elaboration rejected

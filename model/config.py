@@ -41,7 +41,8 @@ class Config:
         return asdict(self)
 
 
-# The nine verified v1 hardware configurations (manual E16/7E.1).
+# The nine verified v1 hardware configurations (manual E16/7E.1) plus the A2 candidate pipeline
+# (docs/design_a2.md; declared in U04, promoted here in U10 when rtl/search_pipeline.sv passed its gates).
 SUPPORTED = (
     Config(0, 0, 1, 1, 0),
     Config(1, 0, 1, 1, 0),
@@ -52,16 +53,15 @@ SUPPORTED = (
     Config(1, 1, 1, 1, 4),
     Config(1, 1, 1, 2, 0),
     Config(1, 1, 2, 1, 0),
-)
-SUPPORTED_IDS = {c.id: c for c in SUPPORTED}
-
-# Declared by a specification, not yet verified: A2 candidate pipeline (docs/design_a2.md, U04).
-# Exactly Config(2, 1, 1, 1, 0) is declared; every other A2 combination (bitmap, depth two, several
-# lanes, approximate profiles) is unsupported outright.  Promotion to SUPPORTED happens in U10 when
-# rtl/search_pipeline.sv exists and its gates pass.
-DECLARED = (
     Config(2, 1, 1, 1, 0),
 )
+SUPPORTED_IDS = {c.id: c for c in SUPPORTED}
+V1_SUPPORTED_IDS = {c.id for c in SUPPORTED[:9]}   # the frozen v1 matrix
+
+# Declared by a specification but not yet verified (empty since U10; four-lane A1 is added by U13
+# directly as verified).  Every other A2 combination (bitmap, depth two, several lanes, approximate
+# profiles) is unsupported outright.
+DECLARED = ()
 DECLARED_IDS = {c.id: c for c in DECLARED}
 
 
@@ -82,7 +82,7 @@ def validate(cfg: Config) -> Config:
         raise ValueError(f"configuration {cfg.id} is declared (docs/design_a2.md) but not implemented/verified; "
                          "it cannot be built, simulated, synthesized or benchmarked until its upgrade job passes")
     if cfg.arch == 2:
-        raise ValueError(f"configuration {cfg.id} is not supported: A2 is specified only as {DECLARED[0].id} "
+        raise ValueError(f"configuration {cfg.id} is not supported: A2 is specified only as a2-cache-d1-p0-l1 "
                          "(cache representation, one lane, depth one, exact profile)")
     raise ValueError(f"configuration {cfg.id} is not implemented/verified; supported: "
                      + ", ".join(sorted(SUPPORTED_IDS)))
@@ -93,7 +93,7 @@ def from_args(args) -> Config:
 
 
 def add_config_arguments(parser, defaults: Config = Config()):
-    parser.add_argument("--arch", type=int, default=defaults.arch, help="0 serial A0, 1 fast A1, 2 candidate pipeline A2 (declared)")
+    parser.add_argument("--arch", type=int, default=defaults.arch, help="0 serial A0, 1 fast A1, 2 pipelined candidate evaluator A2")
     parser.add_argument("--board-repr", dest="board_repr", type=int, default=defaults.board_repr,
                         help="0 bitmap only, 1 bitmap plus exact height cache")
     parser.add_argument("--lanes", type=int, default=defaults.lanes)

@@ -167,6 +167,6 @@ def test_manifest_validation(sandbox):
     (root / "bad.json").write_text(json.dumps({"schema": "hardware-matrix-v1"}))
     with pytest.raises(SystemExit, match="schema must be"):
         mm.load_manifest(root / "bad.json")
-    (root / "bad.json").write_text(json.dumps(dict(MANIFEST, configurations=["a2-cache-d1-p0-l1"])))
+    (root / "bad.json").write_text(json.dumps(dict(MANIFEST, configurations=["a2-bitmap-d1-p0-l1"])))
     with pytest.raises(SystemExit, match="unsupported configuration"):
         mm.load_manifest(root / "bad.json")

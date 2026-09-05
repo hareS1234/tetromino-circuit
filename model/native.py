@@ -38,6 +38,27 @@ class NativeCore:
         self.requests += 1
         return rec
 
+    def request_pair(self, rows1, piece1, next1, rows2, piece2, next2) -> tuple[dict, dict]:
+        """Batch mode: the second request is offered while the first is in flight; the first response
+        carries interval_measured = edges between the two real acceptance edges."""
+        w1, w2 = board_words(rows1), board_words(rows2)
+        line = f"P {piece1} {next1} " + " ".join(str(w) for w in w1) + f" {piece2} {next2} " + " ".join(str(w) for w in w2) + "\n"
+        self.proc.stdin.write(line)
+        self.proc.stdin.flush()
+        out1 = self.proc.stdout.readline()
+        out2 = self.proc.stdout.readline()
+        if not out1 or not out2:
+            err = self.proc.stderr.read()
+            raise RuntimeError(f"native driver exited (code {self.proc.poll()}): {err.strip()}")
+        v1 = [int(p) for p in out1.split()]
+        v2 = [int(p) for p in out2.split()]
+        if len(v1) != len(self.FIELDS) + 1 or len(v2) != len(self.FIELDS):
+            raise RuntimeError(f"malformed pair response: {out1!r} {out2!r}")
+        rec1 = dict(zip(self.FIELDS + ("interval_measured",), v1))
+        rec2 = dict(zip(self.FIELDS, v2))
+        self.requests += 2
+        return rec1, rec2
+
     def close(self):
         if self.proc.poll() is None:
             self.proc.stdin.close()

@@ -1,0 +1,30 @@
+{
+ "schema": "corpus-meta-v1",
+ "corpus": "benchmarks/states/corpus_d1_upgrade_dev.jsonl",
+ "seed_base": 11000,
+ "seeds": [
+  11000,
+  11099
+ ],
+ "quotas": {
+  "heuristic_trajectory": 600,
+  "random_trajectory": 600,
+  "high_stack_holes": 400,
+  "structured": 400
+ },
+ "counts": {
+  "heuristic_trajectory": 600,
+  "random_trajectory": 600,
+  "high_stack_holes": 400,
+  "structured": 400
+ },
+ "states": 2000,
+ "unique_states": 2000,
+ "legal": 1963,
+ "no_move": 37,
+ "generator_sha256": "329ff1c9ec1db63a6104a5ba3644cacca7e3d655fe02983e72eb5d9f84a9f253",
+ "v1_helpers_sha256": "ba325623b6d5142aef307c180c9e412a68ce10d35d93a47058f5a93b313245f8",
+ "model_closure": "0e6a97de7857079991eb826edb8308978aaf4981f4dde93f1a290b8818e32358",
+ "corpus_sha256": "73f506c4c1e9655ba2771773e5a42c4a97bdcaa86c347a680e03ed5432471d69",
+ "note": "category mixture is a test design, not the frequency of states in ordinary games"
+}

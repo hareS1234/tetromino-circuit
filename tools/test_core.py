@@ -34,8 +34,8 @@ DECISION_FIELDS = ["commit", "arch", "board_repr", "lanes", "depth", "precision"
                    "request_interval_cycles", "driver"]
 
 
-def load_corpus(depth: int, count: int):
-    path = ROOT / "benchmarks" / "states" / ("corpus_d2.jsonl" if depth == 2 else "corpus_d1.jsonl")
+def load_corpus(depth: int, count: int, corpus: str | None = None):
+    path = ROOT / corpus if corpus else ROOT / "benchmarks" / "states" / ("corpus_d2.jsonl" if depth == 2 else "corpus_d1.jsonl")
     recs = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
     if count > len(recs):
         raise SystemExit(f"corpus has {len(recs)} distinct cases; {count} requested")
@@ -119,10 +119,11 @@ def main() -> int:
     ap.add_argument("--driver", default="native", choices=["native", "cocotb", "both"])
     ap.add_argument("--max-cycles", type=int, default=None)
     ap.add_argument("--out", default=None, help="native decision CSV path (default build/decisions/<config>_native_<count>.csv)")
+    ap.add_argument("--corpus", default=None, help="alternative depth-one corpus (e.g. benchmarks/states/corpus_d1_upgrade_dev.jsonl)")
     args = ap.parse_args()
     cfg = validate(Config(args.arch, args.board_repr, args.lanes, args.depth, args.precision))
     max_cycles = args.max_cycles or (4_000_000 if cfg.depth == 2 else (60_000 if cfg.arch == 0 else 10_000))
-    corpus = load_corpus(cfg.depth, args.count)
+    corpus = load_corpus(cfg.depth, args.count, args.corpus)
 
     native = cocotb_rsp = None
     if args.driver in ("native", "both"):
@@ -139,6 +140,13 @@ def main() -> int:
             raise SystemExit(f"native: {mism} of {len(corpus)} decisions disagree with the reference")
         cyc = sorted(r["cycles"] for r in native)
         print(f"native: all {len(corpus)} decisions match; cycles min {cyc[0]} median {cyc[len(cyc) // 2]} max {cyc[-1]}")
+        cats = {}
+        for rec, rsp in zip(corpus, native):
+            cats[rec["category"]] = cats.get(rec["category"], 0) + 1
+        no_move = sum(1 for r in native if r["no_move"])
+        last_win = sum(1 for rec, rsp in zip(corpus, native)
+                       if not rsp["no_move"] and (10 * rsp["rotation"] + rsp["x"]) == candidate_ids(rec["piece"])[-1])
+        print(f"native: categories {cats}; no-move decisions {no_move}; last-candidate winners {last_win}")
         write_rows(cfg, "native", corpus, native, ROOT / args.out if args.out else ROOT / "build" / "decisions" / f"{cfg.id}_native_{args.count}.csv")
     if args.driver in ("cocotb", "both"):
         cocotb_rsp = run_cocotb(cfg, args.count)

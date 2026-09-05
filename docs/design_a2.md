@@ -1,9 +1,10 @@
 # A2 candidate pipeline — implementation specification (U04)
 
-Status: **declared, not verified**. `Config(2, 1, 1, 1, 0)` (`a2-cache-d1-p0-l1`) exists in
-`model/config.py` as a declared configuration so manifests and documents can name it; `validate()`
-rejects it and `tetris_core`'s `CFG_OK` does not admit `ARCH == 2` until `rtl/search_pipeline.sv`
-and `rtl/candidate_pipe.sv` exist and pass U09–U11. Nothing returns a canned move for A2.
+Status: **implemented and verified at the core level (U10)**; the U04 revision of this document
+declared `Config(2, 1, 1, 1, 0)` (`a2-cache-d1-p0-l1`) without sources. Since U10 the configuration
+is in `SUPPORTED`, `tetris_core`'s `CFG_OK` admits exactly `ARCH == 2 && BOARD_REPR == 1 &&
+LANES == 1 && DEPTH == 1 && PRECISION == 0`, and the measured latencies (§8) are recorded from RTL.
+Routing (U12) and the release matrix (U17) are separate evidence.
 
 This document restates guide §4–§7 with the exact names used in this repository. The register
 schedule lives in `architecture/a2_stages.json`; the cycle contract is executable in
@@ -55,9 +56,11 @@ A2 is validated with one lane, so its result occupies lane slot 0 and the existi
 `CFG_OK` gains exactly `ARCH == 2 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 1 && PRECISION == 0`
 in U10; A2 with the bitmap representation, depth two, several lanes or an approximate profile
 fails in `model/config.py` (`validate`) and in elaboration (`$error`). `rtl/files.f` and
-`rtl/files_core.f` gain, in dependency order, `row_rank20.sv`, `line_clear_parallel.sv`,
-`line_clear_pipe.sv`, `drop_merge_pipe.sv`, `features_pipe.sv`, `score_pipe.sv`,
-`candidate_pipe.sv`, `search_pipeline.sv` before `tetris_core.sv`. The Makefile derives
+`rtl/files_core.f` gain, in dependency order, `rank_level.sv`, `row_rank20.sv`, `rank_match.sv`,
+`row_select_groups.sv`, `row_select_final.sv`, `drop_merge_pipe.sv`, `line_clear_pipe.sv`,
+`features_pipe.sv`, `score_pipe.sv`, `candidate_pipe.sv`, `search_pipeline.sv` before
+`tetris_core.sv` (`line_clear_parallel.sv` is the combinational reference used by the formal miter
+and the native harness, not a production file). The Makefile derives
 `CFG_ID` from `python -m model.config` so `a2-cache-d1-p0-l1` is spelled by the same code as
 every other id.
 
@@ -201,9 +204,13 @@ and output capacity exists; all N tokens pass through all banks.
 | N + 28 | core registers lane slot 0 (`FINALIZE`) |
 | N + 29 | `rsp_valid` |
 
-Target decision latency `D(N) = N + 29`: 38 cycles for O, 46 for I/S/Z, 63 for T/J/L. These are
-targets until U10 measures them on the RTL; the measured count is never altered to fit the
-formula — a differing controller transition produces a documented new equation.
+Target decision latency `D(N) = N + 29`: 38 cycles for O, 46 for I/S/Z, 63 for T/J/L.
+**Measured (U10):** the native driver reports exactly 38 / 46 / 63 cycles on the 1,000-state v1
+corpus and the 2,000-state development corpus (min/median/max 38/46/63), and
+`tools/request_interval.py` measures 40 / 48 / 65 edges between two real acceptance edges with the
+second request offered during the first (`R(N) = D(N) + 2`), equal to the single-request inferred
+interval on 200 pairs. The measured count was not altered to fit the formula; the controller
+transitions are exactly those of the table.
 
 Why candidate II and request interval differ: the pipeline accepts one candidate per cycle, but
 the public core is single-outstanding, so a second board cannot be accepted before the first

@@ -1,7 +1,8 @@
 // Drop-only Tetris decision engine: request (board, piece[, next piece]) -> best action.
 // Ready/valid on both sides, one outstanding request, response fields held until consumed.
 // Parameters (validated at elaboration against the supported matrix):
-//   ARCH       0 serial A0 evaluator, 1 fast A1 evaluator
+//   ARCH       0 serial A0 evaluator, 1 fast A1 evaluator, 2 pipelined candidate evaluator (A2, one lane,
+//              cache representation, depth one, exact profile; docs/design_a2.md)
 //   BOARD_REPR 0 bitmap only, 1 bitmap plus an exact height cache built once per request
 //   LANES      1 or 2 evaluator lanes (depth one only)
 //   DEPTH      1 or 2 (two-piece lookahead, A1/cache/one lane only)
@@ -36,7 +37,8 @@ module tetris_core #(
         (ARCH == 1 && BOARD_REPR == 0 && LANES == 1 && DEPTH == 1 && PRECISION == 0) ||
         (ARCH == 1 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 1 && PRECISION >= 0 && PRECISION <= 4) ||
         (ARCH == 1 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 2 && PRECISION == 0) ||
-        (ARCH == 1 && BOARD_REPR == 1 && LANES == 2 && DEPTH == 1 && PRECISION == 0);
+        (ARCH == 1 && BOARD_REPR == 1 && LANES == 2 && DEPTH == 1 && PRECISION == 0) ||
+        (ARCH == 2 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 1 && PRECISION == 0);
     generate
         if (!CFG_OK) begin : g_bad_cfg
             $error("tetris_core: unsupported parameter combination ARCH/BOARD_REPR/LANES/DEPTH/PRECISION");
@@ -78,7 +80,14 @@ module tetris_core #(
     logic [4:0]         s_y;
 
     generate
-        if (DEPTH == 1) begin : g_d1
+        if (ARCH == 2) begin : g_a2
+            // A2: one pipelined search mapped to lane slot 0; the existing SEARCH_WAIT/REDUCE/FINALIZE path is reused
+            search_pipeline u_search (
+                .clk, .rst, .start_i(search_start), .board_i(board_q), .heights_i(heights_q), .piece_i(piece_q),
+                .count_i(count), .busy_o(), .done_o(lane_done[0]), .best_valid_o(lane_best_valid[0]),
+                .best_score_o(lane_score[0]), .best_id_o(lane_id[0]), .best_y_o(lane_y[0]), .issued_o(), .retired_o());
+            assign s_done = 1'b0; assign s_valid = 1'b0; assign s_score = 32'sd0; assign s_id = 6'd0; assign s_y = 5'd0;
+        end else if (DEPTH == 1) begin : g_d1
             for (genvar k = 0; k < LANES; k++) begin : g_lane
                 lane_player #(.ARCH(ARCH), .BOARD_REPR(BOARD_REPR), .PRECISION(PRECISION), .LANES(LANES), .LANE_INDEX(k)) u_lane (
                     .clk, .rst, .start_i(search_start), .board_i(board_q), .heights_i(heights_q), .piece_i(piece_q),

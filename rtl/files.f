@@ -13,5 +13,16 @@ rtl/features_fast.sv
 rtl/candidate_eval.sv
 rtl/lane_player.sv
 rtl/search_depth2.sv
+rtl/rank_level.sv
+rtl/row_rank20.sv
+rtl/rank_match.sv
+rtl/row_select_groups.sv
+rtl/row_select_final.sv
+rtl/drop_merge_pipe.sv
+rtl/line_clear_pipe.sv
+rtl/features_pipe.sv
+rtl/score_pipe.sv
+rtl/candidate_pipe.sv
+rtl/search_pipeline.sv
 rtl/tetris_core.sv
 rtl/stream_wrapper.sv

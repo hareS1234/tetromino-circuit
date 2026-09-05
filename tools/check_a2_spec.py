@@ -112,12 +112,23 @@ def check_identity(problems: list) -> tuple[int, int]:
 
     a2 = Config(2, 1, 1, 1, 0)
     chk(a2.id == "a2-cache-d1-p0-l1", f"A2 id {a2.id}")
-    chk(status(a2) == "declared" and a2.id in DECLARED_IDS and a2.id not in SUPPORTED_IDS, "A2 must be declared, not verified")
-    try:
-        validate(a2)
-        chk(False, "validate accepted the declared A2 configuration")
-    except ValueError as exc:
-        chk("declared" in str(exc) and "not implemented/verified" in str(exc), f"unexpected message: {exc}")
+    st = status(a2)
+    sources = [ROOT / "rtl" / f for f in ("candidate_pipe.sv", "search_pipeline.sv")]
+    in_lists = all(f.name in (ROOT / "rtl" / lst).read_text() for f in sources for lst in ("files.f", "files_core.f"))
+    if st == "declared":
+        chk(a2.id in DECLARED_IDS and a2.id not in SUPPORTED_IDS, "declared A2 must not be verified")
+        chk(not all(f.is_file() for f in sources), "A2 sources exist but the configuration is still declared: promote or remove")
+        try:
+            validate(a2)
+            chk(False, "validate accepted the declared A2 configuration")
+        except ValueError as exc:
+            chk("declared" in str(exc) and "not implemented/verified" in str(exc), f"unexpected message: {exc}")
+    else:
+        chk(st == "verified" and a2.id in SUPPORTED_IDS, f"A2 status {st}")
+        chk(all(f.is_file() for f in sources) and in_lists, "verified A2 requires its sources in rtl/files.f and rtl/files_core.f")
+        chk(validate(a2) is a2, "validate must accept the verified A2 configuration")
+        chk("ARCH == 2 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 1 && PRECISION == 0" in (ROOT / "rtl" / "tetris_core.sv").read_text(),
+            "tetris_core CFG_OK must admit exactly the A2 configuration")
     for bad in (Config(2, 0, 1, 1, 0), Config(2, 1, 2, 1, 0), Config(2, 1, 4, 1, 0), Config(2, 1, 1, 2, 0), Config(2, 1, 1, 1, 1),
                 Config(2, 1, 1, 1, 5)):
         try:
@@ -125,7 +136,8 @@ def check_identity(problems: list) -> tuple[int, int]:
             chk(False, f"validate accepted {bad.id}")
         except ValueError as exc:
             chk(status(bad) == "unsupported" and "not supported" in str(exc), f"{bad.id}: {exc}")
-    chk(len(SUPPORTED_IDS) == 9, "the nine v1 configurations must stay verified")
+    from model.config import V1_SUPPORTED_IDS
+    chk(len(V1_SUPPORTED_IDS) == 9 and V1_SUPPORTED_IDS <= set(SUPPORTED_IDS), "the nine v1 configurations must stay verified")
     out = subprocess.run([sys.executable, "-m", "model.config", "2", "1", "1", "1", "0"], cwd=ROOT, capture_output=True, text=True)
     chk(out.stdout.strip() == "a2-cache-d1-p0-l1", "python -m model.config does not print the id")
     mk = (ROOT / "Makefile").read_text()
@@ -170,7 +182,8 @@ def check_latency(m: dict, problems: list) -> tuple[int, int]:
 
 
 def check_elaboration(problems: list) -> tuple[int, int]:
-    """V01 (pre-U10 half): direct elaboration of tetris_core with ARCH=2 must fail."""
+    """V01: direct elaboration of tetris_core with ARCH=2 fails while A2 is declared and succeeds once verified;
+    the nearby unsupported A2 combinations must always fail."""
     files = [str(ROOT / s) for s in (ROOT / "rtl" / "files_core.f").read_text().split() if s.endswith(".sv")]
     from tools.build_native import WARNING_WAIVERS
     # no -Wno-fatal: it would demote the $error guard (v1 lesson); legacy warning waivers as in the native build
@@ -178,15 +191,35 @@ def check_elaboration(problems: list) -> tuple[int, int]:
            f"-I{ROOT / 'rtl'}", "-GARCH=2", "-GBOARD_REPR=1", "-GLANES=1", "-GDEPTH=1", "-GPRECISION=0", *files]
     out = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     text = out.stdout + out.stderr
-    rejected = out.returncode != 0 and "unsupported parameter combination" in text
-    if not rejected:
-        problems.append(f"A2 elaboration was not rejected (exit {out.returncode})")
-    good = subprocess.run(cmd[:-len(files)] + ["-GARCH=1"] + files, cwd=ROOT, capture_output=True, text=True)
-    # the same command with ARCH=1 must not report the configuration error
-    ok_good = "unsupported parameter combination" not in (good.stdout + good.stderr)
-    if not ok_good:
+    ok = total = 0
+    if status(Config(2, 1, 1, 1, 0)) == "declared":
+        total += 1
+        if out.returncode != 0 and "unsupported parameter combination" in text:
+            ok += 1
+        else:
+            problems.append(f"A2 elaboration was not rejected (exit {out.returncode})")
+    else:
+        total += 1
+        if out.returncode == 0:
+            ok += 1
+        else:
+            problems.append(f"verified A2 does not elaborate (exit {out.returncode}): {text[-400:]}")
+    # nearby unsupported combinations must fail in elaboration
+    base = cmd[:-len(files)]
+    for override in (["-GBOARD_REPR=0"], ["-GLANES=2"], ["-GDEPTH=2"], ["-GPRECISION=1"]):
+        total += 1
+        bad = subprocess.run(base + override + files, cwd=ROOT, capture_output=True, text=True)
+        if bad.returncode != 0 and "unsupported parameter combination" in bad.stdout + bad.stderr:
+            ok += 1
+        else:
+            problems.append(f"A2 with {override} was not rejected in elaboration")
+    total += 1
+    good = subprocess.run(base + ["-GARCH=1"] + files, cwd=ROOT, capture_output=True, text=True)
+    if "unsupported parameter combination" not in (good.stdout + good.stderr):
+        ok += 1
+    else:
         problems.append("ARCH=1 elaboration reported the configuration error")
-    return int(rejected) + int(ok_good), 2
+    return ok, total
 
 
 def main() -> int:
@@ -206,7 +239,7 @@ def main() -> int:
         for p in problems:
             print("  -", p)
         return 1
-    print("check-a2-spec: OK (A2 remains declared, not verified)")
+    print(f"check-a2-spec: OK (A2 {status(Config(2, 1, 1, 1, 0))})")
     return 0
 
 

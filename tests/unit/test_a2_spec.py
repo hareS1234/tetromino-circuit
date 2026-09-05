@@ -76,12 +76,13 @@ def test_manifest_groups_tile_the_pipeline():
 
 # ---- configuration identity ---------------------------------------------------------------------------------
 
-def test_a2_is_declared_not_verified_and_neighbours_are_unsupported():
+def test_a2_identity_and_neighbours_are_unsupported():
+    """Since U10 the exact A2 configuration is verified; every neighbouring A2 combination stays unsupported."""
     a2 = Config(2, 1, 1, 1, 0)
-    assert a2.id == "a2-cache-d1-p0-l1" and status(a2) == "declared"
-    assert DECLARED == (a2,) and a2.id in DECLARED_IDS and a2.id not in SUPPORTED_IDS and len(SUPPORTED) == 9
-    with pytest.raises(ValueError, match="declared .* not implemented/verified"):
-        validate(a2)
+    assert a2.id == "a2-cache-d1-p0-l1" and status(a2) == "verified" and validate(a2) is a2
+    assert a2.id in SUPPORTED_IDS and DECLARED == () and len(SUPPORTED) == 10
+    from model.config import V1_SUPPORTED_IDS
+    assert len(V1_SUPPORTED_IDS) == 9 and a2.id not in V1_SUPPORTED_IDS
     for bad in (Config(2, 0, 1, 1, 0), Config(2, 1, 2, 1, 0), Config(2, 1, 4, 1, 0), Config(2, 1, 1, 2, 0), Config(2, 1, 1, 1, 1),
                 Config(2, 1, 1, 1, 4)):
         assert status(bad) == "unsupported"
@@ -93,14 +94,14 @@ def test_a2_is_declared_not_verified_and_neighbours_are_unsupported():
         validate(Config(3, 0, 1, 1, 0))
 
 
-def test_tools_refuse_declared_configuration():
-    """No stub returns a canned move: builders, synthesis and identities reject A2 before U10."""
+def test_tools_refuse_unsupported_a2_neighbours():
+    """No stub returns a canned move for an unsupported A2 combination."""
     import subprocess
-    for argv in (["tools/build_native.py", "--arch", "2", "--board-repr", "1", "--print-key"],
-                 ["tools/synth.py", "--arch", "2", "--board-repr", "1", "--print-key"],
-                 ["tools/test_core.py", "--arch", "2", "--board-repr", "1", "--count", "1"]):
+    for argv in (["tools/build_native.py", "--arch", "2", "--board-repr", "0", "--print-key"],
+                 ["tools/synth.py", "--arch", "2", "--board-repr", "1", "--lanes", "2", "--print-key"],
+                 ["tools/test_core.py", "--arch", "2", "--board-repr", "1", "--depth", "2", "--count", "1"]):
         r = subprocess.run(["bash", str(ROOT / "scripts" / "env.sh"), "python", *argv], cwd=ROOT, capture_output=True, text=True)
-        assert r.returncode != 0 and "declared" in r.stderr, argv
+        assert r.returncode != 0 and "not supported" in r.stderr, argv
 
 
 # ---- abstract cycle contract ----------------------------------------------------------------------------------
