@@ -1,30 +1,54 @@
 {
  "schema": "upgrade-evidence-v1",
  "job": "U11",
- "status": "failed",
- "git_commit": "52fb7d13dd4bdeca152fed729b7fcbe9e225c4be",
- "git_modified_tracked": [],
+ "status": "passed",
+ "git_commit": "99f5a17738506207bd5796e878388c8012939fa6-dirty",
+ "git_modified_tracked": [
+  "results/replays/a2-cache-d1-p0-l1_seed2000_cap250.jsonl",
+  "results/replays/a2-cache-d1-p0-l1_seed2001_cap250.jsonl",
+  "results/replays/a2-cache-d1-p0-l1_seed2002_cap250.jsonl"
+ ],
  "git_untracked": [],
- "source_sha256": "c8e476b97cc15454d6d8d7f82cb4edc0d27e12673fb4ae0fab3cfc57a9ecc199",
+ "source_sha256": "e13411b2493b18eb888788ee81c55f5940622e1cd50243a344e23e23302e5d3b",
  "configuration_id": "a2-cache-d1-p0-l1",
  "toolchain_id": "oss-cad-suite-2026-09-04",
- "recorded_utc": "2026-09-05T16:08:40Z",
+ "recorded_utc": "2026-09-05T16:19:57Z",
  "commands": [
   {
    "argv": [
     "make",
     "verify-a2-release"
    ],
-   "exit_code": 2,
-   "elapsed_s": 4.0,
+   "exit_code": 0,
+   "elapsed_s": 529.58,
    "log": "results/evidence/U11/cmd00.log",
    "counts": {
-    "pytest_passed": 14,
+    "pytest_passed": 1529,
+    "pytest_failed": 0,
+    "rtl_total": 77,
+    "rtl_failed": 0,
+    "native_decisions": 3450,
     "check_a2_stages": "39/39",
     "check_a2_widths": "5/5",
-    "check_a2_identity": "14/15",
+    "check_a2_identity": "15/15",
     "check_a2_latency": "16/16",
-    "check_a2_elaboration": "6/6"
+    "check_a2_elaboration": "6/6",
+    "check_compactor_exhaustive": "1048576/1048576",
+    "check_compactor_random": "100000/100000",
+    "check_compactor_stream_continuous": "4096/4096",
+    "check_compactor_stream_random": "4096/4096",
+    "check_compactor_stream_stalls": "8/8",
+    "check_compactor_stream_backtoback": "300/300",
+    "check_compactor_stream_reset": "22/22",
+    "check_synth_drop_merge_pipe": "3/3",
+    "check_synth_features_pipe": "3/3",
+    "check_synth_score_pipe": "3/3",
+    "check_a2_stream": "4096/4096",
+    "check_a2_traffic": "1733/1733",
+    "check_a2_metadata": "201/201",
+    "check_a2_reset": "50/50",
+    "check_request_interval_matches_inferred": "200/200",
+    "check_a2_latency_equation": "200/200"
    }
   },
   {
@@ -33,7 +57,7 @@
     "formal-a2-control"
    ],
    "exit_code": 0,
-   "elapsed_s": 2.69,
+   "elapsed_s": 2.82,
    "log": "results/evidence/U11/cmd01.log",
    "counts": {
     "check_formal_smoke": "1/1",
@@ -49,7 +73,7 @@
     "mutation-check-a2"
    ],
    "exit_code": 0,
-   "elapsed_s": 21.63,
+   "elapsed_s": 22.1,
    "log": "results/evidence/U11/cmd02.log",
    "counts": {
     "check_mutations_killed": "12/12"
@@ -67,7 +91,7 @@
     "CAP=250"
    ],
    "exit_code": 0,
-   "elapsed_s": 1.26,
+   "elapsed_s": 1.27,
    "log": "results/evidence/U11/cmd03.log",
    "counts": {}
   }
@@ -76,38 +100,50 @@
   {
    "name": "cocotb",
    "count_key": "rtl_total",
-   "values": [],
-   "ok": false
+   "values": [
+    77
+   ],
+   "ok": true
   },
   {
    "name": "native_decisions",
    "count_key": "native_decisions",
-   "values": [],
-   "ok": false
+   "values": [
+    3450
+   ],
+   "ok": true
   },
   {
    "name": "exhaustive_masks",
    "count_key": "check_compactor_exhaustive",
-   "values": [],
-   "ok": false
+   "values": [
+    "1048576/1048576"
+   ],
+   "ok": true
   },
   {
    "name": "stream",
    "count_key": "check_a2_stream",
-   "values": [],
-   "ok": false
+   "values": [
+    "4096/4096"
+   ],
+   "ok": true
   },
   {
    "name": "traffic",
    "count_key": "check_a2_traffic",
-   "values": [],
-   "ok": false
+   "values": [
+    "1733/1733"
+   ],
+   "ok": true
   },
   {
    "name": "reset",
    "count_key": "check_a2_reset",
-   "values": [],
-   "ok": false
+   "values": [
+    "50/50"
+   ],
+   "ok": true
   },
   {
    "name": "formal_control",
@@ -158,7 +194,7 @@
   {
    "path": "results/replays/a2-cache-d1-p0-l1_seed2000_cap250.jsonl",
    "exists": true,
-   "bytes": 103779
+   "bytes": 103780
   }
  ],
  "limitations": [],
