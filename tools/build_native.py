@@ -84,10 +84,11 @@ def build(cfg: Config, out: Path | None = None, files_f: str = "rtl/files_core.f
 
 
 def build_harness(top: str, files_f: str, driver: str, params: dict | None = None, jobs: int = 2, force: bool = False,
-                  quiet: bool = False, waivers: list | None = None) -> Path:
+                  quiet: bool = False, waivers: list | None = None, trace: bool = False) -> Path:
     """Build a native micro-harness (top + driver) keyed by its complete identity, e.g. the compactor."""
     params = params or {}
-    ident = native_identity(params, files_f, driver=driver, top=top)
+    flags = NATIVE_FLAGS + (["--trace"] if trace else [])
+    ident = native_identity(params, files_f, driver=driver, top=top, flags=flags)
     key = ident["native_key"]
     bdir = identity_dir(key)
     exe = bdir / f"V{top}"
@@ -101,7 +102,8 @@ def build_harness(top: str, files_f: str, driver: str, params: dict | None = Non
     sources = [ROOT / s for s in ident["hdl"]["ordered"]]
     cmd = ["bash", str(ROOT / "scripts" / "env.sh"), "verilator", "--cc", "--exe", "--build", "-j", str(jobs), "--assert",
            "-O2", "--x-assign", "fast", "--x-initial", "fast", "--top-module", top, f"-I{ROOT / 'rtl'}",
-           "-Mdir", str(bdir), *(WARNING_WAIVERS if waivers is None else waivers), "-CFLAGS", "-O2 -std=c++17"]
+           "-Mdir", str(bdir), *(WARNING_WAIVERS if waivers is None else waivers), *(["--trace"] if trace else []),
+           "-CFLAGS", "-O2 -std=c++17"]
     for k, v in params.items():
         cmd.append(f"-G{k}={v}")
     cmd += [str(s) for s in sources] + [str(ROOT / driver)]

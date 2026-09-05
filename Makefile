@@ -30,7 +30,8 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         check-report check-release reproduce clean \
         test-identities test-result-schemas check-v1-results upgrade-smoke matrix-plan matrix-status \
         print-cfg-id check-a2-spec test-prefix test-compactor-native formal-compactor formal-smoke \
-        test-compactor-pipe synth-compactor-pipe test-drop-merge-pipe test-features-pipe test-score-pipe
+        test-compactor-pipe synth-compactor-pipe test-drop-merge-pipe test-features-pipe test-score-pipe \
+        test-a2-stream test-a2-metadata test-a2-reset test-a2-pipe synth-a2-pipe
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -201,6 +202,21 @@ test-features-pipe: ## U08: P13-P19 vs direct hole counting (one-hots, height-20
 test-score-pipe: ## U08: P20-P22 at every bound, 10,000 tuples, signed scores, illegal canonicalization; smoke synthesis
 	$(RUN_RTL) --top score_pipe_harness --test tb_score_pipe --files-f rtl/files_score_pipe.f
 	$(PY) tools/synth_module.py --top score_pipe --files-f rtl/files_score_pipe.f --expect-no-latch --expect-no-dsp --expect-ff-min 100
+
+# ---------------------------------------------------------------- U09 (candidate pipeline)
+A2_CONTEXTS ?= 60
+test-a2-pipe: ## U09: cocotb protocol checks of candidate_pipe (latency 22/23, freeze, illegal order, reset)
+	$(RUN_RTL) --top candidate_pipe --test tb_candidate_pipe --files-f rtl/files_candidate_pipe.f
+test-a2-stream: test-a2-pipe ## U09: 4,096 consecutive tokens (spacing 1, visible 22, transfer 23) + oracle traffic with bubbles/stalls
+	$(PY) tools/a2_native.py --phase stream --contexts $(A2_CONTEXTS)
+	$(PY) tools/a2_native.py --phase traffic --contexts $(A2_CONTEXTS)
+test-a2-metadata: ## U09: identical candidates with distinct tags, rotation/x changing every cycle, last on an illegal token
+	$(PY) tools/a2_native.py --phase metadata --contexts $(A2_CONTEXTS)
+test-a2-reset: ## U09: reset at every occupancy (stalled and not), at last issue and just before retirement; bounded trace
+	$(PY) tools/a2_native.py --phase reset --contexts $(A2_CONTEXTS)
+	$(PY) tools/a2_native.py --phase reset --contexts $(A2_CONTEXTS) --trace build/traces/a2_stall_reset.vcd
+synth-a2-pipe: ## U09: micro-synthesis of candidate_pipe (no latch/DSP)
+	$(PY) tools/synth_module.py --top candidate_pipe --files-f rtl/files_candidate_pipe.f --expect-no-latch --expect-no-dsp --expect-ff-min 4000
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04: stage manifest, configuration identity, abstract cycle contract, A2 elaboration rejected
