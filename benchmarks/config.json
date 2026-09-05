@@ -1,0 +1,56 @@
+{
+  "spec": "drop-v1.1",
+  "frozen_note": "Frozen before any held-out (test split) outcome was inspected. Validation pilots (seeds 2000-2019) were used to set caps and check feasibility; test streams 3000-3099 are opened only by tools/bench.py suites.",
+  "coefficient_profiles": {
+    "0": {"name": "exact", "coefficients": [76, 51, 36, 18]},
+    "1": {"name": "powers_of_two", "coefficients": [64, 64, 32, 16]},
+    "2": {"name": "two_terms", "coefficients": [80, 48, 36, 18]},
+    "3": {"name": "cap_holes", "coefficients": [76, 51, 36, 18], "rule": "scoring uses min(Q,15)"},
+    "4": {"name": "no_bumpiness", "coefficients": [76, 51, 36, 0], "rule": "U datapath removed"}
+  },
+  "candidate_ordering": "dense valid-geometry list in increasing candidate_id = 10*rotation + x; ties to the lower id",
+  "random_baseline_seed": "stream_seed + 1000000",
+  "software_engine": "python-fast column-bitmask model, validated against the literal-descent reference (tests/unit/test_policy.py, test_lookahead.py) and against RTL differential corpora (results/decisions/)",
+  "suites": {
+    "precision": {
+      "policies": [
+        {"policy": "heuristic", "depth": 1, "precision": 0},
+        {"policy": "heuristic", "depth": 1, "precision": 1},
+        {"policy": "heuristic", "depth": 1, "precision": 2},
+        {"policy": "heuristic", "depth": 1, "precision": 3},
+        {"policy": "heuristic", "depth": 1, "precision": 4},
+        {"policy": "random_legal", "depth": 1, "precision": 0}
+      ],
+      "streams": {"split": "test", "seeds": [3000, 3099]},
+      "cap": 2000,
+      "baseline": {"policy": "heuristic", "depth": 1, "precision": 0}
+    },
+    "depth": {
+      "policies": [
+        {"policy": "heuristic", "depth": 1, "precision": 0},
+        {"policy": "heuristic", "depth": 2, "precision": 0}
+      ],
+      "streams": {"split": "test", "seeds": [3000, 3019]},
+      "cap": 500,
+      "baseline": {"policy": "heuristic", "depth": 1, "precision": 0},
+      "note": "predeclared smaller workload; compare only within this paired study"
+    }
+  },
+  "statistics": {"bootstrap_resamples": 2000, "bootstrap_seed": 12345, "resampling_unit": "stream id, jointly across compared policies"},
+  "hardware_matrix": {
+    "device": "LFE5U-85F", "package": "CABGA381", "speed_grade": "6", "target_mhz": 50.0, "route_seeds": [1, 2, 3, 4, 5],
+    "configurations": [
+      "a0-bitmap-d1-p0-l1", "a1-bitmap-d1-p0-l1", "a1-cache-d1-p0-l1", "a1-cache-d1-p1-l1", "a1-cache-d1-p2-l1",
+      "a1-cache-d1-p3-l1", "a1-cache-d1-p4-l1", "a1-cache-d2-p0-l1", "a1-cache-d1-p0-l2"
+    ],
+    "decision_corpus": {"depth1": "benchmarks/states/corpus_d1.jsonl", "depth2": "benchmarks/states/corpus_d2.jsonl", "driver": "native"}
+  },
+  "tournament": {
+    "seed": 2000, "cap": 100, "sync": "pieces",
+    "configurations": ["a0-bitmap-d1-p0-l1", "a1-cache-d1-p0-l1", "a1-cache-d1-p1-l1", "a1-cache-d2-p0-l1"],
+    "note": "actual RTL replays through the native Verilator driver, checked against Python at every move"
+  },
+  "expectations_from_validation_pilot": {
+    "note": "exact-policy games reached the 500-piece validation cap on 20/20 streams (about 196 lines); the 2,000-piece cap is therefore expected to censor most exact-policy games, and cap-hit fraction plus lines-at-cap are the primary statistics"
+  }
+}
