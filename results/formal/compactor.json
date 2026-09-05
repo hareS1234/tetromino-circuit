@@ -9,7 +9,7 @@
  "status": "unbounded",
  "reason": "k-induction closed: holds for all inputs/states",
  "return_code": 0,
- "elapsed_s": 50.6,
+ "elapsed_s": 50.8,
  "summary": [
   "summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:50 (50)",
   "summary: Elapsed process time [H:MM:SS (secs)]: 0:01:09 (69)",
@@ -22,5 +22,5 @@
  "traces": [],
  "workdir": "build/formal/compactor",
  "log": "build/formal/compactor/logfile.txt",
- "recorded_utc": "2026-09-05T15:24:42Z"
+ "recorded_utc": "2026-09-05T15:26:03Z"
 }

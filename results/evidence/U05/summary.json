@@ -1,0 +1,147 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U05",
+ "status": "passed",
+ "git_commit": "10ac659251dded18262ba128416fbd1abebbf829",
+ "git_modified_tracked": [],
+ "git_untracked": [],
+ "source_sha256": "0631d2dca6cf794aa4d48332e840016743bd262397236522f562062d3b22d6c0",
+ "configuration_id": null,
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T15:25:06Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-prefix"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 3.47,
+   "log": "results/evidence/U05/cmd00.log",
+   "counts": {
+    "pytest_passed": 15
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-compactor-native",
+    "MODE=exhaustive"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.13,
+   "log": "results/evidence/U05/cmd01.log",
+   "counts": {
+    "check_compactor_exhaustive": "1048576/1048576"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-compactor-native",
+    "MODE=random",
+    "COUNT=100000",
+    "SEED=3"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.37,
+   "log": "results/evidence/U05/cmd02.log",
+   "counts": {
+    "check_compactor_random": "100000/100000"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "formal-compactor"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 53.66,
+   "log": "results/evidence/U05/cmd03.log",
+   "counts": {
+    "check_formal_smoke": "1/1",
+    "check_formal_compactor": "1/1",
+    "check_formal_compactor_cover": "1/1"
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "prefix_tests",
+   "count_key": "pytest_passed",
+   "values": [
+    15
+   ],
+   "ok": true
+  },
+  {
+   "name": "exhaustive_masks",
+   "count_key": "check_compactor_exhaustive",
+   "values": [
+    "1048576/1048576"
+   ],
+   "ok": true
+  },
+  {
+   "name": "random_boards",
+   "count_key": "check_compactor_random",
+   "values": [
+    "100000/100000"
+   ],
+   "ok": true
+  },
+  {
+   "name": "formal_smoke",
+   "count_key": "check_formal_smoke",
+   "values": [
+    "1/1"
+   ],
+   "ok": true
+  },
+  {
+   "name": "formal_miter_unbounded",
+   "count_key": "check_formal_compactor",
+   "values": [
+    "1/1"
+   ],
+   "ok": true
+  },
+  {
+   "name": "formal_cover",
+   "count_key": "check_formal_compactor_cover",
+   "values": [
+    "1/1"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "rtl/row_rank20.sv",
+   "exists": true,
+   "bytes": 1722
+  },
+  {
+   "path": "rtl/line_clear_parallel.sv",
+   "exists": true,
+   "bytes": 2901
+  },
+  {
+   "path": "formal/compactor/compactor_miter.sv",
+   "exists": true,
+   "bytes": 3009
+  },
+  {
+   "path": "results/formal/compactor.json",
+   "exists": true,
+   "bytes": 853
+  },
+  {
+   "path": "results/formal/compactor_cover.json",
+   "exists": true,
+   "bytes": 1733
+  }
+ ],
+ "limitations": [],
+ "note": "miter proof is an unbounded k-induction (combinational, depth 2) by smtbmc/boolector in ~51 s; smoke proof first produced two genuine counterexamples (unconstrained initial state) before passing; exhaustive test covers all 2^20 deletion patterns, not all 2^200 boards"
+}

@@ -9,7 +9,7 @@
  "status": "covered",
  "reason": "all cover statements reached",
  "return_code": 0,
- "elapsed_s": 2.4,
+ "elapsed_s": 2.3,
  "summary": [
   "summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:02 (2)",
   "summary: Elapsed process time [H:MM:SS (secs)]: 0:00:02 (2)",
@@ -29,5 +29,5 @@
  ],
  "workdir": "build/formal/compactor_cover",
  "log": "build/formal/compactor_cover/logfile.txt",
- "recorded_utc": "2026-09-05T15:23:48Z"
+ "recorded_utc": "2026-09-05T15:26:05Z"
 }
