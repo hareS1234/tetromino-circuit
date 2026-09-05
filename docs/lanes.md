@@ -102,7 +102,7 @@ assumed. LUT4s grow slightly faster than linearly (3.48× for four evaluators); 
 over four lanes and the wider `lane_done`/best selection are small, so most of the excess is
 per-lane control plus four independent compactors and feature units.
 
-## 5. Development route (seed 1, 50 MHz, nodsp)
+## 5. Development routes (50 MHz, nodsp)
 
 `a1-cache-d1-p0-l4` on LFE5U-85F (CABGA381, speed 6), `nextpnr-ecp5 0.11.1`, `--freq 50`,
 auto-allocated I/O, `route-record-v2` records under `results/v2/raw/routes/<route_key>.json`:
@@ -110,12 +110,20 @@ auto-allocated I/O, `route-record-v2` records under `results/v2/raw/routes/<rout
 | Budget | Status | Placement estimate | Routed fmax | Wall | Record |
 |---|---|---|---|---|---|
 | 1,200 s | **`route_timeout`** — "declared route budget exhausted (a resource limit, not proof the design cannot route)" | 57.15 MHz (PASS at 50 MHz) | none (routing did not finish; no timing report) | 1,200.6 s, peak RSS 773 MB | `3137bdf7316a474f…json` |
-| 3,600 s | running when this document was written; its record is added here when it lands | | | | |
+| 3,600 s | **`route_timeout`** again: `router1` still had 261 overflowing nets after 3,467 s of routing (from 436 at 2,080 s), converging but far too slowly for the budget | 57.15 MHz (same placement) | none | 3,601 s, peak RSS 791 MB | `1a652e90dca4bbd2…json` |
+| seed 2, 3,600 s | **`routed_timing_met`** — reported fmax **65.96 MHz** at the 50 MHz constraint; worst path 15.16 ns (6.34 logic + 8.82 routing) inside lane 3's fast drop unit (`u_drop.d_q[0]` → `y_o`, the closed-form landing arithmetic) | 63.16 MHz | 65.96 MHz | 214 s, peak RSS 824 MB | `a975dba249d57d66…json` |
 
-Placement finished in 93 s with a 57.15 MHz estimate; `router1` was still at an overflow of
-950–1,935 nets after 1,000 s (72,794 arcs), oscillating rather than converging. That is the same
-symptom as the one non-converging two-lane seed in the v1 matrix (`results/implementation.csv`:
-4/5 two-lane routes met 50 MHz). The likely cause is fan-out rather than utilisation (17 % of the
+Placement finished in 93 s with a 57.15 MHz estimate; `router1` was at an overflow of 950–1,935
+nets after 1,000 s (72,794 arcs) and still 261 after 3,467 s — converging at roughly 100 nets per
+1,000 s, so a complete route of this seed would need on the order of 1.5–2 hours. That is the
+same symptom as the one non-converging two-lane seed in the v1 matrix
+(`results/implementation.csv`: 4/5 two-lane routes met 50 MHz). Seed 2 of the same netlist routed
+in 214 s and met 50 MHz at a reported 65.96 MHz, so the seed-1 outcome is a placement that
+`router1` cannot resolve within hours, not a property of the four-lane netlist; the v1 one-lane
+cores reported 62–69 MHz under the default DSP policy and the v1 toolchain (a different identity),
+so four lanes cost no clock rate in this one comparison. Both seed-1 timeouts stay on record as
+outcomes of their seed and budget, and the U17 matrix must expect that some four-lane seeds do not
+route within its timeout. The likely cause is fan-out rather than utilisation (17 % of the
 85F's LUT4s): the core broadcasts the 200-bit latched board and the 50-bit heights to four
 evaluators, and each `REDUCE` input multiplexes four 44-bit best records. Nothing here is a timing
 result: no routed report exists for four lanes yet, and the timed-out record is kept as the
