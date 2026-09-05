@@ -36,7 +36,8 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-reducer verify-a2-release formal-a2-control mutation-check-a2 regress-a0-a1 route-a2-dev \
         test-precision-v2 analyze-precision-v2 synth-scorer-study \
         streams-v2 test-benchmark-v2 test-statistics-v2 bench-v2 check-quality-v2 analyze-quality-v2 \
-        measure-v2 check-hardware-v2 a2-stream-stats plots-v2
+        measure-v2 check-hardware-v2 a2-stream-stats plots-v2 \
+        trace-a2-demo check-trace render-a2-demo check-viewer diagrams
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -326,6 +327,23 @@ a2-stream-stats: ## U17: A2 candidate acceptance spacing, latencies and occupanc
 	$(PY) tools/request_interval.py --arch 2 --board-repr 1 --count 200
 plots-v2: ## U17: architecture figures from raw records with per-point job keys (results/v2/figures/)
 	$(PY) tools/plots_v2.py --manifest $(HARDWARE_V2)
+
+# ---------------------------------------------------------------- U18 (architecture replay)
+trace-a2-demo: ## U18: export the three a2-trace-v1 stories from the real RTL (results/traces/a2_*.json)
+	$(PY) tools/trace_a2.py --story all
+check-trace: ## U18: validate every trace (conservation, order, stall stability, reset flush, scores, best, public response)
+	$(PY) tools/check_trace.py
+render-a2-demo: ## U18: GIFs + first/middle/last stills from the traces, the bundled viewer demo and the static SVG diagrams
+	$(PY) tools/render_a2_demo.py --trace results/traces/a2_normal_search.json --gif assets/a2_pipeline.gif
+	$(PY) tools/render_a2_demo.py --trace results/traces/a2_last_candidate_wins.json --gif assets/a2_last_candidate_wins.gif
+	$(PY) tools/render_a2_demo.py --trace results/traces/a2_stall_reset.json --gif assets/a2_stall_reset.gif
+	$(PY) tools/build_viewer_demo.py --trace results/traces/a2_normal_search.json --out viewer/demo.html
+	$(PY) tools/diagrams.py
+	$(PY) tools/check_viewer.py
+check-viewer: ## U18: static accessibility/consistency checks of viewer/ and the bundled demo
+	$(PY) tools/check_viewer.py
+diagrams: ## U18: regenerate assets/diagrams/*.svg
+	$(PY) tools/diagrams.py
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04/U13: stage manifest, configuration identity, cycle contract, A2 and four-lane elaboration guards

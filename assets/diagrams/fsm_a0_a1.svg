@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="258" viewBox="0 0 940 258" role="img" aria-labelledby="t">
+<title id="t">A0/A1 candidate evaluator FSM with measured state residency</title>
+<style>text{font-family:system-ui,Segoe UI,Roboto,sans-serif;font-size:12px;fill:#222}.m{fill:#666;font-size:11px}.s{font-size:10px}.b{font-weight:bold}.mono{font-family:ui-monospace,Menlo,monospace}</style>
+<rect width="940" height="258" fill="white"/>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#222"/></marker></defs>
+<text x="20" y="26" class="b">Candidate evaluator FSM (candidate_eval, shared by A0 and A1) — measured cycles per legal candidate without a line clear</text>
+<text x="20" y="44" class="m">Residency from results/stage_cycles_a0_repr0_p0.json (A0 bitmap) and results/stage_cycles_a1_repr1_p0.json (A1 cache), profile legal_no_clear: totals 277 and 40 cycles.</text>
+<rect x="20" y="70" width="112" height="54" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="76.0" y="95.0" text-anchor="middle" class="b ">DECODE</text>
+<text x="76.0" y="109.0" text-anchor="middle" class="m">shape ROM</text>
+<text x="76.0" y="145" text-anchor="middle" class="mono s">A0 1 cyc</text>
+<text x="76.0" y="160" text-anchor="middle" class="mono s">A1 1 cyc</text>
+<rect x="20" y="170" width="2" height="8" fill="#666"/>
+<rect x="20" y="181" width="2.8" height="8" fill="#d95f02"/>
+<line x1="132" y1="97" x2="150" y2="97" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="150" y="70" width="112" height="54" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="206.0" y="95.0" text-anchor="middle" class="b ">DROP</text>
+<text x="206.0" y="109.0" text-anchor="middle" class="m">landing</text>
+<text x="206.0" y="145" text-anchor="middle" class="mono s">A0 26 cyc</text>
+<text x="206.0" y="160" text-anchor="middle" class="mono s">A1 4 cyc</text>
+<rect x="150" y="170" width="10.512635379061372" height="8" fill="#666"/>
+<rect x="150" y="181" width="11.2" height="8" fill="#d95f02"/>
+<line x1="262" y1="97" x2="280" y2="97" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="280" y="70" width="112" height="54" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="336.0" y="95.0" text-anchor="middle" class="b ">MERGE</text>
+<text x="336.0" y="109.0" text-anchor="middle" class="m">lock cells</text>
+<text x="336.0" y="145" text-anchor="middle" class="mono s">A0 8 cyc</text>
+<text x="336.0" y="160" text-anchor="middle" class="mono s">A1 3 cyc</text>
+<rect x="280" y="170" width="3.234657039711191" height="8" fill="#666"/>
+<rect x="280" y="181" width="8.4" height="8" fill="#d95f02"/>
+<line x1="392" y1="97" x2="410" y2="97" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="410" y="70" width="112" height="54" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="466.0" y="95.0" text-anchor="middle" class="b ">CLEAR</text>
+<text x="466.0" y="109.0" text-anchor="middle" class="m">compactor</text>
+<text x="466.0" y="145" text-anchor="middle" class="mono s">A0 24 cyc</text>
+<text x="466.0" y="160" text-anchor="middle" class="mono s">A1 24 cyc</text>
+<rect x="410" y="170" width="9.703971119133573" height="8" fill="#666"/>
+<rect x="410" y="181" width="67.2" height="8" fill="#d95f02"/>
+<line x1="522" y1="97" x2="540" y2="97" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="540" y="70" width="112" height="54" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="596.0" y="95.0" text-anchor="middle" class="b ">FEAT</text>
+<text x="596.0" y="109.0" text-anchor="middle" class="m">A, Q, U</text>
+<text x="596.0" y="145" text-anchor="middle" class="mono s">A0 214 cyc</text>
+<text x="596.0" y="160" text-anchor="middle" class="mono s">A1 4 cyc</text>
+<rect x="540" y="170" width="86.52707581227436" height="8" fill="#666"/>
+<rect x="540" y="181" width="11.2" height="8" fill="#d95f02"/>
+<line x1="652" y1="97" x2="670" y2="97" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="670" y="70" width="112" height="54" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="726.0" y="95.0" text-anchor="middle" class="b ">SCORE</text>
+<text x="726.0" y="109.0" text-anchor="middle" class="m">76L−51A−36Q−18U</text>
+<text x="726.0" y="145" text-anchor="middle" class="mono s">A0 3 cyc</text>
+<text x="726.0" y="160" text-anchor="middle" class="mono s">A1 3 cyc</text>
+<rect x="670" y="170" width="2" height="8" fill="#666"/>
+<rect x="670" y="181" width="8.4" height="8" fill="#d95f02"/>
+<line x1="782" y1="97" x2="800" y2="97" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="800" y="70" width="112" height="54" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="856.0" y="95.0" text-anchor="middle" class="b ">FINISH</text>
+<text x="856.0" y="109.0" text-anchor="middle" class="m">local best</text>
+<text x="856.0" y="145" text-anchor="middle" class="mono s">A0 1 cyc</text>
+<text x="856.0" y="160" text-anchor="middle" class="mono s">A1 1 cyc</text>
+<rect x="800" y="170" width="2" height="8" fill="#666"/>
+<rect x="800" y="181" width="2.8" height="8" fill="#d95f02"/>
+<text x="20" y="210" class="m">Bars: each state’s share of the candidate’s cycles (grey A0, orange A1; a full-width bar would be 100 % of that architecture’s total).</text>
+<text x="20" y="226" class="m">A0 spends 213 of 277 cycles scanning features cell by cell and 25 dropping; A1 keeps the 23-cycle compactor as 58 % of its 40.</text>
+<text x="20" y="242" class="m">A2 removes the FSM: every state becomes one or more pipeline banks and a new candidate enters every cycle (docs/design_a2.md).</text>
+</svg>

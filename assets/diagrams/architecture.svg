@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="390" viewBox="0 0 980 390" role="img" aria-labelledby="t">
+<title id="t">tetris_core architecture: request, cache, search alternatives, reduction, response</title>
+<style>text{font-family:system-ui,Segoe UI,Roboto,sans-serif;font-size:12px;fill:#222}.m{fill:#666;font-size:11px}.s{font-size:10px}.b{font-weight:bold}.mono{font-family:ui-monospace,Menlo,monospace}</style>
+<rect width="980" height="390" fill="white"/>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#222"/></marker></defs>
+<text x="20" y="26" class="b">tetris_core: request → cache → search → deterministic reduction → response</text>
+<text x="20" y="44" class="m">The context (board, heights, piece) is latched once per request and is immutable during the search; every architecture uses the same reduction rule and protocol.</text>
+<rect x="20" y="140" width="110" height="60" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="75.0" y="168.0" text-anchor="middle" class="b ">request</text>
+<text x="75.0" y="182.0" text-anchor="middle" class="m">board, piece, next</text>
+<text x="150" y="134" text-anchor="middle" class="s m">req_valid / req_ready</text>
+<line x1="130" y1="170" x2="170" y2="170" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="170" y="140" width="140" height="60" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="240.0" y="168.0" text-anchor="middle" class="b ">latch + cache</text>
+<text x="240.0" y="182.0" text-anchor="middle" class="m">board_q, heights_q (1 cycle)</text>
+<text x="340" y="134" text-anchor="middle" class="s m">search_start</text>
+<line x1="310" y1="170" x2="370" y2="170" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="370" y="70" width="260" height="56" rx="4" fill="#f2f2f2" stroke="#999" stroke-dasharray="4,3"/>
+<text x="500.0" y="96.0" text-anchor="middle" class="b ">A0 / A1: candidate_eval lanes</text>
+<text x="500.0" y="110.0" text-anchor="middle" class="m">one candidate at a time; lane k owns ids[k::LANES]</text>
+<rect x="370" y="142" width="260" height="56" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="500.0" y="168.0" text-anchor="middle" class="b ">A2: search_pipeline</text>
+<text x="500.0" y="182.0" text-anchor="middle" class="m">dense enumeration → 23-bank candidate_pipe (II = 1)</text>
+<rect x="370" y="270" width="260" height="56" rx="4" fill="#f2f2f2" stroke="#999" stroke-dasharray="4,3"/>
+<text x="500.0" y="296.0" text-anchor="middle" class="b ">A1 depth two: search_depth2</text>
+<text x="500.0" y="310.0" text-anchor="middle" class="m">root × next-piece leaves (v1, historical)</text>
+<line x1="330" y1="98" x2="330" y2="298" stroke="#999" stroke-dasharray="3,3"/>
+<line x1="330" y1="98" x2="370" y2="98" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="330" y1="298" x2="370" y2="298" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="630" y1="98" x2="680" y2="162" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="630" y1="170" x2="680" y2="170" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="630" y1="298" x2="680" y2="178" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="680" y="140" width="130" height="60" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="745.0" y="168.0" text-anchor="middle" class="b ">reduction</text>
+<text x="745.0" y="182.0" text-anchor="middle" class="m">highest score, lower id on ties</text>
+<text x="830" y="134" text-anchor="middle" class="s m">rsp_valid / rsp_ready</text>
+<line x1="810" y1="170" x2="850" y2="170" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="850" y="140" width="110" height="60" rx="4" fill="#f2f2f2" stroke="#999"/>
+<text x="905.0" y="168.0" text-anchor="middle" class="b ">response</text>
+<text x="905.0" y="182.0" text-anchor="middle" class="m">rot, x, y, score, cycles</text>
+<text x="20" y="360" class="m">A2: best_reducer folds retired tokens in acceptance order and the core’s REDUCE state reads lane slot 0. A1 with L lanes: REDUCE visits one lane per cycle (L cycles).</text>
+<text x="20" y="376" class="m">Solid = the architecture measured in v2 (a2-cache-d1-p0-l1); dashed = the v1 architectures kept as exact comparison points (X0–X4) and the historical depth-two study.</text>
+</svg>

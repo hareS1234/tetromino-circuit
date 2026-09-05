@@ -1,0 +1,263 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U18",
+ "status": "passed",
+ "git_commit": "54f06080520e9d51afb5ee1a497ce5e036e7d96d-dirty",
+ "git_modified_tracked": [
+  "Makefile",
+  "tools/build_native.py"
+ ],
+ "git_untracked": [
+  "assets/a2_last_candidate_wins.gif",
+  "assets/a2_pipeline.gif",
+  "assets/a2_stall_reset.gif",
+  "assets/diagrams/a2_pipeline.svg",
+  "assets/diagrams/architecture.svg",
+  "assets/diagrams/compaction.svg",
+  "assets/diagrams/fsm_a0_a1.svg",
+  "assets/diagrams/lanes.svg",
+  "docs/replay.md",
+  "results/traces/a2_last_candidate_wins.json",
+  "results/traces/a2_normal_search.json",
+  "results/traces/a2_stall_reset.json",
+  "results/traces/frames/a2_last_candidate_wins/first_cycle1.png",
+  "results/traces/frames/a2_last_candidate_wins/last_cycle53.png",
+  "results/traces/frames/a2_last_candidate_wins/middle_cycle27.png",
+  "results/traces/frames/a2_last_candidate_wins/render.json",
+  "results/traces/frames/a2_normal_search/first_cycle1.png",
+  "results/traces/frames/a2_normal_search/last_cycle70.png",
+  "results/traces/frames/a2_normal_search/middle_cycle36.png",
+  "results/traces/frames/a2_normal_search/render.json",
+  "results/traces/frames/a2_stall_reset/first_cycle1.png",
+  "results/traces/frames/a2_stall_reset/last_cycle72.png",
+  "results/traces/frames/a2_stall_reset/middle_cycle37.png",
+  "results/traces/frames/a2_stall_reset/render.json",
+  "results/v2/raw/routes/0f8ec9f7e213b5b10b3b3f423dacaa21e6e1bfe2324db7fa7096ed6e9a217c27.json",
+  "results/v2/raw/routes/144218586a172629c269165a2fc46aa01e8462710979a33604e67df5f8389408.json",
+  "results/v2/raw/routes/15657e0a72e3fc7e844a7d7c36554dc2b6ff1a88b512735df0a9bd3835ebdfc0.json",
+  "results/v2/raw/routes/1d9ecd15369012df89d40e7a7c5fd22abe4ff4361c2e2b33669d87c4ca6e9999.json",
+  "results/v2/raw/routes/1ee00db614a1bf8c7aea4aacc9543a99bffd46206fc017292a82d4080240c7d6.json",
+  "results/v2/raw/routes/2091a5598f8c8b3dee6ef1b598ca5ea8dfe4efea864b39b8cc3eef08eef18fc1.json",
+  "results/v2/raw/routes/2b8e1aa407f23d6b91e8aaf7c53284a4c4a8e8351a3bc60c0137652197cb5729.json",
+  "results/v2/raw/routes/2e715f27824fb55ef6f4398813a3cf0ef41e10f234da8dcc7dc414d1e718d47d.json",
+  "results/v2/raw/routes/31356bb7a51c995d327cf5602e71ad6ffe6ce5947df58eaa032e2f6b569415ec.json",
+  "results/v2/raw/routes/47110d273bd6b47b08cce277cec71945398ff6da1e6f5e98401dfc394f69f99f.json",
+  "results/v2/raw/routes/5364253e2034065861117bbd992e1cd65ff9fe19816967fb963805c27d0708a8.json",
+  "results/v2/raw/routes/588c7da4911b08923fa728a6b35dc9eecf69b709a6482764bc79114791e83336.json",
+  "results/v2/raw/routes/65e82f6bca4bb02941f0fb74ca42357e2e886cfbef9b6e3edb6ba3e1b27864bf.json",
+  "results/v2/raw/routes/68add08585904627e58e5653da610f3de8f12bf0d6bc9f6240ed4859dc3a0f4e.json",
+  "results/v2/raw/routes/6b4943236e0bfcbf7b2d1a7ed0eee2c36716c39c7480030b134bca97c3893184.json",
+  "results/v2/raw/routes/6cd0aaa427d88d4107c022a302c5ba606ab296804bde083c8e4b9178648e7924.json",
+  "results/v2/raw/routes/74faf2897405efd5fd8fd2a21b19eae7ca3df4c700dba187b68be7bf739131b9.json",
+  "results/v2/raw/routes/7c024f19000e40dc8ea89cbee6d822c8e5e2d3dbe4e0a66a25ccb223bf518c52.json",
+  "results/v2/raw/routes/882e963e3511ee06eb069807edd61e9f1bee52cbb1a726372d234e5196d31b17.json",
+  "results/v2/raw/routes/a3f2dacaa6b5f7ee7f6efcd89e4a2b6f5c78a48bd428790c1fc24da5b2fa6025.json",
+  "results/v2/raw/routes/a8cee81a35b926f78dc9b9fe30c140fe6ca24efce1dc88dd1e18e0da1fc391b5.json",
+  "results/v2/raw/routes/ab7cdf54a172ab25ad1d6d4e620af8b8eaf1a5329518f0f30879980d382a6680.json",
+  "results/v2/raw/routes/b5ba532ef331dd51e4c6a9b403c73ac21433ecbae40836e6d11138bf970a5d26.json",
+  "results/v2/raw/routes/b787b7727598712fc5f4f5ef7c41e6c5aabc00d79f2ff9d15838892f0cd87462.json",
+  "results/v2/raw/routes/bb759f35f76ec5ba139cbdae77d28316cb1b5beaee4fa746120cc834d383bb62.json",
+  "results/v2/raw/routes/be54e7f97ad1883c04e5465786043dc670b3343434d181c65ec8476fbba24eb3.json",
+  "results/v2/raw/routes/c6c30b98676d12afbc81534bb5fea0ae577123d63a4b2181629d6ba5ef719838.json",
+  "results/v2/raw/routes/c7e2401d256137e0dc5270c5688355c5268931d5baa03d2b9225c83c3352774a.json",
+  "results/v2/raw/routes/c9c59958cf2eadc02ce086b82f9100ab350a6052a495c592d65efc7a2c951311.json",
+  "results/v2/raw/routes/d519805a2147b853bb706d433fc28af6e3cfae46fcd75bdba4018774a39466d4.json",
+  "results/v2/raw/routes/e11b0294cf2da92879bafd0ae841babbb56b9b605ed378a69e3d37a47d5e6859.json",
+  "results/v2/raw/routes/e12121f2312e0a2e27e0747971a472c63a856d1383998dbbf630953101349a3e.json",
+  "results/v2/raw/routes/e2b4211458016848eb13c6bf45a59b134e13656c1bc391e356b84c522794cfcb.json",
+  "results/v2/raw/routes/e355ceabdb49d7182aa165b5e848ae32f70eb65b34e565fca31b43f4b648836f.json",
+  "results/v2/raw/routes/e5ca893f2448d190aebea7e6961c9e2fb1b6d6e577e675a1c4f44f66a7a89b7f.json",
+  "results/v2/raw/routes/f3657547f04726201295e0b587b9965fb469fb42bf083a505c42c2dce000c40e.json",
+  "sim/pipe_trace_main.cpp",
+  "sim/trace_main.cpp",
+  "tools/build_viewer_demo.py",
+  "tools/check_trace.py",
+  "tools/check_viewer.py",
+  "tools/diagrams.py",
+  "tools/render_a2_demo.py",
+  "tools/trace_a2.py",
+  "viewer/app.js",
+  "viewer/demo.html",
+  "viewer/index.html",
+  "viewer/style.css"
+ ],
+ "source_sha256": "192ee84d31b168618027b69bfbedf035eb5617127a440f2069e6f0a1a1b70343",
+ "configuration_id": "a2-cache-d1-p0-l1",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T19:10:24Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "trace-a2-demo"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.45,
+   "log": "results/evidence/U18/cmd00.log",
+   "counts": {}
+  },
+  {
+   "argv": [
+    "make",
+    "check-trace"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.15,
+   "log": "results/evidence/U18/cmd01.log",
+   "counts": {
+    "check_trace_a2_last_candidate_wins": "580/580",
+    "check_trace_a2_normal_search": "1108/1108",
+    "check_trace_a2_stall_reset": "698/698"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "render-a2-demo"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 125.72,
+   "log": "results/evidence/U18/cmd02.log",
+   "counts": {
+    "check_viewer": "37/37"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-python"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 54.62,
+   "log": "results/evidence/U18/cmd03.log",
+   "counts": {
+    "pytest_passed": 439
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "traces",
+   "count_key": "check_trace_a2_normal_search",
+   "values": [
+    "1108/1108"
+   ],
+   "ok": true
+  },
+  {
+   "name": "traces_last",
+   "count_key": "check_trace_a2_last_candidate_wins",
+   "values": [
+    "580/580"
+   ],
+   "ok": true
+  },
+  {
+   "name": "traces_stall",
+   "count_key": "check_trace_a2_stall_reset",
+   "values": [
+    "698/698"
+   ],
+   "ok": true
+  },
+  {
+   "name": "viewer",
+   "count_key": "check_viewer",
+   "values": [
+    "37/37"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "results/traces/a2_normal_search.json",
+   "exists": true,
+   "bytes": 72094
+  },
+  {
+   "path": "results/traces/a2_last_candidate_wins.json",
+   "exists": true,
+   "bytes": 44165
+  },
+  {
+   "path": "results/traces/a2_stall_reset.json",
+   "exists": true,
+   "bytes": 58199
+  },
+  {
+   "path": "assets/a2_pipeline.gif",
+   "exists": true,
+   "bytes": 473005
+  },
+  {
+   "path": "assets/a2_stall_reset.gif",
+   "exists": true,
+   "bytes": 346224
+  },
+  {
+   "path": "assets/a2_last_candidate_wins.gif",
+   "exists": true,
+   "bytes": 291271
+  },
+  {
+   "path": "viewer/index.html",
+   "exists": true,
+   "bytes": 4471
+  },
+  {
+   "path": "viewer/app.js",
+   "exists": true,
+   "bytes": 16686
+  },
+  {
+   "path": "viewer/style.css",
+   "exists": true,
+   "bytes": 3983
+  },
+  {
+   "path": "viewer/demo.html",
+   "exists": true,
+   "bytes": 107036
+  },
+  {
+   "path": "assets/diagrams/architecture.svg",
+   "exists": true,
+   "bytes": 4369
+  },
+  {
+   "path": "assets/diagrams/a2_pipeline.svg",
+   "exists": true,
+   "bytes": 7733
+  },
+  {
+   "path": "assets/diagrams/compaction.svg",
+   "exists": true,
+   "bytes": 15190
+  },
+  {
+   "path": "assets/diagrams/lanes.svg",
+   "exists": true,
+   "bytes": 14551
+  },
+  {
+   "path": "assets/diagrams/fsm_a0_a1.svg",
+   "exists": true,
+   "bytes": 5618
+  },
+  {
+   "path": "docs/replay.md",
+   "exists": true,
+   "bytes": 7120
+  },
+  {
+   "path": "results/traces/frames/a2_normal_search/render.json",
+   "exists": true,
+   "bytes": 348
+  }
+ ],
+ "limitations": [
+  "the browser viewer was exercised in headless Chromium (Playwright) during development: loading, stepping, jumps, block expansion, stall and reset stories; that interactive check is not part of the automated gate, which validates the traces, the bundle and the static accessibility properties"
+ ],
+ "note": "U18: RTL trace exporters (public-flat Verilator builds, no RTL change), three stories (normal search and last-candidate-wins on the production core; stall/reset on the standalone candidate interface), a2-trace-v1 schema with per-candidate reference payloads linked by tag, checker, GIFs with first/middle/last stills, static viewer with bundled demo, SVG diagrams"
+}

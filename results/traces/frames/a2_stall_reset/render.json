@@ -1,0 +1,14 @@
+{
+ "schema": "a2-render-v1",
+ "trace": "results/traces/a2_stall_reset.json",
+ "gif": "assets/a2_stall_reset.gif",
+ "frames": 72,
+ "fps": 3.0,
+ "trace_source_sha256": "192ee84d31b168618027b69bfbedf035eb5617127a440f2069e6f0a1a1b70343",
+ "scenario": "stall-reset",
+ "stills": [
+  "first_cycle1.png",
+  "last_cycle72.png",
+  "middle_cycle37.png"
+ ]
+}
