@@ -1,0 +1,192 @@
+{
+ "schema": "quality-protocol-v2",
+ "name": "quality-v2-bag50k",
+ "spec": "drop-v1.1",
+ "backend": "python-fast",
+ "streams_manifest": "benchmarks/streams_v2/manifest.json",
+ "note": "v2 long-horizon quality protocol (U15/U16). The v1 protocol benchmarks/config.json and its results are frozen and separate. Policies are depth-one software policies whose decisions passed their own-reference RTL tests (P0-P7 core corpora, results/v2/raw/decisions). Development suites use seeds 10000-10019; the held-out suite uses seeds 20000-20099 and is run only after `bench-v2 MODE=freeze` recorded this file's hash.",
+ "policies_all": [
+  {
+   "policy": "heuristic",
+   "depth": 1,
+   "precision": 0
+  },
+  {
+   "policy": "heuristic",
+   "depth": 1,
+   "precision": 1
+  },
+  {
+   "policy": "heuristic",
+   "depth": 1,
+   "precision": 5
+  },
+  {
+   "policy": "heuristic",
+   "depth": 1,
+   "precision": 6
+  },
+  {
+   "policy": "heuristic",
+   "depth": 1,
+   "precision": 7
+  },
+  {
+   "policy": "random_legal",
+   "depth": 1,
+   "precision": 0
+  }
+ ],
+ "suites": {
+  "pilot": {
+   "role": "development",
+   "policies": [
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 0
+    },
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 1
+    },
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 5
+    },
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 6
+    },
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 7
+    },
+    {
+     "policy": "random_legal",
+     "depth": 1,
+     "precision": 0
+    }
+   ],
+   "streams": {
+    "split": "v2_development",
+    "seeds": [
+     10000,
+     10019
+    ]
+   },
+   "cap": 10000,
+   "baseline": {
+    "policy": "heuristic",
+    "depth": 1,
+    "precision": 0
+   },
+   "purpose": "wall time, memory and cap-hit estimates per policy on 20 development streams at a 10,000-piece cap"
+  },
+  "pilot50k": {
+   "role": "development",
+   "policies": [
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 0
+    },
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 1
+    }
+   ],
+   "streams": {
+    "split": "v2_development",
+    "seeds": [
+     10000,
+     10019
+    ]
+   },
+   "cap": 50000,
+   "baseline": {
+    "policy": "heuristic",
+    "depth": 1,
+    "precision": 0
+   },
+   "purpose": "P0 and the strongest development policy at the 10,000 cap (P1: cap-hit 0.70 vs 0.40 for P0 in the pilot suite) to the full 50,000 cap before freezing the primary protocol"
+  },
+  "bag50k": {
+   "role": "held-out",
+   "policies": [
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 0
+    },
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 1
+    },
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 5
+    },
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 6
+    },
+    {
+     "policy": "heuristic",
+     "depth": 1,
+     "precision": 7
+    },
+    {
+     "policy": "random_legal",
+     "depth": 1,
+     "precision": 0
+    }
+   ],
+   "streams": {
+    "split": "v2_heldout",
+    "seeds": [
+     20000,
+     20099
+    ]
+   },
+   "cap": 50000,
+   "baseline": {
+    "policy": "heuristic",
+    "depth": 1,
+    "precision": 0
+   },
+   "purpose": "primary study: six depth-one policies on 100 paired held-out seven-bag streams, cap 50,000 locked pieces"
+  }
+ },
+ "execution": {
+  "mode": "summary",
+  "checkpoint_every_pieces": 1000,
+  "resume": "exact identity match of the checkpoint (protocol hash, policy, stream hash, cap, model closure) only",
+  "failure_handling": "a crash or missing result is a failed job to repair and resume; it is never a censoring event or a top-out; summaries reject incomplete paired sets"
+ },
+ "outcomes": {
+  "primary": [
+   "restricted_mean_pieces",
+   "mean_lines",
+   "cap_hit_fraction"
+  ],
+  "event_time": "T = successfully locked pieces before the first top-out decision; a game stopped at the cap C reports duration C with event_observed = false",
+  "restricted_mean": "mean(min(T, C)) over the paired streams; an estimate of the restricted mean to C, not of unbounded survival",
+  "survival": "discrete product-limit survival S(t) = P(T > t) with the cap and censoring marked; the median is reported only if S crosses 1/2 within [0, C), otherwise 'not reached by C'",
+  "comparisons": "every policy against the baseline (P0), paired by stream id"
+ },
+ "statistics": {
+  "bootstrap_resamples": 5000,
+  "bootstrap_seed": 20260905,
+  "resampling_unit": "stream id, jointly across compared policies (whole streams, never individual moves)",
+  "interval": "2.5/97.5 percentiles of the resampled mean paired difference"
+ }
+}

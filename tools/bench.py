@@ -5,6 +5,10 @@
     python tools/bench.py --check-config --config benchmarks/quality_smoke_v2.json
     python tools/bench.py --suite smoke --config benchmarks/quality_smoke_v2.json --out-root results/v2
     python tools/bench.py --summarise-v1 precision                        # recompute a frozen v1 summary from results/quality.csv
+    python tools/bench.py --config benchmarks/config_v2.json --mode dry-run           # workload counts, no games
+    python tools/bench.py --config benchmarks/config_v2.json --mode pilot             # development suites only
+    python tools/bench.py --config benchmarks/config_v2.json --mode freeze            # reproducibility record before held-out runs
+    python tools/bench.py --config benchmarks/config_v2.json --mode run --suite bag50k # summary mode, checkpoints, resume
 
 v2 protocols (schema quality-protocol-v2) write one atomic record per game to
 <out-root>/raw/quality/<quality_key>.json (quality_key from tools/identity.py: protocol content,
@@ -32,10 +36,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from model.config import SUPPORTED_IDS  # noqa: E402
+from model.longrun import SoftwarePolicy, play_summary  # noqa: E402
 from model.numeric import PROFILES  # noqa: E402
 from model.replay import git_commit, make_decider, play_game  # noqa: E402
 from model.streams import SPLITS, load_stream, stream_sha256  # noqa: E402
-from tools.identity import model_closure_sha256, quality_identity, sha256_of, source_closure_sha256  # noqa: E402
+from model.streams_v2 import SPLITS_V2, load_manifest as load_manifest_v2, load_stream_v2  # noqa: E402
+from tools.identity import model_closure_sha256, quality_identity, sha256_of, source_closure_sha256, toolchain_identity  # noqa: E402
 
 V1_CONFIG = ROOT / "benchmarks" / "config.json"
 V1_QUALITY = ROOT / "results" / "quality.csv"
@@ -70,22 +76,50 @@ def load_protocol(path: Path) -> dict:
 def check_protocol(cfg: dict) -> list[str]:
     """Structural checks shared by the frozen v1 config and v2 protocols."""
     problems = []
+    v2_manifest = None
+    if cfg.get("streams_manifest"):
+        mpath = ROOT / cfg["streams_manifest"]
+        if not mpath.is_file():
+            return [f"streams manifest missing: {cfg['streams_manifest']}"]
+        v2_manifest = load_manifest_v2(ROOT)
+        if str(mpath.relative_to(ROOT)) != "benchmarks/streams_v2/manifest.json":
+            problems.append("v2 protocols must use benchmarks/streams_v2/manifest.json")
     manifest = json.loads((ROOT / "benchmarks" / "streams" / "manifest.json").read_text())
     for name, suite in cfg["suites"].items():
         lo, hi = suite["streams"]["seeds"]
         split = suite["streams"]["split"]
-        for seed in range(lo, hi + 1):
-            if split in SPLITS and seed not in SPLITS[split]:
-                problems.append(f"{name}: seed {seed} not in split {split}")
-            try:
-                doc = load_stream(ROOT, seed)
-            except (FileNotFoundError, ValueError) as exc:
-                problems.append(f"{name}: {exc}")
+        if v2_manifest is not None:
+            if split not in SPLITS_V2:
+                problems.append(f"{name}: split {split} is not a v2 split")
                 continue
-            if manifest["streams"].get(str(seed)) != doc["sha256"] or doc["sha256"] != stream_sha256(doc["pieces"]):
-                problems.append(f"{name}: stream {seed} hash mismatch with manifest")
-            if suite["cap"] + 1 > doc["length"]:
-                problems.append(f"{name}: cap {suite['cap']} exceeds stream length")
+            if suite.get("role") not in ("development", "held-out"):
+                problems.append(f"{name}: v2 suites declare role development|held-out")
+            if (split == "v2_heldout") != (suite.get("role") == "held-out"):
+                problems.append(f"{name}: role {suite.get('role')} does not match split {split}")
+            for seed in range(lo, hi + 1):
+                if seed not in SPLITS_V2[split]:
+                    problems.append(f"{name}: seed {seed} not in split {split}")
+                    continue
+                try:
+                    doc = load_stream_v2(ROOT, seed, v2_manifest)
+                except (FileNotFoundError, ValueError) as exc:
+                    problems.append(f"{name}: {exc}")
+                    continue
+                if suite["cap"] + 1 > doc["length"]:
+                    problems.append(f"{name}: cap {suite['cap']} exceeds stream length {doc['length']}")
+        else:
+            for seed in range(lo, hi + 1):
+                if split in SPLITS and seed not in SPLITS[split]:
+                    problems.append(f"{name}: seed {seed} not in split {split}")
+                try:
+                    doc = load_stream(ROOT, seed)
+                except (FileNotFoundError, ValueError) as exc:
+                    problems.append(f"{name}: {exc}")
+                    continue
+                if manifest["streams"].get(str(seed)) != doc["sha256"] or doc["sha256"] != stream_sha256(doc["pieces"]):
+                    problems.append(f"{name}: stream {seed} hash mismatch with manifest")
+                if suite["cap"] + 1 > doc["length"]:
+                    problems.append(f"{name}: cap {suite['cap']} exceeds stream length")
         for pol in suite["policies"]:
             if pol["precision"] not in PROFILES:
                 problems.append(f"{name}: unknown precision {pol['precision']}")
@@ -135,11 +169,13 @@ def v2_records(out_root: Path) -> dict[str, dict]:
     recs = {}
     if raw.is_dir():
         for p in sorted(raw.glob("*.json")):
+            if p.name.endswith(".failed.json"):
+                continue                      # failed jobs are not outcomes (see failed_record_path)
             try:
                 d = json.loads(p.read_text())
             except ValueError:
                 continue
-            if d.get("schema") == "quality-record-v2":
+            if d.get("schema") == "quality-record-v2" and d.get("status", "complete") == "complete":
                 recs[d["quality_key"]] = d
     return recs
 
@@ -226,7 +262,134 @@ def summarise(rows: list[dict], suite: dict, *, source: str, protocol_sha256: st
 
 # ---- v2 execution ----------------------------------------------------------------------------------------------------------
 
-def run_suite_v2(proto: dict, suite_name: str, out_root: Path, seeds: list[int] | None = None, cap: int | None = None) -> dict:
+HEARTBEAT_S = 60
+
+
+def load_stream_any(proto: dict, seed: int, manifest: dict | None = None) -> dict:
+    if proto.get("streams_manifest"):
+        return load_stream_v2(ROOT, seed, manifest)
+    return load_stream(ROOT, seed)
+
+
+def peak_rss_mb() -> float:
+    import resource
+    return round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024, 1)
+
+
+def checkpoint_path(out_root: Path, key: str) -> Path:
+    return out_root / "checkpoints" / f"{key}.json"
+
+
+def failed_record_path(out_root: Path, key: str) -> Path:
+    return out_root / "raw" / "quality" / f"{key}.failed.json"
+
+
+def freeze_path(out_root: Path, proto: dict) -> Path:
+    return out_root / "protocol" / f"freeze_{proto.get('name', 'protocol')}.json"
+
+
+def load_freeze(out_root: Path, proto: dict) -> dict | None:
+    p = freeze_path(out_root, proto)
+    if not p.is_file():
+        return None
+    return json.loads(p.read_text())
+
+
+def freeze_protocol(proto: dict, out_root: Path) -> dict:
+    """Reproducibility record written before held-out outcomes are produced (guide U15 step 3).
+
+    It records the canonical protocol content and hash, every input stream hash, the source identities
+    and the analysis definition at freeze time.  It is not proof that no human saw data."""
+    body = {k: v for k, v in proto.items() if not k.startswith("_")}
+    streams = {}
+    manifest = load_manifest_v2(ROOT) if proto.get("streams_manifest") else None
+    for name, suite in proto["suites"].items():
+        lo, hi = suite["streams"]["seeds"]
+        for seed in range(lo, hi + 1):
+            doc = load_stream_any(proto, seed, manifest)
+            streams[str(seed)] = {"split": doc["split"], "length": doc["length"], "sha256": doc["sha256"]}
+    doc = {"schema": "quality-freeze-v1", "protocol_name": proto.get("name"), "protocol_path": proto["_path"],
+           "protocol_sha256": proto["_sha256"], "protocol": body,
+           "streams_manifest": proto.get("streams_manifest"),
+           "streams_manifest_sha256": hashlib.sha256((ROOT / proto["streams_manifest"]).read_bytes()).hexdigest() if proto.get("streams_manifest") else None,
+           "streams": streams, "model_closure": model_closure_sha256(), "source_sha256": source_closure_sha256(),
+           "git_commit": git_commit(ROOT), "toolchain_id": toolchain_identity(),
+           "analysis": {"outcomes": proto.get("outcomes"), "statistics": proto.get("statistics"), "execution": proto.get("execution"),
+                        "analysis_tool": "tools/analyze_quality_v2.py"},
+           "frozen_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+           "statement": "reproducibility record: protocol, inputs, source and analysis definition fixed before held-out outcomes; "
+                        "not proof that nobody looked at data"}
+    atomic_write_json(freeze_path(out_root, proto), doc)
+    return doc
+
+
+def workload(proto: dict, suite_name: str, seeds=None, cap=None) -> dict:
+    suite = proto["suites"][suite_name]
+    lo, hi = suite["streams"]["seeds"]
+    n_streams = len(seeds) if seeds is not None else hi - lo + 1
+    cap = cap if cap is not None else int(suite["cap"])
+    games = n_streams * len(suite["policies"])
+    return {"suite": suite_name, "role": suite.get("role"), "policies": len(suite["policies"]), "streams": n_streams, "cap": cap,
+            "games": games, "max_decisions": games * cap}
+
+
+def run_job(proto: dict, suite_name: str, pol: dict, seed: int, cap: int, out_root: Path, *, mode: str, closure: str, src: str,
+            commit: str, manifest: dict | None, have: dict, checkpoint_every: int) -> str:
+    """Run (or reuse) one game; returns 'reused' | 'run' | 'failed'.  Records are one atomic file per job."""
+    stream = load_stream_any(proto, seed, manifest)
+    protocol_body = {k: v for k, v in proto.items() if not k.startswith("_")}
+    ident = quality_identity(protocol_body, pol, stream["sha256"], cap, proto["_path"], model_closure=closure)
+    key = ident["quality_key"]
+    if key in have and have[key].get("status") == "complete":
+        return "reused"
+    t0 = time.perf_counter()
+    base = {"schema": "quality-record-v2", "quality_key": key, "protocol_path": proto["_path"], "protocol_sha256": ident["protocol_sha256"],
+            "protocol_name": proto.get("name"), "suite": suite_name, "spec": stream["spec"], "backend": "python-fast", "policy": dict(pol),
+            "stream_seed": seed, "stream_sha256": stream["sha256"], "cap": cap, "model_closure": closure, "source_sha256": src,
+            "git_commit": commit, "runtime": ident["runtime"], "mode": mode}
+    try:
+        if mode == "summary":
+            if pol["depth"] != 1:
+                raise ValueError("summary mode covers depth-one policies")
+            sp = SoftwarePolicy(pol["policy"], pol["precision"], seed, "fast")
+            ck_identity = {"quality_key": key, "protocol_sha256": ident["protocol_sha256"], "policy": dict(pol), "stream_sha256": stream["sha256"],
+                           "cap": cap, "model_closure": closure}
+            term = play_summary(sp, stream["pieces"], cap, identity=ck_identity, checkpoint_path=checkpoint_path(out_root, key),
+                                checkpoint_every=checkpoint_every)
+            extra = {"trajectory_sha256": term["trajectory_sha256"], "checkpoints_written": term["checkpoints"], "resumed_from": term["resumed_from"],
+                     "checkpoint": str(checkpoint_path(out_root, key).relative_to(ROOT)) if checkpoint_path(out_root, key).is_relative_to(ROOT) else None}
+        else:
+            decide = make_decider(pol["policy"], pol["depth"], pol["precision"], seed, "fast")
+            records, terminal = play_game(decide, stream, cap, depth=pol["depth"])
+            from model.longrun import trajectory_hash_of_records
+            term = {"pieces_locked": terminal["pieces_locked"], "lines": terminal["lines"], "reason": terminal["reason"],
+                    "event_observed": terminal["reason"] == "top_out", "duration": terminal["pieces_locked"]}
+            extra = {"trajectory_sha256": trajectory_hash_of_records(records)}
+    except Exception as exc:   # noqa: BLE001 - a crash is a failed job, recorded as such, never a game outcome
+        import traceback
+        atomic_write_json(failed_record_path(out_root, key),
+                          {**base, "status": "failed", "error": repr(exc), "traceback": traceback.format_exc()[-4000:],
+                           "wall_seconds": round(time.perf_counter() - t0, 3),
+                           "recorded_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")})
+        return "failed"
+    rec = {**base, "status": "complete", "lines": term["lines"], "pieces_locked": term["pieces_locked"], "terminal_reason": term["reason"],
+           "duration": term["duration"], "event_observed": term["event_observed"], **extra,
+           "wall_seconds": round(time.perf_counter() - t0, 3), "peak_rss_mb_process": peak_rss_mb(),
+           "recorded_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
+    atomic_write_json(out_root / "raw" / "quality" / f"{key}.json", rec)
+    fp = failed_record_path(out_root, key)
+    if fp.is_file():
+        fp.unlink()
+    return "run"
+
+
+def run_suite_v2(proto: dict, suite_name: str, out_root: Path, seeds: list[int] | None = None, cap: int | None = None,
+                 mode: str = "replay", checkpoint_every: int = 1000, quiet: bool = False) -> dict:
+    """Run every (policy, stream) job of a suite that has no complete record; resume is by identity.
+
+    mode 'replay' keeps per-move records in memory (short games, the smoke suite); mode 'summary' streams
+    with checkpoints (long games).  Failed jobs are recorded under raw/quality/<key>.failed.json and counted;
+    the function never turns a crash into a game outcome."""
     suite = proto["suites"][suite_name]
     lo, hi = suite["streams"]["seeds"]
     seeds = seeds if seeds is not None else list(range(lo, hi + 1))
@@ -234,33 +397,38 @@ def run_suite_v2(proto: dict, suite_name: str, out_root: Path, seeds: list[int] 
     closure = model_closure_sha256()
     src = source_closure_sha256()
     commit = git_commit(ROOT)
-    protocol_body = {k: v for k, v in proto.items() if not k.startswith("_")}
+    manifest = load_manifest_v2(ROOT) if proto.get("streams_manifest") else None
     have = v2_records(out_root)
-    done = skipped = 0
+    counts = {"run": 0, "reused": 0, "failed": 0}
+    total = len(suite["policies"]) * len(seeds)
+    done = 0
     t_suite = time.perf_counter()
+    last_beat = t_suite
+    per_policy = {}
     for pol in suite["policies"]:
+        t_pol = time.perf_counter()
+        pol_runs = 0
         for seed in seeds:
-            stream = load_stream(ROOT, seed)
-            ident = quality_identity(protocol_body, pol, stream["sha256"], cap, proto["_path"], model_closure=closure)
-            key = ident["quality_key"]
-            if key in have and have[key].get("status") == "complete":
-                skipped += 1
-                continue
-            decide = make_decider(pol["policy"], pol["depth"], pol["precision"], seed, "fast")
-            t0 = time.perf_counter()
-            records, terminal = play_game(decide, stream, cap, depth=pol["depth"])
-            rec = {"schema": "quality-record-v2", "status": "complete", "quality_key": key, "protocol_path": proto["_path"],
-                   "protocol_sha256": ident["protocol_sha256"], "protocol_name": proto.get("name"), "suite": suite_name,
-                   "spec": stream["spec"], "backend": "python-fast", "policy": dict(pol), "stream_seed": seed,
-                   "stream_sha256": stream["sha256"], "cap": cap, "lines": terminal["lines"], "pieces_locked": terminal["pieces_locked"],
-                   "terminal_reason": terminal["reason"], "model_closure": closure, "source_sha256": src, "git_commit": commit,
-                   "runtime": ident["runtime"], "wall_seconds": round(time.perf_counter() - t0, 3),
-                   "recorded_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
-            atomic_write_json(out_root / "raw" / "quality" / f"{key}.json", rec)
+            status = run_job(proto, suite_name, pol, seed, cap, out_root, mode=mode, closure=closure, src=src, commit=commit,
+                             manifest=manifest, have=have, checkpoint_every=checkpoint_every)
+            counts[status] += 1
+            pol_runs += status == "run"
             done += 1
-        print(f"  {suite_name}: {policy_key(pol)} complete ({time.perf_counter() - t_suite:.0f}s elapsed)")
-    print(f"{suite_name}: {done} games run, {skipped} already recorded")
-    return {"run": done, "skipped": skipped}
+            now = time.perf_counter()
+            if not quiet and (now - last_beat >= HEARTBEAT_S or done == total):
+                rate = done / max(now - t_suite, 1e-9)
+                print(f"  [{suite_name}] {done}/{total} jobs, active {policy_key(pol)} stream {seed}, {now - t_suite:.0f}s elapsed, "
+                      f"ETA {(total - done) / rate:.0f}s, rss {peak_rss_mb()} MB", flush=True)
+                last_beat = now
+        per_policy[policy_key(pol)] = {"games_run": pol_runs, "wall_seconds": round(time.perf_counter() - t_pol, 2),
+                                       "peak_rss_mb_process": peak_rss_mb()}
+        if not quiet:
+            print(f"  {suite_name}: {policy_key(pol)} complete ({time.perf_counter() - t_suite:.0f}s elapsed)", flush=True)
+    if not quiet:
+        print(f"{suite_name}: {counts['run']} games run, {counts['reused']} already recorded, {counts['failed']} failed")
+    counts["per_policy"] = per_policy
+    counts["skipped"] = counts["reused"]     # backward-compatible name
+    return counts
 
 
 def derive_v2_csv(out_root: Path) -> Path:
@@ -288,14 +456,42 @@ def print_summary(summary: dict) -> None:
             print(f"  {k:24s} incomplete: {v['games']} games, {v['missing_count']} missing")
 
 
+def rel(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def print_workloads(proto: dict, out_root: Path) -> None:
+    have = v2_records(out_root)
+    for name in proto["suites"]:
+        w = workload(proto, name)
+        suite = proto["suites"][name]
+        manifest = load_manifest_v2(ROOT) if proto.get("streams_manifest") else None
+        lo, hi = suite["streams"]["seeds"]
+        complete = 0
+        for pol in suite["policies"]:
+            for seed in range(lo, hi + 1):
+                stream = load_stream_any(proto, seed, manifest)
+                ident = quality_identity({k: v for k, v in proto.items() if not k.startswith("_")}, pol, stream["sha256"], int(suite["cap"]),
+                                         proto["_path"], model_closure=model_closure_sha256())
+                complete += have.get(ident["quality_key"], {}).get("status") == "complete"
+        print(f"  {name:10s} role {str(w['role']):12s} policies {w['policies']} x streams {w['streams']} = {w['games']} games, cap {w['cap']}, "
+              f"<= {w['max_decisions']:,} decisions; complete records {complete}/{w['games']}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default=str(V1_CONFIG.relative_to(ROOT)), help="protocol path (v1 config or quality-protocol-v2)")
     ap.add_argument("--out-root", default="results/v2", help="v2 output root (never the frozen v1 results/)")
     ap.add_argument("--check-config", action="store_true")
+    ap.add_argument("--mode", default=None, choices=["dry-run", "pilot", "freeze", "run"],
+                    help="dry-run: workload counts; pilot: development suites only; freeze: reproducibility record; run: execute --suite")
     ap.add_argument("--suite", default=None)
     ap.add_argument("--seeds", default=None, help="comma-separated subset for development runs")
     ap.add_argument("--cap", type=int, default=None, help="override cap for development runs")
+    ap.add_argument("--exec-mode", default=None, choices=["replay", "summary"], help="override the protocol's execution mode")
     ap.add_argument("--summarise-v1", default=None, metavar="EXPERIMENT", help="recompute a frozen v1 summary (precision|depth) from results/quality.csv")
     args = ap.parse_args()
     proto = load_protocol(ROOT / args.config)
@@ -315,34 +511,73 @@ def main() -> int:
         print_summary(s)
         print(json.dumps({k: v for k, v in s.items() if k != "policies"}))
         return 0
-    if args.check_config and not args.suite:
-        return 0
-    if not args.suite:
-        ap.error("--suite is required to run games")
-    if proto.get("schema") != "quality-protocol-v2":
-        raise SystemExit("running games requires a quality-protocol-v2 file; the v1 protocol benchmarks/config.json is frozen "
-                         "(its results are read with --summarise-v1)")
     out_root = ROOT / args.out_root
     if out_root.resolve() == (ROOT / "results").resolve():
         raise SystemExit("--out-root must not be the frozen v1 results/ directory")
+    if args.check_config and not args.suite and not args.mode:
+        return 0
+    if proto.get("schema") != "quality-protocol-v2":
+        raise SystemExit("running games requires a quality-protocol-v2 file; the v1 protocol benchmarks/config.json is frozen "
+                         "(its results are read with --summarise-v1)")
+    if args.mode == "dry-run":
+        print_workloads(proto, out_root)
+        fz = load_freeze(out_root, proto)
+        print(f"  freeze record: {'present, protocol ' + fz['protocol_sha256'][:12] + (' (matches)' if fz['protocol_sha256'] == proto['_sha256'] else ' (STALE: protocol changed)') if fz else 'absent'}")
+        return 0
+    if args.mode == "freeze":
+        doc = freeze_protocol(proto, out_root)
+        print(f"frozen {doc['protocol_name']} protocol {doc['protocol_sha256'][:12]} with {len(doc['streams'])} stream hashes, model closure "
+              f"{doc['model_closure'][:12]} -> {rel(freeze_path(out_root, proto))}")
+        return 0
+    mode = args.mode or "run"
+    if not args.suite:
+        if mode == "pilot":
+            args.suite = "pilot"
+        else:
+            ap.error("--suite is required to run games")
+    suite = proto["suites"][args.suite]
+    role = suite.get("role", "development")
+    if mode == "pilot" and role != "development":
+        raise SystemExit(f"pilot mode never opens held-out outcomes: suite {args.suite} has role {role}")
+    if role == "held-out":
+        if args.seeds or args.cap:
+            raise SystemExit("held-out suites run exactly as frozen: no --seeds/--cap overrides")
+        fz = load_freeze(out_root, proto)
+        if fz is None or fz["protocol_sha256"] != proto["_sha256"]:
+            raise SystemExit(f"held-out suite {args.suite} requires a matching freeze record (python tools/bench.py --config {args.config} --mode freeze)")
+        if fz.get("model_closure") != model_closure_sha256():
+            raise SystemExit("model sources changed since the freeze; re-freeze (and re-run) or restore the frozen sources")
+    exec_mode = args.exec_mode or proto.get("execution", {}).get("mode", "replay")
     seeds = [int(s) for s in args.seeds.split(",")] if args.seeds else None
-    run_suite_v2(proto, args.suite, out_root, seeds, args.cap)
+    w = workload(proto, args.suite, seeds, args.cap)
+    print(f"{args.suite} ({role}): {w['games']} games, cap {w['cap']}, execution mode {exec_mode}, out-root {args.out_root}")
+    counts = run_suite_v2(proto, args.suite, out_root, seeds, args.cap, mode=exec_mode,
+                          checkpoint_every=int(proto.get("execution", {}).get("checkpoint_every_pieces", 1000)))
     csv_path = derive_v2_csv(out_root)
-    suite = dict(proto["suites"][args.suite])
+    suite = dict(suite)
     if args.cap is not None:
         suite["cap"] = args.cap
     if seeds is not None:
         suite = {**suite, "streams": {**suite["streams"], "seeds": [min(seeds), max(seeds)]}}
-    rows = [v2_row(r) for r in v2_records(out_root).values()]
+    # records are identity-keyed: only this protocol version's and this model closure's rows belong to the quick
+    # summary (records of an earlier protocol revision stay on disk as records, but are not part of it)
+    rows = [v2_row(r) for r in v2_records(out_root).values()
+            if r["protocol_sha256"] == proto["_sha256"] and r["model_closure"] == model_closure_sha256()]
     summary = summarise(rows, suite, source=model_closure_sha256(), protocol_sha256=proto["_sha256"],
-                        resamples=proto["statistics"]["bootstrap_resamples"], bootstrap_seed=proto["statistics"]["bootstrap_seed"],
+                        resamples=min(int(proto["statistics"]["bootstrap_resamples"]), 500), bootstrap_seed=proto["statistics"]["bootstrap_seed"],
                         suite_name=args.suite)
     summary.update({"schema": "quality-summary-v2", "protocol_path": proto["_path"], "git_commit": git_commit(ROOT),
-                    "source_sha256": source_closure_sha256(), "derived_csv": str(csv_path.relative_to(ROOT)),
+                    "source_sha256": source_closure_sha256(), "derived_csv": rel(csv_path),
+                    "execution": {"mode": exec_mode, "counts": {k: v for k, v in counts.items() if k != "per_policy"}, "per_policy": counts["per_policy"]},
+                    "note": "quick lines summary; the censoring-aware analysis is tools/analyze_quality_v2.py",
                     "recorded_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")})
-    atomic_write_json(out_root / "summary" / f"quality_{args.suite}.json", summary)
+    name = f"pilot_{args.suite}" if mode == "pilot" else f"quality_{args.suite}"
+    atomic_write_json(out_root / "summary" / f"{name}.json", summary)
     print_summary(summary)
-    print("->", (out_root / "summary" / f"quality_{args.suite}.json").relative_to(ROOT))
+    print("->", rel(out_root / "summary" / f"{name}.json"))
+    if counts["failed"]:
+        print(f"{counts['failed']} job(s) FAILED (raw/quality/<key>.failed.json): repair and re-run; they are not outcomes")
+        return 1
     return 0
 
 

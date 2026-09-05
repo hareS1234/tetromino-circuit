@@ -12,3 +12,4 @@ results/v2/runner.lock
 results/v2/runner.heartbeat.json
 *.part
 results/v2/precision/*/states_*.jsonl
+results/v2/checkpoints/

@@ -20,7 +20,7 @@ def proto():
 def test_v2_run_records_resume_and_summary(tmp_path, proto):
     out = tmp_path / "v2"
     r = bench.run_suite_v2(proto, "smoke", out, seeds=[2000, 2001], cap=20)
-    assert r == {"run": 6, "skipped": 0}
+    assert (r["run"], r["reused"], r["failed"]) == (6, 0, 0)
     recs = bench.v2_records(out)
     assert len(recs) == 6
     for key, d in recs.items():
@@ -28,9 +28,11 @@ def test_v2_run_records_resume_and_summary(tmp_path, proto):
         assert d["cap"] == 20 and d["protocol_sha256"] == proto["_sha256"] and len(d["model_closure"]) == 64
         assert d["policy"]["policy"] in ("heuristic", "random_legal") and d["terminal_reason"] in ("cap_reached", "top_out")
     # same protocol/policy/streams/cap: nothing re-run
-    assert bench.run_suite_v2(proto, "smoke", out, seeds=[2000, 2001], cap=20) == {"run": 0, "skipped": 6}
+    again = bench.run_suite_v2(proto, "smoke", out, seeds=[2000, 2001], cap=20)
+    assert (again["run"], again["reused"]) == (0, 6)
     # a different cap is a different identity: new records, old ones kept
-    assert bench.run_suite_v2(proto, "smoke", out, seeds=[2000, 2001], cap=25) == {"run": 6, "skipped": 0}
+    more = bench.run_suite_v2(proto, "smoke", out, seeds=[2000, 2001], cap=25)
+    assert (more["run"], more["reused"]) == (6, 0)
     assert len(bench.v2_records(out)) == 12
     csv_path = bench.derive_v2_csv(out)
     assert csv_path.read_text().count("\n") == 13

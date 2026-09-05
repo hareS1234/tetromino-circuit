@@ -34,7 +34,8 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-a2-stream test-a2-metadata test-a2-reset test-a2-pipe synth-a2-pipe \
         test-a2-core-extra test-request-interval corpus-v2-dev \
         test-reducer verify-a2-release formal-a2-control mutation-check-a2 regress-a0-a1 route-a2-dev \
-        test-precision-v2 analyze-precision-v2 synth-scorer-study
+        test-precision-v2 analyze-precision-v2 synth-scorer-study \
+        streams-v2 test-benchmark-v2 test-statistics-v2 bench-v2 check-quality-v2 analyze-quality-v2
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -290,6 +291,25 @@ analyze-precision-v2: ## U14: common-state disagreement, score gaps, stability c
 	$(PY) tools/analyze_precision_v2.py --split $(SPLIT) --explain
 synth-scorer-study: ## U14: registered scorer microbenchmarks P0-P7 and one A1/cache core per profile (LUT/FF/carry/DSP, observed outputs)
 	$(PY) tools/scorer_study.py --cores 0,1,2,3,4,5,6,7
+
+# ---------------------------------------------------------------- U15 (v2 long-horizon benchmarks)
+PROTOCOL_V2 ?= benchmarks/config_v2.json
+SUITE ?= pilot
+streams-v2: ## U15: generate (idempotent) and verify the v2 development and held-out piece streams
+	$(PY) tools/streams_v2.py generate --split v2_development
+	$(PY) tools/streams_v2.py generate --split v2_heldout
+	$(PY) tools/streams_v2.py check
+test-benchmark-v2: ## U15: v2 streams, protocol checks, summary = replay, checkpoints/resume, failed jobs, freeze/held-out guards
+	$(PY) -m pytest tests/unit/test_benchmark_v2.py tests/unit/test_bench_v2.py -q $(PYTEST_ARGS)
+test-statistics-v2: ## U15: restricted mean / survival identity, medians not reached, paired bootstrap, paired-set validation
+	$(PY) -m pytest tests/unit/test_statistics_v2.py -q $(PYTEST_ARGS)
+bench-v2: ## U15/U16: MODE=dry-run|pilot|freeze|run [SUITE=pilot|pilot50k|bag50k] on $(PROTOCOL_V2) (held-out runs need MODE=freeze first)
+	@case "$(MODE)" in dry-run|pilot|freeze|run) ;; *) echo "usage: make bench-v2 MODE=dry-run|pilot|freeze|run [SUITE=pilot|pilot50k|bag50k]"; exit 2;; esac
+	$(PY) tools/bench.py --config $(PROTOCOL_V2) --mode $(MODE) $(if $(filter run pilot,$(MODE)),--suite $(SUITE),)
+check-quality-v2: ## U16: every expected paired record present, consistent and matching the freeze (SUITE=bag50k)
+	$(PY) tools/analyze_quality_v2.py --config $(PROTOCOL_V2) --suite $(SUITE) --check
+analyze-quality-v2: ## U16: restricted means, lines, cap hits, survival curves, paired bootstrap intervals (SUITE=bag50k)
+	$(PY) tools/analyze_quality_v2.py --config $(PROTOCOL_V2) --suite $(SUITE)
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04/U13: stage manifest, configuration identity, cycle contract, A2 and four-lane elaboration guards

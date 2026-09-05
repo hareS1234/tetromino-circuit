@@ -1,0 +1,94 @@
+{
+ "analysis": {
+  "errors": [],
+  "parser_version": "pnr-parser-v2"
+ },
+ "analysis_key": "739e31e30f5a455975aaa3f37b5769c2f60fc04775d0cabc5344d205e3928418",
+ "area": {
+  "bram": 0,
+  "carry": 1225,
+  "cells_total": 24196,
+  "dp16kd": 0,
+  "dsp": 0,
+  "ff": 6773,
+  "lut4": 14035,
+  "mult18x18d": 0,
+  "trellis_comb": 17551,
+  "trellis_ff": 6773
+ },
+ "attempt": {
+  "id": "a975dba249d5-a1",
+  "number": 1,
+  "previous_status": null,
+  "reason": null
+ },
+ "configuration_id": "a1-cache-d1-p0-l4",
+ "device": {
+  "device": "LFE5U-85F",
+  "flag": "--85k",
+  "package": "CABGA381",
+  "speed": "6"
+ },
+ "dsp_policy": "nodsp",
+ "files": {
+  "config": "build/route/a975dba249d57d66db17fb1bb72eb6cd6860457a850943d101d6f713fb078e9b/routed.config",
+  "dir": "build/route/a975dba249d57d66db17fb1bb72eb6cd6860457a850943d101d6f713fb078e9b",
+  "log": "build/route/a975dba249d57d66db17fb1bb72eb6cd6860457a850943d101d6f713fb078e9b/nextpnr.log",
+  "report": "build/route/a975dba249d57d66db17fb1bb72eb6cd6860457a850943d101d6f713fb078e9b/timing.json"
+ },
+ "io_constraints": "auto-allocated (--lpf-allow-unconstrained)",
+ "netlist_sha256": "0a21af7ba84e5232013e2947c39053059b31e96e3375fdc897f3aac47c870d49",
+ "nextpnr": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
+ "options": [
+  "--lpf-allow-unconstrained"
+ ],
+ "params": {
+  "ARCH": 1,
+  "BOARD_REPR": 1,
+  "DEPTH": 1,
+  "LANES": 4,
+  "PRECISION": 0
+ },
+ "process": {
+  "cancelled": false,
+  "completed": true,
+  "elapsed_s": 213.6,
+  "finished_utc": "2026-09-05T18:22:11Z",
+  "peak_rss_mb": 824.4,
+  "return_code": 0,
+  "started_utc": "2026-09-05T18:18:38Z",
+  "timed_out": false
+ },
+ "reused": false,
+ "route_key": "a975dba249d57d66db17fb1bb72eb6cd6860457a850943d101d6f713fb078e9b",
+ "route_timeout_s": 3600,
+ "schema": "route-record-v2",
+ "script_version": "route-v2",
+ "seed": 2,
+ "source_sha256": "4ff6080a637411652a2f94d31a0691c2d54b1cbd99c75a0d61930b45fb57b3ac",
+ "status": "routed_timing_met",
+ "status_reason": "final routed timing PASS from report-json+final-log",
+ "synth_key": "1a9d7e5fb832b0ee9f66813c4fe24d11ee0c0ad193abec15c3747c1eec517459",
+ "target_mhz": 50.0,
+ "timing": {
+  "clock": "$glbnet$clk$TRELLIS_IO_IN",
+  "freq_option_note": "--freq is nextpnr's default clock constraint for the selected clock",
+  "met": true,
+  "placement_estimate_mhz": 63.16,
+  "report_available": true,
+  "reported_fmax_mhz": 65.96,
+  "requested_mhz": 50.0,
+  "source": "report-json+final-log",
+  "worst_path": {
+   "clock": "$glbnet$clk$TRELLIS_IO_IN",
+   "from": "u_core.genblk3.g_d1.g_lane[3].u_lane.u_eval.g_a1.u_drop.d_q[0]_TRELLIS_FF_Q.Q",
+   "logic_ns": 6.34,
+   "routing_ns": 8.82,
+   "to": "u_core.genblk3.g_d1.g_lane[3].u_lane.u_eval.g_a1.u_drop.y_o_TRELLIS_FF_Q_2.M",
+   "total_ns": 15.16
+  }
+ },
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "top": "stream_wrapper",
+ "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)"
+}

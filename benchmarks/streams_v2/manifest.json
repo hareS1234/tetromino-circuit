@@ -1,0 +1,983 @@
+{
+ "schema": "stream-manifest-v2",
+ "spec": "drop-v1.1",
+ "generator": "python-random-seven-bag",
+ "length": 50001,
+ "splits": {
+  "v2_development": [
+   10000,
+   10019
+  ],
+  "v2_heldout": [
+   20000,
+   20099
+  ],
+  "v2_iid_heldout": [
+   30000,
+   30099
+  ]
+ },
+ "encoding": "one byte per piece (0-6), gzip file",
+ "streams": {
+  "10000": {
+   "seed": 10000,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "06ed0a8335c2502ed7ba9a073329cea9770dfb8f908237bae7265ed1567621d0",
+   "file": "benchmarks/streams_v2/stream_10000.bin.gz",
+   "file_sha256": "41a11405fe74057ab66ba27219afe7586c941448fae4f671e498f8054e9bd68a"
+  },
+  "10001": {
+   "seed": 10001,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "26924a12a6dbb17532e9cdca6c28505940bedfb47a8318bf1bcdbcf3ddb9bdea",
+   "file": "benchmarks/streams_v2/stream_10001.bin.gz",
+   "file_sha256": "7b9c861d80e4d2314d410ca7a7fb887448fb1354f7a12950f3ad0a9b75dff7c1"
+  },
+  "10002": {
+   "seed": 10002,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "0c8f8ef4f0b2d7eaaa415e7b7424b631586e0c1c2474e665ee48dd5a470db793",
+   "file": "benchmarks/streams_v2/stream_10002.bin.gz",
+   "file_sha256": "64b81ccfda0b2dac932fef331471e8756631ce96a45c1de58c4902bc7fcae4cd"
+  },
+  "10003": {
+   "seed": 10003,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "b866cddd14ef7a6af94ffe2fa91a8aff3f1979fa633f770dd35d2918e2cec20b",
+   "file": "benchmarks/streams_v2/stream_10003.bin.gz",
+   "file_sha256": "38989679cd6c9e5eebbaeeb26bf9f3828cb88382df544b7c53c7e55f1caa16cd"
+  },
+  "10004": {
+   "seed": 10004,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "672f993cd08e5ae9886dd785d7938778022d052b000044293d2105e3cec30a76",
+   "file": "benchmarks/streams_v2/stream_10004.bin.gz",
+   "file_sha256": "f0bae29e3ca0bc75aca16649302933ef69f360b74e88ba8faa97822c78611010"
+  },
+  "10005": {
+   "seed": 10005,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "5e72721988363eccc85605a83a0833952009569565d88e66f924ac5e158289c6",
+   "file": "benchmarks/streams_v2/stream_10005.bin.gz",
+   "file_sha256": "dc049f0677cedc3a03d6f738f0ebaa89c66b34c54cd73c80f7e19f206acb1273"
+  },
+  "10006": {
+   "seed": 10006,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "aa3e7c06987dbfc267ef63d4171c29e326fae529d31627f35d20d956b5ab0334",
+   "file": "benchmarks/streams_v2/stream_10006.bin.gz",
+   "file_sha256": "2416ff90ccac547dda720731c212a1b9aa0472db6878f24df83a2bc8d4ae062b"
+  },
+  "10007": {
+   "seed": 10007,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "5638e05d930dc08f3db97674e88b7375c253931cf8a879a0f817fbd3358d6646",
+   "file": "benchmarks/streams_v2/stream_10007.bin.gz",
+   "file_sha256": "976bca46f18b273262466085c32ac325b58d7d6fd1292dc3189dcc18b2e4e8e2"
+  },
+  "10008": {
+   "seed": 10008,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "1dace9f116db9bdcedaaf91ec50eda100281d4c6d91f79ef2c075e30ac7d2055",
+   "file": "benchmarks/streams_v2/stream_10008.bin.gz",
+   "file_sha256": "0bda8ab9edce1c649ec012ce73b21e45341d21627f1c9c23dbc2d52bafb525fb"
+  },
+  "10009": {
+   "seed": 10009,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "422cbf7971bae3e3955aeeb6deb290820a167b42030c0ab78b2f74c59006afca",
+   "file": "benchmarks/streams_v2/stream_10009.bin.gz",
+   "file_sha256": "2e1542b7578c269b4c3c9566771911931ca50fa239f83d8b050b987d92d9cc90"
+  },
+  "10010": {
+   "seed": 10010,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "9c68182fb9cc7aae420035c47da0f68f9e3049709b9c4a10703318efc78694a7",
+   "file": "benchmarks/streams_v2/stream_10010.bin.gz",
+   "file_sha256": "482f88b93bab69becbd9382072ebeabb0d29361e642df28ccd4eec01936a57d3"
+  },
+  "10011": {
+   "seed": 10011,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "13667fb31e53ec57bdedd21989c004580a0c214115a10f0966968395e3497d9b",
+   "file": "benchmarks/streams_v2/stream_10011.bin.gz",
+   "file_sha256": "ca74d61c2a2bc003af48d63e76efd9c802558fe28c3215b869dbae7c4effb4a3"
+  },
+  "10012": {
+   "seed": 10012,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "e8ac57208a2e63a0c04547c3432926df3b3d621c3bc5f882a5c0dc8483fb8c94",
+   "file": "benchmarks/streams_v2/stream_10012.bin.gz",
+   "file_sha256": "9a44494a6266c90bddb42a56e1a7bdbd83ccd2aaa795ea098da3fc6c3f765d5e"
+  },
+  "10013": {
+   "seed": 10013,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "a46a8bdacdb71d7956db4d0f1c41e18b1fcedbb02b7ff59c504ef3401ed0b6a6",
+   "file": "benchmarks/streams_v2/stream_10013.bin.gz",
+   "file_sha256": "7457f2846811bd627e0b6fbad9f4ceadf7852dea42235cccbe0af738e86365ce"
+  },
+  "10014": {
+   "seed": 10014,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "f4567d3484cfc6aa2a018489c63d7f246c789f32033b29b82626217c2adcf65f",
+   "file": "benchmarks/streams_v2/stream_10014.bin.gz",
+   "file_sha256": "78e66323419bf9fdcbc8113d593ca27797a584f2b06dd79f3ee0837a79373221"
+  },
+  "10015": {
+   "seed": 10015,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "ee66b819b1d8b674164fcc83718b7eeee7e5f673ff81ad68f9958779b8261e81",
+   "file": "benchmarks/streams_v2/stream_10015.bin.gz",
+   "file_sha256": "49d41443dcac5c99cff99a3a3d716ef1f80bcbdafe32250246f17abbbc37723d"
+  },
+  "10016": {
+   "seed": 10016,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "476fead0fc61df995f972cf01e9be03f4fd56229b76e5b5ee51d733f3ba9ba86",
+   "file": "benchmarks/streams_v2/stream_10016.bin.gz",
+   "file_sha256": "6bbc9a53f7e0a738580ca41fec453ec7a9f98027ab4701aca276385d578d9800"
+  },
+  "10017": {
+   "seed": 10017,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "7b39471278ec0b132fb6c7fab6b599339ebf7c3fc66b6958bc165bbd5b5a0b92",
+   "file": "benchmarks/streams_v2/stream_10017.bin.gz",
+   "file_sha256": "2d29e658aae97ff85716f7b7d0d60b8cad551ac842c5b613a58bd91e3bd1ec0b"
+  },
+  "10018": {
+   "seed": 10018,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "64ed5c06c4e0a8b6085baa7a9dce7c664a2be54349be28231856e180aa6c5bc0",
+   "file": "benchmarks/streams_v2/stream_10018.bin.gz",
+   "file_sha256": "10ec52a47732c6bbf9c996d9d34a4bf261e2fefba4887a6147c296aeee08a880"
+  },
+  "10019": {
+   "seed": 10019,
+   "split": "v2_development",
+   "length": 50001,
+   "sha256": "cee6774528d041679a5861bfb65d3de28c80fa9406682993f2394c0756c87101",
+   "file": "benchmarks/streams_v2/stream_10019.bin.gz",
+   "file_sha256": "e0b16293bd137a1cf6d63a624ec3cb6756a418a060437fa8fa6c1289792eae11"
+  },
+  "20000": {
+   "seed": 20000,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "457b35bb33331c8f625db7a9198ee566a1982750994493feccebd5ca569e6a5d",
+   "file": "benchmarks/streams_v2/stream_20000.bin.gz",
+   "file_sha256": "58d7aac02dedb3b94d8d4c21c0e83875f9b836c4b7fdb47ca1f9119253d51813"
+  },
+  "20001": {
+   "seed": 20001,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "a52d9254c4e01272d6de77c1945e36e98aab0723c059b4923a3bd636e3d61ac2",
+   "file": "benchmarks/streams_v2/stream_20001.bin.gz",
+   "file_sha256": "a7ec9f3287681965bf4ac1639387009feb3bc1048d3f8f525badc3b1f12c495b"
+  },
+  "20002": {
+   "seed": 20002,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "953a92450b7e7e987e726e113ca56df23812ce839c9fa5d16c6c0a30dd1c19b4",
+   "file": "benchmarks/streams_v2/stream_20002.bin.gz",
+   "file_sha256": "b72232b945abfd203cfe09bae73720b88d9e43bd94e7563ece8a79f7d4b65cb0"
+  },
+  "20003": {
+   "seed": 20003,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "3119830bd573d9354b2e32478faf187e5c0ea6d377ff861080b0b2a23619e683",
+   "file": "benchmarks/streams_v2/stream_20003.bin.gz",
+   "file_sha256": "94dc89d67459540eb763a931596d3d6ec559d8aaccffd3d3414ee6c4ffa1917b"
+  },
+  "20004": {
+   "seed": 20004,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "1f7f995d4b2a7929d3a96dcdbbfb23d4579e4ba8425b5531cdf624723e31fd9e",
+   "file": "benchmarks/streams_v2/stream_20004.bin.gz",
+   "file_sha256": "02bfef19c19a8f03f8b2e3fea1cedffcfe3cdd33ac4892b9e38bd88c32382b7b"
+  },
+  "20005": {
+   "seed": 20005,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "d99bdfaec413f5bd748184e9da1f682c9d1c7594e563fc8c8e915137f9678df5",
+   "file": "benchmarks/streams_v2/stream_20005.bin.gz",
+   "file_sha256": "fdbf302bf2634f14c5cbdd136dfe72c344467394c6490bc1110cd0834003f169"
+  },
+  "20006": {
+   "seed": 20006,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "59d6d5c12b37507ecbe77a0e22e79b5996a61ce2e045f23ccf95cf876ee92a06",
+   "file": "benchmarks/streams_v2/stream_20006.bin.gz",
+   "file_sha256": "218bc231885484d983b468050b2b795ae75f0d5581d24c997cd9d2e3ea057895"
+  },
+  "20007": {
+   "seed": 20007,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "dcfbf68816b96f5dce4727bc2ea7e76575e86c01ad5da6c6a401c3f9ccd0b243",
+   "file": "benchmarks/streams_v2/stream_20007.bin.gz",
+   "file_sha256": "0e49bcc0116521c141852ee861c020261d80f2a2f66cee6a6e05f3591eaccbd7"
+  },
+  "20008": {
+   "seed": 20008,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "8eba5f25ca4eb93b8d31f0efb458e78f090a7b36b07b5d220fad92f9067d7305",
+   "file": "benchmarks/streams_v2/stream_20008.bin.gz",
+   "file_sha256": "18e28164156f983aaf2eeecaadee624638de4511c88440abe679db42a8b4be24"
+  },
+  "20009": {
+   "seed": 20009,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "f8968abb0e84e3ab23145235583c31eda9c5fec83377a7a9a4d86dad12a34f29",
+   "file": "benchmarks/streams_v2/stream_20009.bin.gz",
+   "file_sha256": "6c0f582fa3120171a0fa1551ac88543bfd5e4eb17aec1cf3a55e429ac09c6988"
+  },
+  "20010": {
+   "seed": 20010,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "3ce8d3604c439bdcbe959fd55eadde0b6f4492cb3bbeda150360adc02034e326",
+   "file": "benchmarks/streams_v2/stream_20010.bin.gz",
+   "file_sha256": "ed96f13eb01fa7ed63436a40c81a7951cd1d0dba4755e7ae882c4ace820c2660"
+  },
+  "20011": {
+   "seed": 20011,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "d14e32cef79cc3b5e95d57e8d036c1402a76c79acb7060b978e858451d857826",
+   "file": "benchmarks/streams_v2/stream_20011.bin.gz",
+   "file_sha256": "ba88d24ece95600810365569411e6b36fd5db3e5234f1b574d3c4225bebbe6db"
+  },
+  "20012": {
+   "seed": 20012,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "e33e614f76236d62960dce6aa019ee0c84a2e4584510ef629c585fd61ed5e696",
+   "file": "benchmarks/streams_v2/stream_20012.bin.gz",
+   "file_sha256": "44722ace3008ad57c84e86392b19924ee048f45a574d69fcc3eab1bcf2d68993"
+  },
+  "20013": {
+   "seed": 20013,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "2b7a6be9dce8e24d2bcbd7def0290067e360bb57710234fe97201a2e91148c1a",
+   "file": "benchmarks/streams_v2/stream_20013.bin.gz",
+   "file_sha256": "8a0b6452bf1dcb6b3142f0729ef999665cf3d07aa19673c71f86824d8c629ae9"
+  },
+  "20014": {
+   "seed": 20014,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "862d9031c0959a2d837c24db0b428b36314ae1e950b11f7e9e9399c47f14c0ce",
+   "file": "benchmarks/streams_v2/stream_20014.bin.gz",
+   "file_sha256": "a644d1d1f0d6f1ce16b778eab7e3ed709c8ef5aa894b73bd280e17cb88cbdf42"
+  },
+  "20015": {
+   "seed": 20015,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "043811e9ee6ab030dad65b4f9f2eb6bfd757e53d95503be1ed58fb9df422ee58",
+   "file": "benchmarks/streams_v2/stream_20015.bin.gz",
+   "file_sha256": "19f691226d27a40268dc11f89ac44775da010e4bc7aa97a44181d1d72e80f87d"
+  },
+  "20016": {
+   "seed": 20016,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "73fe55939753c3f33ef44477774a6e95b85da142fbb9ffdd705568e05cbb75b5",
+   "file": "benchmarks/streams_v2/stream_20016.bin.gz",
+   "file_sha256": "5a3a22d02ea0e0495b010027e6a9d4fb924f01b35ba52b3f32cae97ac3987086"
+  },
+  "20017": {
+   "seed": 20017,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "b1cdb99fe01b93f0785c1fbcfba3396124eba56d278aa88f4f9b5b0de34d24c2",
+   "file": "benchmarks/streams_v2/stream_20017.bin.gz",
+   "file_sha256": "5f4932f372fe3ef0a027aba52f6983fdb4b72c7cf7e859b0963d87e135a0b5ed"
+  },
+  "20018": {
+   "seed": 20018,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "cb8e3313f9a74104aa1cd72f727bcb97921d795fd98411329ee362abec6bb811",
+   "file": "benchmarks/streams_v2/stream_20018.bin.gz",
+   "file_sha256": "a34ea61c96ba25171d053adcc1db29d9b5aff96f6f7626ed4baf91d21528a2b9"
+  },
+  "20019": {
+   "seed": 20019,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "e7589ad871bbc87dab02625bdfa56222eb1828c5f5b763d6917138a4e9c2dc5e",
+   "file": "benchmarks/streams_v2/stream_20019.bin.gz",
+   "file_sha256": "b7728f2b258101dcdc1f1c50e2e8ce350f8c32e43ff2f669ebf819764199d3f5"
+  },
+  "20020": {
+   "seed": 20020,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "3fb5ebf548d659d90f4e0670159945de6c6ec01723b524e711cccf9d63c6c129",
+   "file": "benchmarks/streams_v2/stream_20020.bin.gz",
+   "file_sha256": "7039e46cd6ca64709f5bfa0caef7e42d5c7ea63449a84635fc3020b0eceef68c"
+  },
+  "20021": {
+   "seed": 20021,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "f00ace91f2d21efa5ec38b764fb2ed6335d0e119686c75fdf0245dc90512300c",
+   "file": "benchmarks/streams_v2/stream_20021.bin.gz",
+   "file_sha256": "40d1bdccc16d57270782bc916a212b0f9c13242822a02b2da0a3410a9c1e623e"
+  },
+  "20022": {
+   "seed": 20022,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "ca94c245ac8e26068faf7af212482ef077884ceddd2204e0806155d8460f14ad",
+   "file": "benchmarks/streams_v2/stream_20022.bin.gz",
+   "file_sha256": "88f58efdce44298c102d76d9c9275372ba637b7fe3e748129893482b561e0922"
+  },
+  "20023": {
+   "seed": 20023,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "ad6eca772c8d04be516f8b2675120e09e1539ad9f68354804f05503377063769",
+   "file": "benchmarks/streams_v2/stream_20023.bin.gz",
+   "file_sha256": "a083d8b3f42239abd842c4dbccffc989da5095626256470bd5961935d1346f4f"
+  },
+  "20024": {
+   "seed": 20024,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "e592ae359a570a69c1778988e8219891aa1620fbc2171f9afe897a8ea819ebdd",
+   "file": "benchmarks/streams_v2/stream_20024.bin.gz",
+   "file_sha256": "6f2224074adcb9c2b78396c93abd66568c54916505a89b9c97538f771c1798a5"
+  },
+  "20025": {
+   "seed": 20025,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "0eee359fe5c5cda080329b646e307358a0830209fd4ed56f0780b3be92047dea",
+   "file": "benchmarks/streams_v2/stream_20025.bin.gz",
+   "file_sha256": "4549a01033b87d4b9234925a95d998c27a74dca842d285ba7dcc91cc4f8fc4ed"
+  },
+  "20026": {
+   "seed": 20026,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "3b122b2dce179f1ba72e18268dc72031f294759cf799e4c7b42c172b2f0e845d",
+   "file": "benchmarks/streams_v2/stream_20026.bin.gz",
+   "file_sha256": "d353dce7cf06481c7ad24926ddc47d16268815861d40c104dad28d5371a9b487"
+  },
+  "20027": {
+   "seed": 20027,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "ef7b44efbcd26aa1dcf4b44be0ad10a573b6ee49e674673a20ec9aa84e9ffff5",
+   "file": "benchmarks/streams_v2/stream_20027.bin.gz",
+   "file_sha256": "49915dbea799df69c58f938d29d2f6b0387a02678b50ccd8e3694d82047149c0"
+  },
+  "20028": {
+   "seed": 20028,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "80988b825cb41f54cd2636ccfe1b744c49f40b51f4361cf216f6ca82cf1dead3",
+   "file": "benchmarks/streams_v2/stream_20028.bin.gz",
+   "file_sha256": "9eaa8423cf8b709810d60b60645a5d3000bfc6e3e0c5c98cde05138425cd6d2b"
+  },
+  "20029": {
+   "seed": 20029,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "dc1eb228019a37f4a86ec7915b4a63475986f8b969292d3c71579cc05d2c4390",
+   "file": "benchmarks/streams_v2/stream_20029.bin.gz",
+   "file_sha256": "2858c216040987fc220a10d2a2b219beaa9f3356322b96994c9b449a20b45fa2"
+  },
+  "20030": {
+   "seed": 20030,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "8b97d13a0858dba0851cf9870a923e6cbb04eaff3ed94f7aa2748fb02ed9b39e",
+   "file": "benchmarks/streams_v2/stream_20030.bin.gz",
+   "file_sha256": "bc1fe235b6a70cb8ebf2f46426ff1e22a06b51a4f2cdb2a75d6dafab0bd0a080"
+  },
+  "20031": {
+   "seed": 20031,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "7e3318c85e9e78660374b6e8a1ea4851651dc073836b54c3946c3c706fb92856",
+   "file": "benchmarks/streams_v2/stream_20031.bin.gz",
+   "file_sha256": "7f1d3a64553b76a647e1c7d502e43a4937cd4f2726c29541161721576b451420"
+  },
+  "20032": {
+   "seed": 20032,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "402ae09e4f7d4008081fad6c649a368bc8f74caabe1376e5f18adc0544c83429",
+   "file": "benchmarks/streams_v2/stream_20032.bin.gz",
+   "file_sha256": "84d94bc9ea0224c54695699ca86df82e541932dc00a5fd0698f39b79840bfb31"
+  },
+  "20033": {
+   "seed": 20033,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "8cf896711f470e4638dd90e75807be71bc09e92d677ea28dbe0dd8257616adb2",
+   "file": "benchmarks/streams_v2/stream_20033.bin.gz",
+   "file_sha256": "11ff305db8a83d4336e8e3ebed14072f859422bfa604463eb1643ce013486035"
+  },
+  "20034": {
+   "seed": 20034,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "d38a3c7a848c0eb718c30ae9fdab6c60929d68f37239288c8d5d588393bf3beb",
+   "file": "benchmarks/streams_v2/stream_20034.bin.gz",
+   "file_sha256": "54151145ac60d0bcf28f9353ad6d7ec69f2f51c6e92a82218d6b6c94b48c3ba8"
+  },
+  "20035": {
+   "seed": 20035,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "c30c56e1a55c8aebdf6d8ca6ee3d4519a3b5133594dc04653c44a7fc05206932",
+   "file": "benchmarks/streams_v2/stream_20035.bin.gz",
+   "file_sha256": "7cc2a81d06457389fa55d91a04e381e7b95e6ee8dd9f7a452fa6ed2f5d41cb03"
+  },
+  "20036": {
+   "seed": 20036,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "d647804eb824b047ee6526a73fd95ec2a3d91363cccb4dbba3da7d94b7183ccf",
+   "file": "benchmarks/streams_v2/stream_20036.bin.gz",
+   "file_sha256": "340c91b4c32f090eeee3b570c1871edd52120dded7cfebabfc005a3e1ed02e2a"
+  },
+  "20037": {
+   "seed": 20037,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "a5d7c74be070b62768d683f5e48b2f9528bd18dcfc60ddad9acdab8ac0d5aa0e",
+   "file": "benchmarks/streams_v2/stream_20037.bin.gz",
+   "file_sha256": "87609349b4602eb757a6c190a9b3ba86446b903796486ff719bc1947efe2870c"
+  },
+  "20038": {
+   "seed": 20038,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "55d1519a209d5450bebf5113135ed0f76f735118ea840370c48c10e1eb559a56",
+   "file": "benchmarks/streams_v2/stream_20038.bin.gz",
+   "file_sha256": "f5fa6f932123ea449806d6a66b20b2bc81ce44b016abee86a985471efb013b72"
+  },
+  "20039": {
+   "seed": 20039,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "bbbc0c68f3704e4b18d849390d3579506a18442d9fc80f6b780e775b8662ec97",
+   "file": "benchmarks/streams_v2/stream_20039.bin.gz",
+   "file_sha256": "2ae37f511a7ce49ee24db1b07cbca94d4bb4c1e9dd99d96a0f4575b9f0246b61"
+  },
+  "20040": {
+   "seed": 20040,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "1b24e8a368e7faa75dbf66bb4bc0e62d33e7fd2337794f34b46229897f9c282b",
+   "file": "benchmarks/streams_v2/stream_20040.bin.gz",
+   "file_sha256": "5cf8e25a8f29034a5fc6af08911bed8bc0ac0b9bfb5e321ead77a895786686f7"
+  },
+  "20041": {
+   "seed": 20041,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "26de03a74aab50b57acf71f292972ed80db84754b9cb12a6e325d9cb2a2c627b",
+   "file": "benchmarks/streams_v2/stream_20041.bin.gz",
+   "file_sha256": "623bb48e401edc7c6286a272fc3fcb352c48507544522e70624962e14196f18a"
+  },
+  "20042": {
+   "seed": 20042,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "5c7d1584160b9d0674180e88a9d9a882cbb93edff39e550182083c6f7ae72dda",
+   "file": "benchmarks/streams_v2/stream_20042.bin.gz",
+   "file_sha256": "204e335b5d11fe41b477de2db5c34b509af6908d8d75f2fb0796d0c9f2c92b1e"
+  },
+  "20043": {
+   "seed": 20043,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "4604e32ef141906fe92cd408dab92e4391b8fb2777aeb94620eaa06cff51bc6b",
+   "file": "benchmarks/streams_v2/stream_20043.bin.gz",
+   "file_sha256": "663938f8b5fdeec6129c8103198b8f10edfbf53770c243e1e560fb711d4fac34"
+  },
+  "20044": {
+   "seed": 20044,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "a7ae0493b3623fa4aef58c7f4c081834e4522d0bb0593535361464b2ed5d2d1b",
+   "file": "benchmarks/streams_v2/stream_20044.bin.gz",
+   "file_sha256": "b769560336576190b13aa23fa8c17ae47a79a1dd532a1e98f39b53f9da680e51"
+  },
+  "20045": {
+   "seed": 20045,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "e02f1acd61c0e8190457d0fd553d7544852551be8acb9b1726c29bd893b57e0a",
+   "file": "benchmarks/streams_v2/stream_20045.bin.gz",
+   "file_sha256": "3d9f37c1b8c3b3e0fdbc696c45359d3524a7cd144141edb12f8a4d736e9477a4"
+  },
+  "20046": {
+   "seed": 20046,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "fef8aeda3a0a2772cc118aba4122e4c054a1062536f4cf50dea5b8ca59419603",
+   "file": "benchmarks/streams_v2/stream_20046.bin.gz",
+   "file_sha256": "6ed617c4e7ef52517c11cbf4b5fdef1d859a245f412dc37845f92a5d07426a3d"
+  },
+  "20047": {
+   "seed": 20047,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "79799c313b98d64d50c31548e0ff1507cf7de5d0675f010fa65096f842897d21",
+   "file": "benchmarks/streams_v2/stream_20047.bin.gz",
+   "file_sha256": "eaf5292cd79f68df2a93e7dfd149dc5c764b969fbf2bfa9a21227aafae69371a"
+  },
+  "20048": {
+   "seed": 20048,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "6ae87328c502b876069303a123152ac074247cee57e975cb18afc7768e716493",
+   "file": "benchmarks/streams_v2/stream_20048.bin.gz",
+   "file_sha256": "170296bc4d708a8393d5e3d70de2705d200edc393be67eb878c6cd74535d5ca8"
+  },
+  "20049": {
+   "seed": 20049,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "83924a7eab4f479a3bf70f74ef1f60facb0f054101d8e9e1552c32c96c3d529c",
+   "file": "benchmarks/streams_v2/stream_20049.bin.gz",
+   "file_sha256": "0c944a3b2a3d36b3b1e414faa519aca638732a82947ea2fa14bb4c30fc158074"
+  },
+  "20050": {
+   "seed": 20050,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "4ef272adafe2ac3f7e250b983e5c9e247057d3ff04b6a31f51917df34d7d4589",
+   "file": "benchmarks/streams_v2/stream_20050.bin.gz",
+   "file_sha256": "3f101ff9b6775c0e8d0efc2720d5335b1d2d67b706648fdd287abc5049c0c8d6"
+  },
+  "20051": {
+   "seed": 20051,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "46fce0c64f43fcfe72e10947ef8babb0e824fc286cf7c331bc2feed5e8851d01",
+   "file": "benchmarks/streams_v2/stream_20051.bin.gz",
+   "file_sha256": "0ba5f06dc2a5edbbb40a9969ab291fef5a3d1056b7f7d8d44f2383f030f8f167"
+  },
+  "20052": {
+   "seed": 20052,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "8c9285bef59ffe52ebcc9f0cb61000e8f90a607ad8b00c59d3e75614a081de52",
+   "file": "benchmarks/streams_v2/stream_20052.bin.gz",
+   "file_sha256": "36d416f05d5c3c0213fc171c46c826b07f3ea554e219ac7a51a4cd5a44aeda7b"
+  },
+  "20053": {
+   "seed": 20053,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "430ca1f0b6929139fc7df14bd5e3fa5f041512754c12aa41442cff1e634a38c6",
+   "file": "benchmarks/streams_v2/stream_20053.bin.gz",
+   "file_sha256": "26d769a0ad3928b03e26865223510ba8cc40cf96f4ba38fb87df77058caf9b83"
+  },
+  "20054": {
+   "seed": 20054,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "1daab2256b45db26a2a7f82e9ed3354c278f976a05e6ee3ca16c0ee97a6ab78a",
+   "file": "benchmarks/streams_v2/stream_20054.bin.gz",
+   "file_sha256": "1c57e3d438c2cf9bb2f42885324523bd4662e156e209e34b4bcb3b2cd49c4492"
+  },
+  "20055": {
+   "seed": 20055,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "4c2418d36a73f67be16e3b942a9a750aee034fd529f0fa96ae948ab88412356b",
+   "file": "benchmarks/streams_v2/stream_20055.bin.gz",
+   "file_sha256": "434ad0f33a045574382120cca8e7fc3765776a0d2f122ec4ea6b3a6df364996a"
+  },
+  "20056": {
+   "seed": 20056,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "08aa6af04891323c20a9418d780e57b9bca99f9f3e647ef617b096b71a71f455",
+   "file": "benchmarks/streams_v2/stream_20056.bin.gz",
+   "file_sha256": "7ae76a1df098b5fe92f2d79efd1ad3ccf73b26648ff0b41fb00efb5482b88377"
+  },
+  "20057": {
+   "seed": 20057,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "9b1e0843619742d1bc58b3c4f0ab5a58b3abfa65c58c160f9c199e32f518aeba",
+   "file": "benchmarks/streams_v2/stream_20057.bin.gz",
+   "file_sha256": "7bdf725657c28e82fff8688b80cecefa2eba337133789dc33eff996d25d6077e"
+  },
+  "20058": {
+   "seed": 20058,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "434c6c7fe294403d0dc40cd44497eb4ff0ef89a3fa1cb1a6e7cf407700db01b1",
+   "file": "benchmarks/streams_v2/stream_20058.bin.gz",
+   "file_sha256": "832a7a92aa44d82bab86d28ee2fdeb32fb2bce461675b24445f82985dd9f8096"
+  },
+  "20059": {
+   "seed": 20059,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "5ab8c7bb021142bae1ceffcb4648e8331176d7f080238d04f06bef6829e5492b",
+   "file": "benchmarks/streams_v2/stream_20059.bin.gz",
+   "file_sha256": "ca931066a56cad0b7cd2214b3b44765131e1ed19c6cae360b6118597c08f4325"
+  },
+  "20060": {
+   "seed": 20060,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "28486abe71558a18ddd9d9bc5183a062ea39d3b57094dfc0485eab44b5c4b8a4",
+   "file": "benchmarks/streams_v2/stream_20060.bin.gz",
+   "file_sha256": "34e236ffa0bd7edc5bb90157cafd4aa5d32d33888d4641c695f74184c59a9016"
+  },
+  "20061": {
+   "seed": 20061,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "35fade3bb7db9f2540695921ea137e6597002a8f89d35f0283e6b99872f498ad",
+   "file": "benchmarks/streams_v2/stream_20061.bin.gz",
+   "file_sha256": "0df666a0f5969093ef0d992be2f2f615c1d37803904805fa5cc5d7ce1249f8ae"
+  },
+  "20062": {
+   "seed": 20062,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "2bc43b1e75a7fb087554a783c3f021787239f44a45a2b0250209d9740b0606eb",
+   "file": "benchmarks/streams_v2/stream_20062.bin.gz",
+   "file_sha256": "7d0fd715815761a3715cfea94fe9923769434845b7e3748e0a5901db9bba8953"
+  },
+  "20063": {
+   "seed": 20063,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "02dc2388aad014b75595799b6564d2f5c0f8d65f15b3dde3882247e3cf07330a",
+   "file": "benchmarks/streams_v2/stream_20063.bin.gz",
+   "file_sha256": "ebf43b597f00ddcb95ad684e5244d8ba6ce7d1dc6b04d4c66d60f7b5adbfb872"
+  },
+  "20064": {
+   "seed": 20064,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "9128bad6b56c36840fbaa822867f581d3748c2f2668c06a941eef74663a6e5e3",
+   "file": "benchmarks/streams_v2/stream_20064.bin.gz",
+   "file_sha256": "ce99a70bff72c42701d1a058c6365747ee68c6f96151c43d850282572fb86c73"
+  },
+  "20065": {
+   "seed": 20065,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "a83237607cd6c5564c29f28b944ca48e3d02a8ac030d713d78c1c33da471fdc6",
+   "file": "benchmarks/streams_v2/stream_20065.bin.gz",
+   "file_sha256": "42bf7b203f609c4f26f450ce9856ede4191006c5211a93328273a8d6afecc3dc"
+  },
+  "20066": {
+   "seed": 20066,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "b2fa31da9fbb23788c0e030034147756f2cf1b29e0ae77185932f4e02239a755",
+   "file": "benchmarks/streams_v2/stream_20066.bin.gz",
+   "file_sha256": "67c69a4a164d8bb09b752bfd3c2657503230434edd552b17fbf9ce1278099e24"
+  },
+  "20067": {
+   "seed": 20067,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "92a9ccbf973c75fb765431d63138bac631286ac4e542c3d8f71d76cbf7e2fae6",
+   "file": "benchmarks/streams_v2/stream_20067.bin.gz",
+   "file_sha256": "a01ecfe61697391e0f3539c79c652e9a2b81c622c15c3d8296d8285e45bed2ff"
+  },
+  "20068": {
+   "seed": 20068,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "b5f0a910249c7e37d719e64323ef954c228ed134e72220da876829665cd042eb",
+   "file": "benchmarks/streams_v2/stream_20068.bin.gz",
+   "file_sha256": "8581ce9ba967729556d00a7f92f3a5612dd0ac6b77690c03fa269aa613e0199c"
+  },
+  "20069": {
+   "seed": 20069,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "de2e19c96a47edb2890257b145516ac6b32c891d5e49fc730e3aaa4793e860bf",
+   "file": "benchmarks/streams_v2/stream_20069.bin.gz",
+   "file_sha256": "5e2364ad2d4214bedfc82375e1efcc9ed5f1cc01af11b2f2e6a0831e58abdec9"
+  },
+  "20070": {
+   "seed": 20070,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "6d3ff3284d9c2b1cc0fe5d2ddb4468ef7ef490fda74ad78a715d9fea6d5d42c1",
+   "file": "benchmarks/streams_v2/stream_20070.bin.gz",
+   "file_sha256": "afa49ea3f2553f9da3ba18d99fc5afa4100b5edbf422407fe8919115425c6b5d"
+  },
+  "20071": {
+   "seed": 20071,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "633876c65248805693b4d70b430c4c1652ebaad4cb2b992e41cd334456531cff",
+   "file": "benchmarks/streams_v2/stream_20071.bin.gz",
+   "file_sha256": "40122688fc9fbb10c77035d386150df28b9542b3af4749baa591ed90b6b63bc7"
+  },
+  "20072": {
+   "seed": 20072,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "1939ceaa0efbe2446b03240c56198478c155ddff7171c8a053e51a007f40ac11",
+   "file": "benchmarks/streams_v2/stream_20072.bin.gz",
+   "file_sha256": "2b5b1900d0fd85c100529de05d2d4c1913fca97e26ed9e7e96d2ae315c097c57"
+  },
+  "20073": {
+   "seed": 20073,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "995f23c7784a64e02fefaa2d0b622dfb2f3cf122181a5bd6546abe4fb18d835f",
+   "file": "benchmarks/streams_v2/stream_20073.bin.gz",
+   "file_sha256": "c03544c6a7b3e4971cbb2687b1d9e4c173cddc5b8308015efc4f8bf446ad39f2"
+  },
+  "20074": {
+   "seed": 20074,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "afb4c91f0b6a620a381d74e4ce8a15a3f094984bf0821397a4341cff33f3b658",
+   "file": "benchmarks/streams_v2/stream_20074.bin.gz",
+   "file_sha256": "1b81961f1ee1baa410c3b14c8e3661af5e3f30712a363a2ac23f1bd39267c3b4"
+  },
+  "20075": {
+   "seed": 20075,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "b8374d9871e393be1297b23c499d2068e29cf6c01a28b0b9369a7ea471474d49",
+   "file": "benchmarks/streams_v2/stream_20075.bin.gz",
+   "file_sha256": "30859cd4461c0f101b681452e3ddf00409f6b081e8777dea56a913bc96f2a554"
+  },
+  "20076": {
+   "seed": 20076,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "edc49c3643135650facdb943351412484a694c65d453104780b7c70a02b14d44",
+   "file": "benchmarks/streams_v2/stream_20076.bin.gz",
+   "file_sha256": "604b864db77f03e82351ab0d865a5650612c5e305ea0b4d52c864e740f8b2a32"
+  },
+  "20077": {
+   "seed": 20077,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "0cb189edc742688ee684141dcbdd6bd29b28ce1fc9f1a05aa02c5e0e287eec27",
+   "file": "benchmarks/streams_v2/stream_20077.bin.gz",
+   "file_sha256": "e520a729939c9ee493c81aa0a84c1e17e3cb2664843e4e4f987e013ad1c8acf1"
+  },
+  "20078": {
+   "seed": 20078,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "4d9ac8c3890f5d9d906431405c9edaabc86b5f0ef28af67db710ff8ca9117131",
+   "file": "benchmarks/streams_v2/stream_20078.bin.gz",
+   "file_sha256": "235ceb4045730914c0e4eef64f3f77d2a22dfdd0f5a0a0aa390599b5bf8cfd1e"
+  },
+  "20079": {
+   "seed": 20079,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "04dd3a2256f89f4a357cf495069b183f2ccfda9298824dc0585bf45752a21c23",
+   "file": "benchmarks/streams_v2/stream_20079.bin.gz",
+   "file_sha256": "c5b01753233aec55a45ecf6c12d92698c282edb39440d29d8096b50e5b9fa534"
+  },
+  "20080": {
+   "seed": 20080,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "1dee8e56942ba5c311f1ca281fa1b3aa4ab8ad7b6026cf4ab4dddd37c7980623",
+   "file": "benchmarks/streams_v2/stream_20080.bin.gz",
+   "file_sha256": "0cd76c8bf75d624d88ab9fcf5217218d545b6aa793365e86f8fe3f3f1b121225"
+  },
+  "20081": {
+   "seed": 20081,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "47e7152fca605445b896fb592991dd622bc0e6ea528002cda7cb38bd76206d14",
+   "file": "benchmarks/streams_v2/stream_20081.bin.gz",
+   "file_sha256": "600e7518d84eb81e6d1af273e4290de6a38b189676b80edf8ca8a6ef60c14890"
+  },
+  "20082": {
+   "seed": 20082,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "a45f9eeccc29005807cd8f0a6111ed701a86bf8cbf6b4b0e1bfd2a0e989ce7cc",
+   "file": "benchmarks/streams_v2/stream_20082.bin.gz",
+   "file_sha256": "07d92b434e77ad1979d8234170dcfd333398a5c0e902b35637668994407bb9e1"
+  },
+  "20083": {
+   "seed": 20083,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "37906a4efec945a8950ad6c18b455be6d5855fe2e3b1be018b84be28319b4a50",
+   "file": "benchmarks/streams_v2/stream_20083.bin.gz",
+   "file_sha256": "d1f6c9521b5f00bc74f2f5f93b6170259b03f8abb4b812b3ff17c9f94197f9ae"
+  },
+  "20084": {
+   "seed": 20084,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "c05367b70e5460a462b972b89a2cf400ce97d16b77758e4876c6912078dfc4b5",
+   "file": "benchmarks/streams_v2/stream_20084.bin.gz",
+   "file_sha256": "4e63ab438bbf4700fed22251163b090033ca80e536cde2a13c5c0a3d45b4e48b"
+  },
+  "20085": {
+   "seed": 20085,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "47f25256ae04d347366d825b0a4f49b13b46f188b6f712f5ebbb3a22d249ba9f",
+   "file": "benchmarks/streams_v2/stream_20085.bin.gz",
+   "file_sha256": "99a4d90110d5c7ff5c4b40398903b633d190e51eb79c0cf79f67298870170ee0"
+  },
+  "20086": {
+   "seed": 20086,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "f3265eec5df3cbe8289208e91e79eadda8c06b26b93726ebd0806bac1aa4c410",
+   "file": "benchmarks/streams_v2/stream_20086.bin.gz",
+   "file_sha256": "2f45e63aa71a860b73477bbf82fc825083dd347620540d17addde89e8f10c09b"
+  },
+  "20087": {
+   "seed": 20087,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "ad4da02353496ddf46ba783e90554968d6f74ca50f51337d0455f1745f4420ac",
+   "file": "benchmarks/streams_v2/stream_20087.bin.gz",
+   "file_sha256": "42d5d71af5cc76bdf0164baf5f6f7c0e9961d0cf4a0c06f65d6bea9afbb39e2e"
+  },
+  "20088": {
+   "seed": 20088,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "4e0158645407f7f66734616c141d3e374f5ff01236abf5a844f7a4c975bd5213",
+   "file": "benchmarks/streams_v2/stream_20088.bin.gz",
+   "file_sha256": "70741852651f67a0aab191b34b68187191e5aaad5850612adda1c2f9a6296f31"
+  },
+  "20089": {
+   "seed": 20089,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "70b7efe034f7657dbbca4cd5050fb3ddff18ad1f3dc3fae765c4df379da319ed",
+   "file": "benchmarks/streams_v2/stream_20089.bin.gz",
+   "file_sha256": "07864d1deee23732d6a317a31a13d32cf90ccbba156c7ef56b1179e2abf409b9"
+  },
+  "20090": {
+   "seed": 20090,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "ffecc55ee889c01fc71e06f820ef8690bb2b0bda33dec227ad3592d976f7b0ce",
+   "file": "benchmarks/streams_v2/stream_20090.bin.gz",
+   "file_sha256": "1f993ebb4e142bb105d848d9aed52a04d41a45afb7f32373dcb8fb8e059a5860"
+  },
+  "20091": {
+   "seed": 20091,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "ea7142fdef5cc7424b746f86c373e9e669d5301b44bee526e272e3792b3fb251",
+   "file": "benchmarks/streams_v2/stream_20091.bin.gz",
+   "file_sha256": "0f1a38862c38262e6c96e9debece6afa336b09a576f7f3acf13eda0638dce81b"
+  },
+  "20092": {
+   "seed": 20092,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "97d712e101e46d26286dba4949be755c5094887e3b66da60c2e12994fefd04de",
+   "file": "benchmarks/streams_v2/stream_20092.bin.gz",
+   "file_sha256": "cda16dd39c987e8af40aa6abd0e17a1606f2ff7131d1d0e4c7ed67ed35d79b52"
+  },
+  "20093": {
+   "seed": 20093,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "44044dc663fa99928d89f91b248d5d572e50cf47ea85cc666b0b53bef760d912",
+   "file": "benchmarks/streams_v2/stream_20093.bin.gz",
+   "file_sha256": "0a959a7be53a85a6e3d41a331d06ee067e1eac6c004f38a036de37590069d18c"
+  },
+  "20094": {
+   "seed": 20094,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "35898ea72f259752818ff801b2351d3c9b59efa4e147252c19f66bbfb238930d",
+   "file": "benchmarks/streams_v2/stream_20094.bin.gz",
+   "file_sha256": "f607396b2305ed099d5281be068d850cc0732d71afcd92469b8f66016da2a255"
+  },
+  "20095": {
+   "seed": 20095,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "ae29c386acd7468d8da8f4455988f9c9b25a45b58f83747714dbffb9f5bf1b56",
+   "file": "benchmarks/streams_v2/stream_20095.bin.gz",
+   "file_sha256": "16d3097e9a0bb2049ae162d4ecbcb93ae91772a04711a27bb9cebe50b1d18cc0"
+  },
+  "20096": {
+   "seed": 20096,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "27c2219e0708f69f49efd2e8d871d040575a6cd373b918c95259c92672cb0d95",
+   "file": "benchmarks/streams_v2/stream_20096.bin.gz",
+   "file_sha256": "b686b458f6ff21ccc13330b48c8f0f304d25e6809e1e1a9e2596e1b892eb785b"
+  },
+  "20097": {
+   "seed": 20097,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "2f9bc41827419e7c859334bb6140ef7ac4aebe82950bcc4c2ad52a29e4ac0e26",
+   "file": "benchmarks/streams_v2/stream_20097.bin.gz",
+   "file_sha256": "45f02cf225cea02d5c8fd1280cbe8e8c155864d9e3587406b238da7f7898edb1"
+  },
+  "20098": {
+   "seed": 20098,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "347175e868ee0837c8374676a02d15f83ace74d0d4bc5d8d3d60406c60e2bf43",
+   "file": "benchmarks/streams_v2/stream_20098.bin.gz",
+   "file_sha256": "346a393dc3739c14d73e8252eeab91aa7e1b426e5c0e685c8ce4be0a4f4065d4"
+  },
+  "20099": {
+   "seed": 20099,
+   "split": "v2_heldout",
+   "length": 50001,
+   "sha256": "3bea2f65534b3a435117b491956b6c9084ba979c13fe5a0fe9a1caaf5fa0343d",
+   "file": "benchmarks/streams_v2/stream_20099.bin.gz",
+   "file_sha256": "b0801b0e6641ff5281a0d2e87c37bc63d1c8cccd4c607303dbf4a734211fd2e6"
+  }
+ }
+}

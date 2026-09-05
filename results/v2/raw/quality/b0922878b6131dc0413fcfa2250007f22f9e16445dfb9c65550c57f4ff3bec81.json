@@ -1,0 +1,38 @@
+{
+ "backend": "python-fast",
+ "cap": 50000,
+ "checkpoint": "results/v2/checkpoints/b0922878b6131dc0413fcfa2250007f22f9e16445dfb9c65550c57f4ff3bec81.json",
+ "checkpoints_written": 9,
+ "duration": 8933,
+ "event_observed": true,
+ "git_commit": "46d8afb3776efbbea93b0c65a148b64b78b4ddeb-dirty",
+ "lines": 3556,
+ "mode": "summary",
+ "model_closure": "ea02300144a03bd2605ebbdab5fd629cf41f2231f6b4a535757a3fe695f9be81",
+ "peak_rss_mb_process": 22.3,
+ "pieces_locked": 8933,
+ "policy": {
+  "depth": 1,
+  "policy": "heuristic",
+  "precision": 0
+ },
+ "protocol_name": "quality-v2-bag50k",
+ "protocol_path": "benchmarks/config_v2.json",
+ "protocol_sha256": "12e05937e613e64fc618b7b3a6f2d329cbe0cef37485fdf356cde609b39415b4",
+ "quality_key": "b0922878b6131dc0413fcfa2250007f22f9e16445dfb9c65550c57f4ff3bec81",
+ "recorded_utc": "2026-09-05T18:11:35Z",
+ "resumed_from": null,
+ "runtime": {
+  "python": "3.11.15"
+ },
+ "schema": "quality-record-v2",
+ "source_sha256": "ea9304c6f2d0dbb1da0e0de32625392abd792be0cc75a48c73fdda693876a21c",
+ "spec": "drop-v1.1",
+ "status": "complete",
+ "stream_seed": 10006,
+ "stream_sha256": "aa3e7c06987dbfc267ef63d4171c29e326fae529d31627f35d20d956b5ab0334",
+ "suite": "pilot50k",
+ "terminal_reason": "top_out",
+ "trajectory_sha256": "e6601bc71febe781c1746cba9fecd0582d0c15faa2ca558026497e15bff4bf92",
+ "wall_seconds": 1.185
+}

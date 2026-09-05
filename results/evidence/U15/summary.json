@@ -1,0 +1,539 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U15",
+ "status": "passed",
+ "git_commit": "46d8afb3776efbbea93b0c65a148b64b78b4ddeb-dirty",
+ "git_modified_tracked": [
+  ".gitignore",
+  "Makefile",
+  "results/v2/summary/quality.csv",
+  "tests/unit/test_bench_v2.py",
+  "tools/bench.py"
+ ],
+ "git_untracked": [
+  "benchmarks/config_v2.json",
+  "benchmarks/streams_v2/manifest.json",
+  "benchmarks/streams_v2/stream_10000.bin.gz",
+  "benchmarks/streams_v2/stream_10001.bin.gz",
+  "benchmarks/streams_v2/stream_10002.bin.gz",
+  "benchmarks/streams_v2/stream_10003.bin.gz",
+  "benchmarks/streams_v2/stream_10004.bin.gz",
+  "benchmarks/streams_v2/stream_10005.bin.gz",
+  "benchmarks/streams_v2/stream_10006.bin.gz",
+  "benchmarks/streams_v2/stream_10007.bin.gz",
+  "benchmarks/streams_v2/stream_10008.bin.gz",
+  "benchmarks/streams_v2/stream_10009.bin.gz",
+  "benchmarks/streams_v2/stream_10010.bin.gz",
+  "benchmarks/streams_v2/stream_10011.bin.gz",
+  "benchmarks/streams_v2/stream_10012.bin.gz",
+  "benchmarks/streams_v2/stream_10013.bin.gz",
+  "benchmarks/streams_v2/stream_10014.bin.gz",
+  "benchmarks/streams_v2/stream_10015.bin.gz",
+  "benchmarks/streams_v2/stream_10016.bin.gz",
+  "benchmarks/streams_v2/stream_10017.bin.gz",
+  "benchmarks/streams_v2/stream_10018.bin.gz",
+  "benchmarks/streams_v2/stream_10019.bin.gz",
+  "benchmarks/streams_v2/stream_20000.bin.gz",
+  "benchmarks/streams_v2/stream_20001.bin.gz",
+  "benchmarks/streams_v2/stream_20002.bin.gz",
+  "benchmarks/streams_v2/stream_20003.bin.gz",
+  "benchmarks/streams_v2/stream_20004.bin.gz",
+  "benchmarks/streams_v2/stream_20005.bin.gz",
+  "benchmarks/streams_v2/stream_20006.bin.gz",
+  "benchmarks/streams_v2/stream_20007.bin.gz",
+  "benchmarks/streams_v2/stream_20008.bin.gz",
+  "benchmarks/streams_v2/stream_20009.bin.gz",
+  "benchmarks/streams_v2/stream_20010.bin.gz",
+  "benchmarks/streams_v2/stream_20011.bin.gz",
+  "benchmarks/streams_v2/stream_20012.bin.gz",
+  "benchmarks/streams_v2/stream_20013.bin.gz",
+  "benchmarks/streams_v2/stream_20014.bin.gz",
+  "benchmarks/streams_v2/stream_20015.bin.gz",
+  "benchmarks/streams_v2/stream_20016.bin.gz",
+  "benchmarks/streams_v2/stream_20017.bin.gz",
+  "benchmarks/streams_v2/stream_20018.bin.gz",
+  "benchmarks/streams_v2/stream_20019.bin.gz",
+  "benchmarks/streams_v2/stream_20020.bin.gz",
+  "benchmarks/streams_v2/stream_20021.bin.gz",
+  "benchmarks/streams_v2/stream_20022.bin.gz",
+  "benchmarks/streams_v2/stream_20023.bin.gz",
+  "benchmarks/streams_v2/stream_20024.bin.gz",
+  "benchmarks/streams_v2/stream_20025.bin.gz",
+  "benchmarks/streams_v2/stream_20026.bin.gz",
+  "benchmarks/streams_v2/stream_20027.bin.gz",
+  "benchmarks/streams_v2/stream_20028.bin.gz",
+  "benchmarks/streams_v2/stream_20029.bin.gz",
+  "benchmarks/streams_v2/stream_20030.bin.gz",
+  "benchmarks/streams_v2/stream_20031.bin.gz",
+  "benchmarks/streams_v2/stream_20032.bin.gz",
+  "benchmarks/streams_v2/stream_20033.bin.gz",
+  "benchmarks/streams_v2/stream_20034.bin.gz",
+  "benchmarks/streams_v2/stream_20035.bin.gz",
+  "benchmarks/streams_v2/stream_20036.bin.gz",
+  "benchmarks/streams_v2/stream_20037.bin.gz",
+  "benchmarks/streams_v2/stream_20038.bin.gz",
+  "benchmarks/streams_v2/stream_20039.bin.gz",
+  "benchmarks/streams_v2/stream_20040.bin.gz",
+  "benchmarks/streams_v2/stream_20041.bin.gz",
+  "benchmarks/streams_v2/stream_20042.bin.gz",
+  "benchmarks/streams_v2/stream_20043.bin.gz",
+  "benchmarks/streams_v2/stream_20044.bin.gz",
+  "benchmarks/streams_v2/stream_20045.bin.gz",
+  "benchmarks/streams_v2/stream_20046.bin.gz",
+  "benchmarks/streams_v2/stream_20047.bin.gz",
+  "benchmarks/streams_v2/stream_20048.bin.gz",
+  "benchmarks/streams_v2/stream_20049.bin.gz",
+  "benchmarks/streams_v2/stream_20050.bin.gz",
+  "benchmarks/streams_v2/stream_20051.bin.gz",
+  "benchmarks/streams_v2/stream_20052.bin.gz",
+  "benchmarks/streams_v2/stream_20053.bin.gz",
+  "benchmarks/streams_v2/stream_20054.bin.gz",
+  "benchmarks/streams_v2/stream_20055.bin.gz",
+  "benchmarks/streams_v2/stream_20056.bin.gz",
+  "benchmarks/streams_v2/stream_20057.bin.gz",
+  "benchmarks/streams_v2/stream_20058.bin.gz",
+  "benchmarks/streams_v2/stream_20059.bin.gz",
+  "benchmarks/streams_v2/stream_20060.bin.gz",
+  "benchmarks/streams_v2/stream_20061.bin.gz",
+  "benchmarks/streams_v2/stream_20062.bin.gz",
+  "benchmarks/streams_v2/stream_20063.bin.gz",
+  "benchmarks/streams_v2/stream_20064.bin.gz",
+  "benchmarks/streams_v2/stream_20065.bin.gz",
+  "benchmarks/streams_v2/stream_20066.bin.gz",
+  "benchmarks/streams_v2/stream_20067.bin.gz",
+  "benchmarks/streams_v2/stream_20068.bin.gz",
+  "benchmarks/streams_v2/stream_20069.bin.gz",
+  "benchmarks/streams_v2/stream_20070.bin.gz",
+  "benchmarks/streams_v2/stream_20071.bin.gz",
+  "benchmarks/streams_v2/stream_20072.bin.gz",
+  "benchmarks/streams_v2/stream_20073.bin.gz",
+  "benchmarks/streams_v2/stream_20074.bin.gz",
+  "benchmarks/streams_v2/stream_20075.bin.gz",
+  "benchmarks/streams_v2/stream_20076.bin.gz",
+  "benchmarks/streams_v2/stream_20077.bin.gz",
+  "benchmarks/streams_v2/stream_20078.bin.gz",
+  "benchmarks/streams_v2/stream_20079.bin.gz",
+  "benchmarks/streams_v2/stream_20080.bin.gz",
+  "benchmarks/streams_v2/stream_20081.bin.gz",
+  "benchmarks/streams_v2/stream_20082.bin.gz",
+  "benchmarks/streams_v2/stream_20083.bin.gz",
+  "benchmarks/streams_v2/stream_20084.bin.gz",
+  "benchmarks/streams_v2/stream_20085.bin.gz",
+  "benchmarks/streams_v2/stream_20086.bin.gz",
+  "benchmarks/streams_v2/stream_20087.bin.gz",
+  "benchmarks/streams_v2/stream_20088.bin.gz",
+  "benchmarks/streams_v2/stream_20089.bin.gz",
+  "benchmarks/streams_v2/stream_20090.bin.gz",
+  "benchmarks/streams_v2/stream_20091.bin.gz",
+  "benchmarks/streams_v2/stream_20092.bin.gz",
+  "benchmarks/streams_v2/stream_20093.bin.gz",
+  "benchmarks/streams_v2/stream_20094.bin.gz",
+  "benchmarks/streams_v2/stream_20095.bin.gz",
+  "benchmarks/streams_v2/stream_20096.bin.gz",
+  "benchmarks/streams_v2/stream_20097.bin.gz",
+  "benchmarks/streams_v2/stream_20098.bin.gz",
+  "benchmarks/streams_v2/stream_20099.bin.gz",
+  "docs/quality_v2.md",
+  "model/longrun.py",
+  "model/streams_v2.py",
+  "model/survival.py",
+  "results/v2/figures/survival_pilot.png",
+  "results/v2/figures/survival_pilot50k.png",
+  "results/v2/raw/quality/016cf554a3f793508ca2b6370466aa18736e3a0c524cdbc6bd783ba8d3806652.json",
+  "results/v2/raw/quality/018d154c4ae5fd23f0f2756ef382cc02f5b4284e24b475d6e92c3c9189e11978.json",
+  "results/v2/raw/quality/034843f28fcee43efc6e7e72ba0b11cd60964620c61fa2d7d401619e01fa271d.json",
+  "results/v2/raw/quality/07f4ff86874dc01431073563ecfb5731d9ea84bcb05f3b317ffa280fe9d84382.json",
+  "results/v2/raw/quality/0c5c1dc28851234b9ef13e60917385f19650cfa4c56e8216f2de86375122dca9.json",
+  "results/v2/raw/quality/0cf5b0288a83fcda22eedfd13eb36544dcbe598b260f1cfdfda4e8114c1e48da.json",
+  "results/v2/raw/quality/1083490ed25518f93741c0b003006899f4261b12da6a279ccce55649df6cffab.json",
+  "results/v2/raw/quality/10abeadd05eed93ba595866fed38c9f95103f2dd348d1f7d96a6a3411dd450e6.json",
+  "results/v2/raw/quality/10c60592531d258b2d15fe23eefbfc66f53e85f201383c5b073340292c0b0c1f.json",
+  "results/v2/raw/quality/10e5186cbfb13b8b8917118af49d75c29773393162e56639858f5763e1011ee6.json",
+  "results/v2/raw/quality/14b0a197e55dea7796664127d7f6b1afbcf403675389e4ac3859dac2911c1cd0.json",
+  "results/v2/raw/quality/15393b77b111b02707dff3bcb0167ce11338bdd76f59d4ba5cb9b17301a96c6a.json",
+  "results/v2/raw/quality/18f0862fc88d0b755f210be426d73cd5a7a1b15e20bf0733dd7a35f2286c9429.json",
+  "results/v2/raw/quality/1d3e698f2893f1b242cc138e559734b65f286c977c9cb37f2ae24657200bd984.json",
+  "results/v2/raw/quality/1eb7dfc0f7f1e157a67476949cb587bb6761e7f6334c20860dcc26bdb41056cd.json",
+  "results/v2/raw/quality/20580d816b4812f0b2336ba6b2d3548187904c87684351e70a38a35cbd18e46f.json",
+  "results/v2/raw/quality/2413d47b9ff14f9e1e0c366e134cc4aa6f630538c583ed2d16975d707dd573df.json",
+  "results/v2/raw/quality/256bd7388e6442bf074d2a8e6f3c1ad8248fcf9e54c60793232a44931d669c23.json",
+  "results/v2/raw/quality/279d3b49480f476353a175fbca7524035de41aff801c19dbd466a8bfcc9935f1.json",
+  "results/v2/raw/quality/28ae6eec7bd0aade28d75d55b2addf654339c5b08dbe94b33cc14797ca173500.json",
+  "results/v2/raw/quality/29d71062d12a14c99a8f3b6973d0fe0ce195b25c67e19c0610f8a1c215b40184.json",
+  "results/v2/raw/quality/2fd7a0f9bc43dfd8b41d7a191ed4166ebd5dd2b0daff13ddf3aa4454163217bc.json",
+  "results/v2/raw/quality/30132cfd3ad3991fc4f5958c581643f9725ca821249c2886c439dc1497c2fd76.json",
+  "results/v2/raw/quality/30abaaafa4b8086ac0cadb26c1779c13fe6f9e60067595eab76debc921039d6c.json",
+  "results/v2/raw/quality/30f90cfb3cbfc30e66bdff02b1884357bdb813c0cd6d1e297cb63371efdd8314.json",
+  "results/v2/raw/quality/32d5e7d885a9072db61297a0cb2063f30e7a191411192bee499dfa31f81e8a1f.json",
+  "results/v2/raw/quality/356e5da6e452f7a6e756de256e9ff73fa7dcc579ee04381aac945976dd763ba3.json",
+  "results/v2/raw/quality/3629136406a06497792ad1ca9d8aa66b91e00c9bab28107bd24c74b3cdd595a3.json",
+  "results/v2/raw/quality/36b9f8a7aa65d6a1c5edd20bb60cc9afc2dd00943314e0f8453284e60f62effb.json",
+  "results/v2/raw/quality/390a6e05ff7983486690065b1b8917f9b5454aabf74aa00bf189d4970d40b18e.json",
+  "results/v2/raw/quality/3b22b0ba4123575cbea836e5f7cfcbaed6eedfc8bd5321a60aef820da01e77e0.json",
+  "results/v2/raw/quality/3c9356f29a0e54c96a31f0acc4f76f644bd4fde24e9d87921fddb1eb3a469668.json",
+  "results/v2/raw/quality/40dfa41a6ed5673aa951b415be5b4b70114c8aea606d3d4f5f7b945b322bdb07.json",
+  "results/v2/raw/quality/40e7f4f59c8b55a959601ff64701e9b24dc97a3611f1c09a2e354d201508d497.json",
+  "results/v2/raw/quality/41c9a51bfb31940ff1ebbb012cac43f6628bc44fd31b2cd4bfaed71f3c7bd193.json",
+  "results/v2/raw/quality/41cd74ec116257ee33b5cb12451b6fba41269d310974f09d5cc88ea5263d612a.json",
+  "results/v2/raw/quality/42e1054932b37594d812add88f1073cdfb8bd08db91e49810bec82228ef7dc9f.json",
+  "results/v2/raw/quality/442235ef37f9986c1413e91baad1cbdff94317fcbfa53b8bd9da6933b702608d.json",
+  "results/v2/raw/quality/444ab9938764720d70d150d150b0cfb0c0a1dcdb9df5d45768801eda1f723a8b.json",
+  "results/v2/raw/quality/448c778daac60222c016c848fd43550c329106df5c6172573eb374af2e0885ca.json",
+  "results/v2/raw/quality/46a5a8e43c013b1b107b7d0a814137b08f44da3745b42c24141e9c70666bf9b9.json",
+  "results/v2/raw/quality/486a1ee95c8572e179e092bf75c8f00f6daf10a4ea6f76a71bc4122d174d4490.json",
+  "results/v2/raw/quality/4885e10ea4cb8b2849b3d50916dec0de55b30490df2d13d21b117161cdce5b26.json",
+  "results/v2/raw/quality/49be229f2ae6d7602a08d0804555542c2b2b9095c2707009dd87c8ac923263e4.json",
+  "results/v2/raw/quality/49d831592e81f6edada6886055b3ef2f72f1eae1541ee50eac74f90e70e82f0a.json",
+  "results/v2/raw/quality/4ad2c6fc3707165c3c8665d7331005784d32f4186a4c1348836e49c99aecd93d.json",
+  "results/v2/raw/quality/4b1e21269c37ca506d7a86297648fb71a7c38ee0ba7d82b61a7c42cc9baca429.json",
+  "results/v2/raw/quality/4c2eaf2c2a5291734dc2b33cb0ab582d51dd0fe55b5710929ebb9ccf70fea213.json",
+  "results/v2/raw/quality/508aaeba69cf81d3a0cc0198298f3fff0d9f7f662300c4b7733d9bc97df3e9cd.json",
+  "results/v2/raw/quality/51704455013307502bc3178a9c0b2c3d068b3d0932a9a1134edb3ebb9490862a.json",
+  "results/v2/raw/quality/52ebe5ee6a6dfdeeaf44f105c37f9e351a73eff3e5d27c6180801bba53094adc.json",
+  "results/v2/raw/quality/536c96c9db477ee66f14395ae0d44d6ab84673eb292031e883654111346af630.json",
+  "results/v2/raw/quality/537b9cc4f98ca69c2d9f1753132ded8999c7392c1454c21229b2fc37a4a67be5.json",
+  "results/v2/raw/quality/5449ee986678c024410aa0976a359924656287b01392193d99214567cbd43d8b.json",
+  "results/v2/raw/quality/552f7ccd8b6c4434143522b93e5d5556c5d81674badc62abfc940e82d9ff833f.json",
+  "results/v2/raw/quality/55781738e076e8fc2f754bd78f23c7d784f24da8ec8203b01722ccb10a8f567d.json",
+  "results/v2/raw/quality/5903effe7c36b7c8798527974a50f8cacb6747ad971331585edb1bfa2931a5f4.json",
+  "results/v2/raw/quality/5b1ec5f830f162dbd826080a944526481d14432f59817090c051c1e97d5dac4f.json",
+  "results/v2/raw/quality/5b49a75ad3f6aa1dd57c30b1ea22c624686328aa628df8bbafd05454f8ac065e.json",
+  "results/v2/raw/quality/5d637448898b84a1a3e7122fb3bc6472fc0f5004bdcd518fc98c92c8443c9698.json",
+  "results/v2/raw/quality/5e1ab829b1549f79be4a11049f16e8e66d510d79b8b2c2a934ce4d7c4f3983bb.json",
+  "results/v2/raw/quality/60c0edfbf725143044b862c8c6c0aad0b8cb645301c9d6e23e6d374abebb8305.json",
+  "results/v2/raw/quality/60c34db551c9f242e127ad2ff8a956d8df07c5a1fb692287e05ffe53774508e0.json",
+  "results/v2/raw/quality/6170dfadf392abab4f13ca10d2ee05f9839a1cc5ab8af58c274095c8eb3a3de1.json",
+  "results/v2/raw/quality/620b3109fbe5ba08c86446e447511014ae151e87288c1056d16b52662da91729.json",
+  "results/v2/raw/quality/624453db8f38a9091623f24b68c296d84657292dab97bc5eb00ad3b0f9a013b3.json",
+  "results/v2/raw/quality/624b91f22481bfe149e3161d6f65e1c35a9a83b33ccb5eb64b35e66fe54746d6.json",
+  "results/v2/raw/quality/624c4be13663129035a4935f8e6254118d8e60e16b662179e23207e42bf92902.json",
+  "results/v2/raw/quality/62f03132e83cb06ed29910970461383a9d5b85e969053a0bff76038ca3539db8.json",
+  "results/v2/raw/quality/63363271158c7984b07e80be235f717f2287becf077c78b7bfd17d7dfd1744b7.json",
+  "results/v2/raw/quality/641cf19cb5ba542259aeb5be5b60380c326ddb036d6854fda7d1c18f83b95937.json",
+  "results/v2/raw/quality/64f0aca04fa46ed9ff6b1730f4398ddb9651a5b309f0eec2c4e9a78c8f8e904b.json",
+  "results/v2/raw/quality/65b1beac4988c4b799549faf873cba3da45a5c84d4d3701cb9553631a25012bb.json",
+  "results/v2/raw/quality/66604bc24cf64c145f85e9b6a0926ea6052c59c27f7372af3bfd920cd6f4646b.json",
+  "results/v2/raw/quality/66c37f2f6b952d7a6f5d02b48717b1c57c5cb85379f7f2c4604a3bec8a3a39e1.json",
+  "results/v2/raw/quality/67cbe5198172267712dddba27fe051b1760ba6e3edd4b1b08934cbf658c9f517.json",
+  "results/v2/raw/quality/69bcfa28af73d390f889a22bea59c5bc507f0b48c35c83ec6b1c3b5fab8e51c9.json",
+  "results/v2/raw/quality/69d08b6d992ed67f8cb708a2e89dc1daa7a487818a76970cb71be756ab04da40.json",
+  "results/v2/raw/quality/6a49b7c5e507e91ef7324b465a340dc7005d57f94cabe611b66470f05f673f92.json",
+  "results/v2/raw/quality/6a9a4aa53ec5d3af81b7e12e6e1c03adbc67676b538571b15e336dc55d16b50a.json",
+  "results/v2/raw/quality/6b11a9b3e1477f6bbdbd90b3926867e0ede969934d4866cddc2150a62e3bff36.json",
+  "results/v2/raw/quality/6b4daf756622de6733f5c843f4eae13a2e5164c4235b095d4b4ed4ae523a5609.json",
+  "results/v2/raw/quality/6bed556a292216099ed445571adb48970743cf4b4e733a977d8fa6dbd321fc5e.json",
+  "results/v2/raw/quality/6dddb4f434730ebf4de21478e07788ef0db230d9fc27075d138da9785ae2a301.json",
+  "results/v2/raw/quality/71d2f0afcbcacc1d9efa324af7a277319c7960daaf74bdc100eb59ccde64fd31.json",
+  "results/v2/raw/quality/728527368f8b42176ce0160566ff3ba926b7831d85b7dea7e7d1bb5e49523035.json",
+  "results/v2/raw/quality/733f87f60bc4f33bb176f47e90e2c6c3c91da85f3797196e9f340ab41baa1d9f.json",
+  "results/v2/raw/quality/753ef2aeb8d5fc966a8062c3745f1c2faa25b8c11d9837466a18573c19a9cadf.json",
+  "results/v2/raw/quality/765be5a7a41e73dc921de791f0df01bc779eb4b3d5ca49c0bbe5d82d6adb3fcc.json",
+  "results/v2/raw/quality/772d790747a711765d0b93836681a6cddf3ca865de79a9a2d07d53d108dbccc3.json",
+  "results/v2/raw/quality/78253759ba08e6add06808f3cf022483638c18c39273f5c028eebb52d722ef3e.json",
+  "results/v2/raw/quality/7848bbce90e05efe083e54ddbea8aee5b277778e06817875d22e306fe3fa7b98.json",
+  "results/v2/raw/quality/792b713c8c2db99fcf518ca287ac72fccbcdbe21a0c960cc09a504cad95febbf.json",
+  "results/v2/raw/quality/7940f479f6f6dfb4c0846d2dfc577f72ce98843e3f216411d92d2c0fe54efd16.json",
+  "results/v2/raw/quality/7c8438d149e8aca5d89adc7f4ee8d96bc94ac87815640dd300aeb43a4bbd295a.json",
+  "results/v2/raw/quality/80d936106ea12321d7f6ce9ca412a73614383b0eb5bf89e4783bbd4739eef164.json",
+  "results/v2/raw/quality/83ed0c46de837922d97c84fed66a0ef95604d2daf10fd19fa62e8320ee4cde80.json",
+  "results/v2/raw/quality/84ef91f6377b0bdb252067a8217749326a5dac311fc02f835f5bb432cf3a5888.json",
+  "results/v2/raw/quality/84f3bc6f187512f9a73d07617a745cc0e25d1a48d8847ba9b595efbfe2c8cb44.json",
+  "results/v2/raw/quality/863d5f05070abba6de8fc5532aa875d288048aabcb25ea43f3ea21100c8432f9.json",
+  "results/v2/raw/quality/8c294880e41784e64a1af1bd8b5d89ca8138e571c296fe866a985f35ba7bc601.json",
+  "results/v2/raw/quality/8c9067567b24ec8d71d5b1a3904dc3d35e1738124f052dcc4622e62457e37f6f.json",
+  "results/v2/raw/quality/8f8baacfdc6e8021c7c8c1d02b25c3e01104ca4507a9ef5e06cbb5c781e2a8e0.json",
+  "results/v2/raw/quality/9015beb0ef5050f4fe8ff80e15d45550db4835264823a1b321db69a118918195.json",
+  "results/v2/raw/quality/93fd29ae970861d30a2fe677b7d10c407dbda696b6c397712a83c8a58847fc4c.json",
+  "results/v2/raw/quality/94366aae1467441fb468b7f61968d6ba4d74a706df853660f02f3a138e8e076b.json",
+  "results/v2/raw/quality/993349cb79e27be81e5bee228c33e5aa628686b83b201e7f2a7f3e91d322e4b6.json",
+  "results/v2/raw/quality/9ba2cee745f6f9e8ea78535d48c4aba52fb9edb20488dce71c56dc15b6ce6fcd.json",
+  "results/v2/raw/quality/9bafe3e88feaec61307e10569507bad4462a58a59e47c5f2154a015162f807af.json",
+  "results/v2/raw/quality/9ea93749aac77ce3ba8391c5c3a7a5e534d50be8e1c3bbe1e598f4752af2c212.json",
+  "results/v2/raw/quality/a0d10c3346573540175ac1af2cc7ec67cbc09af63d739c10ba91c2afed68491e.json",
+  "results/v2/raw/quality/a223cd54c74a428e9fa91a3aaf7ccef145f90e1e72a7f4dea0c63807669ef4db.json",
+  "results/v2/raw/quality/a231c3d115ed5ffdedcc44b3aa62dd0535359be06017c112e649d5bff70606d4.json",
+  "results/v2/raw/quality/a23bea3cf1cefa2b4e90f100b4ef7ab7729406d5fad6eea4f8b37c4da3183b13.json",
+  "results/v2/raw/quality/a23d683fb1ddd96f1802b2b7c8e521168b4772f869f428bfde37da157e754e9e.json",
+  "results/v2/raw/quality/a46892f7fd2f707bd5bec90039fed98c4f23a0745632c627afe612636f8f40db.json",
+  "results/v2/raw/quality/a6d798e67521639a8da049acfbd911dd5f4897af0432d7f74694fe3479277460.json",
+  "results/v2/raw/quality/a711975840b87d1f7d1fee81e77e9d85c82184b41fb5e423a70ade53db369e90.json",
+  "results/v2/raw/quality/a7601d4e07e323180d8370445525bb51541c271335f2bc508c96362f23cfb4ce.json",
+  "results/v2/raw/quality/ab5a22c9a4677f11a4ef50cc2a0ffe435aba3f98268a9b74d57a6f8aadcfe0f2.json",
+  "results/v2/raw/quality/adaeb63fdadda792955d8c4897837179403501f8287b303a1497540f530ede53.json",
+  "results/v2/raw/quality/af59079486e54db282e71cbf4f28b92cda87f72710763e0764ab52276407908c.json",
+  "results/v2/raw/quality/b058abc2cee7a4a0dcb21543fc6568322710dd53865fe05097edd93d97fef177.json",
+  "results/v2/raw/quality/b0922878b6131dc0413fcfa2250007f22f9e16445dfb9c65550c57f4ff3bec81.json",
+  "results/v2/raw/quality/b1939c1519cc2c6fd7ab9b02bc4de2d0ac1fa041a0f2b57910b6911358a99cbb.json",
+  "results/v2/raw/quality/b320eb246301877f285e23581e692d1a2fea6d20f5c53f925fec69b969ea77f8.json",
+  "results/v2/raw/quality/b3b173dcbe4f8f0e5a48da01b304cf2ef6b010d269c92582ac0ab67112233fcd.json",
+  "results/v2/raw/quality/b822638808b870cda13eb11f6d70704d3b4de5bcbae092804f820017ccf17985.json",
+  "results/v2/raw/quality/b87e342517bd08ab8afe414dcbfd9e5eea720eb52b6366753453f57b272c742b.json",
+  "results/v2/raw/quality/bcd5b1c36eb4417e13b8d7ce85ca4ee054d21adab093bca6dda6945301445ba6.json",
+  "results/v2/raw/quality/be948d890a5ce8da8e3a083c344ca9c60744b8a953b161159e76fe06a1af984f.json",
+  "results/v2/raw/quality/c0f7602ccda5f800195f354344e6e881a0dcea7f6327d035fe9bdd686e89ef16.json",
+  "results/v2/raw/quality/c17fdb59e0a58bbe3bde8acc3d2575746289ae345cf48e01d72aee2b69bff886.json",
+  "results/v2/raw/quality/c1ab4d6dc5568850707d271a7c8f179a826af91d2bda8cd9c15af1dbd50e346a.json",
+  "results/v2/raw/quality/c39f8642f98f6a755786c4f4bf21ab330085c28849306cc1e3bd36cff4f7445e.json",
+  "results/v2/raw/quality/c3e069b1ad39be9037253a7913f18be12eb46359b277771ce9866fc0e3591918.json",
+  "results/v2/raw/quality/c60436ecaaad2d1cc552d48b9462289c55e04c8ae40db0f640e4af8a616882cb.json",
+  "results/v2/raw/quality/cbdfd22ccae5e8da2a0802e9099ca398c8893004eb0f44274a80a7f5591232d6.json",
+  "results/v2/raw/quality/d0297d8695ebf9b4ca086c47fb7c235110c78f2360f53f895b44f37ceac0e591.json",
+  "results/v2/raw/quality/d0cd3429e2163dc099c939cb97e59174b4304c9eaf874c41e59f25d6bfd8f188.json",
+  "results/v2/raw/quality/d1fa0852f9a09687b4790717e19c6ad607dc2d0c4bdfee67dbcf26f45609f116.json",
+  "results/v2/raw/quality/d45f878093f25a761eb705acbf21bb420fd262b7ca41c68055f393307aea9a61.json",
+  "results/v2/raw/quality/d519deb72195a6676fd8b9ad49ad1ed055708b04fdc1a5ee635efd8037a9fd40.json",
+  "results/v2/raw/quality/d58e85ac11a5e94629973983cfb4c59eef6c2c66c2057b768eba38e43121bd46.json",
+  "results/v2/raw/quality/d690931fef6c0e888555546ad897de0e5f1e8096c81b656523bbc161bcda7b90.json",
+  "results/v2/raw/quality/d8c77fc4a242c3427802b2c0a214396578177def48676cc2b35df37307f972d5.json",
+  "results/v2/raw/quality/def5636cd7ffcb297b623c4afab93a0b53570e23c560f300e0704c3338c5f4d9.json",
+  "results/v2/raw/quality/df43ae7105c9b8160fba3c224a1e8927a96460abf4fcf07ec93863ef2b1d63a2.json",
+  "results/v2/raw/quality/df5715661f93114379ebbcd51d64dfe5516859324bb8a314c3d9baa570518f33.json",
+  "results/v2/raw/quality/e3db7c6513d2a693aa96621c0781bce3067d5066c670ae4fc71221e3469c1197.json",
+  "results/v2/raw/quality/e63b5f53e2a409d3201fd8ba4125ea8c61cf66fc03d3d9c9517031144e7160d3.json",
+  "results/v2/raw/quality/ea5b543a2acc0dac199cbadbb7d7da7733b497b41a80a47187c312748b92060a.json",
+  "results/v2/raw/quality/ebd5db922026590fde9c56b770b7ea6116cebbf2a64b1bcd53776c563412ffdd.json",
+  "results/v2/raw/quality/ebe502c49513d7f2c4e829eb56a4dc8b650e7dffbe4ef9bd9f3ad91fdb4f67d8.json",
+  "results/v2/raw/quality/f19ee62656cc6657c12a79ef4ded78c98174eb4e89ec09287cf02a335b22a3b3.json",
+  "results/v2/raw/quality/f2af97ed6e1080d0a9541256d2d25a9896e6ec6a51be1a445796b95b116c36ac.json",
+  "results/v2/raw/quality/f814f775cb4cd798e11b9bd97e8c690cb60a730ac4932af3b0a17c3b28fb81a7.json",
+  "results/v2/raw/quality/f8cbb431aa03a37e191ed874850acfb21598d86cc974eedce23606a830aa8b62.json",
+  "results/v2/raw/quality/f9f0023aa1dbfe26223addfb40ae23551b878206d01e863c3733d7d4dfe6df36.json",
+  "results/v2/raw/quality/fd181c3566730bc4770e137093473cf009f703b21295b7f0c7e08b0a0df96101.json",
+  "results/v2/raw/routes/1a652e90dca4bbd27334bf0354dc9f4ff780a3878a324205b29b80fad6eaf457.json",
+  "results/v2/summary/analysis_pilot.json",
+  "results/v2/summary/analysis_pilot50k.json",
+  "results/v2/summary/pilot_pilot.json",
+  "results/v2/summary/pilot_pilot50k.json",
+  "tests/unit/test_benchmark_v2.py",
+  "tests/unit/test_statistics_v2.py",
+  "tools/analyze_quality_v2.py",
+  "tools/streams_v2.py"
+ ],
+ "source_sha256": "c3f31201d2e767c0d464dbbd5158fa2789caede72f743c2f351e51417f39e282",
+ "configuration_id": "a1-cache-d1-p0-l1",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T18:20:19Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "streams-v2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 2.46,
+   "log": "results/evidence/U15/cmd00.log",
+   "counts": {
+    "check_streams_v2": "120/120"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-python"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 53.91,
+   "log": "results/evidence/U15/cmd01.log",
+   "counts": {
+    "pytest_passed": 438
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-benchmark-v2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 10.9,
+   "log": "results/evidence/U15/cmd02.log",
+   "counts": {
+    "pytest_passed": 15
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-statistics-v2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.3,
+   "log": "results/evidence/U15/cmd03.log",
+   "counts": {
+    "pytest_passed": 6
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "bench-v2",
+    "MODE=dry-run"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 3.3,
+   "log": "results/evidence/U15/cmd04.log",
+   "counts": {}
+  },
+  {
+   "argv": [
+    "make",
+    "bench-v2",
+    "MODE=pilot",
+    "SUITE=pilot"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.09,
+   "log": "results/evidence/U15/cmd05.log",
+   "counts": {
+    "pytest_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "bench-v2",
+    "MODE=pilot",
+    "SUITE=pilot50k"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.84,
+   "log": "results/evidence/U15/cmd06.log",
+   "counts": {
+    "pytest_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "analyze-quality-v2",
+    "SUITE=pilot"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 2.07,
+   "log": "results/evidence/U15/cmd07.log",
+   "counts": {
+    "check_quality_v2_pilot_records": "120/120",
+    "check_quality_v2_pilot_paired": "1/1",
+    "check_quality_v2_pilot_analysis": "6/6"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "analyze-quality-v2",
+    "SUITE=pilot50k"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.59,
+   "log": "results/evidence/U15/cmd08.log",
+   "counts": {
+    "check_quality_v2_pilot50k_records": "40/40",
+    "check_quality_v2_pilot50k_paired": "1/1",
+    "check_quality_v2_pilot50k_analysis": "2/2"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "check-v1-results"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.48,
+   "log": "results/evidence/U15/cmd09.log",
+   "counts": {
+    "check_quality_jobs": "640/640",
+    "check_quality_summary_recomputed": "8/8",
+    "check_route_jobs": "45/45",
+    "check_decision_files": "9/9",
+    "check_v1_evidence": "20/20"
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "streams",
+   "count_key": "check_streams_v2",
+   "values": [
+    "120/120"
+   ],
+   "ok": true
+  },
+  {
+   "name": "unit",
+   "count_key": "pytest_passed",
+   "values": [
+    438,
+    15,
+    6
+   ],
+   "ok": true
+  },
+  {
+   "name": "pilot_analysis",
+   "count_key": "check_quality_v2_pilot_analysis",
+   "values": [
+    "6/6"
+   ],
+   "ok": true
+  },
+  {
+   "name": "pilot50k_analysis",
+   "count_key": "check_quality_v2_pilot50k_analysis",
+   "values": [
+    "2/2"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "benchmarks/config_v2.json",
+   "exists": true,
+   "bytes": 4670
+  },
+  {
+   "path": "benchmarks/streams_v2/manifest.json",
+   "exists": true,
+   "bytes": 36896
+  },
+  {
+   "path": "docs/quality_v2.md",
+   "exists": true,
+   "bytes": 8014
+  },
+  {
+   "path": "results/v2/summary/pilot_pilot.json",
+   "exists": true,
+   "bytes": 3679
+  },
+  {
+   "path": "results/v2/summary/pilot_pilot50k.json",
+   "exists": true,
+   "bytes": 1732
+  },
+  {
+   "path": "results/v2/summary/analysis_pilot.json",
+   "exists": true,
+   "bytes": 51841
+  },
+  {
+   "path": "results/v2/summary/analysis_pilot50k.json",
+   "exists": true,
+   "bytes": 18181
+  },
+  {
+   "path": "results/v2/figures/survival_pilot.png",
+   "exists": true,
+   "bytes": 57813
+  },
+  {
+   "path": "results/v2/figures/survival_pilot50k.png",
+   "exists": true,
+   "bytes": 44920
+  }
+ ],
+ "limitations": [
+  "pilot outcomes are development data (seeds 10000-10019) used to size the study; the held-out suite bag50k is frozen and run in U16",
+  "wall time and memory per policy are the pilot's process-level measurements (peak RSS of the runner process, wall seconds per policy over 20 games)"
+ ],
+ "note": "U15: v2 streams (50,001 pieces, byte-encoded, content hashes, disjoint splits), protocol quality-v2-bag50k, summary mode with identity-keyed checkpoints/resume, per-game records with duration/event fields, failed jobs recorded as failed, freeze record, censoring-aware statistics (restricted mean = RMST identity asserted, product-limit survival, median not reached, paired bootstrap), analysis tool with figures; pilot suites executed"
+}
