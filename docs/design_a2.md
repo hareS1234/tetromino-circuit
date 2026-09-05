@@ -129,6 +129,8 @@ need.
 
 ## 6. Register schedule
 
+![A2 grouped pipeline: candidate-private board data and the immutable original context](../assets/diagrams/a2_pipeline.svg)
+
 `architecture/a2_stages.json` records the 23 banks P0–P22 (guide §5.5): P0 decode/select, P1
 differences, P2 landing, P3 merge, P4 keep/prefix init, P5–P8 prefix strides 1/2/4/8, P9 stride
 16 + counts, P10 match bits, P11 five partial rows per destination, P12 compacted board, P13
@@ -141,6 +143,8 @@ boundary registers (P3→P4 and P12→P13 are single register banks). Candidate 
 P0 height mux, P3 board fanout, P9 prefix arithmetic, P10 rank comparisons, P11 selection wiring,
 P14 encoders, and the best-result feedback outside the pipe. Adding a bank requires updating the
 manifest, the latency constants in `search_pipeline`/`candidate_pipe` and this document together.
+
+![compaction example: nonadjacent full rows, inclusive ranks, survivor order preserved](../assets/diagrams/compaction.svg)
 
 Compaction (P4–P12, guide §6): `keep[s] = (row[s] != 10'h3FF)`; five-level inclusive prefix scan
 where each level reads only the previous level (`next[s] = prev[s] + (s >= stride ? prev[s-stride] : 0)`,

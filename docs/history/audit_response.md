@@ -17,7 +17,7 @@ Full numbers: `results/evidence/U00/inventory.json`.
 |---|---|---|
 | cocotb import path | already fixed in v1 (`tools/run_rtl.py` extends `sys.path`); regression with an out-of-tree working directory added in U01's test suite | `tests/unit/test_bootstrap.py` |
 | DSP inference | already fixed for v1 (shift-add); v2 makes the DSP policy an explicit identity field (`dsp_policy`) and the controlled study uses `-nodsp` | U02 `tools/identity.py`, U17 |
-| One-stage landing timing failure | preserved (`results/implementation_dev_history*.csv`, `docs/bugs.md` #5); consolidated by identity in U19 | — |
+| One-stage landing timing failure | preserved (`results/history/implementation_dev_history*.csv`, `docs/history/bugs.md` #5); consolidated by identity in U19 | — |
 | A1 serial per candidate | newly actionable: A2 candidate pipeline | U04–U12 |
 | P2 changed no decisions | wording corrected below; P2 preserved; P5–P7 added | U14 |
 | Capped quality study | newly actionable: protocol `quality-v2-bag50k` | U15–U16 |
@@ -35,7 +35,7 @@ Full numbers: `results/evidence/U00/inventory.json`.
 ## Wording corrections accepted
 
 * **P2.** The v1 problems report said P2 "chose the same move as the exact profile on 0 of 981
-  corpus states"; the data say it *differed* on 0 of 981. `docs/PROBLEMS_FOUND.md` is corrected
+  corpus states"; the data say it *differed* on 0 of 981. `docs/history/PROBLEMS_FOUND.md` is corrected
   in U19's history move; the statement is empirical agreement on a finite corpus and on the 100
   v1 held-out games, not universal equivalence.
 * **Multiplication.** The v1 rule "no `*` in the datapath" is restated as a mapping policy: shift-add

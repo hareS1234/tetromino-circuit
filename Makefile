@@ -37,7 +37,9 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-precision-v2 analyze-precision-v2 synth-scorer-study \
         streams-v2 test-benchmark-v2 test-statistics-v2 bench-v2 check-quality-v2 analyze-quality-v2 \
         measure-v2 check-hardware-v2 a2-stream-stats plots-v2 \
-        trace-a2-demo check-trace render-a2-demo check-viewer diagrams
+        trace-a2-demo check-trace render-a2-demo check-viewer diagrams \
+        results-v2 check-report-v2 check-links check-claims \
+        check-release-v2 fresh-clone-check test-release-v2
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -344,6 +346,28 @@ check-viewer: ## U18: static accessibility/consistency checks of viewer/ and the
 	$(PY) tools/check_viewer.py
 diagrams: ## U18: regenerate assets/diagrams/*.svg
 	$(PY) tools/diagrams.py
+
+# ---------------------------------------------------------------- U19 (report and repository)
+results-v2: ## U19: regenerate docs/results.md (v2 sections) and the frozen v1 blocks in docs/results.md and docs/design.md
+	$(PY) tools/write_report.py
+	$(PY) tools/write_report_v2.py
+check-report-v2: ## U19: docs/results.md current, v1 blocks current, links resolve, headline numbers resolve to result files, no placeholders
+	$(PY) tools/write_report.py --check
+	$(PY) tools/write_report_v2.py --check
+	$(PY) tools/check_links.py
+	$(PY) tools/check_claims.py
+check-links: ## U19: every relative link/image in the Markdown documents resolves
+	$(PY) tools/check_links.py
+check-claims: ## U19: every claim in docs/claims.json is recomputed from its source and found verbatim in its documents
+	$(PY) tools/check_claims.py
+
+# ---------------------------------------------------------------- U20 (release)
+check-release-v2: ## U20: validate benchmarks/release_v2.json — frozen inputs, artifacts, evidence, measurement identities, sub-validators; creates nothing
+	$(PY) tools/check_release_v2.py --json build/release_v2_check.json
+fresh-clone-check: ## U20: clone, bootstrap and reproduce from scratch; records results/evidence/U20/fresh_clone_<family>.json (REUSE_ARCHIVE=1 skips the download)
+	bash scripts/fresh_clone_check.sh
+test-release-v2: ## U20: unit tests of the release validator's failure modes
+	$(PY) -m pytest tests/unit/test_release_v2.py -q $(PYTEST_ARGS)
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04/U13: stage manifest, configuration identity, cycle contract, A2 and four-lane elaboration guards

@@ -33,6 +33,12 @@ clear of full rows, post-clear features A (aggregate height), Q (holes), U (bump
 The entry-from-above rule replaced an earlier inside-board spawn that let a piece appear beneath an
 overhang (Section 7).
 
+![request, cache, search, reduction and response](../assets/diagrams/architecture.svg)
+
+*The complete request/cache/search/reduction/response architecture shared by every variant
+(`tools/diagrams.py`; U18). The v2 pipelined evaluator A2 and the four-lane replication are described in
+`docs/design_a2.md` and `docs/lanes.md`.*
+
 **Hardware variants** (all behind the same ready/valid core interface and the same 32-bit streaming
 wrapper used for implementation):
 
@@ -135,6 +141,7 @@ Tournament (`results/tournament_report.json`): seed 2000, cap 100, actual RTL re
 
 ![area vs cycles](../assets/plots/area_vs_cycles.png)
 ![stage cycles](../assets/plots/stage_cycles.png)
+![A0 and A1 candidate FSMs with measured state residency](../assets/diagrams/fsm_a0_a1.svg)
 
 A0 spends 277 cycles on a legal candidate: 25 in the row-by-row descent, 7 in the four-cell merge,
 23 in the compactor, and 213 in the one-cell-per-cycle feature scan. Moving the feature extraction to
@@ -230,7 +237,7 @@ a falling piece could never have reached. The fix — entry from y = 20 with abo
 as empty and a final in-board check — made the landing height a closed form of the column heights,
 which in turn made the A1 drop unit a two-stage arithmetic block instead of a twenty-iteration
 search. The regression fixture `spawn_under_overhang_J` and a separate set-of-cells oracle now guard
-the rule; `docs/bugs.md` lists the other six.
+the rule; `docs/history/bugs.md` lists the other six.
 
 ## Appendix: handshake and verification evidence
 

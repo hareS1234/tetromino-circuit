@@ -1,0 +1,17 @@
+{
+ "schema": "dev-history-consolidation-v1",
+ "sources": [
+  "results/history/implementation_dev_history.csv",
+  "results/history/implementation_dev_history2.csv"
+ ],
+ "rows_in": [
+  4,
+  12
+ ],
+ "rows_out": 11,
+ "duplicates_merged": 5,
+ "failed_or_timing_rows_kept": 2,
+ "identity": "commit, toolchain, configuration, seed, target, status, fmax, area, log path; attempt numbered per (commit, configuration, seed, target) in file order",
+ "output": "results/history/implementation_dev_history_consolidated.csv",
+ "sha256": "b0aff4cfae41d467426916374932a30ba86bb43a3213727a39a5c58c1c4b886e"
+}

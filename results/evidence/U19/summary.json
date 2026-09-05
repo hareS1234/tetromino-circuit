@@ -1,0 +1,207 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U19",
+ "status": "passed",
+ "git_commit": "8751eee202d41264391e64ea80edbf6f948a78f6-dirty",
+ "git_modified_tracked": [
+  ".github/workflows/ci.yml",
+  "PROJECT_NOTES.md",
+  "PROJECT_NOTES.md",
+  "Makefile",
+  "README.md",
+  "docs/ci.md",
+  "docs/design.md",
+  "docs/design_a2.md",
+  "docs/history/audit_response.md",
+  "docs/lanes.md",
+  "docs/upgrade_progress.md",
+  "scripts/fresh_clone_check.sh"
+ ],
+ "git_untracked": [
+  "LICENSE",
+  "NOTICE.md",
+  "benchmarks/release_v2.json",
+  "docs/author_notes.md",
+  "docs/claims.json",
+  "docs/history/README.md",
+  "docs/release_v2.md",
+  "docs/research_report.md",
+  "results/evidence/U19/summary.json",
+  "results/history/implementation_dev_history_consolidated.csv",
+  "results/history/implementation_dev_history_consolidated.json",
+  "tests/unit/test_release_v2.py",
+  "tests/unit/test_report_checks.py",
+  "tools/check_claims.py",
+  "tools/check_links.py",
+  "tools/check_release_v2.py"
+ ],
+ "source_sha256": "d294a52ace0cc721bfca43d60ed07d94528d5bd69d337ba44713fd4d8a79f417",
+ "configuration_id": null,
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T23:11:05Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "check-report-v2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.48,
+   "log": "results/evidence/U19/cmd00.log",
+   "counts": {
+    "check_links": "43/43",
+    "check_claims": "53/53"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "check-links"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.11,
+   "log": "results/evidence/U19/cmd01.log",
+   "counts": {
+    "check_links": "43/43"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "check-claims"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.2,
+   "log": "results/evidence/U19/cmd02.log",
+   "counts": {
+    "check_claims": "53/53"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "check-report"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 2.15,
+   "log": "results/evidence/U19/cmd03.log",
+   "counts": {}
+  },
+  {
+   "argv": [
+    "make",
+    "check-v1-results"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.48,
+   "log": "results/evidence/U19/cmd04.log",
+   "counts": {
+    "check_quality_jobs": "640/640",
+    "check_quality_summary_recomputed": "8/8",
+    "check_route_jobs": "45/45",
+    "check_decision_files": "9/9",
+    "check_v1_evidence": "20/20"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-python"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 53.29,
+   "log": "results/evidence/U19/cmd05.log",
+   "counts": {
+    "pytest_passed": 454
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "claims resolve",
+   "count_key": "check_claims",
+   "values": [
+    "53/53",
+    "53/53"
+   ],
+   "ok": true
+  },
+  {
+   "name": "links resolve",
+   "count_key": "check_links",
+   "values": [
+    "43/43",
+    "43/43"
+   ],
+   "ok": true
+  },
+  {
+   "name": "python tests",
+   "count_key": "pytest_passed",
+   "values": [
+    454
+   ],
+   "ok": true
+  },
+  {
+   "name": "v1 frozen results",
+   "count_key": "check_quality_jobs",
+   "values": [
+    "640/640"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "README.md",
+   "exists": true,
+   "bytes": 8268
+  },
+  {
+   "path": "docs/research_report.md",
+   "exists": true,
+   "bytes": 23173
+  },
+  {
+   "path": "docs/results.md",
+   "exists": true,
+   "bytes": 20612
+  },
+  {
+   "path": "docs/claims.json",
+   "exists": true,
+   "bytes": 12713
+  },
+  {
+   "path": "docs/author_notes.md",
+   "exists": true,
+   "bytes": 4762
+  },
+  {
+   "path": "docs/history/README.md",
+   "exists": true,
+   "bytes": 1541
+  },
+  {
+   "path": "results/history/implementation_dev_history_consolidated.csv",
+   "exists": true,
+   "bytes": 3684
+  },
+  {
+   "path": "LICENSE",
+   "exists": true,
+   "bytes": 1067
+  },
+  {
+   "path": "NOTICE.md",
+   "exists": true,
+   "bytes": 1100
+  }
+ ],
+ "limitations": [
+  "docs/author_notes.md keeps the author's sections as instructions: the helper recorded the decisions and provenance but did not write the author's own understanding",
+  "LICENSE names 'Harry Song' as the copyright holder from the author's name; to be confirmed by the author"
+ ],
+ "note": null
+}

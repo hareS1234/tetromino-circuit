@@ -25,6 +25,8 @@ v1 files are untouched.
 
 ## 2. Ownership and lane-interaction checks (`make test-lanes LANES=4`)
 
+![four-lane dense-index assignment and the deterministic final reduction](../assets/diagrams/lanes.svg)
+
 300 corpus states (`benchmarks/states/corpus_d1.jsonl`, the categories `equal_scores`,
 `last_candidate_winner`, `no_move` and `blocked_spawn` first, then the rest), one cocotb test,
 Verilator. For every state the test asserts:
