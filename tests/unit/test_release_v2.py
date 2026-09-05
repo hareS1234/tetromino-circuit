@@ -187,3 +187,11 @@ def test_structural_run_reports_blocked_as_not_releasable():
     assert "CHECK release_v2_platforms_executed" in out
     assert r.returncode != 0
     assert ("NOT RELEASABLE" in out) or ("FAIL" in out)
+
+
+def test_expect_blocked_returns_zero_only_for_the_blocked_only_outcome():
+    r = subprocess.run([sys.executable, "tools/check_release_v2.py", "--no-subchecks", "--expect-blocked"], cwd=ROOT, capture_output=True, text=True)
+    if "NOT RELEASABLE" in r.stdout:
+        assert r.returncode == 0 and "CHECK release_v2_executed_checks_passed 1/1" in r.stdout
+    else:
+        assert r.returncode != 0          # problems remain, or nothing is blocked (then the flag itself is refused)

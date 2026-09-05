@@ -23,7 +23,8 @@ sources, and the platform table (executed / blocked).  This validator
 
 Exit 0 only when no problem was found *and* no gate is blocked; exit 1 otherwise.  A blocked-only
 outcome is printed as `check-release-v2: NOT RELEASABLE (blocked: ...)` so it cannot be mistaken for
-a pass.
+a pass.  `--expect-blocked` (used only by the U20 evidence gate) returns 0 for exactly that blocked-only
+outcome so the local evidence can be recorded with status `blocked`; it is not a release decision.
 """
 from __future__ import annotations
 
@@ -89,6 +90,9 @@ def check_evidence(root: Path, m: dict) -> tuple[list[str], dict]:
     for job, want in ev.items():
         p = root / "results" / "evidence" / job / "summary.json"
         if not p.is_file():
+            if want.get("self"):          # the record this validator's own gate writes: absent while that gate runs
+                statuses[job] = "pending (written by this gate)"
+                continue
             problems.append(f"evidence {job}: no summary.json")
             statuses[job] = "missing"
             continue
@@ -272,7 +276,7 @@ SUBCHECKS = [
     ("v1_release", [sys.executable, "tools/check_release.py"]),
     ("generated_geometry", [sys.executable, "tools/gen_shapes.py", "--check"]),
     ("streams_v1", [sys.executable, "tools/make_streams.py", "--check"]),
-    ("streams_v2", [sys.executable, "tools/streams_v2.py", "--check"]),
+    ("streams_v2", [sys.executable, "tools/streams_v2.py", "check"]),
     ("hardware_v2", [sys.executable, "tools/check_hardware_v2.py", "--manifest", "benchmarks/hardware_v2.json"]),
     ("quality_v2", [sys.executable, "tools/analyze_quality_v2.py", "--config", "benchmarks/config_v2.json", "--suite", "bag50k", "--check"]),
     ("traces", [sys.executable, "tools/check_trace.py"]),
@@ -293,8 +297,8 @@ def run_subchecks(root: Path) -> tuple[list[str], list[str]]:
         checks = [ln for ln in out if ln.startswith("CHECK ")]
         lines.append(f"subcheck {name}: exit {r.returncode}" + (f"; {'; '.join(checks)}" if checks else ""))
         if r.returncode != 0:
-            tail = out[-1] if out else ""
-            problems.append(f"sub-check {name} failed: {tail[:160]}")
+            detail = [ln.strip() for ln in out if ln.strip().startswith("- ")] or out[-2:]
+            problems.append(f"sub-check {name} failed: {'; '.join(d[:120] for d in detail[:6])}")
     return problems, lines
 
 
@@ -312,6 +316,9 @@ def main() -> int:
     ap.add_argument("--manifest", default="benchmarks/release_v2.json")
     ap.add_argument("--no-subchecks", action="store_true", help="skip the sub-validators (fast structural check)")
     ap.add_argument("--json", default=None, help="write the outcome record here")
+    ap.add_argument("--expect-blocked", action="store_true",
+                    help="for the U20 evidence record: exit 0 when every executed check passed and the only remaining items are the "
+                         "declared blocked ones (the NOT RELEASABLE verdict is still printed and recorded); never use for a release decision")
     args = ap.parse_args()
     root = ROOT
     m = load_manifest(root, args.manifest)
@@ -361,6 +368,12 @@ def main() -> int:
     if blocked or blocked_gates:
         print(f"check-release-v2: NOT RELEASABLE (blocked: {', '.join(blocked + blocked_gates)}); every executed check passed, "
               f"tag {m.get('tag')} must not be created until the blocked items are executed and recorded")
+        if args.expect_blocked:
+            print("CHECK release_v2_executed_checks_passed 1/1 (blocked items recorded, not satisfied)")
+            return 0
+        return 1
+    if args.expect_blocked:
+        print("check-release-v2: --expect-blocked was given but nothing is blocked; run without it for the release decision")
         return 1
     print(f"check-release-v2: OK — releasable at {git['head']}")
     return 0

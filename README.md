@@ -89,9 +89,9 @@ A changed quality protocol must be frozen again (`make bench-v2 MODE=freeze`) be
 
 ## Limitations
 
-* The game is a simplification: no rotation system or wall kicks, tucks, spins, hold, lock delay,
-  soft/hard-drop timing, gravity levels, hidden rows, level or bonus scoring, back-to-back, combos,
-  garbage or multiplayer (`docs/spec.md`). Scores are not comparable to workers playing other rules.
+* The game is a simplification. Excluded: rotation systems and wall kicks, tucks, spins, hold, lock
+  delay, soft/hard-drop timing, gravity levels, hidden rows, level or bonus scoring, back-to-back,
+  combos, garbage and multiplayer (`docs/spec.md`). Scores are not comparable to workers playing other rules.
 * Playing-strength numbers come from the Python bit-exact policy model whose decisions passed their
   own-reference RTL tests; they are labelled as such wherever they appear.
 * Cycle counts are RTL-simulation counts under the documented protocol; latency projections divide
@@ -109,3 +109,11 @@ A changed quality protocol must be frozen again (`make bench-v2 MODE=freeze`) be
 MIT (`LICENSE`); third-party notices and the heuristic attribution in `NOTICE.md`. The build manual and
 upgrade guide were written with planning notes and the implementation jobs executed with Contributor; the author's
 notes are in [`docs/author_notes.md`](docs/author_notes.md).
+
+## References
+
+* Yiyuan Lee, *Tetris AI – The (Near) Perfect Bot* (2013) — the four-feature heuristic and its
+  coefficients (aggregate height, complete lines, holes, bumpiness), used here as the fixed baseline.
+* YosysHQ OSS CAD Suite (Yosys, nextpnr-ecp5, Verilator, SymbiYosys with boolector), release 2026-09-04,
+  pinned in `toolchains/oss_cad_suite.lock.json`; cocotb for the protocol-level RTL tests.
+* Lattice ECP5 LFE5U-85F (CABGA381, speed grade 6) as the implementation device model; no board was used.
