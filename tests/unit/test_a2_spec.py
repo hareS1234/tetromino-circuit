@@ -80,9 +80,14 @@ def test_a2_identity_and_neighbours_are_unsupported():
     """Since U10 the exact A2 configuration is verified; every neighbouring A2 combination stays unsupported."""
     a2 = Config(2, 1, 1, 1, 0)
     assert a2.id == "a2-cache-d1-p0-l1" and status(a2) == "verified" and validate(a2) is a2
-    assert a2.id in SUPPORTED_IDS and DECLARED == () and len(SUPPORTED) == 10
+    # nine v1 identities + A2 (U10) + the four-lane A1 (U13)
+    assert a2.id in SUPPORTED_IDS and DECLARED == () and len(SUPPORTED) == 11
     from model.config import V1_SUPPORTED_IDS
     assert len(V1_SUPPORTED_IDS) == 9 and a2.id not in V1_SUPPORTED_IDS
+    l4 = Config(1, 1, 4, 1, 0)
+    assert l4.id == "a1-cache-d1-p0-l4" and status(l4) == "verified" and l4.id not in V1_SUPPORTED_IDS
+    for bad in (Config(1, 0, 4, 1, 0), Config(1, 1, 4, 2, 0), Config(1, 1, 4, 1, 1), Config(0, 0, 4, 1, 0)):
+        assert status(bad) == "unsupported"
     for bad in (Config(2, 0, 1, 1, 0), Config(2, 1, 2, 1, 0), Config(2, 1, 4, 1, 0), Config(2, 1, 1, 2, 0), Config(2, 1, 1, 1, 1),
                 Config(2, 1, 1, 1, 4)):
         assert status(bad) == "unsupported"

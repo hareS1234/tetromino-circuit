@@ -18,7 +18,7 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 | U10 search + core integration | passed | `rtl/search_pipeline.sv`, `g_a2` in `rtl/tetris_core.sv`, A2 promoted to verified, `tools/make_corpus_v2.py` (2,000-state dev corpus, seeds 11000–11099), pair mode in `sim/main.cpp` + `tools/request_interval.py`; gate: core corpus 1000/1000 + dev 2000/2000 (min/median/max cycles 38/46/63 = N+29), tb_protocol 9/9, tb_wrapper 4/4, drivers agree 50/50, request interval 200/200 = N+31, check-a2-spec (`results/evidence/U10`) |
 | U11 verification + mutations | passed | `rtl/best_reducer.sv` + `tb/tb_best_reducer.py`, proofs `formal/reducer` and `formal/control` (**unbounded**, covers reached), `tools/run_mutations.py` 12/12 killed, `docs/verification_a2.md`; gate `verify-a2-release` (77 cocotb tests, 3,450 native decisions, exhaustive masks, streams, A0/A1 regression), `formal-a2-control`, `mutation-check-a2`, A2 replays 2000–2002 (`results/evidence/U11`, 556 s) |
 | U12 route A2 | passed | `docs/timing_journal.md`: route 1 (50 MHz, seed 1, -nodsp) **met** at 71.77 MHz, worst path P14 comparator tree; P14 regrouped to a one-hot select (no bank/equation change), route 2 **met** at 76.36 MHz (LUT4 6,104, FF 5,489, CCU2C 418, 0 DSP), new worst path ROM→P0 height mux; pilots 60 MHz met, 80 MHz failed (76.36). Gate: hierarchy 4/4, block/stream/corpus re-verified (`results/evidence/U12`) |
-| U13 four-lane A1 | pending | |
+| U13 four-lane A1 | passed (route budget exhausted, see notes) | `Config(1,1,4,1,0)` = `a1-cache-d1-p0-l4` verified (eleven ids; `V1_SUPPORTED_IDS` still nine), `CFG_OK` LANES==4 line, `tb/tb_lanes.py` parameterised (ownership partition O [3,2,2,2] / N=17 [5,4,4,4] / N=34 [9,9,8,8], strict last-finishing witness 95 vs last-or-tied 156, cross-lane ties 74, invalid local bests 62, unequal finishes 300/300; two lanes re-run: 58/134/230/17/202), `docs/lanes.md`, `results/v2/lanes/`. Gate: check-a2-spec (14 unit + lane guards 5/5), test-lanes 4 and 2, 1,000/1,000 native decisions (cycles 44/236/416 = `45·⌈N/4⌉+11` when all candidates legal; Σ speed-up 3.36× vs one lane, 1.91× for two), tb_protocol 9/9, replays 2000–2002 cap 100. Synthesis nodsp: LUT4 4,030/7,345/14,035, FF 2,220/3,738/6,773 for 1/2/4 lanes (+1,518 FF per lane: replicated board/height storage). Development route 50 MHz seed 1 nodsp: **`route_timeout`** after the 1,200 s budget (placement estimate 57.15 MHz; record `3137bdf7…`), a 3,600 s attempt started (`results/evidence/U13`) |
 | U14 quantization ladder | pending | |
 | U15 v2 benchmarks/statistics | pending | |
 | U16 v2 quality study | pending | |
@@ -29,8 +29,8 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 
 ## Current
 
-* Last passing job: U12 (U03 is blocked on the remote run only; its local validation passed).
-* Current job: U13.
-* Active process/log: none.
-* Next command: four-lane A1 (`Config(1,1,4,1,0)`, ownership counts O [3,2,2,2], N=17 [5,4,4,4], N=34 [9,9,8,8]), `tb/tb_lanes.py` extension, common 1,000-state corpus, lane analysis.
-* Blockers: remote CI (U03/U20) and Mac execution (U20) are environment blockers; A2 work is not blocked.
+* Last passing job: U13 (U03 is blocked on the remote run only; its local validation passed).
+* Current job: U14.
+* Active process/log: `tools/pnr.py --arch 1 --board-repr 1 --lanes 4 --seed 1 --freq 50 --dsp-policy nodsp --timeout 3600` (four-lane route with the extended budget; its record lands under `results/v2/raw/routes/` and is to be added to `docs/lanes.md` §5 when it finishes).
+* Next command: U14 — `model/numeric.py` profiles P5–P7 (`coeff_u4/u3/u2`), `rtl/score.sv` shift-add branches, `tests/fixtures/precision_v2_divergences.json`, `tools/analyze_precision_v2.py`; gate `make test-precision-v2`, `make analyze-precision-v2 SPLIT=development`, `make synth-scorer-study`.
+* Blockers: remote CI (U03/U20) and Mac execution (U20) are environment blockers; the four-lane route has not yet completed within a 1,200 s budget (not a design failure claim; see `docs/lanes.md` §5).

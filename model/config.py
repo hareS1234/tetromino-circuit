@@ -41,8 +41,8 @@ class Config:
         return asdict(self)
 
 
-# The nine verified v1 hardware configurations (manual E16/7E.1) plus the A2 candidate pipeline
-# (docs/design_a2.md; declared in U04, promoted here in U10 when rtl/search_pipeline.sv passed its gates).
+# The nine verified v1 hardware configurations (manual E16/7E.1), the A2 candidate pipeline
+# (docs/design_a2.md; declared in U04, promoted in U10) and the four-lane A1 replication (U13).
 SUPPORTED = (
     Config(0, 0, 1, 1, 0),
     Config(1, 0, 1, 1, 0),
@@ -54,6 +54,7 @@ SUPPORTED = (
     Config(1, 1, 1, 2, 0),
     Config(1, 1, 2, 1, 0),
     Config(2, 1, 1, 1, 0),
+    Config(1, 1, 4, 1, 0),   # four-lane A1 (U13)
 )
 SUPPORTED_IDS = {c.id: c for c in SUPPORTED}
 V1_SUPPORTED_IDS = {c.id for c in SUPPORTED[:9]}   # the frozen v1 matrix

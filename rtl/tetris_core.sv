@@ -4,7 +4,7 @@
 //   ARCH       0 serial A0 evaluator, 1 fast A1 evaluator, 2 pipelined candidate evaluator (A2, one lane,
 //              cache representation, depth one, exact profile; docs/design_a2.md)
 //   BOARD_REPR 0 bitmap only, 1 bitmap plus an exact height cache built once per request
-//   LANES      1 or 2 evaluator lanes (depth one only)
+//   LANES      1, 2 or 4 evaluator lanes (A1/cache, depth one, exact profile)
 //   DEPTH      1 or 2 (two-piece lookahead, A1/cache/one lane only)
 //   PRECISION  0-4 numerical profile
 module tetris_core #(
@@ -38,6 +38,7 @@ module tetris_core #(
         (ARCH == 1 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 1 && PRECISION >= 0 && PRECISION <= 4) ||
         (ARCH == 1 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 2 && PRECISION == 0) ||
         (ARCH == 1 && BOARD_REPR == 1 && LANES == 2 && DEPTH == 1 && PRECISION == 0) ||
+        (ARCH == 1 && BOARD_REPR == 1 && LANES == 4 && DEPTH == 1 && PRECISION == 0) ||
         (ARCH == 2 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 1 && PRECISION == 0);
     generate
         if (!CFG_OK) begin : g_bad_cfg

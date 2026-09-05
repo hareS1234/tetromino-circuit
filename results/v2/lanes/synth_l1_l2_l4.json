@@ -1,0 +1,85 @@
+{
+ "schema": "lanes-synth-comparison-v1",
+ "generated_utc": "2026-09-05T17:00:53Z",
+ "note": "Derived from synth-record-v2 summaries under build/synth/<synth_key>/ (yosys synth_ecp5 -nodsp, top stream_wrapper); the route record of the four-lane configuration under results/v2/raw/routes/ carries the same area for that identity.",
+ "rows": [
+  {
+   "lanes": 1,
+   "configuration_id": "a1-cache-d1-p0-l1",
+   "synth_key": "58dfb3eda5e900f318138e2c60d98f1fcca4779755e6b708bdf84e0a4fa5659d",
+   "dsp_policy": "nodsp",
+   "top": "stream_wrapper",
+   "lut4": 4030,
+   "ff": 2220,
+   "ccu2c": 342,
+   "cells": {
+    "$scopeinfo": 13,
+    "CCU2C": 342,
+    "L6MUX21": 116,
+    "LUT4": 4030,
+    "PFUMX": 434,
+    "TRELLIS_FF": 2220
+   },
+   "lut4_ratio_vs_l1": 1.0,
+   "ff_ratio_vs_l1": 1.0,
+   "ff_added_vs_l1": 0,
+   "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
+   "hdl_files_f": "rtl/files.f",
+   "hdl_closure_sha256": "ea4e6ec80513c03d926039d0e8c4fc68a7917f466821a6dd20c361fb00695d2e",
+   "identity_version": "identity-v1",
+   "script_version": "synth-v2"
+  },
+  {
+   "lanes": 2,
+   "configuration_id": "a1-cache-d1-p0-l2",
+   "synth_key": "fc1f27933397e67b89fa100d7a74896ad523fd411ab4cdb812b104218c9a651f",
+   "dsp_policy": "nodsp",
+   "top": "stream_wrapper",
+   "lut4": 7345,
+   "ff": 3738,
+   "ccu2c": 642,
+   "cells": {
+    "$scopeinfo": 23,
+    "CCU2C": 642,
+    "L6MUX21": 237,
+    "LUT4": 7345,
+    "PFUMX": 828,
+    "TRELLIS_FF": 3738
+   },
+   "lut4_ratio_vs_l1": 1.823,
+   "ff_ratio_vs_l1": 1.684,
+   "ff_added_vs_l1": 1518,
+   "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
+   "hdl_files_f": "rtl/files.f",
+   "hdl_closure_sha256": "ea4e6ec80513c03d926039d0e8c4fc68a7917f466821a6dd20c361fb00695d2e",
+   "identity_version": "identity-v1",
+   "script_version": "synth-v2"
+  },
+  {
+   "lanes": 4,
+   "configuration_id": "a1-cache-d1-p0-l4",
+   "synth_key": "d9c9e78d493533c2a2eddb1ec80d5b7065e46cd2ec51893ec0b3c74e0a34e8fc",
+   "dsp_policy": "nodsp",
+   "top": "stream_wrapper",
+   "lut4": 14035,
+   "ff": 6773,
+   "ccu2c": 1225,
+   "cells": {
+    "$scopeinfo": 43,
+    "CCU2C": 1225,
+    "L6MUX21": 479,
+    "LUT4": 14035,
+    "PFUMX": 1641,
+    "TRELLIS_FF": 6773
+   },
+   "lut4_ratio_vs_l1": 3.483,
+   "ff_ratio_vs_l1": 3.051,
+   "ff_added_vs_l1": 4553,
+   "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
+   "hdl_files_f": "rtl/files.f",
+   "hdl_closure_sha256": "ea4e6ec80513c03d926039d0e8c4fc68a7917f466821a6dd20c361fb00695d2e",
+   "identity_version": "identity-v1",
+   "script_version": "synth-v2"
+  }
+ ]
+}

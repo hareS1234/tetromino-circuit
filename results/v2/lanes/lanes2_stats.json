@@ -1,0 +1,6764 @@
+{
+ "lanes": 2,
+ "cases": 293,
+ "cross_lane_ties": 58,
+ "winner_lane_finished_last_or_tied": 230,
+ "winner_lane_finished_strictly_last": 134,
+ "invalid_local_bests": 17,
+ "unequal_finish_cases": 202,
+ "ownership": {
+  "9": [
+   5,
+   4
+  ],
+  "17": [
+   9,
+   8
+  ],
+  "34": [
+   17,
+   17
+  ]
+ },
+ "stats": [
+  {
+   "state_id": 801,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 14,
+     "best_score": 4294964869
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 22,
+     "best_score": 4294964869
+    }
+   ]
+  },
+  {
+   "state_id": 805,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294966387
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966402
+    }
+   ]
+  },
+  {
+   "state_id": 809,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294965877
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965841
+    }
+   ]
+  },
+  {
+   "state_id": 821,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 21,
+     "best_score": 4294964527
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 36,
+     "best_score": 4294964527
+    }
+   ]
+  },
+  {
+   "state_id": 822,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294965292
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294965361
+    }
+   ]
+  },
+  {
+   "state_id": 830,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965382
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294965382
+    }
+   ]
+  },
+  {
+   "state_id": 831,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294966234
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294966234
+    }
+   ]
+  },
+  {
+   "state_id": 836,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 23,
+     "best_score": 4294965292
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294965292
+    }
+   ]
+  },
+  {
+   "state_id": 837,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294966081
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294966081
+    }
+   ]
+  },
+  {
+   "state_id": 849,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294964698
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294964647
+    }
+   ]
+  },
+  {
+   "state_id": 853,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294966270
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966234
+    }
+   ]
+  },
+  {
+   "state_id": 863,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294966576
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966576
+    }
+   ]
+  },
+  {
+   "state_id": 870,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294965568
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965568
+    }
+   ]
+  },
+  {
+   "state_id": 878,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294964794
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294964794
+    }
+   ]
+  },
+  {
+   "state_id": 880,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294965070
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294965070
+    }
+   ]
+  },
+  {
+   "state_id": 886,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294965634
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294965634
+    }
+   ]
+  },
+  {
+   "state_id": 887,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294965058
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294965058
+    }
+   ]
+  },
+  {
+   "state_id": 896,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294963759
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294963759
+    }
+   ]
+  },
+  {
+   "state_id": 897,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294966456
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966456
+    }
+   ]
+  },
+  {
+   "state_id": 899,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294966594
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294966543
+    }
+   ]
+  },
+  {
+   "state_id": 905,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294966180
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966108
+    }
+   ]
+  },
+  {
+   "state_id": 909,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965325
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294965325
+    }
+   ]
+  },
+  {
+   "state_id": 910,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294965550
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294965550
+    }
+   ]
+  },
+  {
+   "state_id": 912,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 31,
+     "best_score": 4294965127
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965127
+    }
+   ]
+  },
+  {
+   "state_id": 917,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294965466
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294965466
+    }
+   ]
+  },
+  {
+   "state_id": 919,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966594
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294966594
+    }
+   ]
+  },
+  {
+   "state_id": 920,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294966834
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294966834
+    }
+   ]
+  },
+  {
+   "state_id": 924,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965070
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294965142
+    }
+   ]
+  },
+  {
+   "state_id": 925,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294964545
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294964545
+    }
+   ]
+  },
+  {
+   "state_id": 928,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965685
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294965688
+    }
+   ]
+  },
+  {
+   "state_id": 930,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966300
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 22,
+     "best_score": 4294966354
+    }
+   ]
+  },
+  {
+   "state_id": 934,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294966132
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294966168
+    }
+   ]
+  },
+  {
+   "state_id": 936,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294966729
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966693
+    }
+   ]
+  },
+  {
+   "state_id": 944,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294966384
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294966297
+    }
+   ]
+  },
+  {
+   "state_id": 950,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294965328
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965259
+    }
+   ]
+  },
+  {
+   "state_id": 952,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294966438
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294966438
+    }
+   ]
+  },
+  {
+   "state_id": 954,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294966318
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966318
+    }
+   ]
+  },
+  {
+   "state_id": 956,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294964767
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294964767
+    }
+   ]
+  },
+  {
+   "state_id": 958,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965058
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294965058
+    }
+   ]
+  },
+  {
+   "state_id": 959,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294966732
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294966732
+    }
+   ]
+  },
+  {
+   "state_id": 963,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294966594
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966594
+    }
+   ]
+  },
+  {
+   "state_id": 964,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966594
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966594
+    }
+   ]
+  },
+  {
+   "state_id": 968,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294964989
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294964989
+    }
+   ]
+  },
+  {
+   "state_id": 970,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294966012
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966012
+    }
+   ]
+  },
+  {
+   "state_id": 982,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294965124
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 20,
+     "best_score": 4294965124
+    }
+   ]
+  },
+  {
+   "state_id": 985,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294964728
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294964830
+    }
+   ]
+  },
+  {
+   "state_id": 987,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294965736
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294965736
+    }
+   ]
+  },
+  {
+   "state_id": 992,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294966780
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294966798
+    }
+   ]
+  },
+  {
+   "state_id": 800,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294962625
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294960723
+    }
+   ]
+  },
+  {
+   "state_id": 803,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294962223
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294962151
+    }
+   ]
+  },
+  {
+   "state_id": 804,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294964389
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294964371
+    }
+   ]
+  },
+  {
+   "state_id": 807,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965455
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294964818
+    }
+   ]
+  },
+  {
+   "state_id": 810,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965586
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294965478
+    }
+   ]
+  },
+  {
+   "state_id": 812,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965364
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294965313
+    }
+   ]
+  },
+  {
+   "state_id": 816,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294965229
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965800
+    }
+   ]
+  },
+  {
+   "state_id": 819,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965888
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294964608
+    }
+   ]
+  },
+  {
+   "state_id": 824,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966048
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965979
+    }
+   ]
+  },
+  {
+   "state_id": 825,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294967114
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966492
+    }
+   ]
+  },
+  {
+   "state_id": 826,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294964963
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294964269
+    }
+   ]
+  },
+  {
+   "state_id": 829,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965757
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965790
+    }
+   ]
+  },
+  {
+   "state_id": 833,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294965637
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294966205
+    }
+   ]
+  },
+  {
+   "state_id": 841,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966522
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294966486
+    }
+   ]
+  },
+  {
+   "state_id": 847,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965655
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294966223
+    }
+   ]
+  },
+  {
+   "state_id": 850,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965772
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294965700
+    }
+   ]
+  },
+  {
+   "state_id": 857,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 25,
+     "best_score": 4294965709
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294966364
+    }
+   ]
+  },
+  {
+   "state_id": 859,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 21,
+     "best_score": 4294965415
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965448
+    }
+   ]
+  },
+  {
+   "state_id": 865,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294966150
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294966667
+    }
+   ]
+  },
+  {
+   "state_id": 869,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294963411
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294961545
+    }
+   ]
+  },
+  {
+   "state_id": 876,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294963453
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294963919
+    }
+   ]
+  },
+  {
+   "state_id": 877,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966718
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294966168
+    }
+   ]
+  },
+  {
+   "state_id": 883,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294962076
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294962422
+    }
+   ]
+  },
+  {
+   "state_id": 893,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 23,
+     "best_score": 4294964617
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965236
+    }
+   ]
+  },
+  {
+   "state_id": 900,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965386
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294964800
+    }
+   ]
+  },
+  {
+   "state_id": 904,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294964825
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294966069
+    }
+   ]
+  },
+  {
+   "state_id": 915,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965775
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965793
+    }
+   ]
+  },
+  {
+   "state_id": 918,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965829
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965724
+    }
+   ]
+  },
+  {
+   "state_id": 921,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294966540
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294966594
+    }
+   ]
+  },
+  {
+   "state_id": 932,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965608
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965022
+    }
+   ]
+  },
+  {
+   "state_id": 935,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294963846
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294964537
+    }
+   ]
+  },
+  {
+   "state_id": 946,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965848
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294965367
+    }
+   ]
+  },
+  {
+   "state_id": 947,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965935
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965313
+    }
+   ]
+  },
+  {
+   "state_id": 949,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294966016
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965358
+    }
+   ]
+  },
+  {
+   "state_id": 951,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294964941
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294964905
+    }
+   ]
+  },
+  {
+   "state_id": 953,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294964695
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294964680
+    }
+   ]
+  },
+  {
+   "state_id": 971,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965141
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294963759
+    }
+   ]
+  },
+  {
+   "state_id": 972,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294966718
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966096
+    }
+   ]
+  },
+  {
+   "state_id": 979,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294965433
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965361
+    }
+   ]
+  },
+  {
+   "state_id": 988,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294962295
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294962172
+    }
+   ]
+  },
+  {
+   "state_id": 989,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294963379
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294962586
+    }
+   ]
+  },
+  {
+   "state_id": 998,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965535
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965463
+    }
+   ]
+  },
+  {
+   "state_id": 999,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294966940
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294966354
+    }
+   ]
+  },
+  {
+   "state_id": 802,
+   "cycles": 346,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 7,
+     "active": 339,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294958251
+    },
+    {
+     "evaluated": 8,
+     "legal": 5,
+     "active": 260,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294957450
+    }
+   ]
+  },
+  {
+   "state_id": 806,
+   "cycles": 434,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 6,
+     "active": 393,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294957105
+    },
+    {
+     "evaluated": 17,
+     "legal": 7,
+     "active": 427,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294956967
+    }
+   ]
+  },
+  {
+   "state_id": 808,
+   "cycles": 301,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 3,
+     "active": 203,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294955803
+    },
+    {
+     "evaluated": 8,
+     "legal": 6,
+     "active": 294,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294957216
+    }
+   ]
+  },
+  {
+   "state_id": 811,
+   "cycles": 346,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 7,
+     "active": 339,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294961434
+    },
+    {
+     "evaluated": 8,
+     "legal": 7,
+     "active": 328,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294961560
+    }
+   ]
+  },
+  {
+   "state_id": 813,
+   "cycles": 210,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 3,
+     "active": 203,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294958521
+    },
+    {
+     "evaluated": 8,
+     "legal": 3,
+     "active": 192,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294958467
+    }
+   ]
+  },
+  {
+   "state_id": 814,
+   "cycles": 176,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 2,
+     "active": 169,
+     "best_valid": 1,
+     "best_id": 14,
+     "best_score": 4294958947
+    },
+    {
+     "evaluated": 8,
+     "legal": 2,
+     "active": 158,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294958875
+    }
+   ]
+  },
+  {
+   "state_id": 815,
+   "cycles": 298,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 2,
+     "active": 257,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294956115
+    },
+    {
+     "evaluated": 17,
+     "legal": 3,
+     "active": 291,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294956217
+    }
+   ]
+  },
+  {
+   "state_id": 818,
+   "cycles": 132,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 2,
+     "active": 125,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294957681
+    },
+    {
+     "evaluated": 4,
+     "legal": 1,
+     "active": 80,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294957681
+    }
+   ]
+  },
+  {
+   "state_id": 820,
+   "cycles": 570,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 11,
+     "active": 563,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294960132
+    },
+    {
+     "evaluated": 17,
+     "legal": 10,
+     "active": 529,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294960132
+    }
+   ]
+  },
+  {
+   "state_id": 823,
+   "cycles": 366,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 4,
+     "active": 325,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294955278
+    },
+    {
+     "evaluated": 17,
+     "legal": 5,
+     "active": 359,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294955293
+    }
+   ]
+  },
+  {
+   "state_id": 828,
+   "cycles": 176,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 2,
+     "active": 169,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294956415
+    },
+    {
+     "evaluated": 8,
+     "legal": 2,
+     "active": 158,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294954882
+    }
+   ]
+  },
+  {
+   "state_id": 834,
+   "cycles": 672,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 14,
+     "active": 665,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294959532
+    },
+    {
+     "evaluated": 17,
+     "legal": 13,
+     "active": 631,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294959424
+    }
+   ]
+  },
+  {
+   "state_id": 835,
+   "cycles": 400,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 6,
+     "active": 393,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294961614
+    },
+    {
+     "evaluated": 17,
+     "legal": 6,
+     "active": 393,
+     "best_valid": 1,
+     "best_id": 30,
+     "best_score": 4294961632
+    }
+   ]
+  },
+  {
+   "state_id": 838,
+   "cycles": 233,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 3,
+     "active": 203,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294957813
+    },
+    {
+     "evaluated": 8,
+     "legal": 4,
+     "active": 226,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294956910
+    }
+   ]
+  },
+  {
+   "state_id": 840,
+   "cycles": 434,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 7,
+     "active": 427,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294959583
+    },
+    {
+     "evaluated": 17,
+     "legal": 5,
+     "active": 359,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294959529
+    }
+   ]
+  },
+  {
+   "state_id": 842,
+   "cycles": 312,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 6,
+     "active": 305,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294963126
+    },
+    {
+     "evaluated": 8,
+     "legal": 5,
+     "active": 260,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294963198
+    }
+   ]
+  },
+  {
+   "state_id": 843,
+   "cycles": 298,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 2,
+     "active": 257,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294956046
+    },
+    {
+     "evaluated": 17,
+     "legal": 3,
+     "active": 291,
+     "best_valid": 1,
+     "best_id": 36,
+     "best_score": 4294956046
+    }
+   ]
+  },
+  {
+   "state_id": 844,
+   "cycles": 200,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 4,
+     "active": 193,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294962319
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294962427
+    }
+   ]
+  },
+  {
+   "state_id": 852,
+   "cycles": 366,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 5,
+     "active": 359,
+     "best_valid": 1,
+     "best_id": 21,
+     "best_score": 4294954519
+    },
+    {
+     "evaluated": 17,
+     "legal": 5,
+     "active": 359,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294954432
+    }
+   ]
+  },
+  {
+   "state_id": 854,
+   "cycles": 312,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 6,
+     "active": 305,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294956022
+    },
+    {
+     "evaluated": 8,
+     "legal": 4,
+     "active": 226,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294956961
+    }
+   ]
+  },
+  {
+   "state_id": 855,
+   "cycles": 380,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 8,
+     "active": 373,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294959460
+    },
+    {
+     "evaluated": 8,
+     "legal": 7,
+     "active": 328,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294959460
+    }
+   ]
+  },
+  {
+   "state_id": 856,
+   "cycles": 604,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 12,
+     "active": 597,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294960222
+    },
+    {
+     "evaluated": 17,
+     "legal": 12,
+     "active": 597,
+     "best_valid": 1,
+     "best_id": 36,
+     "best_score": 4294960120
+    }
+   ]
+  },
+  {
+   "state_id": 860,
+   "cycles": 278,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 5,
+     "active": 271,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294960012
+    },
+    {
+     "evaluated": 8,
+     "legal": 4,
+     "active": 226,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294960084
+    }
+   ]
+  },
+  {
+   "state_id": 861,
+   "cycles": 335,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 5,
+     "active": 271,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294959556
+    },
+    {
+     "evaluated": 8,
+     "legal": 7,
+     "active": 328,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294959556
+    }
+   ]
+  },
+  {
+   "state_id": 862,
+   "cycles": 210,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 3,
+     "active": 203,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294955308
+    },
+    {
+     "evaluated": 8,
+     "legal": 3,
+     "active": 192,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294954492
+    }
+   ]
+  },
+  {
+   "state_id": 864,
+   "cycles": 176,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 2,
+     "active": 169,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294955467
+    },
+    {
+     "evaluated": 8,
+     "legal": 1,
+     "active": 124,
+     "best_valid": 1,
+     "best_id": 14,
+     "best_score": 4294955323
+    }
+   ]
+  },
+  {
+   "state_id": 866,
+   "cycles": 298,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 3,
+     "active": 291,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294956955
+    },
+    {
+     "evaluated": 17,
+     "legal": 2,
+     "active": 257,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294956937
+    }
+   ]
+  },
+  {
+   "state_id": 871,
+   "cycles": 200,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 4,
+     "active": 193,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294961731
+    },
+    {
+     "evaluated": 4,
+     "legal": 3,
+     "active": 148,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294961767
+    }
+   ]
+  },
+  {
+   "state_id": 872,
+   "cycles": 366,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 5,
+     "active": 359,
+     "best_valid": 1,
+     "best_id": 37,
+     "best_score": 4294956271
+    },
+    {
+     "evaluated": 17,
+     "legal": 5,
+     "active": 359,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294956373
+    }
+   ]
+  },
+  {
+   "state_id": 873,
+   "cycles": 230,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 1,
+     "active": 223,
+     "best_valid": 1,
+     "best_id": 27,
+     "best_score": 4294953712
+    },
+    {
+     "evaluated": 17,
+     "legal": 0,
+     "active": 189,
+     "best_valid": 0,
+     "best_id": 0,
+     "best_score": 0
+    }
+   ]
+  },
+  {
+   "state_id": 874,
+   "cycles": 400,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 6,
+     "active": 393,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294955851
+    },
+    {
+     "evaluated": 17,
+     "legal": 6,
+     "active": 393,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294955815
+    }
+   ]
+  },
+  {
+   "state_id": 875,
+   "cycles": 176,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 2,
+     "active": 169,
+     "best_valid": 1,
+     "best_id": 14,
+     "best_score": 4294955491
+    },
+    {
+     "evaluated": 8,
+     "legal": 1,
+     "active": 124,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294955404
+    }
+   ]
+  },
+  {
+   "state_id": 879,
+   "cycles": 199,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 1,
+     "active": 135,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294954414
+    },
+    {
+     "evaluated": 8,
+     "legal": 3,
+     "active": 192,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294954558
+    }
+   ]
+  },
+  {
+   "state_id": 881,
+   "cycles": 244,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 4,
+     "active": 237,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294958659
+    },
+    {
+     "evaluated": 8,
+     "legal": 2,
+     "active": 158,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294957246
+    }
+   ]
+  },
+  {
+   "state_id": 884,
+   "cycles": 200,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 4,
+     "active": 193,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294959298
+    },
+    {
+     "evaluated": 4,
+     "legal": 3,
+     "active": 148,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294959370
+    }
+   ]
+  },
+  {
+   "state_id": 885,
+   "cycles": 604,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 12,
+     "active": 597,
+     "best_valid": 1,
+     "best_id": 35,
+     "best_score": 4294958743
+    },
+    {
+     "evaluated": 17,
+     "legal": 12,
+     "active": 597,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294958743
+    }
+   ]
+  },
+  {
+   "state_id": 889,
+   "cycles": 369,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 7,
+     "active": 339,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294963174
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294963174
+    }
+   ]
+  },
+  {
+   "state_id": 891,
+   "cycles": 176,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 2,
+     "active": 169,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294957819
+    },
+    {
+     "evaluated": 8,
+     "legal": 2,
+     "active": 158,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294957747
+    }
+   ]
+  },
+  {
+   "state_id": 892,
+   "cycles": 502,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 8,
+     "active": 461,
+     "best_valid": 1,
+     "best_id": 35,
+     "best_score": 4294961341
+    },
+    {
+     "evaluated": 17,
+     "legal": 9,
+     "active": 495,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294961341
+    }
+   ]
+  },
+  {
+   "state_id": 901,
+   "cycles": 570,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 11,
+     "active": 563,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294959844
+    },
+    {
+     "evaluated": 17,
+     "legal": 10,
+     "active": 529,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294959844
+    }
+   ]
+  },
+  {
+   "state_id": 902,
+   "cycles": 244,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 4,
+     "active": 237,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294956241
+    },
+    {
+     "evaluated": 8,
+     "legal": 3,
+     "active": 192,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294956097
+    }
+   ]
+  },
+  {
+   "state_id": 903,
+   "cycles": 301,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 5,
+     "active": 271,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294963027
+    },
+    {
+     "evaluated": 8,
+     "legal": 6,
+     "active": 294,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294963081
+    }
+   ]
+  },
+  {
+   "state_id": 906,
+   "cycles": 166,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 3,
+     "active": 159,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294959559
+    },
+    {
+     "evaluated": 4,
+     "legal": 2,
+     "active": 114,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294958605
+    }
+   ]
+  },
+  {
+   "state_id": 913,
+   "cycles": 244,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 4,
+     "active": 237,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294958878
+    },
+    {
+     "evaluated": 8,
+     "legal": 3,
+     "active": 192,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294958932
+    }
+   ]
+  },
+  {
+   "state_id": 916,
+   "cycles": 244,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 4,
+     "active": 237,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294954810
+    },
+    {
+     "evaluated": 8,
+     "legal": 1,
+     "active": 124,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294954441
+    }
+   ]
+  },
+  {
+   "state_id": 923,
+   "cycles": 570,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 11,
+     "active": 563,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294955083
+    },
+    {
+     "evaluated": 17,
+     "legal": 9,
+     "active": 495,
+     "best_valid": 1,
+     "best_id": 30,
+     "best_score": 4294954993
+    }
+   ]
+  },
+  {
+   "state_id": 926,
+   "cycles": 98,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 1,
+     "active": 91,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294955671
+    },
+    {
+     "evaluated": 4,
+     "legal": 0,
+     "active": 46,
+     "best_valid": 0,
+     "best_id": 0,
+     "best_score": 0
+    }
+   ]
+  },
+  {
+   "state_id": 927,
+   "cycles": 142,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 1,
+     "active": 135,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294954744
+    },
+    {
+     "evaluated": 8,
+     "legal": 1,
+     "active": 124,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294954693
+    }
+   ]
+  },
+  {
+   "state_id": 931,
+   "cycles": 233,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 2,
+     "active": 169,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294958305
+    },
+    {
+     "evaluated": 8,
+     "legal": 4,
+     "active": 226,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294958428
+    }
+   ]
+  },
+  {
+   "state_id": 933,
+   "cycles": 604,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 12,
+     "active": 597,
+     "best_valid": 1,
+     "best_id": 35,
+     "best_score": 4294959313
+    },
+    {
+     "evaluated": 17,
+     "legal": 10,
+     "active": 529,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294959208
+    }
+   ]
+  },
+  {
+   "state_id": 938,
+   "cycles": 380,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 8,
+     "active": 373,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294959061
+    },
+    {
+     "evaluated": 8,
+     "legal": 6,
+     "active": 294,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294958260
+    }
+   ]
+  },
+  {
+   "state_id": 939,
+   "cycles": 176,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 2,
+     "active": 169,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294958566
+    },
+    {
+     "evaluated": 8,
+     "legal": 0,
+     "active": 90,
+     "best_valid": 0,
+     "best_id": 0,
+     "best_score": 0
+    }
+   ]
+  },
+  {
+   "state_id": 940,
+   "cycles": 740,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 16,
+     "active": 733,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294961614
+    },
+    {
+     "evaluated": 17,
+     "legal": 15,
+     "active": 699,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294961506
+    }
+   ]
+  },
+  {
+   "state_id": 955,
+   "cycles": 346,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 7,
+     "active": 339,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294961230
+    },
+    {
+     "evaluated": 8,
+     "legal": 7,
+     "active": 328,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294961284
+    }
+   ]
+  },
+  {
+   "state_id": 960,
+   "cycles": 278,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 5,
+     "active": 271,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294960318
+    },
+    {
+     "evaluated": 8,
+     "legal": 5,
+     "active": 260,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294960282
+    }
+   ]
+  },
+  {
+   "state_id": 965,
+   "cycles": 672,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 13,
+     "active": 631,
+     "best_valid": 1,
+     "best_id": 35,
+     "best_score": 4294961767
+    },
+    {
+     "evaluated": 17,
+     "legal": 14,
+     "active": 665,
+     "best_valid": 1,
+     "best_id": 32,
+     "best_score": 4294961731
+    }
+   ]
+  },
+  {
+   "state_id": 966,
+   "cycles": 502,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 8,
+     "active": 461,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294956745
+    },
+    {
+     "evaluated": 17,
+     "legal": 9,
+     "active": 495,
+     "best_valid": 1,
+     "best_id": 32,
+     "best_score": 4294956643
+    }
+   ]
+  },
+  {
+   "state_id": 973,
+   "cycles": 346,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 7,
+     "active": 339,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294961764
+    },
+    {
+     "evaluated": 8,
+     "legal": 6,
+     "active": 294,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294961872
+    }
+   ]
+  },
+  {
+   "state_id": 974,
+   "cycles": 200,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 4,
+     "active": 193,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294959445
+    },
+    {
+     "evaluated": 4,
+     "legal": 3,
+     "active": 148,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294959481
+    }
+   ]
+  },
+  {
+   "state_id": 975,
+   "cycles": 312,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 6,
+     "active": 305,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294960114
+    },
+    {
+     "evaluated": 8,
+     "legal": 5,
+     "active": 260,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294960132
+    }
+   ]
+  },
+  {
+   "state_id": 978,
+   "cycles": 132,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 2,
+     "active": 125,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294958263
+    },
+    {
+     "evaluated": 4,
+     "legal": 1,
+     "active": 80,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294958299
+    }
+   ]
+  },
+  {
+   "state_id": 981,
+   "cycles": 536,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 10,
+     "active": 529,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294960237
+    },
+    {
+     "evaluated": 17,
+     "legal": 9,
+     "active": 495,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294960201
+    }
+   ]
+  },
+  {
+   "state_id": 983,
+   "cycles": 298,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 3,
+     "active": 291,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294953871
+    },
+    {
+     "evaluated": 17,
+     "legal": 3,
+     "active": 291,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294954045
+    }
+   ]
+  },
+  {
+   "state_id": 991,
+   "cycles": 434,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 7,
+     "active": 427,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294956139
+    },
+    {
+     "evaluated": 17,
+     "legal": 6,
+     "active": 393,
+     "best_valid": 1,
+     "best_id": 24,
+     "best_score": 4294956034
+    }
+   ]
+  },
+  {
+   "state_id": 995,
+   "cycles": 312,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 6,
+     "active": 305,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294958068
+    },
+    {
+     "evaluated": 8,
+     "legal": 6,
+     "active": 294,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294958212
+    }
+   ]
+  },
+  {
+   "state_id": 996,
+   "cycles": 570,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 11,
+     "active": 563,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294959931
+    },
+    {
+     "evaluated": 17,
+     "legal": 10,
+     "active": 529,
+     "best_valid": 1,
+     "best_id": 36,
+     "best_score": 4294959931
+    }
+   ]
+  },
+  {
+   "state_id": 997,
+   "cycles": 312,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 6,
+     "active": 305,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294958641
+    },
+    {
+     "evaluated": 8,
+     "legal": 2,
+     "active": 158,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294958425
+    }
+   ]
+  },
+  {
+   "state_id": 0,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965430
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965481
+    }
+   ]
+  },
+  {
+   "state_id": 1,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965146
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294964578
+    }
+   ]
+  },
+  {
+   "state_id": 2,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965124
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965782
+    }
+   ]
+  },
+  {
+   "state_id": 3,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294966409
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 20,
+     "best_score": 4294965841
+    }
+   ]
+  },
+  {
+   "state_id": 4,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294964203
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294964185
+    }
+   ]
+  },
+  {
+   "state_id": 5,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965400
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294965328
+    }
+   ]
+  },
+  {
+   "state_id": 6,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294964807
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294964152
+    }
+   ]
+  },
+  {
+   "state_id": 7,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294965652
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965616
+    }
+   ]
+  },
+  {
+   "state_id": 8,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294964185
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294964185
+    }
+   ]
+  },
+  {
+   "state_id": 9,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294964491
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294964542
+    }
+   ]
+  },
+  {
+   "state_id": 10,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294966012
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294966706
+    }
+   ]
+  },
+  {
+   "state_id": 11,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 25,
+     "best_score": 4294966014
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965305
+    }
+   ]
+  },
+  {
+   "state_id": 12,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294963868
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294963195
+    }
+   ]
+  },
+  {
+   "state_id": 13,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 25,
+     "best_score": 4294965925
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294966547
+    }
+   ]
+  },
+  {
+   "state_id": 14,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294965481
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965553
+    }
+   ]
+  },
+  {
+   "state_id": 15,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294964884
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294964884
+    }
+   ]
+  },
+  {
+   "state_id": 16,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966766
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294966270
+    }
+   ]
+  },
+  {
+   "state_id": 17,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294966354
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966303
+    }
+   ]
+  },
+  {
+   "state_id": 18,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294965244
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 32,
+     "best_score": 4294965866
+    }
+   ]
+  },
+  {
+   "state_id": 19,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294965178
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 20,
+     "best_score": 4294965109
+    }
+   ]
+  },
+  {
+   "state_id": 20,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 23,
+     "best_score": 4294966288
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 32,
+     "best_score": 4294966201
+    }
+   ]
+  },
+  {
+   "state_id": 21,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294963570
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294964210
+    }
+   ]
+  },
+  {
+   "state_id": 22,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294964836
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965440
+    }
+   ]
+  },
+  {
+   "state_id": 23,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 27,
+     "best_score": 4294963930
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 22,
+     "best_score": 4294963945
+    }
+   ]
+  },
+  {
+   "state_id": 24,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294964728
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294964728
+    }
+   ]
+  },
+  {
+   "state_id": 25,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965823
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965751
+    }
+   ]
+  },
+  {
+   "state_id": 26,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294963672
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294963636
+    }
+   ]
+  },
+  {
+   "state_id": 27,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 23,
+     "best_score": 4294965415
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 20,
+     "best_score": 4294965415
+    }
+   ]
+  },
+  {
+   "state_id": 28,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294964986
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294965022
+    }
+   ]
+  },
+  {
+   "state_id": 29,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294966634
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294965976
+    }
+   ]
+  },
+  {
+   "state_id": 30,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 35,
+     "best_score": 4294965557
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 26,
+     "best_score": 4294965680
+    }
+   ]
+  },
+  {
+   "state_id": 31,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294966045
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294966045
+    }
+   ]
+  },
+  {
+   "state_id": 32,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 31,
+     "best_score": 4294965124
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 22,
+     "best_score": 4294965109
+    }
+   ]
+  },
+  {
+   "state_id": 33,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294963672
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294963636
+    }
+   ]
+  },
+  {
+   "state_id": 34,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294965943
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294965943
+    }
+   ]
+  },
+  {
+   "state_id": 35,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294965062
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 32,
+     "best_score": 4294964368
+    }
+   ]
+  },
+  {
+   "state_id": 36,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294964807
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294964152
+    }
+   ]
+  },
+  {
+   "state_id": 37,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294963552
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294963552
+    }
+   ]
+  },
+  {
+   "state_id": 38,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294965208
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294965121
+    }
+   ]
+  },
+  {
+   "state_id": 39,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294966409
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 20,
+     "best_score": 4294965841
+    }
+   ]
+  },
+  {
+   "state_id": 40,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 31,
+     "best_score": 4294965583
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294966292
+    }
+   ]
+  },
+  {
+   "state_id": 41,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966303
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966267
+    }
+   ]
+  },
+  {
+   "state_id": 42,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294964614
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294964614
+    }
+   ]
+  },
+  {
+   "state_id": 43,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294965241
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294965313
+    }
+   ]
+  },
+  {
+   "state_id": 44,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965838
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966460
+    }
+   ]
+  },
+  {
+   "state_id": 45,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294966353
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965145
+    }
+   ]
+  },
+  {
+   "state_id": 46,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294966282
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966318
+    }
+   ]
+  },
+  {
+   "state_id": 47,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294966409
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 20,
+     "best_score": 4294965841
+    }
+   ]
+  },
+  {
+   "state_id": 48,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294963450
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294963399
+    }
+   ]
+  },
+  {
+   "state_id": 49,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294964593
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294964629
+    }
+   ]
+  },
+  {
+   "state_id": 50,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294965244
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294965244
+    }
+   ]
+  },
+  {
+   "state_id": 51,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294966456
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966420
+    }
+   ]
+  },
+  {
+   "state_id": 52,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294965349
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965385
+    }
+   ]
+  },
+  {
+   "state_id": 53,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 25,
+     "best_score": 4294964035
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 34,
+     "best_score": 4294963999
+    }
+   ]
+  },
+  {
+   "state_id": 54,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294963970
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294963384
+    }
+   ]
+  },
+  {
+   "state_id": 55,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965919
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966027
+    }
+   ]
+  },
+  {
+   "state_id": 56,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294965583
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965655
+    }
+   ]
+  },
+  {
+   "state_id": 57,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 27,
+     "best_score": 4294965404
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965404
+    }
+   ]
+  },
+  {
+   "state_id": 58,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966448
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965826
+    }
+   ]
+  },
+  {
+   "state_id": 59,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294964338
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965029
+    }
+   ]
+  },
+  {
+   "state_id": 60,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 14,
+     "best_score": 4294964578
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294965182
+    }
+   ]
+  },
+  {
+   "state_id": 61,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294965721
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 24,
+     "best_score": 4294965793
+    }
+   ]
+  },
+  {
+   "state_id": 62,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294966063
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 20,
+     "best_score": 4294966114
+    }
+   ]
+  },
+  {
+   "state_id": 63,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 27,
+     "best_score": 4294966488
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965884
+    }
+   ]
+  },
+  {
+   "state_id": 64,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294965157
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965779
+    }
+   ]
+  },
+  {
+   "state_id": 65,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965320
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 30,
+     "best_score": 4294965335
+    }
+   ]
+  },
+  {
+   "state_id": 66,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965565
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965619
+    }
+   ]
+  },
+  {
+   "state_id": 67,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 14,
+     "best_score": 4294965325
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965394
+    }
+   ]
+  },
+  {
+   "state_id": 68,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965298
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 26,
+     "best_score": 4294965316
+    }
+   ]
+  },
+  {
+   "state_id": 69,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294966994
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966354
+    }
+   ]
+  },
+  {
+   "state_id": 70,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965376
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294965361
+    }
+   ]
+  },
+  {
+   "state_id": 71,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294966103
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294965340
+    }
+   ]
+  },
+  {
+   "state_id": 72,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 21,
+     "best_score": 4294965236
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 30,
+     "best_score": 4294965320
+    }
+   ]
+  },
+  {
+   "state_id": 73,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294965325
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294965382
+    }
+   ]
+  },
+  {
+   "state_id": 74,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294964396
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294963723
+    }
+   ]
+  },
+  {
+   "state_id": 75,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 14,
+     "best_score": 4294966147
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 20,
+     "best_score": 4294966201
+    }
+   ]
+  },
+  {
+   "state_id": 76,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966303
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966267
+    }
+   ]
+  },
+  {
+   "state_id": 77,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294965586
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965514
+    }
+   ]
+  },
+  {
+   "state_id": 78,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294964968
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294964932
+    }
+   ]
+  },
+  {
+   "state_id": 79,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294964818
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294964782
+    }
+   ]
+  },
+  {
+   "state_id": 80,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965109
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294965181
+    }
+   ]
+  },
+  {
+   "state_id": 81,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294966303
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966267
+    }
+   ]
+  },
+  {
+   "state_id": 82,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294965583
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965655
+    }
+   ]
+  },
+  {
+   "state_id": 83,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965356
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294964698
+    }
+   ]
+  },
+  {
+   "state_id": 84,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965400
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 26,
+     "best_score": 4294965418
+    }
+   ]
+  },
+  {
+   "state_id": 85,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 37,
+     "best_score": 4294965277
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 24,
+     "best_score": 4294965277
+    }
+   ]
+  },
+  {
+   "state_id": 86,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294965295
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965223
+    }
+   ]
+  },
+  {
+   "state_id": 87,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 37,
+     "best_score": 4294966252
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 22,
+     "best_score": 4294966252
+    }
+   ]
+  },
+  {
+   "state_id": 88,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294966321
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966318
+    }
+   ]
+  },
+  {
+   "state_id": 89,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965091
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294965040
+    }
+   ]
+  },
+  {
+   "state_id": 90,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294966252
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294966252
+    }
+   ]
+  },
+  {
+   "state_id": 91,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294963624
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294963606
+    }
+   ]
+  },
+  {
+   "state_id": 92,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965889
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294965889
+    }
+   ]
+  },
+  {
+   "state_id": 93,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 8,
+     "best_score": 4294963945
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294963942
+    }
+   ]
+  },
+  {
+   "state_id": 94,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965379
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294965448
+    }
+   ]
+  },
+  {
+   "state_id": 95,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 23,
+     "best_score": 4294965946
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294965874
+    }
+   ]
+  },
+  {
+   "state_id": 96,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294963450
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294963399
+    }
+   ]
+  },
+  {
+   "state_id": 97,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294965149
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294964458
+    }
+   ]
+  },
+  {
+   "state_id": 98,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294963300
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294963904
+    }
+   ]
+  },
+  {
+   "state_id": 99,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294963300
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294963904
+    }
+   ]
+  },
+  {
+   "state_id": 100,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294965280
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294965316
+    }
+   ]
+  },
+  {
+   "state_id": 101,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294965025
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294964974
+    }
+   ]
+  },
+  {
+   "state_id": 102,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294964938
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294964815
+    }
+   ]
+  },
+  {
+   "state_id": 103,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 35,
+     "best_score": 4294966438
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 26,
+     "best_score": 4294966474
+    }
+   ]
+  },
+  {
+   "state_id": 104,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 12,
+     "best_score": 4294965856
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294966634
+    }
+   ]
+  },
+  {
+   "state_id": 105,
+   "cycles": 234,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294963282
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294963297
+    }
+   ]
+  },
+  {
+   "state_id": 106,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294964524
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 24,
+     "best_score": 4294964596
+    }
+   ]
+  },
+  {
+   "state_id": 107,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294964884
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294964884
+    }
+   ]
+  },
+  {
+   "state_id": 108,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 31,
+     "best_score": 4294963672
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 22,
+     "best_score": 4294963708
+    }
+   ]
+  },
+  {
+   "state_id": 109,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294967096
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294966474
+    }
+   ]
+  },
+  {
+   "state_id": 110,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294965958
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 22,
+     "best_score": 4294966048
+    }
+   ]
+  },
+  {
+   "state_id": 111,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294963591
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294964108
+    }
+   ]
+  },
+  {
+   "state_id": 112,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 33,
+     "best_score": 4294962394
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294962430
+    }
+   ]
+  },
+  {
+   "state_id": 113,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294965502
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 24,
+     "best_score": 4294965520
+    }
+   ]
+  },
+  {
+   "state_id": 114,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 27,
+     "best_score": 4294965356
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 24,
+     "best_score": 4294964698
+    }
+   ]
+  },
+  {
+   "state_id": 115,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 19,
+     "best_score": 4294965583
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294965640
+    }
+   ]
+  },
+  {
+   "state_id": 116,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294963435
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 24,
+     "best_score": 4294963417
+    }
+   ]
+  },
+  {
+   "state_id": 117,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294963603
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294963621
+    }
+   ]
+  },
+  {
+   "state_id": 118,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294962979
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 13,
+     "best_score": 4294962907
+    }
+   ]
+  },
+  {
+   "state_id": 119,
+   "cycles": 234,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 5,
+     "legal": 5,
+     "active": 227,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294966474
+    },
+    {
+     "evaluated": 4,
+     "legal": 4,
+     "active": 182,
+     "best_valid": 1,
+     "best_id": 1,
+     "best_score": 4294966438
+    }
+   ]
+  },
+  {
+   "state_id": 120,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 14,
+     "best_score": 4294963297
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294963228
+    }
+   ]
+  },
+  {
+   "state_id": 121,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 18,
+     "best_score": 4294965026
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294964975
+    }
+   ]
+  },
+  {
+   "state_id": 122,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 0,
+     "best_score": 4294965505
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 38,
+     "best_score": 4294966004
+    }
+   ]
+  },
+  {
+   "state_id": 123,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294965040
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 7,
+     "best_score": 4294965022
+    }
+   ]
+  },
+  {
+   "state_id": 124,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294966856
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966180
+    }
+   ]
+  },
+  {
+   "state_id": 125,
+   "cycles": 774,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294964723
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 26,
+     "best_score": 4294964152
+    }
+   ]
+  },
+  {
+   "state_id": 126,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294966612
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 15,
+     "best_score": 4294966540
+    }
+   ]
+  },
+  {
+   "state_id": 127,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 6,
+     "best_score": 4294964177
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 3,
+     "best_score": 4294963504
+    }
+   ]
+  },
+  {
+   "state_id": 128,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 35,
+     "best_score": 4294966165
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 32,
+     "best_score": 4294966216
+    }
+   ]
+  },
+  {
+   "state_id": 129,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294963384
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 20,
+     "best_score": 4294963438
+    }
+   ]
+  },
+  {
+   "state_id": 130,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294964206
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294964206
+    }
+   ]
+  },
+  {
+   "state_id": 131,
+   "cycles": 414,
+   "winner_lane": 0,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 16,
+     "best_score": 4294966144
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294966093
+    }
+   ]
+  },
+  {
+   "state_id": 132,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 4,
+     "best_score": 4294963657
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 5,
+     "best_score": 4294963693
+    }
+   ]
+  },
+  {
+   "state_id": 133,
+   "cycles": 774,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 2,
+     "best_score": 4294965070
+    },
+    {
+     "evaluated": 17,
+     "legal": 17,
+     "active": 767,
+     "best_valid": 1,
+     "best_id": 11,
+     "best_score": 4294965178
+    }
+   ]
+  },
+  {
+   "state_id": 134,
+   "cycles": 414,
+   "winner_lane": 1,
+   "lanes": [
+    {
+     "evaluated": 9,
+     "legal": 9,
+     "active": 407,
+     "best_valid": 1,
+     "best_id": 10,
+     "best_score": 4294966420
+    },
+    {
+     "evaluated": 8,
+     "legal": 8,
+     "active": 362,
+     "best_valid": 1,
+     "best_id": 17,
+     "best_score": 4294966456
+    }
+   ]
+  }
+ ]
+}

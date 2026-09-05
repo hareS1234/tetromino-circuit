@@ -130,8 +130,8 @@ test-lookahead-reference:
 test-lookahead-rtl:
 	$(RUN_RTL) --top tetris_core --test tb_lookahead --files-f rtl/files.f --param ARCH=1 --param BOARD_REPR=1 --param DEPTH=2
 	$(RUN_RTL) --top tetris_core --test tb_lookahead --files-f rtl/files.f --param ARCH=1 --param BOARD_REPR=1 --param DEPTH=1 --build-tag d1preview
-test-lanes:
-	$(RUN_RTL) --top tetris_core --test tb_lanes --files-f rtl/files.f --param ARCH=1 --param BOARD_REPR=1 --param LANES=2
+test-lanes: ## LANES=2|4: ownership, cross-lane ties, strict last-finishing winner, per-lane counters (results/v2/lanes/)
+	$(RUN_RTL) --top tetris_core --test tb_lanes --files-f rtl/files.f --param ARCH=1 --param BOARD_REPR=1 --param LANES=$(if $(filter 1,$(LANES)),2,$(LANES))
 test-rtl: test-shapes test-score test-drop test-merge test-clear test-features test-candidate test-protocol ## directed RTL tests plus a differential subset
 	$(PY) tools/test_core.py --arch 0 --board-repr 0 --count 100 --driver native
 
@@ -276,7 +276,7 @@ route-a2-dev: ## U12: synthesize the A2 wrapper (-nodsp), inspect the hierarchy,
 	$(PY) tools/pnr.py --arch 2 --board-repr 1 --seed $(SEED) --freq $(FREQ) --dsp-policy nodsp --timeout 600
 
 # ---------------------------------------------------------------- U04 (A2 specification)
-check-a2-spec: ## U04: stage manifest, configuration identity, abstract cycle contract, A2 elaboration rejected
+check-a2-spec: ## U04/U13: stage manifest, configuration identity, cycle contract, A2 and four-lane elaboration guards
 	$(PY) -m pytest tests/unit/test_a2_spec.py -q $(PYTEST_ARGS)
 	$(PY) tools/check_a2_spec.py --rtl
 reproduce: ## resumable orchestrator of the documented release pipeline

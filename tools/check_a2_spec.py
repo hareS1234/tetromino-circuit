@@ -12,6 +12,8 @@ Checks (each printed as CHECK name ok/total):
   latency     — abstract token model: visible 22, transfer 23, II 1, D(N) = N + 29 for N in 9/17/34,
                 R(N) = D(N) + 2, order preserved with bubbles and stalls
   elaboration — (--rtl) tetris_core with ARCH=2 fails to elaborate until U10 (V01)
+  lane_guards — (--rtl) the four-lane A1 elaborates (U13); four lanes with bitmap/depth two/approximate
+                profile and three lanes are rejected in RTL and in Python
 """
 from __future__ import annotations
 
@@ -225,6 +227,38 @@ def check_elaboration(problems: list) -> tuple[int, int]:
     return ok, total
 
 
+def check_lane_guards(problems: list) -> tuple[int, int]:
+    """U13: the four-lane A1 (cache, depth one, exact) elaborates; four lanes with the bitmap, depth two, an
+    approximate profile, or three lanes, are rejected by CFG_OK, and the Python validator agrees."""
+    files = [str(ROOT / s) for s in (ROOT / "rtl" / "files_core.f").read_text().split() if s.endswith(".sv")]
+    from tools.build_native import WARNING_WAIVERS
+    base = ["bash", str(ROOT / "scripts" / "env.sh"), "verilator", "--lint-only", *WARNING_WAIVERS, "--top-module", "tetris_core",
+            f"-I{ROOT / 'rtl'}", "-GARCH=1", "-GBOARD_REPR=1", "-GLANES=4", "-GDEPTH=1", "-GPRECISION=0"]
+    ok = total = 0
+    total += 1
+    l4 = Config(1, 1, 4, 1, 0)
+    good = subprocess.run(base + files, cwd=ROOT, capture_output=True, text=True)
+    if good.returncode == 0 and status(l4) == "verified" and l4.id == "a1-cache-d1-p0-l4":
+        ok += 1
+    else:
+        problems.append(f"four-lane A1 does not elaborate or is not verified (exit {good.returncode}, status {status(l4)})")
+    for override, bad_cfg in ((["-GBOARD_REPR=0"], Config(1, 0, 4, 1, 0)), (["-GDEPTH=2"], Config(1, 1, 4, 2, 0)),
+                              (["-GPRECISION=1"], Config(1, 1, 4, 1, 1)), (["-GLANES=3"], Config(1, 1, 3, 1, 0))):
+        total += 1
+        bad = subprocess.run(base + override + files, cwd=ROOT, capture_output=True, text=True)
+        rejected_rtl = bad.returncode != 0 and "unsupported parameter combination" in bad.stdout + bad.stderr
+        try:
+            validate(bad_cfg)
+            rejected_py = False
+        except ValueError:
+            rejected_py = status(bad_cfg) == "unsupported"
+        if rejected_rtl and rejected_py:
+            ok += 1
+        else:
+            problems.append(f"{bad_cfg.id} ({override}) not rejected: rtl {rejected_rtl}, python {rejected_py}")
+    return ok, total
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--rtl", action="store_true", help="also check that A2 elaboration is rejected (needs Verilator)")
@@ -235,6 +269,7 @@ def main() -> int:
                "latency": check_latency(m, problems)}
     if args.rtl:
         results["elaboration"] = check_elaboration(problems)
+        results["lane_guards"] = check_lane_guards(problems)
     for name, (ok, total) in results.items():
         print(f"CHECK a2_{name} {ok}/{total}")
     if problems:

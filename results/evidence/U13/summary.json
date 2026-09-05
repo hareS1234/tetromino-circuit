@@ -1,0 +1,210 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U13",
+ "status": "passed",
+ "git_commit": "e9811492207530814454c9e528f930d20b2ced5a-dirty",
+ "git_modified_tracked": [
+  "Makefile",
+  "model/config.py",
+  "rtl/tetris_core.sv",
+  "tb/tb_lanes.py",
+  "tests/unit/test_a2_spec.py",
+  "tools/check_a2_spec.py"
+ ],
+ "git_untracked": [
+  "docs/lanes.md",
+  "results/evidence/--help/summary.json",
+  "results/replays/a1-cache-d1-p0-l4_seed2000_cap100.jsonl",
+  "results/replays/a1-cache-d1-p0-l4_seed2001_cap100.jsonl",
+  "results/replays/a1-cache-d1-p0-l4_seed2002_cap100.jsonl",
+  "results/v2/lanes/lanes2_stats.json",
+  "results/v2/lanes/lanes4_stats.json",
+  "results/v2/lanes/synth_l1_l2_l4.json",
+  "results/v2/raw/routes/3137bdf7316a474fb3b02b327a8b4a5c7c7906060bae92439b24573e37a83286.json"
+ ],
+ "source_sha256": "353222b9f2262c14e9bcfba8e9b4872019c692cec51783f74c176a1aaeba3bec",
+ "configuration_id": "a1-cache-d1-p0-l4",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T17:20:13Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "check-a2-spec"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 7.37,
+   "log": "results/evidence/U13/cmd00.log",
+   "counts": {
+    "pytest_passed": 14,
+    "check_a2_stages": "39/39",
+    "check_a2_widths": "5/5",
+    "check_a2_identity": "15/15",
+    "check_a2_latency": "16/16",
+    "check_a2_elaboration": "6/6",
+    "check_a2_lane_guards": "5/5"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-lanes",
+    "LANES=4"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 10.46,
+   "log": "results/evidence/U13/cmd01.log",
+   "counts": {
+    "pytest_failed": 0,
+    "rtl_total": 1,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-lanes",
+    "LANES=2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 12.72,
+   "log": "results/evidence/U13/cmd02.log",
+   "counts": {
+    "pytest_failed": 0,
+    "rtl_total": 1,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-core",
+    "ARCH=1",
+    "BOARD_REPR=1",
+    "LANES=4",
+    "COUNT=1000",
+    "DRIVER=native"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.64,
+   "log": "results/evidence/U13/cmd03.log",
+   "counts": {
+    "native_decisions": 1000
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-protocol",
+    "ARCH=1",
+    "BOARD_REPR=1",
+    "LANES=4"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.68,
+   "log": "results/evidence/U13/cmd04.log",
+   "counts": {
+    "pytest_failed": 0,
+    "rtl_total": 9,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "replay-suite",
+    "ARCH=1",
+    "BOARD_REPR=1",
+    "LANES=4",
+    "CAP=100"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.23,
+   "log": "results/evidence/U13/cmd05.log",
+   "counts": {}
+  }
+ ],
+ "checks": [
+  {
+   "name": "unit_and_spec",
+   "count_key": "pytest_passed",
+   "values": [
+    14
+   ],
+   "ok": true
+  },
+  {
+   "name": "lane_guards",
+   "count_key": "check_a2_lane_guards",
+   "values": [
+    "5/5"
+   ],
+   "ok": true
+  },
+  {
+   "name": "lanes_rtl",
+   "count_key": "rtl_total",
+   "values": [
+    1,
+    1,
+    9
+   ],
+   "ok": true
+  },
+  {
+   "name": "core_corpus",
+   "count_key": "native_decisions",
+   "values": [
+    1000
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "docs/lanes.md",
+   "exists": true,
+   "bytes": 7925
+  },
+  {
+   "path": "results/v2/lanes/lanes4_stats.json",
+   "exists": true,
+   "bytes": 192023
+  },
+  {
+   "path": "results/v2/lanes/lanes2_stats.json",
+   "exists": true,
+   "bytes": 109347
+  },
+  {
+   "path": "results/v2/lanes/synth_l1_l2_l4.json",
+   "exists": true,
+   "bytes": 2660
+  },
+  {
+   "path": "results/v2/raw/routes/3137bdf7316a474fb3b02b327a8b4a5c7c7906060bae92439b24573e37a83286.json",
+   "exists": true,
+   "bytes": 2483
+  },
+  {
+   "path": "results/replays/a1-cache-d1-p0-l4_seed2000_cap100.jsonl",
+   "exists": true,
+   "bytes": 41250
+  },
+  {
+   "path": "results/replays/a1-cache-d1-p0-l4_seed2001_cap100.jsonl",
+   "exists": true,
+   "bytes": 40564
+  },
+  {
+   "path": "results/replays/a1-cache-d1-p0-l4_seed2002_cap100.jsonl",
+   "exists": true,
+   "bytes": 40234
+  }
+ ],
+ "limitations": [
+  "development route a1-cache-d1-p0-l4 seed 1 @ 50 MHz nodsp with a 1,200 s budget ended route_timeout (placement estimate 57.15 MHz, router did not converge); a 3,600 s attempt (a distinct route identity) was started and is recorded under results/v2/raw/routes/ when it finishes; multi-seed routing is U17",
+  "four-lane synthesis figures come from synth-record-v2 summaries under build/synth/ (uncommitted cache), copied with their identities into results/v2/lanes/synth_l1_l2_l4.json"
+ ],
+ "note": "U13 four-lane A1: Config(1,1,4,1,0) verified; tb_lanes parameterised (ownership partition, strict last-finishing witness, invalid local bests, unequal finishes); 1,000-state corpus, protocol, replays; lane analysis in docs/lanes.md"
+}
