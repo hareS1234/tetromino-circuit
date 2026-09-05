@@ -1,0 +1,7 @@
+split,corpus,precision,name,legal_states,changed,changed_rate,certified_unchanged,not_certified_but_unchanged,exact_ties,ties_introduced,ties_broken,median_exact_gap_changed,median_exact_gap_unchanged,median_p0_loss_changed
+development,benchmarks/states/corpus_d1.jsonl,5,coeff_u4,981,1,0.001,237,743,192,0,0,2,36,2
+development,benchmarks/states/corpus_d1.jsonl,6,coeff_u3,981,25,0.0255,128,828,192,40,0,15,36,15
+development,benchmarks/states/corpus_d1.jsonl,7,coeff_u2,981,87,0.0887,141,753,192,35,15,15,36,15
+development,benchmarks/states/corpus_d1_upgrade_dev.jsonl,5,coeff_u4,1963,6,0.0031,454,1503,489,0,2,9,36,12
+development,benchmarks/states/corpus_d1_upgrade_dev.jsonl,6,coeff_u3,1963,76,0.0387,263,1624,489,81,2,15,36,15
+development,benchmarks/states/corpus_d1_upgrade_dev.jsonl,7,coeff_u2,1963,221,0.1126,303,1439,489,81,57,15,36,15

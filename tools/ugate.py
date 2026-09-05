@@ -47,10 +47,12 @@ def git_state() -> dict:
 
 def parse_counts(text: str) -> dict:
     counts = {}
-    m = re.findall(r"(\d+) passed", text)
+    # pytest summaries only ("N passed in 1.2s", "N passed, M failed"): a cocotb test *named* random_tuples_1000
+    # must not contribute its 1000 (the digits are preceded by a word character there)
+    m = re.findall(r"(?<!\w)(\d+) passed(?=[ ,]|$)", text, re.M)
     if m:
         counts["pytest_passed"] = sum(int(x) for x in m)
-    m = re.findall(r"(\d+) failed", text)
+    m = re.findall(r"(?<!\w)(\d+) failed(?=[ ,]|$)", text, re.M)
     if m:
         counts["pytest_failed"] = sum(int(x) for x in m)
     m = re.findall(r"RTL tests: (\d+) total, (\d+) failed", text)

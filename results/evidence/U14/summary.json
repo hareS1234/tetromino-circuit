@@ -1,0 +1,252 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U14",
+ "status": "passed",
+ "git_commit": "ae0728a3e36e9a03e211f2ae3f8a73c386bdd68e-dirty",
+ "git_modified_tracked": [
+  ".gitignore",
+  "Makefile",
+  "docs/spec.md",
+  "model/config.py",
+  "model/numeric.py",
+  "rtl/score.sv",
+  "rtl/tetris_core.sv",
+  "tb/tb_candidate.py",
+  "tb/tb_score.py",
+  "tests/unit/test_a2_spec.py",
+  "tests/unit/test_result_schemas.py",
+  "tools/measure_matrix.py",
+  "tools/ugate.py"
+ ],
+ "git_untracked": [
+  "docs/precision_v2.md",
+  "model/sensitivity.py",
+  "results/evidence/U14/summary.json",
+  "results/replays/a1-cache-d1-p5-l1_seed2000_cap100.jsonl",
+  "results/replays/a1-cache-d1-p6-l1_seed2000_cap100.jsonl",
+  "results/replays/a1-cache-d1-p7-l1_seed2000_cap100.jsonl",
+  "results/v2/precision/development/disagreement.csv",
+  "results/v2/precision/development/summary.json",
+  "results/v2/precision/divergence_explanations.json",
+  "results/v2/precision/scorer_study.json",
+  "results/v2/raw/decisions/a1-cache-d1-p5-l1/172f5d89635bcb4a.csv",
+  "results/v2/raw/decisions/a1-cache-d1-p5-l1/172f5d89635bcb4a.json",
+  "results/v2/raw/decisions/a1-cache-d1-p6-l1/172f5d89635bcb4a.csv",
+  "results/v2/raw/decisions/a1-cache-d1-p6-l1/172f5d89635bcb4a.json",
+  "results/v2/raw/decisions/a1-cache-d1-p7-l1/172f5d89635bcb4a.csv",
+  "results/v2/raw/decisions/a1-cache-d1-p7-l1/172f5d89635bcb4a.json",
+  "results/v2/stage_cycles/stage_cycles_a1_repr1_p5.json",
+  "results/v2/stage_cycles/stage_cycles_a1_repr1_p6.json",
+  "results/v2/stage_cycles/stage_cycles_a1_repr1_p7.json",
+  "tests/fixtures/precision_v2_divergences.json",
+  "tests/unit/test_precision_v2.py",
+  "tools/analyze_precision_v2.py",
+  "tools/scorer_study.py"
+ ],
+ "source_sha256": "4cfea51b218d17a69d7e2d42ad03717d46867f4badaae326daf776c0a64e6388",
+ "configuration_id": "a1-cache-d1-p5-l1",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T17:54:22Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-python"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 44.42,
+   "log": "results/evidence/U14/cmd00.log",
+   "counts": {
+    "pytest_passed": 421
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "check-a2-spec"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 7.7,
+   "log": "results/evidence/U14/cmd01.log",
+   "counts": {
+    "pytest_passed": 14,
+    "check_a2_stages": "39/39",
+    "check_a2_widths": "5/5",
+    "check_a2_identity": "15/15",
+    "check_a2_latency": "16/16",
+    "check_a2_elaboration": "6/6",
+    "check_a2_lane_guards": "5/5"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-precision-v2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 109.51,
+   "log": "results/evidence/U14/cmd02.log",
+   "counts": {
+    "pytest_passed": 10,
+    "pytest_failed": 0,
+    "rtl_total": 24,
+    "rtl_failed": 0,
+    "native_decisions": 3000
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "analyze-precision-v2",
+    "SPLIT=development"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 3.12,
+   "log": "results/evidence/U14/cmd03.log",
+   "counts": {
+    "check_precision_sensitivity": "6/6"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "synth-scorer-study"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 7.68,
+   "log": "results/evidence/U14/cmd04.log",
+   "counts": {
+    "check_scorer_study": "16/16"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "check-v1-results"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.52,
+   "log": "results/evidence/U14/cmd05.log",
+   "counts": {
+    "check_quality_jobs": "640/640",
+    "check_quality_summary_recomputed": "8/8",
+    "check_route_jobs": "45/45",
+    "check_decision_files": "9/9",
+    "check_v1_evidence": "20/20"
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "unit",
+   "count_key": "pytest_passed",
+   "values": [
+    421,
+    14,
+    10
+   ],
+   "ok": true
+  },
+  {
+   "name": "rtl",
+   "count_key": "rtl_total",
+   "values": [
+    24
+   ],
+   "ok": true
+  },
+  {
+   "name": "core_corpus",
+   "count_key": "native_decisions",
+   "values": [
+    3000
+   ],
+   "ok": true
+  },
+  {
+   "name": "sensitivity",
+   "count_key": "check_precision_sensitivity",
+   "values": [
+    "6/6"
+   ],
+   "ok": true
+  },
+  {
+   "name": "scorer_study",
+   "count_key": "check_scorer_study",
+   "values": [
+    "16/16"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "docs/precision_v2.md",
+   "exists": true,
+   "bytes": 10416
+  },
+  {
+   "path": "tests/fixtures/precision_v2_divergences.json",
+   "exists": true,
+   "bytes": 379
+  },
+  {
+   "path": "results/v2/precision/development/summary.json",
+   "exists": true,
+   "bytes": 14141
+  },
+  {
+   "path": "results/v2/precision/development/disagreement.csv",
+   "exists": true,
+   "bytes": 850
+  },
+  {
+   "path": "results/v2/precision/divergence_explanations.json",
+   "exists": true,
+   "bytes": 15033
+  },
+  {
+   "path": "results/v2/precision/scorer_study.json",
+   "exists": true,
+   "bytes": 12419
+  },
+  {
+   "path": "results/v2/raw/decisions/a1-cache-d1-p5-l1/172f5d89635bcb4a.json",
+   "exists": true,
+   "bytes": 558
+  },
+  {
+   "path": "results/v2/raw/decisions/a1-cache-d1-p6-l1/172f5d89635bcb4a.json",
+   "exists": true,
+   "bytes": 558
+  },
+  {
+   "path": "results/v2/raw/decisions/a1-cache-d1-p7-l1/172f5d89635bcb4a.json",
+   "exists": true,
+   "bytes": 558
+  },
+  {
+   "path": "results/replays/a1-cache-d1-p5-l1_seed2000_cap100.jsonl",
+   "exists": true,
+   "bytes": 41199
+  },
+  {
+   "path": "results/replays/a1-cache-d1-p6-l1_seed2000_cap100.jsonl",
+   "exists": true,
+   "bytes": 39906
+  },
+  {
+   "path": "results/replays/a1-cache-d1-p7-l1_seed2000_cap100.jsonl",
+   "exists": true,
+   "bytes": 42389
+  }
+ ],
+ "limitations": [
+  "sensitivity counts are on the supplied planning corpora (development split): they chose the ladder and are not a final evaluation; the held-out common-state corpus is U16",
+  "P5-P7 cores are synthesized (-nodsp) but not routed here; their timing is part of the U17 matrix",
+  "scorer microbenchmark savings are reported separately from the complete-core numbers and are not core savings",
+  "the 1,000-state decision records were produced by the first test-precision-v2 run and reused by native identity in the gate (unchanged source)"
+ ],
+ "note": "U14 quantization ladder: P5-P7 generated from the exact coefficients; narrow-width shift-add scorer with sign extension; fixtures verified against the literal-descent and set-of-cells references; integer stability certificate (soundness asserted); 1,000-state native decision records per profile; one RTL replay per profile; scorer-only and full-core synthesis (P0-P7)"
+}

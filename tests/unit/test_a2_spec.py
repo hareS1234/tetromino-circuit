@@ -80,10 +80,13 @@ def test_a2_identity_and_neighbours_are_unsupported():
     """Since U10 the exact A2 configuration is verified; every neighbouring A2 combination stays unsupported."""
     a2 = Config(2, 1, 1, 1, 0)
     assert a2.id == "a2-cache-d1-p0-l1" and status(a2) == "verified" and validate(a2) is a2
-    # nine v1 identities + A2 (U10) + the four-lane A1 (U13)
-    assert a2.id in SUPPORTED_IDS and DECLARED == () and len(SUPPORTED) == 11
-    from model.config import V1_SUPPORTED_IDS
+    # nine frozen v1 identities + the upgrade additions (A2 in U10, four lanes in U13, P5-P7 in U14)
+    from model.config import UPGRADE_SUPPORTED, V1_SUPPORTED, V1_SUPPORTED_IDS
+    assert a2.id in SUPPORTED_IDS and DECLARED == ()
+    assert SUPPORTED == V1_SUPPORTED + UPGRADE_SUPPORTED and len(SUPPORTED) == len(set(SUPPORTED))
     assert len(V1_SUPPORTED_IDS) == 9 and a2.id not in V1_SUPPORTED_IDS
+    assert {c.id for c in UPGRADE_SUPPORTED} == {"a2-cache-d1-p0-l1", "a1-cache-d1-p0-l4", "a1-cache-d1-p5-l1",
+                                                 "a1-cache-d1-p6-l1", "a1-cache-d1-p7-l1"}
     l4 = Config(1, 1, 4, 1, 0)
     assert l4.id == "a1-cache-d1-p0-l4" and status(l4) == "verified" and l4.id not in V1_SUPPORTED_IDS
     for bad in (Config(1, 0, 4, 1, 0), Config(1, 1, 4, 2, 0), Config(1, 1, 4, 1, 1), Config(0, 0, 4, 1, 0)):

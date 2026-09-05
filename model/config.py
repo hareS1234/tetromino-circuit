@@ -41,9 +41,9 @@ class Config:
         return asdict(self)
 
 
-# The nine verified v1 hardware configurations (manual E16/7E.1), the A2 candidate pipeline
-# (docs/design_a2.md; declared in U04, promoted in U10) and the four-lane A1 replication (U13).
-SUPPORTED = (
+# The nine verified v1 hardware configurations (manual E16/7E.1) — frozen: the v1 matrix and its
+# result files are keyed by these ids (tools/check_v1_results.py).
+V1_SUPPORTED = (
     Config(0, 0, 1, 1, 0),
     Config(1, 0, 1, 1, 0),
     Config(1, 1, 1, 1, 0),
@@ -53,15 +53,22 @@ SUPPORTED = (
     Config(1, 1, 1, 1, 4),
     Config(1, 1, 1, 2, 0),
     Config(1, 1, 2, 1, 0),
-    Config(2, 1, 1, 1, 0),
-    Config(1, 1, 4, 1, 0),   # four-lane A1 (U13)
 )
+# Configurations added and verified by upgrade jobs (docs/upgrade_progress.md); each entry names its job.
+UPGRADE_SUPPORTED = (
+    Config(2, 1, 1, 1, 0),   # A2 candidate pipeline (docs/design_a2.md; declared in U04, promoted in U10)
+    Config(1, 1, 4, 1, 0),   # four-lane A1 (U13)
+    Config(1, 1, 1, 1, 5),   # coeff_u4: 4-bit coefficient-magnitude budget (U14)
+    Config(1, 1, 1, 1, 6),   # coeff_u3: 3-bit (U14)
+    Config(1, 1, 1, 1, 7),   # coeff_u2: 2-bit (U14)
+)
+SUPPORTED = V1_SUPPORTED + UPGRADE_SUPPORTED
 SUPPORTED_IDS = {c.id: c for c in SUPPORTED}
-V1_SUPPORTED_IDS = {c.id for c in SUPPORTED[:9]}   # the frozen v1 matrix
+V1_SUPPORTED_IDS = {c.id for c in V1_SUPPORTED}   # the frozen v1 matrix
 
-# Declared by a specification but not yet verified (empty since U10; four-lane A1 is added by U13
-# directly as verified).  Every other A2 combination (bitmap, depth two, several lanes, approximate
-# profiles) is unsupported outright.
+# Declared by a specification but not yet verified (empty since U10).  Every other combination
+# (A2 variants, four lanes with other options, approximate profiles outside A1/cache/L1/D1) is
+# unsupported outright.
 DECLARED = ()
 DECLARED_IDS = {c.id: c for c in DECLARED}
 

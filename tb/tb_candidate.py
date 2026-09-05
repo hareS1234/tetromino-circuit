@@ -141,7 +141,9 @@ async def stage_cycle_profile(dut):
             assert n < GUARD
         counts["total"] = n
         profiles[name] = counts
-    out = _Path(ROOT) / "results" / f"stage_cycles_a{ARCH}_repr{CACHE}_p{PREC}.json"
+    # v1 profiles keep their historical location; the v2 profiles (P5-P7, U14) record under results/v2/
+    out_dir = _Path(ROOT) / "results" / ("v2/stage_cycles" if PREC >= 5 else "")
+    out = out_dir / f"stage_cycles_a{ARCH}_repr{CACHE}_p{PREC}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(_json.dumps({"arch": ARCH, "board_repr": CACHE, "precision": PREC, "profiles": profiles}, indent=1) + "\n")
     dut._log.info(f"stage profile: {profiles}")

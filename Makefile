@@ -33,7 +33,8 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-compactor-pipe synth-compactor-pipe test-drop-merge-pipe test-features-pipe test-score-pipe \
         test-a2-stream test-a2-metadata test-a2-reset test-a2-pipe synth-a2-pipe \
         test-a2-core-extra test-request-interval corpus-v2-dev \
-        test-reducer verify-a2-release formal-a2-control mutation-check-a2 regress-a0-a1 route-a2-dev
+        test-reducer verify-a2-release formal-a2-control mutation-check-a2 regress-a0-a1 route-a2-dev \
+        test-precision-v2 analyze-precision-v2 synth-scorer-study
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -274,6 +275,21 @@ route-a2-dev: ## U12: synthesize the A2 wrapper (-nodsp), inspect the hierarchy,
 	$(PY) tools/synth.py --top stream_wrapper --arch 2 --board-repr 1 --dsp-policy nodsp
 	$(PY) tools/synth_module.py --top stream_wrapper --files-f rtl/files.f --param ARCH=2 --param BOARD_REPR=1 --param LANES=1 --param DEPTH=1 --param PRECISION=0 --noflatten --expect-no-latch --expect-no-dsp --expect-module-live candidate_pipe --expect-module-live search_pipeline
 	$(PY) tools/pnr.py --arch 2 --board-repr 1 --seed $(SEED) --freq $(FREQ) --dsp-policy nodsp --timeout 600
+
+# ---------------------------------------------------------------- U14 (quantization ladder P5-P7)
+SPLIT ?= development
+QUANT_PROFILES := 5 6 7
+test-precision-v2: ## U14: P5-P7 — unit tests, scorer, A1 evaluator, 1,000-state native decision records, one short replay each
+	$(PY) -m pytest tests/unit/test_precision_v2.py -q $(PYTEST_ARGS)
+	for p in $(QUANT_PROFILES); do $(MAKE) --no-print-directory test-score PRECISION=$$p || exit 1; done
+	for p in $(QUANT_PROFILES); do $(MAKE) --no-print-directory test-candidate ARCH=1 BOARD_REPR=1 PRECISION=$$p || exit 1; done
+	for p in $(QUANT_PROFILES); do $(PY) tools/measure_matrix.py decisions --config a1-cache-d1-p$$p-l1 --count 1000 || exit 1; done
+	for p in $(QUANT_PROFILES); do $(PY) tools/play_rtl.py --arch 1 --board-repr 1 --precision $$p --driver native --seed 2000 --max-pieces 100 \
+	    --out results/replays/a1-cache-d1-p$$p-l1_seed2000_cap100.jsonl || exit 1; done
+analyze-precision-v2: ## U14: common-state disagreement, score gaps, stability certificates and fixture explanations (SPLIT=development|heldout)
+	$(PY) tools/analyze_precision_v2.py --split $(SPLIT) --explain
+synth-scorer-study: ## U14: registered scorer microbenchmarks P0-P7 and one A1/cache core per profile (LUT/FF/carry/DSP, observed outputs)
+	$(PY) tools/scorer_study.py --cores 0,1,2,3,4,5,6,7
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04/U13: stage manifest, configuration identity, cycle contract, A2 and four-lane elaboration guards

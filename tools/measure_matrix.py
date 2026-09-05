@@ -5,6 +5,7 @@
     python tools/measure_matrix.py run    --manifest benchmarks/smoke_v2.json     # run/resume
     python tools/measure_matrix.py status                                         # lock, heartbeat, progress
     python tools/measure_matrix.py run --manifest ... --only a0-bitmap-d1-p0-l1:50:1 --retry "reason"
+    python tools/measure_matrix.py decisions --config a1-cache-d1-p5-l1 --count 1000   # one decision record
 
 Manifest (schema hardware-matrix-v2): configurations x targets_mhz x seeds plus extra_jobs,
 one dsp_policy, top, route_timeout_s, and an optional decisions block.  Each route is keyed by its
@@ -403,6 +404,10 @@ def main() -> int:
         else:
             sp.add_argument("--skip-decisions", action="store_true")
     sub.add_parser("status")
+    sd = sub.add_parser("decisions", help="one native common-state decision record for a configuration (decision-record-v2)")
+    sd.add_argument("--config", required=True, help="configuration id, e.g. a1-cache-d1-p5-l1")
+    sd.add_argument("--count", type=int, default=1000)
+    sd.add_argument("--force", action="store_true", help="re-run even if a matching record exists")
     args = ap.parse_args()
     if args.cmd == "plan":
         return cmd_plan(args)
@@ -410,6 +415,14 @@ def main() -> int:
         return cmd_run(args)
     if args.cmd == "status":
         return cmd_status(args)
+    if args.cmd == "decisions":
+        if args.config not in SUPPORTED_IDS:
+            raise SystemExit(f"configuration {args.config} is not supported; see python -m model.config --list")
+        meta = run_decisions(args.config, args.count, force=args.force)
+        print(f"[matrix] decisions {args.config} x{args.count}: {meta['status']} ({'reused' if meta.get('reused') else meta['elapsed_s']} s) "
+              f"-> {meta['csv']}")
+        print(meta["result"])
+        return 0
     ap.print_help()
     return 2
 

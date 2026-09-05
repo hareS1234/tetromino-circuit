@@ -1,0 +1,14 @@
+{
+ "schema": "decision-record-v2",
+ "configuration_id": "a1-cache-d1-p6-l1",
+ "count": 1000,
+ "corpus_hash": "172f5d89635bcb4a",
+ "native_key": "f43c9def98208b397a65b5f039c75238b0b5e90cb7ad6c95c115b995c446a5aa",
+ "source_sha256": "681dd1d4f52c8a4deaf9af56833831e251d1315594992b2168fe2c643dfb6c9b",
+ "status": "matched",
+ "result": "native: all 1000 decisions match; cycles min 107 median 773 max 1538",
+ "csv": "results/v2/raw/decisions/a1-cache-d1-p6-l1/172f5d89635bcb4a.csv",
+ "elapsed_s": 16.4,
+ "recorded_utc": "2026-09-05T17:46:10Z",
+ "reused": false
+}

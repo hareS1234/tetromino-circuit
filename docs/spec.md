@@ -98,8 +98,15 @@ legal candidate exists.
 | 2 | two_terms | (80, 48, 36, 18) | each magnitude = two powers of two |
 | 3 | cap_holes | (76, 51, 36, 18) | scoring uses min(Q, 15); heights and landing exact |
 | 4 | no_bumpiness | (76, 51, 36, 0) | U datapath removed |
+| 5 | coeff_u4 | (15, 10, 7, 4) | v2 (U14): 4-bit coefficient magnitudes, `M = 15`; raw score units 76/15 of the baseline |
+| 6 | coeff_u3 | (7, 5, 3, 2) | v2 (U14): 3-bit magnitudes, `M = 7` |
+| 7 | coeff_u2 | (3, 2, 1, 1) | v2 (U14): 2-bit magnitudes, `M = 3` |
 
-Profiles change scoring only; landing, collision, and clearing are identical.
+Profiles change scoring only; landing, collision, and clearing are identical. Profiles 5–7 are
+generated from the exact coefficients by `model.numeric.quantize_magnitudes` (nearest rounding,
+half-ties upward), keep every feature exact, drop the common scale 76/M (the argmax is unchanged),
+and are supported on A1/cache/depth-one/one-lane only; see docs/precision_v2.md. Their raw scores
+are not in baseline units and must not be compared with P0 scores directly.
 
 ## Depth two (`DEPTH=2`)
 

@@ -2,7 +2,7 @@
 import cocotb
 
 from common import cycle, param, reset, rng, signed32
-from model.numeric import profile, score_profile
+from model.numeric import profile, score_bounds, score_profile
 
 PREC = param("PRECISION", 0)
 
@@ -32,9 +32,20 @@ async def directed_boundaries(dut):
     cases = [(0, 0, 0, 0), (0, 0, 0, 4), (200, 190, 180, 0), (200, 200, 180, 4), (127, 0, 0, 0), (128, 0, 0, 0),
              (0, 127, 0, 0), (0, 128, 0, 0), (0, 0, 127, 0), (0, 0, 128, 0), (190, 190, 0, 1), (255, 255, 255, 7),
              (0, 15, 0, 0), (0, 16, 0, 0), (0, 14, 0, 0)]
+    if PREC >= 5:
+        # P5-P7 form the sum at the profile's sufficient signed width (14/12/11 bits) and rely on the
+        # feature-unit bounds A<=200, Q<=200, U<=180, L<=4 (asserted in the RTL); the out-of-contract
+        # tuple (255,255,255,7) is not a valid input for them, the bounded extremes stay in the list
+        cases = [c for c in cases if c != (255, 255, 255, 7)]
+        cases += [(200, 0, 0, 0), (0, 200, 0, 0), (0, 0, 180, 0), (1, 1, 1, 4), (0, 0, 0, 1), (200, 200, 180, 0)]
     for a, q, u, l in cases:
         got = await score_of(dut, a, q, u, l)
         assert got == expected(a, q, u, l), f"({a},{q},{u},{l}): got {got} expected {expected(a, q, u, l)}"
+    if PREC >= 5:
+        # the extremes of the conservative range appear on the port sign-extended, not wrapped
+        lo, hi = score_bounds(PREC)
+        assert await score_of(dut, 200, 200, 180, 0) == lo and await score_of(dut, 0, 0, 0, 4) == hi
+        assert -(1 << (profile(PREC).score_width - 1)) <= lo and hi < (1 << (profile(PREC).score_width - 1))
 
 
 @cocotb.test()

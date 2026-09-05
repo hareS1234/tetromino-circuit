@@ -6,7 +6,7 @@
 //   BOARD_REPR 0 bitmap only, 1 bitmap plus an exact height cache built once per request
 //   LANES      1, 2 or 4 evaluator lanes (A1/cache, depth one, exact profile)
 //   DEPTH      1 or 2 (two-piece lookahead, A1/cache/one lane only)
-//   PRECISION  0-4 numerical profile
+//   PRECISION  0-7 numerical profile (5-7 = coefficient-magnitude budgets, A1/cache/L1/D1 only)
 module tetris_core #(
     parameter int ARCH = 0,
     parameter int BOARD_REPR = 0,
@@ -35,7 +35,7 @@ module tetris_core #(
     localparam bit CFG_OK =
         (ARCH == 0 && BOARD_REPR == 0 && LANES == 1 && DEPTH == 1 && PRECISION == 0) ||
         (ARCH == 1 && BOARD_REPR == 0 && LANES == 1 && DEPTH == 1 && PRECISION == 0) ||
-        (ARCH == 1 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 1 && PRECISION >= 0 && PRECISION <= 4) ||
+        (ARCH == 1 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 1 && PRECISION >= 0 && PRECISION <= 7) ||
         (ARCH == 1 && BOARD_REPR == 1 && LANES == 1 && DEPTH == 2 && PRECISION == 0) ||
         (ARCH == 1 && BOARD_REPR == 1 && LANES == 2 && DEPTH == 1 && PRECISION == 0) ||
         (ARCH == 1 && BOARD_REPR == 1 && LANES == 4 && DEPTH == 1 && PRECISION == 0) ||

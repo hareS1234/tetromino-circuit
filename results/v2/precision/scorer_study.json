@@ -1,0 +1,531 @@
+{
+ "schema": "scorer-study-v1",
+ "recorded_utc": "2026-09-05T17:57:14Z",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "source_sha256": "4cfea51b218d17a69d7e2d42ad03717d46867f4badaae326daf776c0a64e6388",
+ "profiles": {
+  "p0": {
+   "precision": 0,
+   "name": "exact",
+   "coefficients": [
+    76,
+    51,
+    36,
+    18
+   ],
+   "coeff_bits": null,
+   "levels": null,
+   "score_width": 32,
+   "score_range": [
+    -20640,
+    304
+   ],
+   "q_cap": null,
+   "use_u": true,
+   "units": "baseline"
+  },
+  "p1": {
+   "precision": 1,
+   "name": "powers_of_two",
+   "coefficients": [
+    64,
+    64,
+    32,
+    16
+   ],
+   "coeff_bits": null,
+   "levels": null,
+   "score_width": 32,
+   "score_range": [
+    -22080,
+    256
+   ],
+   "q_cap": null,
+   "use_u": true,
+   "units": "baseline"
+  },
+  "p2": {
+   "precision": 2,
+   "name": "two_terms",
+   "coefficients": [
+    80,
+    48,
+    36,
+    18
+   ],
+   "coeff_bits": null,
+   "levels": null,
+   "score_width": 32,
+   "score_range": [
+    -20040,
+    320
+   ],
+   "q_cap": null,
+   "use_u": true,
+   "units": "baseline"
+  },
+  "p3": {
+   "precision": 3,
+   "name": "cap_holes",
+   "coefficients": [
+    76,
+    51,
+    36,
+    18
+   ],
+   "coeff_bits": null,
+   "levels": null,
+   "score_width": 32,
+   "score_range": [
+    -13980,
+    304
+   ],
+   "q_cap": 15,
+   "use_u": true,
+   "units": "baseline"
+  },
+  "p4": {
+   "precision": 4,
+   "name": "no_bumpiness",
+   "coefficients": [
+    76,
+    51,
+    36,
+    0
+   ],
+   "coeff_bits": null,
+   "levels": null,
+   "score_width": 32,
+   "score_range": [
+    -17400,
+    304
+   ],
+   "q_cap": null,
+   "use_u": false,
+   "units": "baseline"
+  },
+  "p5": {
+   "precision": 5,
+   "name": "coeff_u4",
+   "coefficients": [
+    15,
+    10,
+    7,
+    4
+   ],
+   "coeff_bits": 4,
+   "levels": 15,
+   "score_width": 14,
+   "score_range": [
+    -4120,
+    60
+   ],
+   "q_cap": null,
+   "use_u": true,
+   "units": "raw (76/15 of baseline)"
+  },
+  "p6": {
+   "precision": 6,
+   "name": "coeff_u3",
+   "coefficients": [
+    7,
+    5,
+    3,
+    2
+   ],
+   "coeff_bits": 3,
+   "levels": 7,
+   "score_width": 12,
+   "score_range": [
+    -1960,
+    28
+   ],
+   "q_cap": null,
+   "use_u": true,
+   "units": "raw (76/7 of baseline)"
+  },
+  "p7": {
+   "precision": 7,
+   "name": "coeff_u2",
+   "coefficients": [
+    3,
+    2,
+    1,
+    1
+   ],
+   "coeff_bits": 2,
+   "levels": 3,
+   "score_width": 11,
+   "score_range": [
+    -780,
+    12
+   ],
+   "q_cap": null,
+   "use_u": true,
+   "units": "raw (76/3 of baseline)"
+  }
+ },
+ "scorer_microbenchmarks": {
+  "method": "yosys synth_ecp5 -nodsp of module `score` (rtl/files_score.f) alone; registered output",
+  "rows": [
+   {
+    "tag": "score_p0",
+    "precision": 0,
+    "use_mult": 0,
+    "dsp_policy": "nodsp",
+    "cells_total": 179,
+    "cells": {
+     "CCU2C": 26,
+     "L6MUX21": 11,
+     "LUT4": 97,
+     "PFUMX": 25,
+     "TRELLIS_FF": 20
+    },
+    "lut4": 97,
+    "ff": 20,
+    "ccu2c": 26,
+    "dsp": 0,
+    "lut_equiv": 149,
+    "observed_outputs": "valid_o and score_o[31:0] are the module's ports: all 33 registered bits are observed; sign-extension copies may be merged by opt_merge (identical D input), which the FF count shows",
+    "log": "build/synth_module/score_p0/yosys.log"
+   },
+   {
+    "tag": "score_p1",
+    "precision": 1,
+    "use_mult": 0,
+    "dsp_policy": "nodsp",
+    "cells_total": 48,
+    "cells": {
+     "CCU2C": 13,
+     "LUT4": 17,
+     "TRELLIS_FF": 18
+    },
+    "lut4": 17,
+    "ff": 18,
+    "ccu2c": 13,
+    "dsp": 0,
+    "lut_equiv": 43,
+    "observed_outputs": "valid_o and score_o[31:0] are the module's ports: all 33 registered bits are observed; sign-extension copies may be merged by opt_merge (identical D input), which the FF count shows",
+    "log": "build/synth_module/score_p1/yosys.log"
+   },
+   {
+    "tag": "score_p2",
+    "precision": 2,
+    "use_mult": 0,
+    "dsp_policy": "nodsp",
+    "cells_total": 107,
+    "cells": {
+     "CCU2C": 26,
+     "L6MUX21": 2,
+     "LUT4": 53,
+     "PFUMX": 8,
+     "TRELLIS_FF": 18
+    },
+    "lut4": 53,
+    "ff": 18,
+    "ccu2c": 26,
+    "dsp": 0,
+    "lut_equiv": 105,
+    "observed_outputs": "valid_o and score_o[31:0] are the module's ports: all 33 registered bits are observed; sign-extension copies may be merged by opt_merge (identical D input), which the FF count shows",
+    "log": "build/synth_module/score_p2/yosys.log"
+   },
+   {
+    "tag": "score_p3",
+    "precision": 3,
+    "use_mult": 0,
+    "dsp_policy": "nodsp",
+    "cells_total": 179,
+    "cells": {
+     "CCU2C": 26,
+     "L6MUX21": 11,
+     "LUT4": 97,
+     "PFUMX": 25,
+     "TRELLIS_FF": 20
+    },
+    "lut4": 97,
+    "ff": 20,
+    "ccu2c": 26,
+    "dsp": 0,
+    "lut_equiv": 149,
+    "observed_outputs": "valid_o and score_o[31:0] are the module's ports: all 33 registered bits are observed; sign-extension copies may be merged by opt_merge (identical D input), which the FF count shows",
+    "log": "build/synth_module/score_p3/yosys.log"
+   },
+   {
+    "tag": "score_p4",
+    "precision": 4,
+    "use_mult": 0,
+    "dsp_policy": "nodsp",
+    "cells_total": 147,
+    "cells": {
+     "CCU2C": 20,
+     "L6MUX21": 11,
+     "LUT4": 72,
+     "PFUMX": 25,
+     "TRELLIS_FF": 19
+    },
+    "lut4": 72,
+    "ff": 19,
+    "ccu2c": 20,
+    "dsp": 0,
+    "lut_equiv": 112,
+    "observed_outputs": "valid_o and score_o[31:0] are the module's ports: all 33 registered bits are observed; sign-extension copies may be merged by opt_merge (identical D input), which the FF count shows",
+    "log": "build/synth_module/score_p4/yosys.log"
+   },
+   {
+    "tag": "score_p5",
+    "precision": 5,
+    "use_mult": 0,
+    "dsp_policy": "nodsp",
+    "cells_total": 169,
+    "cells": {
+     "CCU2C": 21,
+     "L6MUX21": 18,
+     "LUT4": 79,
+     "PFUMX": 36,
+     "TRELLIS_FF": 15
+    },
+    "lut4": 79,
+    "ff": 15,
+    "ccu2c": 21,
+    "dsp": 0,
+    "lut_equiv": 121,
+    "observed_outputs": "valid_o and score_o[31:0] are the module's ports: all 33 registered bits are observed; sign-extension copies may be merged by opt_merge (identical D input), which the FF count shows",
+    "log": "build/synth_module/score_p5/yosys.log"
+   },
+   {
+    "tag": "score_p6",
+    "precision": 6,
+    "use_mult": 0,
+    "dsp_policy": "nodsp",
+    "cells_total": 130,
+    "cells": {
+     "CCU2C": 18,
+     "L6MUX21": 12,
+     "LUT4": 63,
+     "PFUMX": 24,
+     "TRELLIS_FF": 13
+    },
+    "lut4": 63,
+    "ff": 13,
+    "ccu2c": 18,
+    "dsp": 0,
+    "lut_equiv": 99,
+    "observed_outputs": "valid_o and score_o[31:0] are the module's ports: all 33 registered bits are observed; sign-extension copies may be merged by opt_merge (identical D input), which the FF count shows",
+    "log": "build/synth_module/score_p6/yosys.log"
+   },
+   {
+    "tag": "score_p7",
+    "precision": 7,
+    "use_mult": 0,
+    "dsp_policy": "nodsp",
+    "cells_total": 51,
+    "cells": {
+     "CCU2C": 11,
+     "LUT4": 28,
+     "TRELLIS_FF": 12
+    },
+    "lut4": 28,
+    "ff": 12,
+    "ccu2c": 11,
+    "dsp": 0,
+    "lut_equiv": 50,
+    "observed_outputs": "valid_o and score_o[31:0] are the module's ports: all 33 registered bits are observed; sign-extension copies may be merged by opt_merge (identical D input), which the FF count shows",
+    "log": "build/synth_module/score_p7/yosys.log"
+   }
+  ],
+  "p0_constant_multiply_reference": {
+   "tag": "score_p0_mult_dsp",
+   "precision": 0,
+   "use_mult": 1,
+   "dsp_policy": "default",
+   "cells_total": 64,
+   "cells": {
+    "CCU2C": 17,
+    "LUT4": 25,
+    "MULT18X18D": 4,
+    "TRELLIS_FF": 18
+   },
+   "lut4": 25,
+   "ff": 18,
+   "ccu2c": 17,
+   "dsp": 4,
+   "lut_equiv": 59,
+   "observed_outputs": "valid_o and score_o[31:0] are the module's ports: all 33 registered bits are observed; sign-extension copies may be merged by opt_merge (identical D input), which the FF count shows",
+   "log": "build/synth_module/score_p0_mult_dsp/yosys.log"
+  }
+ },
+ "cores": {
+  "method": "tools/synth.py stream_wrapper ARCH=1 BOARD_REPR=1 LANES=1 DEPTH=1 -nodsp (identity-keyed, build/synth/<key>)",
+  "rows": {
+   "p0": {
+    "configuration_id": "a1-cache-d1-p0-l1",
+    "synth_key": "441925f8c1bd1f7f090631b86a127a2885bb46e23748ef46383767659a0d3500",
+    "reused": true,
+    "cells_total": 7155,
+    "lut4": 4030,
+    "ff": 2220,
+    "ccu2c": 342,
+    "dsp": 0,
+    "bram": 0,
+    "netlist_sha256": "ae80811258bc81722652fecd50b91360bf9c8a06777ca5718e5994a8c441d947",
+    "dsp_policy": "nodsp",
+    "top": "stream_wrapper",
+    "delta_vs_p0": {
+     "lut4": 0,
+     "ff": 0,
+     "ccu2c": 0,
+     "dsp": 0,
+     "cells_total": 0
+    }
+   },
+   "p1": {
+    "configuration_id": "a1-cache-d1-p1-l1",
+    "synth_key": "777025b5695af23cbea710018b2ef4ac83acd49ef37264d756ab347617de3f35",
+    "reused": true,
+    "cells_total": 6964,
+    "lut4": 3941,
+    "ff": 2130,
+    "ccu2c": 324,
+    "dsp": 0,
+    "bram": 0,
+    "netlist_sha256": "d1fdfcba72bbd890f93c6f3bc886a503fff920f002880b9378f012db889ebf5b",
+    "dsp_policy": "nodsp",
+    "top": "stream_wrapper",
+    "delta_vs_p0": {
+     "lut4": -89,
+     "ff": -90,
+     "ccu2c": -18,
+     "dsp": 0,
+     "cells_total": -191
+    }
+   },
+   "p2": {
+    "configuration_id": "a1-cache-d1-p2-l1",
+    "synth_key": "f8e2d40101593d5eb7d27cce23deddcfeb62cb359a5e8ed48b71ca7c10f585a7",
+    "reused": true,
+    "cells_total": 7163,
+    "lut4": 4041,
+    "ff": 2220,
+    "ccu2c": 342,
+    "dsp": 0,
+    "bram": 0,
+    "netlist_sha256": "596b6b02d813e72ee41fd39a70b84cdfe3ce1ff5df9cec2efaf561a818167866",
+    "dsp_policy": "nodsp",
+    "top": "stream_wrapper",
+    "delta_vs_p0": {
+     "lut4": 11,
+     "ff": 0,
+     "ccu2c": 0,
+     "dsp": 0,
+     "cells_total": 8
+    }
+   },
+   "p3": {
+    "configuration_id": "a1-cache-d1-p3-l1",
+    "synth_key": "72f67d5cbd2e9b72861f292f1a032423ac06b9f64a2102fea5d85a365171b5b6",
+    "reused": true,
+    "cells_total": 7188,
+    "lut4": 4058,
+    "ff": 2216,
+    "ccu2c": 363,
+    "dsp": 0,
+    "bram": 0,
+    "netlist_sha256": "aa27ebea64efed129f458d5f2252c566624c5125010b18cde5bd1c72956db3e9",
+    "dsp_policy": "nodsp",
+    "top": "stream_wrapper",
+    "delta_vs_p0": {
+     "lut4": 28,
+     "ff": -4,
+     "ccu2c": 21,
+     "dsp": 0,
+     "cells_total": 33
+    }
+   },
+   "p4": {
+    "configuration_id": "a1-cache-d1-p4-l1",
+    "synth_key": "460564e772f647f94a726525d7d76e03809031d8562bdcb58b6519191231016b",
+    "reused": true,
+    "cells_total": 6891,
+    "lut4": 3908,
+    "ff": 2167,
+    "ccu2c": 272,
+    "dsp": 0,
+    "bram": 0,
+    "netlist_sha256": "84935867a9f4af8908b2ed1fd6d4d8daae0a166b72b907d45dd7279dd7c354f9",
+    "dsp_policy": "nodsp",
+    "top": "stream_wrapper",
+    "delta_vs_p0": {
+     "lut4": -122,
+     "ff": -53,
+     "ccu2c": -70,
+     "dsp": 0,
+     "cells_total": -264
+    }
+   },
+   "p5": {
+    "configuration_id": "a1-cache-d1-p5-l1",
+    "synth_key": "c5b74a2936fce356c247490f626940233d59c1b9ad6fc1c384b6ab005ff745a0",
+    "reused": true,
+    "cells_total": 6907,
+    "lut4": 3909,
+    "ff": 2112,
+    "ccu2c": 332,
+    "dsp": 0,
+    "bram": 0,
+    "netlist_sha256": "cb0db3548371d7cce4101c4178cf2bd2ab19360131957214011d7bec574ac7e7",
+    "dsp_policy": "nodsp",
+    "top": "stream_wrapper",
+    "delta_vs_p0": {
+     "lut4": -121,
+     "ff": -108,
+     "ccu2c": -10,
+     "dsp": 0,
+     "cells_total": -248
+    }
+   },
+   "p6": {
+    "configuration_id": "a1-cache-d1-p6-l1",
+    "synth_key": "307984041f4c554ac5b865ce856284250d2915b4f493c8999ffe9dc23d4e463b",
+    "reused": true,
+    "cells_total": 6862,
+    "lut4": 3882,
+    "ff": 2100,
+    "ccu2c": 329,
+    "dsp": 0,
+    "bram": 0,
+    "netlist_sha256": "3391b9cc9df12856def3e65dd640d4448435fd0c6474a5ac9ea8b93306c77dea",
+    "dsp_policy": "nodsp",
+    "top": "stream_wrapper",
+    "delta_vs_p0": {
+     "lut4": -148,
+     "ff": -120,
+     "ccu2c": -13,
+     "dsp": 0,
+     "cells_total": -293
+    }
+   },
+   "p7": {
+    "configuration_id": "a1-cache-d1-p7-l1",
+    "synth_key": "93e8efc4f62eb533ae26ea99336d9be2c1b68bffe64545271adfa983fe1718a2",
+    "reused": true,
+    "cells_total": 6851,
+    "lut4": 3883,
+    "ff": 2094,
+    "ccu2c": 322,
+    "dsp": 0,
+    "bram": 0,
+    "netlist_sha256": "e7caafa80fcd6bc1dce87eabfada5b43b567931a85217922f2236b7a0d4a9be7",
+    "dsp_policy": "nodsp",
+    "top": "stream_wrapper",
+    "delta_vs_p0": {
+     "lut4": -147,
+     "ff": -126,
+     "ccu2c": -20,
+     "dsp": 0,
+     "cells_total": -304
+    }
+   }
+  }
+ },
+ "caveat": "scorer-only mapping and total player area are reported separately; a scorer saving is not a core saving"
+}

@@ -319,3 +319,13 @@ def test_ugate_requires_nonzero_counts_and_records_identities(tmp_path):
     r = run_recorder("ugate.py", tmp_path, "T04", "--blocked", "no remote configured")
     s = json.loads((tmp_path / "T04" / "summary.json").read_text())
     assert r.returncode == 0 and s["status"] == "blocked" and s["commands"] == [] and "no remote" in s["limitations"][0]
+
+
+def test_ugate_count_parser_ignores_test_names_that_end_in_digits():
+    """A cocotb test called random_tuples_1000 is not 1,000 passing pytest cases (U14 evidence fix)."""
+    from tools.ugate import parse_counts
+    text = ("tb_score.random_tuples_1000 passed\n10 passed in 0.9s\n3 passed, 1 failed in 2s\n"
+            "RTL tests: 5 total, 0 failed (build 1s)\nnative: all 1000 decisions match\nCHECK thing 2/2\n")
+    c = parse_counts(text)
+    assert c["pytest_passed"] == 13 and c["pytest_failed"] == 1
+    assert c["rtl_total"] == 5 and c["rtl_failed"] == 0 and c["native_decisions"] == 1000 and c["check_thing"] == "2/2"
