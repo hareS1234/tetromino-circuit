@@ -9,3 +9,5 @@ a74c8540fdcc2b83efca311065f3d0b66dbbbc06-dirty,oss-cad-suite-2026-09-04-8fb2384c
 4847cf9e0fa16c93cfc9f9fbddad016bcf1ffb01-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,1,1,1,1,4,LFE5U-85F,CABGA381,6,1,50.0,True,65.79,3942,2167,0,0,271,4690,2167,build/pnr_a1-cache-d1-p4-l1_s1/nextpnr.log,routed,42.0
 7d9988712aa33290df45ed9d9a0b578ff1b129eb-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,1,1,1,2,0,LFE5U-85F,CABGA381,6,1,50.0,True,65.94,4865,2849,0,0,379,5931,2849,build/pnr_a1-cache-d2-p0-l1_s1/nextpnr.log,routed,44.2
 7d9988712aa33290df45ed9d9a0b578ff1b129eb-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,1,1,1,2,0,LFE5U-85F,CABGA381,6,1,50.0,True,65.94,4865,2849,0,0,379,5931,2849,build/pnr_a1-cache-d2-p0-l1_s1/nextpnr.log,routed,45.1
+a7feb084cd4bb6e3ff8bbeead8b0bcdd8cceb0eb-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,1,1,2,1,0,LFE5U-85F,CABGA381,6,1,50.0,True,65.99,7453,3738,0,0,641,9289,3738,build/pnr_a1-cache-d1-p0-l2_s1/nextpnr.log,routed,92.4
+a7feb084cd4bb6e3ff8bbeead8b0bcdd8cceb0eb-dirty,oss-cad-suite-2026-09-04-8fb2384c2f88,1,1,2,1,0,LFE5U-85F,CABGA381,6,1,50.0,True,65.99,7453,3738,0,0,641,9289,3738,build/pnr_a1-cache-d1-p0-l2_s1/nextpnr.log,routed,88.4

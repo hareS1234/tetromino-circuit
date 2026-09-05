@@ -1,0 +1,83 @@
+{
+ "job": "E15",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "a7feb084cd4bb6e3ff8bbeead8b0bcdd8cceb0eb-dirty",
+ "source_hash": "1dcb065bd9a606e7",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T05:22:10Z",
+ "note": "LANES=2: 1000/1000 decisions identical; 53 cross-lane ties, winner lane finished last in 247/300; median 414 vs 773 cycles (1.87x); 7453 vs 4027 LUT4 (1.85x); routed 65.99 MHz",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-lanes"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 14.18,
+   "log": "results/evidence/E15/cmd00.log",
+   "tests": {
+    "pytest_failed": 0,
+    "rtl_total": 1,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-core",
+    "ARCH=1",
+    "BOARD_REPR=1",
+    "LANES=2",
+    "COUNT=1000",
+    "DRIVER=native"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.52,
+   "log": "results/evidence/E15/cmd01.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "replay-suite",
+    "ARCH=1",
+    "BOARD_REPR=1",
+    "LANES=2",
+    "CAP=250"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.71,
+   "log": "results/evidence/E15/cmd02.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "synth",
+    "ARCH=1",
+    "BOARD_REPR=1",
+    "LANES=2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 31.26,
+   "log": "results/evidence/E15/cmd03.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "pnr",
+    "ARCH=1",
+    "BOARD_REPR=1",
+    "LANES=2",
+    "SEED=1"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 88.45,
+   "log": "results/evidence/E15/cmd04.log",
+   "tests": {}
+  }
+ ],
+ "elapsed_s": 137.12
+}
