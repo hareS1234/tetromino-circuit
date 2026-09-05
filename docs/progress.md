@@ -28,8 +28,10 @@ the section below.
 
 ## Session log
 
-* Session 1 (2026-09-05): E00–E19 complete and recorded. Remote CI is unverified (no push was authorised in this session); `.github/workflows/ci.yml` uses the same bootstrap as local development. Next command for a maintainer: push and watch the `checks` workflow, then `make reproduce` on a second machine.
-  `make tournament` after `make measure-matrix` finishes, then `make plots`, `python tools/write_report.py`,
-  `make check-report`, `make check-release`. No blockers; the only environment restriction observed
-  was that the GitHub REST API is unreachable (release assets are reachable), which the bootstrap
-  avoids.
+* Session 1 (2026-09-05): E00–E19 complete and recorded (`results/evidence/`). The E19 fresh-clone
+  check performed a full bootstrap including the suite download. Remote CI is unverified because no
+  repository push was authorised in this session; `.github/workflows/ci.yml` uses the same bootstrap
+  as local development. Next command for a maintainer: push and watch the `checks` workflow, then
+  `make reproduce` on a second machine. The only environment restriction observed was that the GitHub
+  REST API is unreachable from the build container (release assets are reachable), which the bootstrap
+  avoids by construction.

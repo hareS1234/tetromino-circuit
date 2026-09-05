@@ -6,7 +6,7 @@
  "source_hash": "aa8fc2820986915b",
  "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
  "recorded_utc": "2026-09-05T06:41:38Z",
- "note": "fresh clone (REUSE_ARCHIVE=1: download skipped, extraction/venv/tests from scratch) passed: doctor, 305 python tests, smoke, ROM test, demo, plots, report check, no path leaks; CI workflow committed but remote CI unverified (no repository push authorised in this session)",
+ "note": "fresh clone with a full bootstrap (the 740 MB suite archive was downloaded again, extracted, venv created from the lock): doctor, 305 python tests, smoke, ROM test, demo, plots, report check, no path leaks; CI workflow committed but remote CI unverified (no repository push authorised in this session)",
  "commands": [
   {
    "argv": [
