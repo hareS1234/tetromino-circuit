@@ -1,8 +1,28 @@
 {
  "schema": "mutation-results-v1",
  "set": "tests/mutations/a2_mutations.json",
- "recorded_utc": "2026-09-05T16:07:07Z",
+ "recorded_utc": "2026-09-05T16:09:09Z",
  "results": [
+  {
+   "name": "rank_compare_d_not_d_plus_1",
+   "family": "V02/V03",
+   "file": "rtl/rank_match.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "MISMATCH mask #1: count 19 exp 19; rows: 001 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff",
+   "test": "python tools/compactor_native.py --mode exhaustive",
+   "elapsed_s": 0.9
+  },
+  {
+   "name": "empty_row_treated_as_deleted",
+   "family": "V03",
+   "file": "rtl/line_clear_parallel.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "MISMATCH random #44: count 8 exp 7; rows: 3ff 311 3ff 39a 10e 3ff 317 254 393 1d3 3ff 071 000 218 3ff 3ff 304 235 11b 3ff",
+   "test": "python tools/compactor_native.py --mode random --count 20000 --seed 5",
+   "elapsed_s": 0.2
+  },
   {
    "name": "drop_stride16_prefix_level",
    "family": "V02",
@@ -11,7 +31,37 @@
    "exit_code": 1,
    "killed_by": "MISMATCH mask #1: count 20 exp 19; rows: 001 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff 3ff",
    "test": "python tools/compactor_native.py --mode exhaustive",
-   "elapsed_s": 8.4
+   "elapsed_s": 0.8
+  },
+  {
+   "name": "board_delayed_one_fewer_than_rank",
+   "family": "V03/V09",
+   "file": "rtl/line_clear_pipe.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "MISMATCH at edge 10: got tag 1 cleared 3 legal 1 y 0 id 24 last 1; expected tag 1 cleared 3",
+   "test": "python tools/compactor_native.py --mode stream --count 1024",
+   "elapsed_s": 0.2
+  },
+  {
+   "name": "stale_valid_on_input_bubble",
+   "family": "V07",
+   "file": "rtl/line_clear_pipe.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "SPURIOUS output tag 51 at edge 92",
+   "test": "python tools/compactor_native.py --mode stream --count 1024",
+   "elapsed_s": 0.2
+  },
+  {
+   "name": "metadata_held_apart_from_data",
+   "family": "V07/V09",
+   "file": "rtl/score_pipe.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "MISMATCH edge 26: got legal 1 last 0 id 1 tag 2 y 5 score -3009; expected legal 1 last 0 id 2 tag 3 y 5 score -3009",
+   "test": "python tools/a2_native.py --phase traffic --contexts 12",
+   "elapsed_s": 0.2
   },
   {
    "name": "drop_illegal_tokens_before_last",
@@ -24,6 +74,16 @@
    "elapsed_s": 0.2
   },
   {
+   "name": "publish_old_best_when_last_wins",
+   "family": "V10",
+   "file": "rtl/search_pipeline.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "MISMATCH case 1601 (structured): got {'error': 0, 'no_move': 0, 'rotation': 0, 'x': 4, 'y': 3, 'score': -2373} expected {'error': 0, 'no_move': 0, 'rotation': 1, 'x': 9, 'y': 2, 'score': -2358}",
+   "test": "python tools/test_core.py --arch 2 --board-repr 1 --count 300 --driver native --corpus benchmarks/states/corpus_d1_upgrade_dev.jsonl --out build/decisions/mutant.csv",
+   "elapsed_s": 0.4
+  },
+  {
    "name": "compare_score_as_unsigned",
    "family": "V10/V16",
    "file": "rtl/best_reducer.sv",
@@ -31,7 +91,7 @@
    "exit_code": 1,
    "killed_by": "AssertionError: assert (1, -5, 39, 9) == (1, 304, 38, 10)",
    "test": "python tools/run_rtl.py --top best_reducer --test tb_best_reducer --files-f rtl/files_reducer.f --build-tag mutant",
-   "elapsed_s": 9.1
+   "elapsed_s": 8.9
   },
   {
    "name": "prefer_larger_id_on_tie",
@@ -42,9 +102,29 @@
    "killed_by": "AssertionError: assert (1, -299, 20, 5) == (1, -299, 3, 6)",
    "test": "python tools/run_rtl.py --top best_reducer --test tb_best_reducer --files-f rtl/files_reducer.f --build-tag mutant",
    "elapsed_s": 9.0
+  },
+  {
+   "name": "stage_valid_survives_reset",
+   "family": "V08",
+   "file": "rtl/score_pipe.sv",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "RESET occupancy 23: pipeline not empty after reset",
+   "test": "python tools/a2_native.py --phase reset --contexts 12",
+   "elapsed_s": 0.2
+  },
+  {
+   "name": "reuse_50mhz_result_for_80mhz",
+   "family": "V17",
+   "file": "tools/identity.py",
+   "status": "killed",
+   "exit_code": 1,
+   "killed_by": "FAILED tests/unit/test_identity.py::test_route_inputs_change_route_key[change0]",
+   "test": "python -m pytest tests/unit/test_identity.py tests/unit/test_runner.py -q -x",
+   "elapsed_s": 0.3
   }
  ],
- "killed": 4,
- "total": 4,
+ "killed": 12,
+ "total": 12,
  "tree_restored": true
 }

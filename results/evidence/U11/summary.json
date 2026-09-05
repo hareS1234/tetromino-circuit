@@ -1,0 +1,166 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U11",
+ "status": "failed",
+ "git_commit": "52fb7d13dd4bdeca152fed729b7fcbe9e225c4be",
+ "git_modified_tracked": [],
+ "git_untracked": [],
+ "source_sha256": "c8e476b97cc15454d6d8d7f82cb4edc0d27e12673fb4ae0fab3cfc57a9ecc199",
+ "configuration_id": "a2-cache-d1-p0-l1",
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T16:08:40Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "verify-a2-release"
+   ],
+   "exit_code": 2,
+   "elapsed_s": 4.0,
+   "log": "results/evidence/U11/cmd00.log",
+   "counts": {
+    "pytest_passed": 14,
+    "check_a2_stages": "39/39",
+    "check_a2_widths": "5/5",
+    "check_a2_identity": "14/15",
+    "check_a2_latency": "16/16",
+    "check_a2_elaboration": "6/6"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "formal-a2-control"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 2.69,
+   "log": "results/evidence/U11/cmd01.log",
+   "counts": {
+    "check_formal_smoke": "1/1",
+    "check_formal_control": "1/1",
+    "check_formal_control_cover": "1/1",
+    "check_formal_reducer": "1/1",
+    "check_formal_reducer_cover": "1/1"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "mutation-check-a2"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 21.63,
+   "log": "results/evidence/U11/cmd02.log",
+   "counts": {
+    "check_mutations_killed": "12/12"
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "replay-suite",
+    "ARCH=2",
+    "BOARD_REPR=1",
+    "LANES=1",
+    "DEPTH=1",
+    "PRECISION=0",
+    "CAP=250"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.26,
+   "log": "results/evidence/U11/cmd03.log",
+   "counts": {}
+  }
+ ],
+ "checks": [
+  {
+   "name": "cocotb",
+   "count_key": "rtl_total",
+   "values": [],
+   "ok": false
+  },
+  {
+   "name": "native_decisions",
+   "count_key": "native_decisions",
+   "values": [],
+   "ok": false
+  },
+  {
+   "name": "exhaustive_masks",
+   "count_key": "check_compactor_exhaustive",
+   "values": [],
+   "ok": false
+  },
+  {
+   "name": "stream",
+   "count_key": "check_a2_stream",
+   "values": [],
+   "ok": false
+  },
+  {
+   "name": "traffic",
+   "count_key": "check_a2_traffic",
+   "values": [],
+   "ok": false
+  },
+  {
+   "name": "reset",
+   "count_key": "check_a2_reset",
+   "values": [],
+   "ok": false
+  },
+  {
+   "name": "formal_control",
+   "count_key": "check_formal_control",
+   "values": [
+    "1/1"
+   ],
+   "ok": true
+  },
+  {
+   "name": "formal_reducer",
+   "count_key": "check_formal_reducer",
+   "values": [
+    "1/1"
+   ],
+   "ok": true
+  },
+  {
+   "name": "mutations",
+   "count_key": "check_mutations_killed",
+   "values": [
+    "12/12"
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "docs/verification_a2.md",
+   "exists": true,
+   "bytes": 6089
+  },
+  {
+   "path": "results/formal/control.json",
+   "exists": true,
+   "bytes": 840
+  },
+  {
+   "path": "results/formal/reducer.json",
+   "exists": true,
+   "bytes": 840
+  },
+  {
+   "path": "results/evidence/U11/mutations.json",
+   "exists": true,
+   "bytes": 4918
+  },
+  {
+   "path": "results/replays/a2-cache-d1-p0-l1_seed2000_cap250.jsonl",
+   "exists": true,
+   "bytes": 103779
+  }
+ ],
+ "limitations": [],
+ "note": "formal proofs are unbounded k-induction results for the compactor, the reducer and the abstract control discipline; full-core equivalence rests on simulation; the drop_illegal mutation was killed by the search_pipeline order/count assertion"
+}

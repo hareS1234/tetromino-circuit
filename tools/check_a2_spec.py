@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -142,8 +143,10 @@ def check_identity(problems: list) -> tuple[int, int]:
     chk(out.stdout.strip() == "a2-cache-d1-p0-l1", "python -m model.config does not print the id")
     mk = (ROOT / "Makefile").read_text()
     chk("model.config" in mk and "$(shell echo a$(ARCH)" not in mk, "Makefile must derive CFG_ID from model.config, not text")
-    mk_out = subprocess.run(["make", "-s", "print-cfg-id", "ARCH=2", "BOARD_REPR=1"], cwd=ROOT, capture_output=True, text=True)
-    chk(mk_out.stdout.strip() == "a2-cache-d1-p0-l1", f"make print-cfg-id gave {mk_out.stdout.strip()!r}")
+    mk_out = subprocess.run(["make", "-s", "--no-print-directory", "print-cfg-id", "ARCH=2", "BOARD_REPR=1"], cwd=ROOT,
+                            capture_output=True, text=True, env={**os.environ, "MAKEFLAGS": ""})
+    lines = [l for l in mk_out.stdout.splitlines() if l.strip() and "directory" not in l]
+    chk(lines[-1:] == ["a2-cache-d1-p0-l1"], f"make print-cfg-id gave {mk_out.stdout.strip()!r}")
     return ok, total
 
 

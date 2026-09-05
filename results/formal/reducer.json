@@ -9,7 +9,7 @@
  "status": "unbounded",
  "reason": "k-induction closed: holds for all inputs/states",
  "return_code": 0,
- "elapsed_s": 0.4,
+ "elapsed_s": 0.5,
  "summary": [
   "summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)",
   "summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)",
@@ -22,5 +22,5 @@
  "traces": [],
  "workdir": "build/formal/reducer",
  "log": "build/formal/reducer/logfile.txt",
- "recorded_utc": "2026-09-05T16:01:57Z"
+ "recorded_utc": "2026-09-05T16:08:47Z"
 }

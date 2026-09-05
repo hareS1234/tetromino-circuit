@@ -15,9 +15,9 @@
   "summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)",
   "summary: engine_0 (smtbmc boolector) returned pass",
   "summary: cover trace: /home/user/tetromino-circuit/build/formal/control_cover/engine_0/trace0.vcd",
-  "summary:   reached cover statement abstract_pipe._witness_.check_cover_abstract_pipe_sv_75_73 at abstract_pipe.sv:75.17-75.36",
+  "summary:   reached cover statement abstract_pipe._witness_.check_cover_abstract_pipe_sv_90_112 at abstract_pipe.sv:90.17-90.36",
   "summary: cover trace: /home/user/tetromino-circuit/build/formal/control_cover/engine_0/trace1.vcd",
-  "summary:   reached cover statement abstract_pipe._witness_.check_cover_abstract_pipe_sv_76_76 at abstract_pipe.sv:76.17-76.74 step 7",
+  "summary:   reached cover statement abstract_pipe._witness_.check_cover_abstract_pipe_sv_91_115 at abstract_pipe.sv:91.17-91.74 step 7",
   "DONE (PASS, rc=0)"
  ],
  "traces": [
@@ -26,5 +26,5 @@
  ],
  "workdir": "build/formal/control_cover",
  "log": "build/formal/control_cover/logfile.txt",
- "recorded_utc": "2026-09-05T16:01:59Z"
+ "recorded_utc": "2026-09-05T16:08:46Z"
 }
