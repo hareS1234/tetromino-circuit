@@ -3,7 +3,8 @@
 // that A=200 is never misread as a negative eight-bit value.  The PRECISION profile
 // selects the coefficient structure at elaboration time (see docs/spec.md).
 module score #(
-    parameter int PRECISION = 0
+    parameter int PRECISION = 0,
+    parameter int USE_MULT  = 0   // 1: write the exact profile with '*' (Yosys maps it to DSP slices)
 ) (
     input  logic               clk,
     input  logic               rst,
@@ -22,9 +23,16 @@ module score #(
     assign l32 = $signed({29'd0, l_i});
 
     generate
-        if (PRECISION == 0 || PRECISION == 3) begin : g_exact
-            // (76, 51, 36, 18); profile 3 receives an already-saturated Q
+        if ((PRECISION == 0 || PRECISION == 3) && USE_MULT == 1) begin : g_exact_mult
+            // (76, 51, 36, 18) as constant multiplies: measured to infer MULT18X18D blocks
             assign sum = 32'sd76 * l32 - 32'sd51 * a32 - 32'sd36 * q32 - 32'sd18 * u32;
+        end else if (PRECISION == 0 || PRECISION == 3) begin : g_exact
+            // (76, 51, 36, 18) = (64+8+4, 32+16+2+1, 32+4, 16+2): eleven shifted terms, no DSP.
+            // Profile 3 receives an already-saturated Q.
+            assign sum = ((l32 <<< 6) + (l32 <<< 3) + (l32 <<< 2))
+                       - ((a32 <<< 5) + (a32 <<< 4) + (a32 <<< 1) + a32)
+                       - ((q32 <<< 5) + (q32 <<< 2))
+                       - ((u32 <<< 4) + (u32 <<< 1));
         end else if (PRECISION == 1) begin : g_pow2
             // (64, 64, 32, 16): pure shifts on widened operands
             assign sum = (l32 <<< 6) - (a32 <<< 6) - (q32 <<< 5) - (u32 <<< 4);
@@ -34,7 +42,9 @@ module score #(
                        - ((q32 <<< 5) + (q32 <<< 2)) - ((u32 <<< 4) + (u32 <<< 1));
         end else if (PRECISION == 4) begin : g_no_u
             // (76, 51, 36, 0): the U operand is structurally absent
-            assign sum = 32'sd76 * l32 - 32'sd51 * a32 - 32'sd36 * q32;
+            assign sum = ((l32 <<< 6) + (l32 <<< 3) + (l32 <<< 2))
+                       - ((a32 <<< 5) + (a32 <<< 4) + (a32 <<< 1) + a32)
+                       - ((q32 <<< 5) + (q32 <<< 2));
         end else begin : g_bad
             $error("unsupported PRECISION");
         end

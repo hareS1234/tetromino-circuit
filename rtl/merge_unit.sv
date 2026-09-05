@@ -21,8 +21,10 @@ module merge_unit (
     logic [1:0] k;
     logic [7:0] idx;
 
+    logic [4:0] cy;
     always_comb begin
-        idx = ({3'd0, y_q} + {6'd0, dy_q[2*k +: 2]}) * 8'd10 + {4'd0, x_q} + {6'd0, dx_q[2*k +: 2]};
+        cy  = y_q + {3'd0, dy_q[2*k +: 2]};
+        idx = {cy, 3'b000} + {2'b00, cy, 1'b0} + {4'd0, x_q} + {6'd0, dx_q[2*k +: 2]};  // y*10 + x
     end
     assign busy_o = (state != IDLE);
 

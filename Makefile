@@ -78,7 +78,7 @@ test-clear:
 test-features:
 	$(RUN_RTL) --top features --test tb_features --files-f rtl/files_features.f --param PRECISION=$(PRECISION)
 test-candidate: ## A0/A1 candidate evaluator with intermediate-value checks
-	$(RUN_RTL) --top candidate_eval_tb --test tb_candidate --files-f rtl/files_candidate.f --param ARCH=$(ARCH) --param BOARD_REPR=$(BOARD_REPR) --param PRECISION=$(PRECISION)
+	$(RUN_RTL) --top candidate_eval --test tb_candidate --files-f rtl/files_candidate$(if $(filter 0,$(ARCH)),_a0,).f --param ARCH=$(ARCH) --param BOARD_REPR=$(BOARD_REPR) --param PRECISION=$(PRECISION)
 synth-candidate:
 	$(PY) tools/synth.py --top candidate_eval --arch $(ARCH) --board-repr $(BOARD_REPR) --precision $(PRECISION) --out build/synth_candidate_a$(ARCH)
 

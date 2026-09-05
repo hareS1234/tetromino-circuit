@@ -1,0 +1,55 @@
+{
+ "job": "E05",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "f5dd0d7da2bf5b8bd7b70c35eb9c6fbefbfe237d-dirty",
+ "source_hash": "08f3499731b2f7f6",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T04:10:24Z",
+ "note": null,
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-drop"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 4.9,
+   "log": "results/evidence/E05/cmd00.log",
+   "tests": {
+    "pytest_failed": 0,
+    "rtl_total": 4,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-merge"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.74,
+   "log": "results/evidence/E05/cmd01.log",
+   "tests": {
+    "pytest_failed": 0,
+    "rtl_total": 3,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-clear"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.79,
+   "log": "results/evidence/E05/cmd02.log",
+   "tests": {
+    "pytest_failed": 0,
+    "rtl_total": 3,
+    "rtl_failed": 0
+   }
+  }
+ ],
+ "elapsed_s": 7.43
+}

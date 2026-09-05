@@ -31,23 +31,25 @@ module drop_unit (
     logic         geom_ok;
 
     // Collision test for the piece one row below the current anchor.
-    logic collide;
+    logic               collide;
+    logic signed [7:0]  cy [4];
+    logic [4:0]         cx [4];
+    logic [7:0]         idx [4];
+    logic [3:0]         hit;
     always_comb begin
-        collide = 1'b0;
         for (int k = 0; k < 4; k++) begin
-            logic signed [7:0] cy;
-            logic [4:0]        cx;
-            logic [7:0]        idx;
-            cy  = $signed({2'b00, y_q}) - 8'sd1 + $signed({6'd0, dy_q[2*k +: 2]});
-            cx  = {1'b0, x_q} + {3'd0, dx_q[2*k +: 2]};
-            if (cy < 0 || cx > 5'd9)
-                collide = 1'b1;
-            else if (cy < 8'sd20) begin
-                idx = 8'(cy) * 8'd10 + {3'd0, cx};
-                if (board_q[idx])
-                    collide = 1'b1;
-            end
+            cy[k]  = $signed({2'b00, y_q}) - 8'sd1 + $signed({6'd0, dy_q[2*k +: 2]});
+            cx[k]  = {1'b0, x_q} + {3'd0, dx_q[2*k +: 2]};
+            // index is always computed; it is only *used* when the cell is inside the board
+            idx[k] = {cy[k][4:0], 3'b000} + {2'b00, cy[k][4:0], 1'b0} + {3'd0, cx[k]};  // y*10 + x without a multiplier
+            if (cy[k] < 0 || cx[k] > 5'd9)
+                hit[k] = 1'b1;
+            else if (cy[k] < 8'sd20)
+                hit[k] = (idx[k] < 8'd200) ? board_q[idx[k]] : 1'b0;
+            else
+                hit[k] = 1'b0;
         end
+        collide = |hit;
     end
 
     assign geom_ok = shape_valid_q && ({1'b0, x_q} + {2'b00, width_q} <= 5'd10);

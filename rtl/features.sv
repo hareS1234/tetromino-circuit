@@ -1,5 +1,5 @@
-// A0 feature extractor: scans x = 0..9, y = 19..0 one cell per cycle, records each column's
-// height on its first occupied cell and counts holes only after that; then a ten-cycle
+// A0 feature extractor: scans x = 0..9, y = 19..0 one cell_bit per cycle, records each column's
+// height on its first occupied cell_bit and counts holes only after that; then a ten-cycle
 // reduction sums heights (A) and adjacent height differences (U).  PRECISION 3 saturates the
 // hole count at 15; PRECISION 4 removes the U datapath.
 module features #(
@@ -21,14 +21,14 @@ module features #(
     logic [199:0] board_q;
     logic [3:0]   sx;          // column under scan
     logic [4:0]   sy;          // row under scan (19 down to 0)
-    logic         seen;        // column has an occupied cell above the current row
+    logic         seen;        // column has an occupied cell_bit above the current row
     logic [49:0]  heights;     // packed ten five-bit heights
     logic [3:0]   rx;          // reduction column
     logic [7:0]   idx;
-    logic         cell;
+    logic         cell_bit;
 
-    assign idx  = {3'd0, sy} * 8'd10 + {4'd0, sx};
-    assign cell = board_q[idx];
+    assign idx  = {sy, 3'b000} + {2'b00, sy, 1'b0} + {4'd0, sx};  // y*10 + x without a multiplier
+    assign cell_bit = board_q[idx];
     assign busy_o = (state != IDLE);
 
     assign heights_o = heights;
@@ -37,9 +37,15 @@ module features #(
     logic [4:0]        h_cur, h_prev;
     logic signed [6:0] diff;
     logic [5:0]        absdiff;
+    logic [3:0]        rxm1;
+    logic [5:0]        ridx, pidx, sidx;    // 5*rx, 5*(rx-1), 5*sx without multipliers
     always_comb begin
-        h_cur  = heights[5 * rx +: 5];
-        h_prev = (rx == 4'd0) ? 5'd0 : heights[5 * (rx - 4'd1) +: 5];
+        rxm1   = rx - 4'd1;
+        ridx   = {rx, 2'b00} + {2'b00, rx};
+        pidx   = {rxm1, 2'b00} + {2'b00, rxm1};
+        sidx   = {sx, 2'b00} + {2'b00, sx};
+        h_cur  = heights[ridx +: 5];
+        h_prev = (rx == 4'd0) ? 5'd0 : heights[pidx +: 5];
         diff = $signed({2'b00, h_cur}) - $signed({2'b00, h_prev});
         absdiff = diff[6] ? 6'(-diff) : 6'(diff);
     end
@@ -59,9 +65,9 @@ module features #(
                     state <= SCAN;
                 end
                 SCAN: begin
-                    if (cell) begin
+                    if (cell_bit) begin
                         if (!seen) begin
-                            heights[5 * sx +: 5] <= sy + 5'd1;
+                            heights[sidx +: 5] <= sy + 5'd1;
                             seen <= 1'b1;
                         end
                     end else if (seen) begin

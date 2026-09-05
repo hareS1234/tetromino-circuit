@@ -1,0 +1,35 @@
+{
+ "job": "E01",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "f09de99474156517784b9ceb50e6eeeba96ba2f9-dirty",
+ "source_hash": "6f1f6b4b81265f69",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T03:51:00Z",
+ "note": null,
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "gen"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.12,
+   "log": "results/evidence/E01/cmd00.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "test-geometry"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.31,
+   "log": "results/evidence/E01/cmd01.log",
+   "tests": {
+    "pytest_passed": 16
+   }
+  }
+ ],
+ "elapsed_s": 0.43
+}

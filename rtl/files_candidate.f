@@ -1,0 +1,11 @@
+rtl/shape_rom.sv
+rtl/score.sv
+rtl/drop_unit.sv
+rtl/merge_unit.sv
+rtl/line_clear.sv
+rtl/features.sv
+rtl/board_profile.sv
+rtl/drop_fast.sv
+rtl/merge_fast.sv
+rtl/features_fast.sv
+rtl/candidate_eval.sv
