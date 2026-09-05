@@ -83,8 +83,10 @@ def main() -> int:
         hdl_toplevel=args.top,
         parameters=parameters,
         build_dir=build,
-        build_args=["--assert", "-Wno-fatal", "--x-assign", "unique", "--x-initial", "unique",
-                    "-j", "2", "--timing", "-Wno-WIDTHTRUNC", "-Wno-WIDTHEXPAND"],
+        # Specific suppressions only: a $error in a generate block (unsupported parameters) must stay fatal.
+        build_args=["--assert", "--x-assign", "unique", "--x-initial", "unique", "-j", "2", "--timing",
+                    "-Wno-WIDTHTRUNC", "-Wno-WIDTHEXPAND", "-Wno-PINCONNECTEMPTY", "-Wno-UNUSEDSIGNAL",
+                    "-Wno-UNUSEDPARAM", "-Wno-DECLFILENAME", "-Wno-CASEINCOMPLETE"],
         timescale=("1ns", "1ps"),
         waves=args.waves,
     )

@@ -11,3 +11,7 @@ rtl/drop_fast.sv
 rtl/merge_fast.sv
 rtl/features_fast.sv
 rtl/candidate_eval.sv
+rtl/lane_player.sv
+rtl/search_depth2.sv
+rtl/tetris_core.sv
+rtl/stream_wrapper.sv

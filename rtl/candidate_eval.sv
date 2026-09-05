@@ -65,10 +65,11 @@ module candidate_eval #(
     logic [49:0] feat_heights;
     logic score_start, score_valid;
     logic signed [31:0] score_w;
-    logic [199:0] merge_out_board;
+    logic [49:0]  prof_heights;
 
     generate
         if (ARCH == 0) begin : g_a0
+            assign prof_heights = '0;
             drop_unit u_drop (.clk, .rst, .start_i(drop_start), .board_i(board_q), .dx_i(dx), .dy_i(dy),
                               .width_i(width), .height_i(height), .shape_valid_i(shape_valid), .x_i(x_q),
                               .busy_o(), .done_o(drop_done), .legal_o(drop_legal), .y_o(drop_y), .phys_y_o(drop_phys));
@@ -77,13 +78,14 @@ module candidate_eval #(
             features #(.PRECISION(PRECISION)) u_feat (.clk, .rst, .start_i(feat_start), .board_i(cleared),
                                                       .busy_o(), .done_o(feat_done), .a_o(fa), .q_o(fq), .u_o(fu), .heights_o(feat_heights));
         end else begin : g_a1
-            logic [49:0] in_heights;
+            // BOARD_REPR=0: profile the latched board in a PROFILE stage on every candidate;
+            // BOARD_REPR=1: heights_q holds the parent's per-request cache (no profile logic here).
             if (BOARD_REPR == 1) begin : g_cache
-                assign in_heights = heights_q;
+                assign prof_heights = '0;
             end else begin : g_profile
-                board_profile u_prof (.board_i(board_q), .heights_o(in_heights));
+                board_profile u_prof (.board_i(board_q), .heights_o(prof_heights), .columns_o(), .holes_o());
             end
-            drop_fast u_drop (.clk, .rst, .start_i(drop_start), .heights_i(in_heights), .bottom_i(bottom), .colmask_i(colmask),
+            drop_fast u_drop (.clk, .rst, .start_i(drop_start), .heights_i(heights_q), .bottom_i(bottom), .colmask_i(colmask),
                               .width_i(width), .height_i(height), .shape_valid_i(shape_valid), .x_i(x_q),
                               .busy_o(), .done_o(drop_done), .legal_o(drop_legal), .y_o(drop_y), .phys_y_o(drop_phys));
             merge_fast u_merge (.clk, .rst, .start_i(merge_start), .board_i(board_q), .dx_i(dx), .dy_i(dy),
@@ -119,7 +121,12 @@ module candidate_eval #(
                 end
                 DECODE: begin
                     // geometry is combinational from the latched piece/rotation; invalid rotation
-                    // or an anchor past the right wall is rejected inside the drop unit's CHECK
+                    // or an anchor past the right wall is rejected inside the drop unit
+                    if (ARCH == 1 && BOARD_REPR == 0) state <= PROFILE;
+                    else                              state <= DROP_START;
+                end
+                PROFILE: begin
+                    heights_q <= prof_heights;      // per-candidate height derivation (bitmap-only A1)
                     state <= DROP_START;
                 end
                 DROP_START: begin
