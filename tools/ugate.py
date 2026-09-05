@@ -25,8 +25,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from model.replay import git_commit  # noqa: E402
 from tools.identity import source_closure_sha256, toolchain_identity  # noqa: E402
+
+
+def git_state() -> dict:
+    """HEAD plus dirtiness of *tracked* files; untracked paths (new evidence) are listed, not counted as dirty."""
+    def git(*args):
+        out = subprocess.run(["git", "-C", str(ROOT), *args], capture_output=True, text=True)
+        return out.stdout if out.returncode == 0 else None
+    head = (git("rev-parse", "HEAD") or "unknown").strip()
+    tracked = [l for l in (git("status", "--porcelain", "--untracked-files=no") or "").splitlines() if l.strip()]
+    untracked = [l for l in (git("ls-files", "--others", "--exclude-standard") or "").splitlines() if l.strip()]
+    return {"commit": head + ("-dirty" if tracked else ""),
+            "modified_tracked": [l[3:] for l in tracked], "untracked": untracked}
 
 
 def parse_counts(text: str) -> dict:
@@ -115,9 +126,11 @@ def main() -> int:
 
     job_dir = ROOT / "results" / "evidence" / job
     job_dir.mkdir(parents=True, exist_ok=True)
+    git = git_state()
     record = {
         "schema": "upgrade-evidence-v1", "job": job, "status": "running",
-        "git_commit": git_commit(ROOT), "source_sha256": source_closure_sha256(),
+        "git_commit": git["commit"], "git_modified_tracked": git["modified_tracked"], "git_untracked": git["untracked"],
+        "source_sha256": source_closure_sha256(),
         "configuration_id": opts["config"], "toolchain_id": toolchain_identity(),
         "recorded_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "commands": [], "checks": [], "artifacts": [], "limitations": list(opts["limitations"]), "note": opts["note"],
