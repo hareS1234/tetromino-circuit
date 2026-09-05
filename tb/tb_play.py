@@ -70,5 +70,6 @@ async def play_full_game(dut):
     meta = metadata(backend="rtl-cocotb", policy_name="heuristic", seed=SEED, stream_doc=stream, max_pieces=CAP,
                     depth=DEPTH, precision=PREC, arch=ARCH, board_repr=param("BOARD_REPR", 0), lanes=param("LANES", 1),
                     root=ROOT, extra={"driver": "cocotb"})
-    write_replay(ROOT / OUT if not os.path.isabs(OUT) else OUT, meta, records, terminal)
+    from pathlib import Path
+    write_replay(Path(OUT) if os.path.isabs(OUT) else ROOT / OUT, meta, records, terminal)
     dut._log.info(f"game: {terminal}")
