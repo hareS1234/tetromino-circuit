@@ -133,6 +133,9 @@ def main() -> int:
 
     job_dir = EVIDENCE / job
     job_dir.mkdir(parents=True, exist_ok=True)
+    stale = job_dir / "summary.json"
+    if stale.is_file():          # a previous attempt's record must not be read as current evidence by validators run inside this gate
+        stale.replace(job_dir / "summary.prev.json")
     git = git_state()
     record = {
         "schema": "upgrade-evidence-v1", "job": job, "status": "running",
