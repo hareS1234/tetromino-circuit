@@ -1,0 +1,68 @@
+{
+ "schema": "release-check-v2",
+ "manifest": "benchmarks/release_v2.json",
+ "manifest_sha256": "c514819d8b3de4faa9de3a19a5ed9743b12e211af5b0c4822c3c270e4261b993",
+ "git": {
+  "head": "a2aca56d7355b0c0dad1f9862fdf3cb00e1d0d7f",
+  "dirty_tracked": [
+   "esults/evidence/U20/fresh_clone_linux-x64.json"
+  ],
+  "tags": [
+   "v0.1-python",
+   "v0.2-rtl",
+   "v0.3-implemented",
+   "v1.0"
+  ]
+ },
+ "evidence_statuses": {
+  "U00": "passed",
+  "U01": "passed",
+  "U02": "passed",
+  "U03": "blocked",
+  "U04": "passed",
+  "U05": "passed",
+  "U06": "passed",
+  "U07": "passed",
+  "U08": "passed",
+  "U09": "passed",
+  "U10": "passed",
+  "U11": "passed",
+  "U12": "passed",
+  "U13": "passed",
+  "U14": "passed",
+  "U15": "passed",
+  "U16": "passed",
+  "U17": "passed",
+  "U18": "passed",
+  "U19": "passed",
+  "U20": "pending (written by this gate)"
+ },
+ "blocked_platforms": [
+  "darwin-arm64",
+  "remote-ci"
+ ],
+ "blocked_gates": [
+  "mac-reproduction",
+  "remote-ci-run"
+ ],
+ "problems": [],
+ "notes": [
+  "note: hardware summary source closure 8a93f90eb814 != live 16dd41c43d64 (measurement identities checked above)"
+ ],
+ "subchecks": [
+  "subcheck v1_release: exit 0; CHECK quality_jobs 640/640",
+  "subcheck generated_geometry: exit 0",
+  "subcheck streams_v1: exit 0",
+  "subcheck streams_v2: exit 0; CHECK streams_v2 120/120",
+  "subcheck hardware_v2: exit 0; CHECK hardware_v2_jobs 84/84; CHECK hardware_v2_decisions 6/6; CHECK hardware_v2_csv_current 84/84",
+  "subcheck quality_v2: exit 0; CHECK quality_v2_bag50k_records 600/600; CHECK quality_v2_bag50k_paired 1/1",
+  "subcheck traces: exit 0; CHECK trace_a2_last_candidate_wins 580/580; CHECK trace_a2_normal_search 1108/1108; CHECK trace_a2_stall_reset 698/698",
+  "subcheck viewer: exit 0; CHECK viewer 37/37",
+  "subcheck report_v1: exit 0",
+  "subcheck report_v2: exit 0",
+  "subcheck links: exit 0; CHECK links 43/43 (30 documents, 43 external links not fetched)",
+  "subcheck claims: exit 0; CHECK claims 53/53",
+  "subcheck ci_workflow: exit 0; CHECK ci_workflow 3/3"
+ ],
+ "releasable": false
+}

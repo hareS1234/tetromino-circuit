@@ -2,9 +2,9 @@
  "schema": "fresh-clone-check-v2",
  "family": "linux-x64",
  "ok": true,
- "clone_commit": "68b2b4e9eaa1609284bd6e15c3acdef2a408ceea",
- "clone_dir": "/tmp/tetromino-fresh.P2I4gg/tetromino-circuit",
- "recorded_utc": "2026-09-05T23:19:52Z",
+ "clone_commit": "a2aca56d7355b0c0dad1f9862fdf3cb00e1d0d7f",
+ "clone_dir": "/tmp/tetromino-fresh.VnsdXj/tetromino-circuit",
+ "recorded_utc": "2026-09-05T23:47:17Z",
  "host": {
   "os": "Linux-6.18.44-fc-v24-x86_64-with-glibc2.39",
   "system": "Linux",
@@ -34,14 +34,14 @@
    "verilator": "Verilator 5.051 devel rev v5.050-309-g228635918 (mod)",
    "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
    "nextpnr_ecp5": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
-   "recorded_utc": "2026-09-05T23:15:00Z"
+   "recorded_utc": "2026-09-05T23:42:38Z"
   }
  },
  "steps": [
   {
    "name": "bootstrap",
    "exit_code": 0,
-   "elapsed_s": 45,
+   "elapsed_s": 40,
    "command": "bash scripts/bootstrap.sh"
   },
   {
@@ -53,25 +53,25 @@
   {
    "name": "test-python",
    "exit_code": 0,
-   "elapsed_s": 66,
+   "elapsed_s": 63,
    "command": "make test-python"
   },
   {
    "name": "smoke",
    "exit_code": 0,
-   "elapsed_s": 10,
+   "elapsed_s": 9,
    "command": "make smoke"
   },
   {
    "name": "test-shapes",
    "exit_code": 0,
-   "elapsed_s": 9,
+   "elapsed_s": 10,
    "command": "make test-shapes"
   },
   {
    "name": "demo-python",
    "exit_code": 0,
-   "elapsed_s": 9,
+   "elapsed_s": 8,
    "command": "make demo-python"
   },
   {
@@ -113,7 +113,7 @@
   {
    "name": "render-a2-demo",
    "exit_code": 0,
-   "elapsed_s": 127,
+   "elapsed_s": 118,
    "command": "make render-a2-demo"
   },
   {
@@ -125,7 +125,7 @@
   {
    "name": "report-v2",
    "exit_code": 0,
-   "elapsed_s": 1,
+   "elapsed_s": 0,
    "command": "bash scripts/env.sh python tools/write_report_v2.py --check"
   },
   {

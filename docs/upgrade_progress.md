@@ -29,8 +29,15 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 
 ## Current
 
-* Last passing job: U19 (U03 is blocked on the remote run only, its local validation passed).
-* Current job: U20 (fresh-clone reproduction, release validator, blocked Mac/CI records).
-* Active process/log: none (the matrix runner finished; `results/v2/runner.lock` released).
-* Next command: `REUSE_ARCHIVE=1 bash scripts/fresh_clone_check.sh`, then `make check-release-v2`.
-* Blockers: remote CI (U03/U20) and the Mac reproduction (U20) are environment blockers — recorded as blocked (`docs/release_v2.md`), never as done.
+* Last passing job: U19. U20 is recorded as **blocked**: every local gate passed (fresh-clone reproduction on Linux
+  19/19 steps, release validator's executed checks, validator tests, workflow validation and local fast tier), but
+  the Mac reproduction (`darwin-arm64`) and the remote CI run were not executed here.
+* Current job: none in this environment. The remaining work needs the maintainer's Mac and a remote repository
+  (`docs/release_v2.md` §"Executing the blocked items").
+* Active process/log: none.
+* Next command (on the Mac, clean clone of the release commit): `bash scripts/bootstrap.sh --enroll` then
+  `bash scripts/fresh_clone_check.sh`; after pushing: record the CI run in `results/evidence/U20/remote_ci.json`,
+  set both rows of `benchmarks/release_v2.json` to `executed`, `make check-release-v2` → `OK — releasable` → `git tag v2.0-a2`.
+* Blockers: `darwin-arm64` (no Mac reachable from this session) and `remote-ci` (no remote repository/credentials) —
+  recorded as blocked in `benchmarks/release_v2.json`, `docs/release_v2.md` and `results/evidence/U20/summary.json`;
+  U03's remote gate remains blocked for the same reason. No tag exists.
