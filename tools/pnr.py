@@ -55,7 +55,10 @@ def parse_utilization(text: str) -> dict:
     return util
 
 
-def route(cfg: Config, seed: int, netlist: Path, out: Path, freq: float = 50.0) -> dict:
+ROUTE_TIMEOUT_S = 1800   # a route that has not converged in 30 minutes is recorded as route_timeout
+
+
+def route(cfg: Config, seed: int, netlist: Path, out: Path, freq: float = 50.0, timeout_s: int = ROUTE_TIMEOUT_S) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     log = out / "nextpnr.log"
     report = out / "timing.json"
@@ -65,12 +68,24 @@ def route(cfg: Config, seed: int, netlist: Path, out: Path, freq: float = 50.0) 
            "--log", str(log)]
     (out / "command.txt").write_text(" ".join(cmd[2:]) + "\n")
     t0 = time.perf_counter()
-    proc = subprocess.run(cmd, capture_output=True, text=True)
+    timed_out = False
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_s)
+        returncode, stdout, stderr = proc.returncode, proc.stdout, proc.stderr
+    except subprocess.TimeoutExpired as exc:
+        timed_out = True
+        returncode, stdout, stderr = -1, (exc.stdout or b"").decode() if isinstance(exc.stdout, bytes) else (exc.stdout or ""), ""
     elapsed = time.perf_counter() - t0
-    text = log.read_text() if log.is_file() else proc.stdout + proc.stderr
+    text = log.read_text() if log.is_file() else stdout + stderr
     fmax, constraint, met = parse_log(text)
     util = parse_utilization(text)
-    status = "routed" if proc.returncode == 0 else ("timing_failed" if met is False else f"error_{proc.returncode}")
+    if timed_out:
+        status = f"route_timeout_{timeout_s}s"
+    else:
+        status = "routed" if returncode == 0 else ("timing_failed" if met is False else f"error_{returncode}")
+    if returncode != 0 and status != "timing_failed":
+        # an incomplete run may have logged a placement-stage frequency estimate: never report it
+        met, fmax = False, None
     synth_summary = json.loads((netlist.parent / "summary.json").read_text()) if (netlist.parent / "summary.json").is_file() else {}
     row = {
         "commit": git_commit(ROOT), "toolchain_id": toolchain_id(), "arch": cfg.arch, "board_repr": cfg.board_repr,
@@ -104,11 +119,12 @@ def main() -> int:
     add_config_arguments(ap)
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--freq", type=float, default=50.0)
+    ap.add_argument("--timeout", type=int, default=ROUTE_TIMEOUT_S, help="seconds before a non-converging route is recorded as route_timeout")
     ap.add_argument("--json", required=True, help="synthesized netlist")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     cfg = validate(Config(args.arch, args.board_repr, args.lanes, args.depth, args.precision))
-    row = route(cfg, args.seed, ROOT / args.json, ROOT / args.out, args.freq)
+    row = route(cfg, args.seed, ROOT / args.json, ROOT / args.out, args.freq, args.timeout)
     return 0 if row["status"] == "routed" else 1
 
 

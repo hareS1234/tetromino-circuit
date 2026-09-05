@@ -1,0 +1,15 @@
+benchmarks/config.json OK: 9 hardware configurations, 8 policy entries, source 66a5deeeb0c72b61, commit ebde781a11596519c7a452de26bae83348e3cb54-dirty
+  precision: heuristic d1 p0 complete (26s elapsed)
+  precision: heuristic d1 p1 complete (53s elapsed)
+  precision: heuristic d1 p2 complete (79s elapsed)
+  precision: heuristic d1 p3 complete (106s elapsed)
+  precision: heuristic d1 p4 complete (107s elapsed)
+  precision: random_legal d1 p0 complete (107s elapsed)
+precision: 600 games run, 0 already present
+  heuristic-d1-p0          mean   752.59 median   796.0 IQR [792.25, 797.0] cap_hit 0.87
+  heuristic-d1-p1          mean   756.63 median   797.0 IQR [795.0, 798.0] cap_hit 0.91  diff vs baseline +4.04 CI95 [-37.2, 42.55]
+  heuristic-d1-p2          mean   752.59 median   796.0 IQR [792.25, 797.0] cap_hit 0.87  diff vs baseline +0.00 CI95 [0.0, 0.0]
+  heuristic-d1-p3          mean   730.26 median   796.0 IQR [792.0, 797.0] cap_hit 0.80  diff vs baseline -22.33 CI95 [-52.04, 6.66]
+  heuristic-d1-p4          mean    16.12 median    14.0 IQR [8.0, 21.0] cap_hit 0.00  diff vs baseline -736.47 CI95 [-760.99, -707.82]
+  random_legal-d1-p0       mean     0.08 median     0.0 IQR [0.0, 0.0] cap_hit 0.00  diff vs baseline -752.51 CI95 [-777.25, -723.7]
+-> results/quality_summary.json

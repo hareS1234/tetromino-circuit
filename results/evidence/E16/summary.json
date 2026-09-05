@@ -1,0 +1,33 @@
+{
+ "job": "E16",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "ebde781a11596519c7a452de26bae83348e3cb54",
+ "source_hash": "3e004057d6bd18d4",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T05:24:09Z",
+ "note": "config validated; pilot estimate precision 159s, depth 24s; nine hardware configurations; matrix rows will be regenerated from the frozen source",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "check-benchmark-config"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.21,
+   "log": "results/evidence/E16/cmd00.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "bench-pilot"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.18,
+   "log": "results/evidence/E16/cmd01.log",
+   "tests": {}
+  }
+ ],
+ "elapsed_s": 0.39
+}

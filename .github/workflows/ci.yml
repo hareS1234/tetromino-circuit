@@ -1,0 +1,77 @@
+name: checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      full:
+        description: "run the full corpus, synthesis and routing matrix"
+        default: "false"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: cache the pinned OSS CAD Suite archive
+        uses: actions/cache@v4
+        with:
+          path: .tools/oss-cad-suite-linux-x64-20260904.tgz
+          key: oss-cad-suite-2026-09-04-linux-x64
+      # same bootstrap as local development: pinned suite date, hash-checked archive, locked Python deps
+      - run: bash scripts/bootstrap.sh
+      - run: make doctor
+      - run: make gen
+      - run: git diff --exit-code -- rtl/generated tests/fixtures/shapes.json
+      - run: bash scripts/env.sh python tools/make_streams.py --check
+      - run: make test-python
+      - run: make smoke
+      - run: make test-rtl
+      - run: make test-core ARCH=1 BOARD_REPR=1 COUNT=200 DRIVER=native
+      - run: make demo-python
+      - run: make plots
+      - run: bash scripts/env.sh python tools/write_report.py --check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-results
+          path: |
+            build/**/*.xml
+            build/**/*.log
+            results/*.jsonl
+            results/evidence/**
+          if-no-files-found: ignore
+
+  full-matrix:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.full == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: bash scripts/bootstrap.sh
+      - run: make doctor
+      - run: make test-core COUNT=1000 DRIVER=native
+      - run: make measure-matrix
+      - run: make bench SUITE=precision
+      - run: make bench SUITE=depth
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: implementation-results
+          path: |
+            results/implementation.csv
+            results/implementation_manifest.json
+            results/quality.csv
+            results/quality_summary.json
+            build/pnr_*/nextpnr.log
+            build/synth_*/yosys.log

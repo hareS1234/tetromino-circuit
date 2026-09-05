@@ -1,0 +1,44 @@
+{
+ "job": "E18",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "ebde781a11596519c7a452de26bae83348e3cb54-dirty",
+ "source_hash": "7e9409c938b8271f",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T06:35:36Z",
+ "note": "plots from CSV/JSON; README and design.md results blocks generated from result files; GIF first/middle/last frames extracted to results/inspection/",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "plots"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 2.77,
+   "log": "results/evidence/E18/cmd00.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "python",
+    "tools/write_report.py",
+    "--check"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.1,
+   "log": "results/evidence/E18/cmd01.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "check-report"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 2.07,
+   "log": "results/evidence/E18/cmd02.log",
+   "tests": {}
+  }
+ ],
+ "elapsed_s": 4.94
+}

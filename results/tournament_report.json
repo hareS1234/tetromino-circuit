@@ -1,0 +1,22 @@
+{
+ "seed": 2000,
+ "cap": 100,
+ "first_divergence_from_a0": {
+  "a0-bitmap-d1-p0-l1": null,
+  "a1-cache-d1-p0-l1": null,
+  "a1-cache-d1-p1-l1": 40,
+  "a1-cache-d2-p0-l1": 2
+ },
+ "lines": {
+  "a0-bitmap-d1-p0-l1": 33,
+  "a1-cache-d1-p0-l1": 33,
+  "a1-cache-d1-p1-l1": 37,
+  "a1-cache-d2-p0-l1": 37
+ },
+ "median_cycles": {
+  "a0-bitmap-d1-p0-l1": 4754,
+  "a1-cache-d1-p0-l1": 773,
+  "a1-cache-d1-p1-l1": 773,
+  "a1-cache-d2-p0-l1": 26238
+ }
+}

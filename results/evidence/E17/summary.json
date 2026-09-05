@@ -1,0 +1,65 @@
+{
+ "job": "E17",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "ebde781a11596519c7a452de26bae83348e3cb54-dirty",
+ "source_hash": "7e9409c938b8271f",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T06:35:16Z",
+ "note": "precision suite 600 games, depth suite 40 games; matrix 45 attempts / 44 met timing (one two-lane seed did not converge, recorded); decisions corpus for 9 configs; RTL tournament seed 2000 cap 100",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "check-benchmark-config"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.21,
+   "log": "results/evidence/E17/cmd00.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "bench",
+    "SUITE=precision"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.49,
+   "log": "results/evidence/E17/cmd01.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "bench",
+    "SUITE=depth"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.21,
+   "log": "results/evidence/E17/cmd02.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "python",
+    "tools/measure_matrix.py"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 19.43,
+   "log": "results/evidence/E17/cmd03.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "tournament"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 22.65,
+   "log": "results/evidence/E17/cmd04.log",
+   "tests": {}
+  }
+ ],
+ "elapsed_s": 42.99
+}

@@ -1,0 +1,8 @@
+a0-bitmap-d1-p0-l1 native seed 2000: 100 pieces, 33 lines, cap_reached; cycles/decision min 2475 median 4754 max 9582; 0.2s wall -> results/replays/tournament_a0-bitmap-d1-p0-l1_seed2000_cap100.jsonl
+a1-cache-d1-p0-l1 native seed 2000: 100 pieces, 33 lines, cap_reached; cycles/decision min 413 median 773 max 1538; 0.2s wall -> results/replays/tournament_a1-cache-d1-p0-l1_seed2000_cap100.jsonl
+a1-cache-d1-p1-l1 native seed 2000: 100 pieces, 37 lines, cap_reached; cycles/decision min 413 median 773 max 1538; 0.2s wall -> results/replays/tournament_a1-cache-d1-p1-l1_seed2000_cap100.jsonl
+a1-cache-d2-p0-l1 native seed 2000: 100 pieces, 37 lines, cap_reached; cycles/decision min 3994 median 26238 max 52469; 4.0s wall -> results/replays/tournament_a1-cache-d2-p0-l1_seed2000_cap100.jsonl
+tournament report: {'seed': 2000, 'cap': 100, 'first_divergence_from_a0': {'a0-bitmap-d1-p0-l1': None, 'a1-cache-d1-p0-l1': None, 'a1-cache-d1-p1-l1': 40, 'a1-cache-d2-p0-l1': 2}, 'lines': {'a0-bitmap-d1-p0-l1': 33, 'a1-cache-d1-p0-l1': 33, 'a1-cache-d1-p1-l1': 37, 'a1-cache-d2-p0-l1': 37}, 'median_cycles': {'a0-bitmap-d1-p0-l1': 4754, 'a1-cache-d1-p0-l1': 773, 'a1-cache-d1-p1-l1': 773, 'a1-cache-d2-p0-l1': 26238}}
+rendered 101 frames, 0.76 MB -> assets/tournament_rtl.gif
+rendered 120 frames, 0.59 MB -> assets/tournament_rtl_cycles.gif
+STUDY_DONE

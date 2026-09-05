@@ -1,0 +1,7 @@
+benchmarks/config.json OK: 9 hardware configurations, 8 policy entries, source 66a5deeeb0c72b61, commit ebde781a11596519c7a452de26bae83348e3cb54-dirty
+  depth: heuristic d1 p0 complete (1s elapsed)
+  depth: heuristic d2 p0 complete (24s elapsed)
+depth: 40 games run, 0 already present
+  heuristic-d1-p0          mean   195.35 median   196.5 IQR [194.25, 198.75] cap_hit 0.95
+  heuristic-d2-p0          mean   198.50 median   199.0 IQR [198.0, 199.0] cap_hit 1.00  diff vs baseline +3.15 CI95 [1.4, 5.7]
+-> results/quality_summary.json

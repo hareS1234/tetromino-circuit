@@ -26,7 +26,7 @@ from model.replay import read_replay  # noqa: E402
 from tools.render import BG, DIM, PIECE_COLORS, TEXT, draw_board, font, landed_cells  # noqa: E402
 
 CELL = 16
-PANEL_W = 10 * CELL + 200
+PANEL_W = 10 * CELL + 250
 PANEL_H = 20 * CELL + 70
 
 
@@ -41,7 +41,7 @@ def load_manifest(path: Path | None):
 def hardware_label(meta, manifest):
     if meta.get("arch") is None:
         return "software model (no hardware)"
-    best = None
+    rows = []
     for row in manifest:
         try:
             same = (int(row["arch"]) == meta["arch"] and int(row["board_repr"]) == meta["board_repr"]
@@ -50,12 +50,11 @@ def hardware_label(meta, manifest):
         except (KeyError, ValueError):
             continue
         if same and row.get("lut4"):
-            if best is None or row.get("timing_met") == "True":
-                best = row
-    if best is None:
+            rows.append(row)
+    if not rows:
         return "LUT4/FF: not measured"
-    status = "timing met" if best.get("timing_met") == "True" else "timing NOT met"
-    return f"LUT4 {best['lut4']}  FF {best['ff']}  ({status} @ {best.get('target_mhz')} MHz, seed {best.get('route_seed')})"
+    met = sum(1 for r in rows if r.get("timing_met") == "True")
+    return f"LUT4 {rows[0]['lut4']} FF {rows[0]['ff']} (synth); timing met {met}/{len(rows)} seeds @ {rows[0].get('target_mhz')} MHz"
 
 
 def panel_title(meta):
@@ -141,7 +140,7 @@ def render(replays, out: Path, manifest_path: Path | None, sync: str, duration_m
             if n >= len(recs) and (sync == "pieces" or tick >= totals[k][-1]):
                 info.append((term["reason"].upper().replace("_", " "), (240, 120, 90)))
             for text, col in info:
-                for chunk in wrap(text, 26):
+                for chunk in wrap(text, 30):
                     d.text((tx, ty), chunk, font=small, fill=col)
                     ty += 17
         frames.append(img)

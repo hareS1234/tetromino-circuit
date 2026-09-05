@@ -1,0 +1,190 @@
+{
+ "precision": {
+  "experiment": "precision",
+  "cap": 2000,
+  "streams": [
+   3000,
+   3099
+  ],
+  "n_streams": 100,
+  "policies": {
+   "heuristic-d1-p0": {
+    "status": "complete",
+    "games": 100,
+    "mean_lines": 752.59,
+    "median_lines": 796.0,
+    "iqr": [
+     792.25,
+     797.0
+    ],
+    "min_lines": 177,
+    "max_lines": 799,
+    "cap_hit_fraction": 0.87,
+    "top_out_fraction": 0.13,
+    "mean_pieces": 1896.63
+   },
+   "heuristic-d1-p1": {
+    "status": "complete",
+    "games": 100,
+    "mean_lines": 756.63,
+    "median_lines": 797.0,
+    "iqr": [
+     795.0,
+     798.0
+    ],
+    "min_lines": 105,
+    "max_lines": 799,
+    "cap_hit_fraction": 0.91,
+    "top_out_fraction": 0.09,
+    "mean_pieces": 1903.56,
+    "vs_baseline": {
+     "mean_diff": 4.04,
+     "ci95": [
+      -37.2,
+      42.55
+     ]
+    }
+   },
+   "heuristic-d1-p2": {
+    "status": "complete",
+    "games": 100,
+    "mean_lines": 752.59,
+    "median_lines": 796.0,
+    "iqr": [
+     792.25,
+     797.0
+    ],
+    "min_lines": 177,
+    "max_lines": 799,
+    "cap_hit_fraction": 0.87,
+    "top_out_fraction": 0.13,
+    "mean_pieces": 1896.63,
+    "vs_baseline": {
+     "mean_diff": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "heuristic-d1-p3": {
+    "status": "complete",
+    "games": 100,
+    "mean_lines": 730.26,
+    "median_lines": 796.0,
+    "iqr": [
+     792.0,
+     797.0
+    ],
+    "min_lines": 71,
+    "max_lines": 799,
+    "cap_hit_fraction": 0.8,
+    "top_out_fraction": 0.2,
+    "mean_pieces": 1842.04,
+    "vs_baseline": {
+     "mean_diff": -22.33,
+     "ci95": [
+      -52.04,
+      6.66
+     ]
+    }
+   },
+   "heuristic-d1-p4": {
+    "status": "complete",
+    "games": 100,
+    "mean_lines": 16.12,
+    "median_lines": 14.0,
+    "iqr": [
+     8.0,
+     21.0
+    ],
+    "min_lines": 0,
+    "max_lines": 47,
+    "cap_hit_fraction": 0.0,
+    "top_out_fraction": 1.0,
+    "mean_pieces": 78.75,
+    "vs_baseline": {
+     "mean_diff": -736.47,
+     "ci95": [
+      -760.99,
+      -707.82
+     ]
+    }
+   },
+   "random_legal-d1-p0": {
+    "status": "complete",
+    "games": 100,
+    "mean_lines": 0.08,
+    "median_lines": 0.0,
+    "iqr": [
+     0.0,
+     0.0
+    ],
+    "min_lines": 0,
+    "max_lines": 1,
+    "cap_hit_fraction": 0.0,
+    "top_out_fraction": 1.0,
+    "mean_pieces": 25.96,
+    "vs_baseline": {
+     "mean_diff": -752.51,
+     "ci95": [
+      -777.25,
+      -723.7
+     ]
+    }
+   }
+  },
+  "commit": "ebde781a11596519c7a452de26bae83348e3cb54-dirty",
+  "source_hash": "66a5deeeb0c72b61"
+ },
+ "depth": {
+  "experiment": "depth",
+  "cap": 500,
+  "streams": [
+   3000,
+   3019
+  ],
+  "n_streams": 20,
+  "policies": {
+   "heuristic-d1-p0": {
+    "status": "complete",
+    "games": 20,
+    "mean_lines": 195.35,
+    "median_lines": 196.5,
+    "iqr": [
+     194.25,
+     198.75
+    ],
+    "min_lines": 177,
+    "max_lines": 200,
+    "cap_hit_fraction": 0.95,
+    "top_out_fraction": 0.05,
+    "mean_pieces": 499.05
+   },
+   "heuristic-d2-p0": {
+    "status": "complete",
+    "games": 20,
+    "mean_lines": 198.5,
+    "median_lines": 199.0,
+    "iqr": [
+     198.0,
+     199.0
+    ],
+    "min_lines": 195,
+    "max_lines": 199,
+    "cap_hit_fraction": 1.0,
+    "top_out_fraction": 0.0,
+    "mean_pieces": 500,
+    "vs_baseline": {
+     "mean_diff": 3.15,
+     "ci95": [
+      1.4,
+      5.7
+     ]
+    }
+   }
+  },
+  "commit": "ebde781a11596519c7a452de26bae83348e3cb54-dirty",
+  "source_hash": "66a5deeeb0c72b61"
+ }
+}

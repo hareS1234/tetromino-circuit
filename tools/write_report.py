@@ -1,0 +1,188 @@
+#!/usr/bin/env python3
+"""Fill the measured-results blocks of README.md and docs/design.md from result files.
+
+Every number between <!-- results:start --> and <!-- results:end --> is derived here from
+results/*.csv|json; tools/check_report.py regenerates the blocks and fails if the committed
+documents differ, so a stale or hand-typed figure cannot survive.  --check only compares.
+"""
+from __future__ import annotations
+
+import csv
+import json
+import statistics
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+START, END = "<!-- results:start -->", "<!-- results:end -->"
+LABELS = {"a0-bitmap-d1-p0-l1": "A0 serial, bitmap", "a1-bitmap-d1-p0-l1": "A1 fast, bitmap", "a1-cache-d1-p0-l1": "A1 fast, height cache",
+          "a1-cache-d1-p1-l1": "A1 cache, P1 powers_of_two", "a1-cache-d1-p2-l1": "A1 cache, P2 two_terms",
+          "a1-cache-d1-p3-l1": "A1 cache, P3 cap_holes", "a1-cache-d1-p4-l1": "A1 cache, P4 no_bumpiness",
+          "a1-cache-d2-p0-l1": "A1 cache, depth 2", "a1-cache-d1-p0-l2": "A1 cache, 2 lanes"}
+
+
+def cfg_id(r):
+    return f"a{r['arch']}-{'cache' if r['board_repr'] == '1' else 'bitmap'}-d{r['depth']}-p{r['precision']}-l{r['lanes']}"
+
+
+def load():
+    impl = {}
+    p = ROOT / "results" / "implementation.csv"
+    if p.is_file():
+        for r in csv.DictReader(open(p)):
+            impl.setdefault(cfg_id(r), []).append(r)
+    dec = {}
+    for f in (ROOT / "results" / "decisions").glob("*_native_*.csv"):
+        cid = f.name.split("_native_")[0]
+        rows = list(csv.DictReader(open(f)))
+        if rows and (cid not in dec or len(rows) > len(dec[cid])):
+            dec[cid] = rows
+    qs = json.loads((ROOT / "results" / "quality_summary.json").read_text()) if (ROOT / "results" / "quality_summary.json").is_file() else {}
+    manifest = json.loads((ROOT / "results" / "implementation_manifest.json").read_text()) if (ROOT / "results" / "implementation_manifest.json").is_file() else {}
+    tourn = json.loads((ROOT / "results" / "tournament_report.json").read_text()) if (ROOT / "results" / "tournament_report.json").is_file() else {}
+    disagree = json.loads((ROOT / "results" / "precision_disagreement.json").read_text()) if (ROOT / "results" / "precision_disagreement.json").is_file() else {}
+    return impl, dec, qs, manifest, tourn, disagree
+
+
+def fmt_impl(rows):
+    lut = rows[0]["lut4"]; ff = rows[0]["ff"]
+    met = [float(r["reported_fmax_mhz"]) for r in rows if r["timing_met"] == "True" and r["reported_fmax_mhz"]]
+    allf = [float(r["reported_fmax_mhz"]) for r in rows if r["reported_fmax_mhz"]]
+    unconverged = sum(1 for r in rows if not r["status"].startswith("routed") and r["status"] != "timing_failed")
+    failed = sum(1 for r in rows if r["status"] == "timing_failed")
+    extra = "".join([f"; {unconverged} did not converge" if unconverged else "", f"; {failed} failed timing" if failed else ""])
+    timing = f"{len(met)}/{len(rows)} met 50 MHz{extra}; Fmax {min(allf):.1f}–{max(allf):.1f} MHz" if allf else "no routed report"
+    return lut, ff, timing, len(met) == len(rows) and len(rows) > 0
+
+
+def facts(impl, dec, qs, manifest) -> list:
+    """Three headline facts, each traceable to a result file."""
+    out = []
+    total = sum(len(v) for v in dec.values())
+    out.append(f"**Verification.** {total:,} complete-core decisions across {len(dec)} hardware configurations match the "
+               f"Python literal-descent reference (`results/decisions/*.csv`), plus three 250-piece RTL games per depth-one "
+               f"configuration checked against Python at every move (`results/replays/`).")
+    cid = "a1-cache-d1-p0-l1"
+    if cid in impl:
+        lut, ff, timing, _ = fmt_impl(impl[cid])
+        out.append(f"**Resources.** The fast exact engine with a height cache (`{cid}`) synthesizes to {lut} LUT4 and {ff} flip-flops "
+                   f"on the ECP5 LFE5U-85F (Yosys `synth_ecp5`), with routed timing {timing} (`results/implementation.csv`).")
+    if cid in dec and cid in impl:
+        med = statistics.median(int(r["core_cycles"]) for r in dec[cid])
+        a0 = statistics.median(int(r["core_cycles"]) for r in dec["a0-bitmap-d1-p0-l1"]) if "a0-bitmap-d1-p0-l1" in dec else None
+        _, _, _, all_met = fmt_impl(impl[cid])
+        proj = f"{med / 50:.1f} µs per decision at the timing-supported 50 MHz constraint" if all_met else "no timing-supported projection"
+        out.append(f"**Latency.** Median {med:.0f} core cycles per decision on the corpus (A0 serial: {a0:.0f}), projecting to "
+                   f"{proj}; this is RTL-simulation cycle count divided by a routed clock constraint, not measured on a board.")
+    return out
+
+
+def block(impl, dec, qs, manifest, tourn, disagree) -> str:
+    out = ["", "### Three measured facts", ""]
+    for f in facts(impl, dec, qs, manifest):
+        out.append(f)
+        out.append("")
+    out += ["### Measured results (generated by `tools/write_report.py`; do not edit by hand)", ""]
+    out.append(f"Source: `results/implementation.csv` ({manifest.get('summary', {}).get('routing_attempts', 0)} routing attempts, "
+               f"{manifest.get('summary', {}).get('timing_met', 0)} met timing; ECP5 LFE5U-85F CABGA381 speed 6, 50 MHz target, seeds 1–5), "
+               f"`results/decisions/` (native Verilator driver on the committed corpora), `results/quality_summary.json` "
+               f"(Python bit-exact policies on held-out streams). RTL hash `{manifest.get('rtl_hash', '?')}`, toolchain `{manifest.get('toolchain_id', '?')}`.")
+    out.append("")
+    out.append("| Configuration | LUT4 | FF | Routed timing (5 seeds) | Median cycles/decision | Max | Decisions checked |")
+    out.append("|---|---:|---:|---|---:|---:|---|")
+    for cid, label in LABELS.items():
+        if cid not in impl:
+            continue
+        lut, ff, timing, _ = fmt_impl(impl[cid])
+        cyc = [int(r["core_cycles"]) for r in dec.get(cid, [])]
+        med = f"{statistics.median(cyc):.0f}" if cyc else "—"
+        mx = f"{max(cyc)}" if cyc else "—"
+        n = f"{len(cyc)}/{len(cyc)} match" if cyc else "—"
+        out.append(f"| {label} (`{cid}`) | {lut} | {ff} | {timing} | {med} | {mx} | {n} |")
+    out.append("")
+    # projected latency for exact designs
+    proj = []
+    for cid in ("a0-bitmap-d1-p0-l1", "a1-cache-d1-p0-l1", "a1-cache-d1-p0-l2"):
+        if cid in impl and cid in dec:
+            _, _, _, all_met = fmt_impl(impl[cid])
+            med = statistics.median(int(r["core_cycles"]) for r in dec[cid])
+            proj.append(f"{LABELS[cid]}: {med:.0f} cycles = {med / 50:.1f} µs at a timing-supported 50 MHz" if all_met else f"{LABELS[cid]}: {med:.0f} cycles; projection withheld because not every route seed completed with timing met")
+    if proj:
+        out.append("Projected decision latency (median cycles ÷ 50 MHz; model-based, not measured on a board): " + "; ".join(proj) + ".")
+        out.append("")
+    pr = qs.get("precision", {})
+    if pr.get("policies"):
+        out.append(f"Held-out playing strength, precision study (`results/quality.csv`, experiment `precision`): streams {pr['streams'][0]}–{pr['streams'][1]}, cap {pr['cap']} pieces, Python bit-exact policies backed by the RTL differential corpora above.")
+        out.append("")
+        out.append("| Policy | Mean lines | Median | IQR | Cap-hit | Top-out | Mean pieces | Mean diff vs exact (95% paired bootstrap CI) | Corpus disagreement with exact |")
+        out.append("|---|---:|---:|---|---:|---:|---:|---|---:|")
+        for key, v in pr["policies"].items():
+            if v.get("status") != "complete":
+                continue
+            vs = v.get("vs_baseline")
+            d = ""
+            pk = key.split("-p")[-1]
+            if key.startswith("heuristic") and pk in disagree:
+                d = f"{100 * disagree[pk]['rate']:.1f}%"
+            out.append(f"| {key} | {v['mean_lines']:.1f} | {v['median_lines']:.0f} | {v['iqr'][0]:.0f}–{v['iqr'][1]:.0f} | {v['cap_hit_fraction']:.0%} | {v['top_out_fraction']:.0%} | {v['mean_pieces']:.0f} | "
+                       + (f"{vs['mean_diff']:+.2f} [{vs['ci95'][0]:+.2f}, {vs['ci95'][1]:+.2f}]" if vs else "baseline") + f" | {d} |")
+        out.append("")
+    dp = qs.get("depth", {})
+    if dp.get("policies"):
+        out.append(f"Depth study (`results/quality.csv`, experiment `depth`; predeclared smaller workload): streams {dp['streams'][0]}–{dp['streams'][1]}, cap {dp['cap']} pieces, exact profile, compare only within this table.")
+        out.append("")
+        out.append("| Policy | Mean lines | Median | IQR | Cap-hit | Mean diff vs depth 1 (95% CI) | Median RTL cycles/decision |")
+        out.append("|---|---:|---:|---|---:|---|---:|")
+        for key, v in dp["policies"].items():
+            if v.get("status") != "complete":
+                continue
+            vs = v.get("vs_baseline")
+            cid = "a1-cache-d2-p0-l1" if "-d2-" in key else "a1-cache-d1-p0-l1"
+            cyc = [int(r["core_cycles"]) for r in dec.get(cid, [])]
+            cyc_txt = f"{statistics.median(cyc):.0f}" if cyc else "—"
+            out.append(f"| {key} | {v['mean_lines']:.1f} | {v['median_lines']:.0f} | {v['iqr'][0]:.0f}–{v['iqr'][1]:.0f} | {v['cap_hit_fraction']:.0%} | "
+                       + (f"{vs['mean_diff']:+.2f} [{vs['ci95'][0]:+.2f}, {vs['ci95'][1]:+.2f}]" if vs else "baseline") + f" | {cyc_txt} |")
+        out.append("")
+    if tourn:
+        out.append(f"Tournament (`results/tournament_report.json`): seed {tourn['seed']}, cap {tourn['cap']}, actual RTL replays; lines "
+                   + ", ".join(f"{LABELS.get(k, k)} {v}" for k, v in tourn.get("lines", {}).items())
+                   + "; first move differing from A0: " + ", ".join(f"{LABELS.get(k, k)} {'never' if v is None else v}" for k, v in tourn.get("first_divergence_from_a0", {}).items()) + ".")
+        out.append("")
+    return "\n".join(out) + "\n"
+
+
+def splice(path: Path, text: str) -> str:
+    doc = path.read_text()
+    if START not in doc or END not in doc:
+        raise SystemExit(f"{path} lacks the results markers")
+    pre, rest = doc.split(START, 1)
+    _, post = rest.split(END, 1)
+    return pre + START + "\n" + text + END + post
+
+
+def main() -> int:
+    check = "--check" in sys.argv
+    data = load()
+    text = block(*data)
+    bad = 0
+    for rel in ("README.md", "docs/design.md"):
+        path = ROOT / rel
+        if not path.is_file():
+            continue
+        new = splice(path, text)
+        if new != path.read_text():
+            if check:
+                print(f"{rel}: results block is stale")
+                bad += 1
+            else:
+                path.write_text(new)
+                print(f"{rel}: results block updated")
+        elif not check:
+            print(f"{rel}: results block unchanged")
+    return 1 if bad else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

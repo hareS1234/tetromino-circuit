@@ -1,0 +1,350 @@
+{
+ "attempts": {
+  "a0-bitmap-d1-p0-l1:s1": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.49,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a0-bitmap-d1-p0-l1:s2": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 62.61,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a0-bitmap-d1-p0-l1:s3": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 64.0,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a0-bitmap-d1-p0-l1:s4": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 65.36,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a0-bitmap-d1-p0-l1:s5": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 68.51,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-bitmap-d1-p0-l1:s1": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 65.56,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-bitmap-d1-p0-l1:s2": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 67.59,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-bitmap-d1-p0-l1:s3": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.56,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-bitmap-d1-p0-l1:s4": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 67.04,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-bitmap-d1-p0-l1:s5": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 68.57,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p0-l1:s1": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 64.5,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p0-l1:s2": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 67.23,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p0-l1:s3": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.66,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p0-l1:s4": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.64,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p0-l1:s5": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 68.98,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p1-l1:s1": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 69.3,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p1-l1:s2": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 67.23,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p1-l1:s3": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 68.06,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p1-l1:s4": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.23,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p1-l1:s5": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 67.14,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p2-l1:s1": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 68.17,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p2-l1:s2": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.98,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p2-l1:s3": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 68.32,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p2-l1:s4": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.48,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p2-l1:s5": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.75,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p3-l1:s1": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.78,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p3-l1:s2": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 68.04,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p3-l1:s3": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 68.24,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p3-l1:s4": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 67.24,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p3-l1:s5": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.82,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p4-l1:s1": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 65.79,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p4-l1:s2": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.55,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p4-l1:s3": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.29,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p4-l1:s4": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 65.92,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p4-l1:s5": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 67.21,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d2-p0-l1:s1": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 65.94,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d2-p0-l1:s2": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 64.51,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d2-p0-l1:s3": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 66.61,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d2-p0-l1:s4": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 65.56,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d2-p0-l1:s5": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 67.17,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p0-l2:s1": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 65.99,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p0-l2:s2": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 63.8,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p0-l2:s3": {
+   "status": "killed_no_convergence",
+   "timing_met": false,
+   "fmax": null,
+   "rtl_hash": "ae34d12e7803250b",
+   "note": "stopped manually after 1314 s with ~305 overused wires at router iteration 88,000 (seeds 1,2,4,5 converged in 74-90 s); the 1800 s route budget in tools/pnr.py was adopted after this attempt"
+  },
+  "a1-cache-d1-p0-l2:s4": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 65.95,
+   "rtl_hash": "ae34d12e7803250b"
+  },
+  "a1-cache-d1-p0-l2:s5": {
+   "status": "routed",
+   "timing_met": true,
+   "fmax": 64.29,
+   "rtl_hash": "ae34d12e7803250b"
+  }
+ },
+ "decisions": {
+  "a0-bitmap-d1-p0-l1": {
+   "count": 1000,
+   "rtl_hash": "ae34d12e7803250b",
+   "result": "native: all 1000 decisions match; cycles min 125 median 4720 max 9596",
+   "csv": "results/decisions/a0-bitmap-d1-p0-l1_native_1000.csv"
+  },
+  "a1-bitmap-d1-p0-l1": {
+   "count": 1000,
+   "rtl_hash": "ae34d12e7803250b",
+   "result": "native: all 1000 decisions match; cycles min 116 median 790 max 1572",
+   "csv": "results/decisions/a1-bitmap-d1-p0-l1_native_1000.csv"
+  },
+  "a1-cache-d1-p0-l1": {
+   "count": 1000,
+   "rtl_hash": "ae34d12e7803250b",
+   "result": "native: all 1000 decisions match; cycles min 107 median 773 max 1538",
+   "csv": "results/decisions/a1-cache-d1-p0-l1_native_1000.csv"
+  },
+  "a1-cache-d1-p1-l1": {
+   "count": 1000,
+   "rtl_hash": "ae34d12e7803250b",
+   "result": "native: all 1000 decisions match; cycles min 107 median 773 max 1538",
+   "csv": "results/decisions/a1-cache-d1-p1-l1_native_1000.csv"
+  },
+  "a1-cache-d1-p2-l1": {
+   "count": 1000,
+   "rtl_hash": "ae34d12e7803250b",
+   "result": "native: all 1000 decisions match; cycles min 107 median 773 max 1538",
+   "csv": "results/decisions/a1-cache-d1-p2-l1_native_1000.csv"
+  },
+  "a1-cache-d1-p3-l1": {
+   "count": 1000,
+   "rtl_hash": "ae34d12e7803250b",
+   "result": "native: all 1000 decisions match; cycles min 107 median 773 max 1538",
+   "csv": "results/decisions/a1-cache-d1-p3-l1_native_1000.csv"
+  },
+  "a1-cache-d1-p4-l1": {
+   "count": 1000,
+   "rtl_hash": "ae34d12e7803250b",
+   "result": "native: all 1000 decisions match; cycles min 107 median 773 max 1538",
+   "csv": "results/decisions/a1-cache-d1-p4-l1_native_1000.csv"
+  },
+  "a1-cache-d2-p0-l1": {
+   "count": 250,
+   "rtl_hash": "ae34d12e7803250b",
+   "result": "native: all 250 decisions match; cycles min 97 median 13522 max 52469",
+   "csv": "results/decisions/a1-cache-d2-p0-l1_native_250.csv"
+  },
+  "a1-cache-d1-p0-l2": {
+   "count": 1000,
+   "rtl_hash": "ae34d12e7803250b",
+   "result": "native: all 1000 decisions match; cycles min 64 median 414 max 774",
+   "csv": "results/decisions/a1-cache-d1-p0-l2_native_1000.csv"
+  }
+ },
+ "rtl_hash": "ae34d12e7803250b",
+ "commit": "ebde781a11596519c7a452de26bae83348e3cb54-dirty",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "device": "LFE5U-85F",
+ "package": "CABGA381",
+ "speed_grade": "6",
+ "target_mhz": 50.0,
+ "route_seeds": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "summary": {
+  "routing_attempts": 45,
+  "timing_met": 44,
+  "elapsed_s": 19.3
+ }
+}
