@@ -6,7 +6,7 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 | Job | Status | Notes |
 |---|---|---|
 | U00 baseline inventory | passed | `docs/audit_response.md`, `results/evidence/U00/inventory.json` |
-| U01 portable bootstrap | pending | |
+| U01 portable bootstrap | passed | `toolchains/oss_cad_suite.lock.json` (linux-x64 verified, three families unenrolled), `scripts/bootstrap.sh --enroll`, `results/host/Linux-x86_64.json`, `tools/doctor.py` v2 lock; gate: test-bootstrap 11 passed, bootstrap idempotent, doctor OK, test-python 316 passed, smoke 1/1 (`results/evidence/U01`, commit `ff19486`). Mac execution blocked → U20 |
 | U02 identities / resume / summaries / gates | pending | |
 | U03 GitHub workflow | pending (remote run will be blocked: no remote) | |
 | U04 A2 specification | pending | |
@@ -29,8 +29,8 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 
 ## Current
 
-* Last passing job: U00.
-* Current job: U01.
+* Last passing job: U01.
+* Current job: U02.
 * Active process/log: none.
-* Next command: `make test-bootstrap` (after U01's tests exist).
-* Blockers: none for U01–U02; remote CI and Mac execution are environment blockers for U03/U20.
+* Next command: `make test-identities` (after U02's tests exist).
+* Blockers: none for U02; remote CI and Mac execution are environment blockers for U03/U20.

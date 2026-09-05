@@ -1,0 +1,124 @@
+{
+ "schema": "upgrade-evidence-v1",
+ "job": "U01",
+ "status": "passed",
+ "git_commit": "ff19486ffd24614066a0314bffcb57e01531ae36",
+ "git_modified_tracked": [],
+ "git_untracked": [
+  "results/evidence/U01/summary.json",
+  "results/host/Linux-x86_64.json"
+ ],
+ "source_sha256": "7c3f0c93f480976360177d420f8c3fbb8d7eb23471d8bb0ed9af534ace9dac4f",
+ "configuration_id": null,
+ "toolchain_id": "oss-cad-suite-2026-09-04",
+ "recorded_utc": "2026-09-05T14:28:25Z",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-bootstrap"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 20.91,
+   "log": "results/evidence/U01/cmd00.log",
+   "counts": {
+    "pytest_passed": 11
+   }
+  },
+  {
+   "argv": [
+    "bash",
+    "scripts/bootstrap.sh"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 2.72,
+   "log": "results/evidence/U01/cmd01.log",
+   "counts": {}
+  },
+  {
+   "argv": [
+    "make",
+    "doctor"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.71,
+   "log": "results/evidence/U01/cmd02.log",
+   "counts": {}
+  },
+  {
+   "argv": [
+    "make",
+    "test-python"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 36.32,
+   "log": "results/evidence/U01/cmd03.log",
+   "counts": {
+    "pytest_passed": 316
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "smoke"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.25,
+   "log": "results/evidence/U01/cmd04.log",
+   "counts": {
+    "pytest_failed": 0,
+    "rtl_total": 1,
+    "rtl_failed": 0
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "bootstrap_tests",
+   "count_key": "pytest_passed",
+   "values": [
+    11,
+    316
+   ],
+   "ok": true
+  },
+  {
+   "name": "python_tests",
+   "count_key": "pytest_passed",
+   "values": [
+    11,
+    316
+   ],
+   "ok": true
+  },
+  {
+   "name": "smoke",
+   "count_key": "rtl_total",
+   "values": [
+    1
+   ],
+   "ok": true
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "toolchains/oss_cad_suite.lock.json",
+   "exists": true,
+   "bytes": 2037
+  },
+  {
+   "path": "results/host/Linux-x86_64.json",
+   "exists": true,
+   "bytes": 973
+  },
+  {
+   "path": "docs/toolchain.md",
+   "exists": true,
+   "bytes": 4530
+  }
+ ],
+ "limitations": [
+  "real Mac execution and macOS asset enrollment are not possible in this Linux environment; recorded as blocked for U20"
+ ],
+ "note": null
+}
