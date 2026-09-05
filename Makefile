@@ -53,6 +53,8 @@ test-geometry: ## E01 gate
 	$(PY) -m pytest tests/unit/test_pieces.py tests/unit/test_board.py -q
 test-reference: ## E02 gate: 40,500-case three-way differential and policy equivalence
 	$(PY) -m pytest tests/unit/test_game.py tests/unit/test_reference.py tests/unit/test_policy.py -q
+test-bootstrap: ## U01: mocked-platform bootstrap tests
+	$(PY) -m pytest tests/unit/test_bootstrap.py -q
 test-python: ## all pure-Python tests
 	$(PY) -m pytest tests/unit -q
 demo-python: ## software replay and GIF (seed 2000, 250 pieces)

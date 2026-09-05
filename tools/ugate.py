@@ -50,6 +50,18 @@ def parse_counts(text: str) -> dict:
     return counts
 
 
+def count_ok(value) -> bool:
+    """A count is evidence only when it is nonzero: 'N' > 0, or 'ok/total' with ok == total > 0."""
+    if isinstance(value, bool):
+        return False
+    if isinstance(value, int):
+        return value > 0
+    if isinstance(value, str) and "/" in value:
+        ok, total = value.split("/", 1)
+        return ok.isdigit() and total.isdigit() and int(ok) == int(total) > 0
+    return False
+
+
 def run_command(job_dir: Path, index: int, argv):
     log = job_dir / f"cmd{index:02d}.log"
     t0 = time.perf_counter()
@@ -129,7 +141,7 @@ def main() -> int:
         if "=" in name:
             label, key = name.split("=", 1)
             vals = [r["counts"].get(key) for r in results if key in r["counts"]]
-            record["checks"].append({"name": label, "count_key": key, "values": vals, "ok": bool(vals)})
+            record["checks"].append({"name": label, "count_key": key, "values": vals, "ok": bool(vals) and all(count_ok(v) for v in vals)})
         else:
             record["checks"].append({"name": name, "ok": all(r["exit_code"] == 0 for r in results)})
     any_count = any(any(isinstance(v, int) and v > 0 for v in r["counts"].values()) or

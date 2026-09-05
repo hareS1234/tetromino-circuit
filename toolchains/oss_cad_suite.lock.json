@@ -1,0 +1,51 @@
+{
+ "schema": "toolchain-lock-v2",
+ "release": "2026-09-04",
+ "release_url": "https://github.com/YosysHQ/oss-cad-suite-build/releases/tag/2026-09-04",
+ "asset_url_template": "https://github.com/YosysHQ/oss-cad-suite-build/releases/download/{release}/{asset}",
+ "note": "Expected inputs only. One entry per asset family; a download is compared with its own family's sha256. Unenrolled families carry null and require `bash scripts/bootstrap.sh --enroll` on that platform, which records the observed hash here for review and commit. Observed machine facts are written to results/host/, never to this file.",
+ "assets": {
+  "linux-x64": {
+   "asset": "oss-cad-suite-linux-x64-20260904.tgz",
+   "sha256": "8fb2384c2f88126f8936fc8f680ed2ebdf0ce440a7457c8f5a21c5c6e3e2de44",
+   "status": "verified",
+   "recorded": "imported unchanged from v1 toolchain.lock.json (Linux x86_64, 2026-09-05)"
+  },
+  "linux-arm64": {
+   "asset": "oss-cad-suite-linux-arm64-20260904.tgz",
+   "sha256": null,
+   "status": "unenrolled",
+   "recorded": null
+  },
+  "darwin-x64": {
+   "asset": "oss-cad-suite-darwin-x64-20260904.tgz",
+   "sha256": null,
+   "status": "unenrolled",
+   "recorded": null
+  },
+  "darwin-arm64": {
+   "asset": "oss-cad-suite-darwin-arm64-20260904.tgz",
+   "sha256": null,
+   "status": "unenrolled",
+   "recorded": null
+  }
+ },
+ "platform_map": {
+  "Linux-x86_64": "linux-x64",
+  "Linux-aarch64": "linux-arm64",
+  "Linux-arm64": "linux-arm64",
+  "Darwin-x86_64": "darwin-x64",
+  "Darwin-arm64": "darwin-arm64"
+ },
+ "required_executables": ["yosys", "nextpnr-ecp5", "verilator"],
+ "verilator_minimum": "5.036",
+ "python": {
+  "supported": ["3.11", "3.12"],
+  "lock_resolved_with": "3.11",
+  "pip": "26.2.1"
+ },
+ "macos": {
+  "documented_remedy": "xattr -d com.apple.quarantine <archive> before extracting, or run ./activate once in the extracted location (OSS CAD Suite README)",
+  "policy": "bootstrap applies the documented remedy only after observing the quarantine attribute or a Gatekeeper execution failure on the extracted suite"
+ }
+}
