@@ -8,10 +8,14 @@ depth 1
 smtbmc boolector
 
 [script]
-read -formal -sv row_rank20.sv line_clear_parallel.sv compactor_miter.sv
+read -formal -sv rank_level.sv row_rank20.sv rank_match.sv row_select_groups.sv row_select_final.sv line_clear_parallel.sv compactor_miter.sv
 prep -top compactor_miter
 
 [files]
+rtl/rank_level.sv
 rtl/row_rank20.sv
+rtl/rank_match.sv
+rtl/row_select_groups.sv
+rtl/row_select_final.sv
 rtl/line_clear_parallel.sv
 formal/compactor/compactor_miter.sv

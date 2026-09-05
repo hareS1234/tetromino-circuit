@@ -29,7 +29,8 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-lanes test-rtl check-benchmark-config bench-pilot bench measure-matrix tournament plots \
         check-report check-release reproduce clean \
         test-identities test-result-schemas check-v1-results upgrade-smoke matrix-plan matrix-status \
-        print-cfg-id check-a2-spec test-prefix test-compactor-native formal-compactor formal-smoke
+        print-cfg-id check-a2-spec test-prefix test-compactor-native formal-compactor formal-smoke \
+        test-compactor-pipe synth-compactor-pipe
 
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-28s %s\n", $$1, $$2}'
@@ -180,6 +181,13 @@ formal-smoke: ## SBY/solver/syntax smoke proof with the pinned suite
 formal-compactor: formal-smoke ## U05: unbounded miter proof (DUT vs independent filter) and extreme-case covers
 	$(PY) tools/formal.py compactor
 	$(PY) tools/formal.py compactor_cover
+
+# ---------------------------------------------------------------- U06 (pipelined compactor)
+test-compactor-pipe: ## U06: cocotb streaming/stall/bubble/reset tests of line_clear_pipe behind its ready/valid harness
+	$(RUN_RTL) --top line_clear_pipe_harness --test tb_clear_pipe --files-f rtl/files_compactor_pipe.f
+synth-compactor-pipe: ## U06: micro-synthesis of line_clear_pipe: no latch/DSP, register scale, selection logic live
+	$(PY) tools/synth_module.py --top line_clear_pipe --files-f rtl/files_compactor_pipe.f --expect-no-latch --expect-no-dsp --expect-ff-min 3000 --expect-ff-max 4200 --expect-lut-min 2000
+	$(PY) tools/synth_module.py --top line_clear_pipe --files-f rtl/files_compactor_pipe.f --noflatten --expect-module-live rank_match --expect-module-live row_select_groups --expect-module-live row_select_final
 
 # ---------------------------------------------------------------- U04 (A2 specification)
 check-a2-spec: ## U04: stage manifest, configuration identity, abstract cycle contract, A2 elaboration rejected

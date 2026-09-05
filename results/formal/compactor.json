@@ -9,10 +9,10 @@
  "status": "unbounded",
  "reason": "k-induction closed: holds for all inputs/states",
  "return_code": 0,
- "elapsed_s": 50.8,
+ "elapsed_s": 55.2,
  "summary": [
-  "summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:50 (50)",
-  "summary: Elapsed process time [H:MM:SS (secs)]: 0:01:09 (69)",
+  "summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:55 (55)",
+  "summary: Elapsed process time [H:MM:SS (secs)]: 0:01:17 (77)",
   "summary: engine_0 (smtbmc boolector) returned pass for basecase",
   "summary: engine_0 (smtbmc boolector) returned pass for induction",
   "summary: engine_0 did not produce any traces",
@@ -22,5 +22,5 @@
  "traces": [],
  "workdir": "build/formal/compactor",
  "log": "build/formal/compactor/logfile.txt",
- "recorded_utc": "2026-09-05T15:26:03Z"
+ "recorded_utc": "2026-09-05T15:28:36Z"
 }
