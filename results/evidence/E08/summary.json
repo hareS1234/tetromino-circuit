@@ -1,0 +1,62 @@
+{
+ "job": "E08",
+ "status": "passed",
+ "spec": "drop-v1.1",
+ "commit": "df015fcce596d7d1748f95375bc7c7f611d5b775-dirty",
+ "source_hash": "2cf1a5113d0c41c6",
+ "toolchain_id": "oss-cad-suite-2026-09-04-8fb2384c2f88",
+ "recorded_utc": "2026-09-05T04:27:03Z",
+ "note": "native driver 4.5 Mcycles/s; drivers agree on 50 requests; seeds 2000-2002 cap 250 match Python at every move",
+ "commands": [
+  {
+   "argv": [
+    "make",
+    "test-driver",
+    "COUNT=50"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 10.76,
+   "log": "results/evidence/E08/cmd00.log",
+   "tests": {
+    "pytest_failed": 0,
+    "rtl_total": 1,
+    "rtl_failed": 0
+   }
+  },
+  {
+   "argv": [
+    "make",
+    "test-core",
+    "COUNT=1000",
+    "DRIVER=native"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.91,
+   "log": "results/evidence/E08/cmd01.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "replay-suite",
+    "ARCH=0",
+    "CAP=250"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 1.89,
+   "log": "results/evidence/E08/cmd02.log",
+   "tests": {}
+  },
+  {
+   "argv": [
+    "make",
+    "demo-rtl"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 8.65,
+   "log": "results/evidence/E08/cmd03.log",
+   "tests": {}
+  }
+ ],
+ "elapsed_s": 23.21
+}
