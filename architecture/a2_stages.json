@@ -1,0 +1,1075 @@
+{
+ "schema": "a2-stage-manifest-v1",
+ "module": "candidate_pipe",
+ "banks": 23,
+ "advance": "advance = !rst && (!valid[22] || m_ready); s_ready = advance; m_valid = valid[22] && !rst",
+ "input_fields": [
+  {
+   "name": "rotation",
+   "bits": 2
+  },
+  {
+   "name": "x",
+   "bits": 4
+  },
+  {
+   "name": "candidate_id",
+   "bits": 6
+  },
+  {
+   "name": "tag",
+   "bits": 16
+  },
+  {
+   "name": "last",
+   "bits": 1
+  }
+ ],
+ "input_bits": 29,
+ "context_fields": [
+  {
+   "name": "ctx_board_i",
+   "bits": 200
+  },
+  {
+   "name": "ctx_heights_i",
+   "bits": 50
+  },
+  {
+   "name": "ctx_piece_i",
+   "bits": 3
+  }
+ ],
+ "output_fields": [
+  {
+   "name": "legal",
+   "bits": 1
+  },
+  {
+   "name": "last",
+   "bits": 1
+  },
+  {
+   "name": "candidate_id",
+   "bits": 6
+  },
+  {
+   "name": "tag",
+   "bits": 16
+  },
+  {
+   "name": "y",
+   "bits": 5
+  },
+  {
+   "name": "score",
+   "bits": 32
+  }
+ ],
+ "latency": {
+  "visible_edges": 22,
+  "transfer_edges": 23,
+  "candidate_ii": 1,
+  "decision_formula": "D(N) = N + 29 with the existing tetris_core controller (see docs/design_a2.md)",
+  "request_interval_formula": "R(N) = D(N) + 2 = N + 31 with immediate response consumption"
+ },
+ "stage_groups": {
+  "drop_merge_pipe": [
+   0,
+   3
+  ],
+  "line_clear_pipe": [
+   4,
+   12
+  ],
+  "features_pipe": [
+   13,
+   19
+  ],
+  "score_pipe": [
+   20,
+   22
+  ]
+ },
+ "note": "Proposed schedule (guide \u00a75.5). Widths are register bits before synthesis optimization, not mapped LUT/FF counts. Any added bank must update this file, the latency constants and docs/design_a2.md together.",
+ "stages": [
+  {
+   "index": 0,
+   "name": "P0 decode+select",
+   "operation": "shape ROM decode, x/rotation validity, select up to four original heights (defined zero for unoccupied/out-of-range columns)",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "rotation",
+     "bits": 2
+    },
+    {
+     "name": "x",
+     "bits": 4
+    },
+    {
+     "name": "geom_ok",
+     "bits": 1
+    },
+    {
+     "name": "dx",
+     "bits": 8
+    },
+    {
+     "name": "dy",
+     "bits": 8
+    },
+    {
+     "name": "height",
+     "bits": 3
+    },
+    {
+     "name": "bottom",
+     "bits": 8
+    },
+    {
+     "name": "colmask",
+     "bits": 4
+    },
+    {
+     "name": "sel_heights",
+     "bits": 20
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 81,
+   "critical_path_candidate": "height mux"
+  },
+  {
+   "index": 1,
+   "name": "P1 differences",
+   "operation": "four signed 7-bit height-minus-bottom differences (-1 for unoccupied columns)",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "rotation",
+     "bits": 2
+    },
+    {
+     "name": "x",
+     "bits": 4
+    },
+    {
+     "name": "geom_ok",
+     "bits": 1
+    },
+    {
+     "name": "dx",
+     "bits": 8
+    },
+    {
+     "name": "dy",
+     "bits": 8
+    },
+    {
+     "name": "height",
+     "bits": 3
+    },
+    {
+     "name": "diff",
+     "bits": 28
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 77
+  },
+  {
+   "index": 2,
+   "name": "P2 landing",
+   "operation": "balanced maximum of the four differences, clamp at zero, legal = geom_ok && y + height <= 20",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "x",
+     "bits": 4
+    },
+    {
+     "name": "dx",
+     "bits": 8
+    },
+    {
+     "name": "dy",
+     "bits": 8
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 49
+  },
+  {
+   "index": 3,
+   "name": "P3 merge",
+   "operation": "parallel four-cell merge into the immutable original board (canonical zero board when illegal)",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "board",
+     "bits": 200
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 229,
+   "critical_path_candidate": "board fanout"
+  },
+  {
+   "index": 4,
+   "name": "P4 keep+init",
+   "operation": "keep[s] = row != 1023; p0[s] = zero_extend_5(keep[s])",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "board",
+     "bits": 200
+    },
+    {
+     "name": "keep",
+     "bits": 20
+    },
+    {
+     "name": "prefix",
+     "bits": 100
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 349
+  },
+  {
+   "index": 5,
+   "name": "P5 prefix stride 1",
+   "operation": "next[s] = prev[s] + (prev[s-1] if s >= 1 else 0); board/keep/metadata delayed",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "board",
+     "bits": 200
+    },
+    {
+     "name": "keep",
+     "bits": 20
+    },
+    {
+     "name": "prefix",
+     "bits": 100
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 349
+  },
+  {
+   "index": 6,
+   "name": "P6 prefix stride 2",
+   "operation": "next[s] = prev[s] + (prev[s-2] if s >= 2 else 0); board/keep/metadata delayed",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "board",
+     "bits": 200
+    },
+    {
+     "name": "keep",
+     "bits": 20
+    },
+    {
+     "name": "prefix",
+     "bits": 100
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 349
+  },
+  {
+   "index": 7,
+   "name": "P7 prefix stride 4",
+   "operation": "next[s] = prev[s] + (prev[s-4] if s >= 4 else 0); board/keep/metadata delayed",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "board",
+     "bits": 200
+    },
+    {
+     "name": "keep",
+     "bits": 20
+    },
+    {
+     "name": "prefix",
+     "bits": 100
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 349
+  },
+  {
+   "index": 8,
+   "name": "P8 prefix stride 8",
+   "operation": "next[s] = prev[s] + (prev[s-8] if s >= 8 else 0); board/keep/metadata delayed",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "board",
+     "bits": 200
+    },
+    {
+     "name": "keep",
+     "bits": 20
+    },
+    {
+     "name": "prefix",
+     "bits": 100
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 349
+  },
+  {
+   "index": 9,
+   "name": "P9 prefix stride 16 + counts",
+   "operation": "final inclusive ranks; survivors = rank[19]; cleared = 20 - survivors",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "board",
+     "bits": 200
+    },
+    {
+     "name": "keep",
+     "bits": 20
+    },
+    {
+     "name": "rank",
+     "bits": 100
+    },
+    {
+     "name": "survivors",
+     "bits": 5
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 359,
+   "critical_path_candidate": "prefix arithmetic"
+  },
+  {
+   "index": 10,
+   "name": "P10 match",
+   "operation": "match[d][s] = keep[s] && (rank[s] == d+1) for 20x20 (d,s)",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "match",
+     "bits": 400
+    },
+    {
+     "name": "board",
+     "bits": 200
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 634,
+   "critical_path_candidate": "rank comparisons"
+  },
+  {
+   "index": 11,
+   "name": "P11 select groups",
+   "operation": "five groups of four sources per destination: OR of (row[s] & replicate(match[d][s]))",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "partial_rows",
+     "bits": 1000
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 1034,
+   "critical_path_candidate": "row-selection wiring"
+  },
+  {
+   "index": 12,
+   "name": "P12 compacted board",
+   "operation": "balanced OR across the five partial rows per destination; zero-padded top",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "board",
+     "bits": 200
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 234
+  },
+  {
+   "index": 13,
+   "name": "P13 group codes",
+   "operation": "fixed-wiring transpose; per 4-bit column group: local height code 0-4 and occupied count 0-4",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "group_code",
+     "bits": 150
+    },
+    {
+     "name": "group_count",
+     "bits": 150
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 334
+  },
+  {
+   "index": 14,
+   "name": "P14 heights+occupied",
+   "operation": "height = 4*g + local_code of the highest nonempty group (balanced select); occupied = balanced sum of group counts",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "heights",
+     "bits": 50
+    },
+    {
+     "name": "occupied",
+     "bits": 50
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 134,
+   "critical_path_candidate": "encoders"
+  },
+  {
+   "index": 15,
+   "name": "P15 holes+differences",
+   "operation": "holes = height - occupied (assert occupied <= height); |h[c] - h[c-1]| in signed 7-bit arithmetic",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "heights",
+     "bits": 50
+    },
+    {
+     "name": "holes",
+     "bits": 50
+    },
+    {
+     "name": "absdiff",
+     "bits": 45
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 179
+  },
+  {
+   "index": 16,
+   "name": "P16 sum level 1",
+   "operation": "16 zero-padded leaves -> 8 partial sums per feature (6-bit)",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "a_partial",
+     "bits": 48
+    },
+    {
+     "name": "q_partial",
+     "bits": 48
+    },
+    {
+     "name": "u_partial",
+     "bits": 48
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 178
+  },
+  {
+   "index": 17,
+   "name": "P17 sum level 2",
+   "operation": "8 -> 4 partial sums per feature (7-bit)",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "a_partial",
+     "bits": 28
+    },
+    {
+     "name": "q_partial",
+     "bits": 28
+    },
+    {
+     "name": "u_partial",
+     "bits": 28
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 118
+  },
+  {
+   "index": 18,
+   "name": "P18 sum level 3",
+   "operation": "4 -> 2 partial sums per feature (8-bit)",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "a_partial",
+     "bits": 16
+    },
+    {
+     "name": "q_partial",
+     "bits": 16
+    },
+    {
+     "name": "u_partial",
+     "bits": 16
+    },
+    {
+     "name": "cleared",
+     "bits": 5
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 82
+  },
+  {
+   "index": 19,
+   "name": "P19 feature sums",
+   "operation": "final sums in 9-bit arithmetic, bounds A<=200 Q<=190 U<=180 L<=4 checked before exposing 8/3 bits",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "A",
+     "bits": 8
+    },
+    {
+     "name": "Q",
+     "bits": 8
+    },
+    {
+     "name": "U",
+     "bits": 8
+    },
+    {
+     "name": "L",
+     "bits": 3
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 56
+  },
+  {
+   "index": 20,
+   "name": "P20 coefficient terms",
+   "operation": "widened shift-add: 76L = (L<<6)+(L<<3)+(L<<2); 51A = (A<<5)+(A<<4)+(A<<1)+A; 36Q = (Q<<5)+(Q<<2); 18U = (U<<4)+(U<<1)",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "term_l",
+     "bits": 32
+    },
+    {
+     "name": "term_a",
+     "bits": 32
+    },
+    {
+     "name": "term_q",
+     "bits": 32
+    },
+    {
+     "name": "term_u",
+     "bits": 32
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 157
+  },
+  {
+   "index": 21,
+   "name": "P21 signed groups",
+   "operation": "pos = 76L - 51A (signed 32); neg = 36Q + 18U (signed 32)",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "pos_term",
+     "bits": 32
+    },
+    {
+     "name": "neg_term",
+     "bits": 32
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 93
+  },
+  {
+   "index": 22,
+   "name": "P22 score",
+   "operation": "score = pos - neg (signed 32); output token m_* = {legal, last, candidate_id, tag, y, score}",
+   "delay_edges": 1,
+   "out_fields": [
+    {
+     "name": "score",
+     "bits": 32
+    },
+    {
+     "name": "legal",
+     "bits": 1
+    },
+    {
+     "name": "y",
+     "bits": 5
+    },
+    {
+     "name": "candidate_id",
+     "bits": 6
+    },
+    {
+     "name": "tag",
+     "bits": 16
+    },
+    {
+     "name": "last",
+     "bits": 1
+    }
+   ],
+   "out_bits": 61,
+   "critical_path_candidate": "best-result feedback (outside the pipe)"
+  }
+ ]
+}
