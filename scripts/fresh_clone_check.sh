@@ -93,6 +93,7 @@ rec = {"schema": "fresh-clone-check-v2", "family": family, "ok": bool(int(ok)) a
        "host": host, "steps": steps}
 pathlib.Path(out).parent.mkdir(parents=True, exist_ok=True)
 pathlib.Path(out).write_text(json.dumps(rec, indent=1) + "\n")
+print(f"CHECK fresh_clone {sum(1 for s in steps if s['exit_code'] == 0)}/{len(steps)}")
 print("[fresh] record ->", out)
 EOF
 }
