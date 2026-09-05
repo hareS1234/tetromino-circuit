@@ -3,8 +3,9 @@
 #   bash scripts/env.sh python tools/doctor.py --profile full
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-export PATH="$ROOT/.venv/bin:$ROOT/.tools/oss-cad-suite/bin:$PATH"
-export VIRTUAL_ENV="$ROOT/.venv"
+VENV="$ROOT/${TETROMINO_VENV:-.venv}"
+export PATH="$VENV/bin:$ROOT/.tools/oss-cad-suite/bin:$PATH"
+export VIRTUAL_ENV="$VENV"
 export TETROMINO_ROOT="$ROOT"
 # Verilator inside the suite needs its own share directory; the suite's wrapper sets it, keep any user override.
 cd "$ROOT"

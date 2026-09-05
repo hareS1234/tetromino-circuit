@@ -1,0 +1,46 @@
+name: bootstrap
+description: >-
+  Pinned toolchain for this repository: locked Python environment plus (optionally) the OSS CAD Suite
+  archive resolved from toolchains/oss_cad_suite.lock.json for the runner's OS/arch, restored from a
+  cache keyed by OS, arch, release and recorded archive hash, and hash-verified by scripts/bootstrap.sh
+  before extraction. A cold cache downloads the release asset directly (no GitHub API dependency).
+inputs:
+  python-version:
+    description: Python version (must be one the lock lists as supported)
+    default: "3.12"
+  hdl:
+    description: install the OSS CAD Suite ("true") or only the Python environment ("false")
+    default: "true"
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+    - name: resolve this runner's lock entry
+      id: lock
+      shell: bash
+      run: |
+        python3 - <<'PY' >> "$GITHUB_OUTPUT"
+        import json, platform
+        doc = json.load(open("toolchains/oss_cad_suite.lock.json"))
+        plat = f"{platform.system()}-{platform.machine()}"
+        family = doc["platform_map"][plat]
+        entry = doc["assets"][family]
+        print(f"platform={plat}")
+        print(f"family={family}")
+        print(f"asset={entry['asset']}")
+        print(f"sha256={entry['sha256'] or 'unenrolled'}")
+        print(f"release={doc['release']}")
+        PY
+    - name: restore the pinned archive (key = OS/arch/release/hash; verified before extraction)
+      if: inputs.hdl == 'true'
+      uses: actions/cache@v4
+      with:
+        path: .tools/${{ steps.lock.outputs.asset }}
+        key: oss-cad-suite-${{ runner.os }}-${{ runner.arch }}-${{ steps.lock.outputs.release }}-${{ steps.lock.outputs.sha256 }}
+    - name: bootstrap
+      shell: bash
+      env:
+        TETROMINO_SKIP_SUITE: ${{ inputs.hdl == 'true' && '0' || '1' }}
+      run: bash scripts/bootstrap.sh

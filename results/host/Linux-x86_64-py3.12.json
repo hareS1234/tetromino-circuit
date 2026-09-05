@@ -7,13 +7,13 @@
  "asset_url": "https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2026-09-04/oss-cad-suite-linux-x64-20260904.tgz",
  "archive_sha256_observed": "8fb2384c2f88126f8936fc8f680ed2ebdf0ce440a7457c8f5a21c5c6e3e2de44",
  "archive_sha256_expected": "8fb2384c2f88126f8936fc8f680ed2ebdf0ce440a7457c8f5a21c5c6e3e2de44",
- "python": "3.11",
- "python_full": "3.11.15",
- "venv": ".venv",
+ "python": "3.12",
+ "python_full": "3.12.3",
+ "venv": ".venv312",
  "os_release": "Linux-6.18.44-fc-v24-x86_64-with-glibc2.39",
  "cxx": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
  "verilator": "Verilator 5.051 devel rev v5.050-309-g228635918 (mod)",
  "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
  "nextpnr_ecp5": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
- "recorded_utc": "2026-09-05T15:02:40Z"
+ "recorded_utc": "2026-09-05T14:54:35Z"
 }

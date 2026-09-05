@@ -1,77 +1,103 @@
+# Baseline checks for tetromino-circuit (U03).  Three tiers:
+#   fast  - pure-Python checks, no HDL tools (every push / pull request)
+#   hdl   - the Linux HDL gate: pinned OSS CAD Suite, directed RTL tests, native corpus, one real route
+#   heavy - manually triggered experiments from an explicit manifest/protocol (never a full matrix by default)
+# Action versions used (major tags; pin to commit SHAs in U20 once a remote run has been inspected):
+#   actions/checkout@v5, actions/setup-python@v5, actions/cache@v4, actions/upload-artifact@v4
 name: checks
 on:
   push:
   pull_request:
   workflow_dispatch:
     inputs:
-      full:
-        description: "run the full corpus, synthesis and routing matrix"
-        default: "false"
+      manifest:
+        description: "hardware matrix manifest for the heavy job (hardware-matrix-v2)"
+        default: "benchmarks/smoke_v2.json"
+      quality_protocol:
+        description: "quality protocol for the heavy job (quality-protocol-v2)"
+        default: "benchmarks/quality_smoke_v2.json"
+      quality_suite:
+        description: "suite name inside the quality protocol"
+        default: "smoke"
 
 permissions:
   contents: read
 
 jobs:
-  verify:
+  fast:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-python@v5
+      - uses: ./.github/actions/bootstrap
         with:
-          python-version: '3.12'
-      - name: cache the pinned OSS CAD Suite archive
-        uses: actions/cache@v4
-        with:
-          path: .tools/oss-cad-suite-linux-x64-20260904.tgz
-          key: oss-cad-suite-2026-09-04-linux-x64
-      # same bootstrap as local development: pinned suite date, hash-checked archive, locked Python deps
-      - run: bash scripts/bootstrap.sh
-      - run: make doctor
-      - run: make gen
+          hdl: "false"
+      - run: make doctor-python
+      - run: make check-gen
       - run: git diff --exit-code -- rtl/generated tests/fixtures/shapes.json
       - run: bash scripts/env.sh python tools/make_streams.py --check
-      - run: make test-python
+      - run: make test-python PYTEST_ARGS="--junitxml=build/junit/python.xml"
+      - run: make check-v1-results
+      - run: bash scripts/env.sh python tools/write_report.py --check
+      - run: bash scripts/env.sh python tools/ci_local.py --validate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fast-results
+          path: |
+            build/junit/**
+          if-no-files-found: ignore
+
+  hdl:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/bootstrap
+      - run: make doctor
+      - run: make test-bootstrap PYTEST_ARGS="--junitxml=build/junit/bootstrap.xml"
       - run: make smoke
       - run: make test-rtl
       - run: make test-core ARCH=1 BOARD_REPR=1 COUNT=200 DRIVER=native
-      - run: make demo-python
-      - run: make plots
-      - run: bash scripts/env.sh python tools/write_report.py --check
+      - run: make test-identities PYTEST_ARGS="--junitxml=build/junit/identities.xml"
+      - run: make test-result-schemas PYTEST_ARGS="--junitxml=build/junit/result_schemas.xml"
+      - run: make upgrade-smoke
+      - run: make matrix-status
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: verification-results
+          name: hdl-results
           path: |
-            build/**/*.xml
+            build/junit/**
+            build/**/results.xml
             build/**/*.log
-            results/*.jsonl
-            results/evidence/**
+            build/route/**/record.json
+            results/v2/raw/**
+            results/v2/summary/**
+            results/host/*.json
           if-no-files-found: ignore
 
-  full-matrix:
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.full == 'true'
+  heavy:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
-    timeout-minutes: 300
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: bash scripts/bootstrap.sh
+      - uses: ./.github/actions/bootstrap
       - run: make doctor
-      - run: make test-core COUNT=1000 DRIVER=native
-      - run: make measure-matrix
-      - run: make bench SUITE=precision
-      - run: make bench SUITE=depth
+      - run: make matrix-plan MANIFEST=${{ inputs.manifest }}
+      - run: make measure-matrix MANIFEST=${{ inputs.manifest }}
+      - run: bash scripts/env.sh python tools/bench.py --suite ${{ inputs.quality_suite }} --config ${{ inputs.quality_protocol }} --out-root results/v2
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: implementation-results
+          name: heavy-results
           path: |
-            results/implementation.csv
-            results/implementation_manifest.json
-            results/quality.csv
-            results/quality_summary.json
-            build/pnr_*/nextpnr.log
-            build/synth_*/yosys.log
+            results/v2/raw/**
+            results/v2/summary/**
+            results/v2/runner.heartbeat.json
+            build/route/**/nextpnr.log
+            build/route/**/record.json
+            build/synth/**/yosys.log
+            build/synth/**/summary.json
+          if-no-files-found: ignore

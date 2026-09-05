@@ -10,6 +10,7 @@ import os
 import shutil
 import stat
 import subprocess
+import sys
 import tarfile
 from pathlib import Path
 
@@ -165,16 +166,18 @@ def test_lock_asset_name_must_match_release(linux):
 
 
 def doctor(tmp: Path, platform: str, lock: Path, extra_env=None):
+    """Run doctor with the interpreter running this test (whichever venv that is)."""
     env = dict(os.environ)
+    venv_name = Path(sys.prefix).name
     env.update({"TETROMINO_PLATFORM": platform, "TETROMINO_LOCK": str(lock), "TETROMINO_TOOLS_DIR": str(tmp / "tools"),
-                "TETROMINO_HOST_DIR": str(tmp / "host"), "PATH": f"{tmp / 'tools' / 'oss-cad-suite' / 'bin'}:{os.environ['PATH']}"})
+                "TETROMINO_HOST_DIR": str(tmp / "host"), "TETROMINO_VENV": venv_name,
+                "PATH": f"{tmp / 'tools' / 'oss-cad-suite' / 'bin'}:{os.environ['PATH']}"})
     if extra_env:
         env.update(extra_env)
-    return subprocess.run([str(ROOT / ".venv" / "bin" / "python"), str(ROOT / "tools" / "doctor.py"), "--profile", "full"],
+    return subprocess.run([sys.executable, str(ROOT / "tools" / "doctor.py"), "--profile", "full"],
                           cwd=ROOT, env=env, capture_output=True, text=True)
 
 
-@pytest.mark.skipif(not (ROOT / ".venv" / "bin" / "python").exists(), reason="venv not created")
 def test_doctor_validates_installed_suite_against_platform_entry(linux):
     """doctor reads the v2 lock: the fake suite passes the toolchain identity checks for its own family
     (the fake nextpnr lacks real options, which is the only reported problem), an unenrolled platform,

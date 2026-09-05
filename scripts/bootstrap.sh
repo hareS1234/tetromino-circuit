@@ -9,7 +9,9 @@
 # machine facts are written to results/host/<os>-<arch>.json and never into the lock.  The v1
 # toolchain.lock.json is historical and is not modified.  Set TETROMINO_PLATFORM=Linux-x86_64 etc.
 # to override detection for tests; TETROMINO_SKIP_PYTHON=1 skips the venv; TETROMINO_LOCK, TETROMINO_TOOLS_DIR,
-# TETROMINO_HOST_DIR and TETROMINO_ARCHIVE_SOURCE redirect the lock, install dir, observations and download.
+# TETROMINO_HOST_DIR and TETROMINO_ARCHIVE_SOURCE redirect the lock, install dir, observations and download;
+# TETROMINO_VENV (default .venv) names the virtual environment, e.g. TETROMINO_VENV=.venv312 PYTHON=python3.12;
+# TETROMINO_SKIP_SUITE=1 installs only the Python environment (software-only CI job; hardware targets need the suite).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -18,6 +20,7 @@ LOCK="${TETROMINO_LOCK:-$ROOT/toolchains/oss_cad_suite.lock.json}"
 TOOLS_DIR="${TETROMINO_TOOLS_DIR:-$ROOT/.tools}"
 SUITE_DIR="$TOOLS_DIR/oss-cad-suite"
 HOST_DIR="${TETROMINO_HOST_DIR:-$ROOT/results/host}"
+VENV="$ROOT/${TETROMINO_VENV:-.venv}"
 PYTHON_BIN="${PYTHON:-python3}"
 ENROLL=0
 for a in "$@"; do
@@ -70,7 +73,9 @@ command -v tar >/dev/null || fail "tar not found"
 mkdir -p "$TOOLS_DIR" "$HOST_DIR" build results/evidence
 
 # ---- 3. archive: download (.part + atomic rename), hash, enroll or verify --------
-if [ -n "$EXPECTED" ] && [ -x "$SUITE_DIR/bin/yosys" ] && [ -f "$SUITE_DIR/.bootstrap-sha256" ] \
+if [ "${TETROMINO_SKIP_SUITE:-0}" = 1 ]; then
+  log "TETROMINO_SKIP_SUITE=1: skipping the OSS CAD Suite (software-only environment)"
+elif [ -n "$EXPECTED" ] && [ -x "$SUITE_DIR/bin/yosys" ] && [ -f "$SUITE_DIR/.bootstrap-sha256" ] \
    && [ "$(cat "$SUITE_DIR/.bootstrap-sha256")" = "$EXPECTED" ] && [ "$(cat "$SUITE_DIR/.bootstrap-asset" 2>/dev/null)" = "$ASSET" ]; then
   log "OSS CAD Suite $ASSET already installed with the locked hash"
 else
@@ -122,24 +127,26 @@ EOF
   echo "$ASSET" > "$SUITE_DIR/.bootstrap-asset"
   echo "$SHA" > "$SUITE_DIR/.bootstrap-sha256"
 fi
-for exe in $(lockq required_executables | tr -d '[]",'); do
-  [ -x "$SUITE_DIR/bin/$exe" ] || fail "suite is missing $exe"
-done
-if ! "$SUITE_DIR/bin/yosys" -V >/dev/null 2>"$TOOLS_DIR/yosys-check.err"; then
-  case "$PLATFORM" in Darwin-*)
-    log "yosys failed to execute; if the message below is a Gatekeeper/quarantine error, run: cd $SUITE_DIR && ./activate"
-    cat "$TOOLS_DIR/yosys-check.err" >&2 ;;
-  esac
-  fail "installed suite does not execute (see $TOOLS_DIR/yosys-check.err)"
+if [ "${TETROMINO_SKIP_SUITE:-0}" != 1 ]; then
+  for exe in $(lockq required_executables | tr -d '[]",'); do
+    [ -x "$SUITE_DIR/bin/$exe" ] || fail "suite is missing $exe"
+  done
+  if ! "$SUITE_DIR/bin/yosys" -V >/dev/null 2>"$TOOLS_DIR/yosys-check.err"; then
+    case "$PLATFORM" in Darwin-*)
+      log "yosys failed to execute; if the message below is a Gatekeeper/quarantine error, run: cd $SUITE_DIR && ./activate"
+      cat "$TOOLS_DIR/yosys-check.err" >&2 ;;
+    esac
+    fail "installed suite does not execute (see $TOOLS_DIR/yosys-check.err)"
+  fi
 fi
 
 # ---- 4. Python environment (pinned installer, locked requirements) -------------
 if [ "${TETROMINO_SKIP_PYTHON:-0}" != 1 ]; then
-  if [ ! -x "$ROOT/.venv/bin/python" ]; then
-    log "creating .venv with $PYTHON_BIN"
-    "$PYTHON_BIN" -m venv "$ROOT/.venv"
+  if [ ! -x "$VENV/bin/python" ]; then
+    log "creating ${TETROMINO_VENV:-.venv} with $PYTHON_BIN"
+    "$PYTHON_BIN" -m venv "$VENV"
   fi
-  VPY="$ROOT/.venv/bin/python"
+  VPY="$VENV/bin/python"
   PIP_PIN="$(lockq python pip)"
   "$VPY" -m pip install --quiet "pip==$PIP_PIN" >/dev/null
   [ -f "$ROOT/requirements.lock" ] || fail "requirements.lock missing; resolve it deliberately and commit it"
@@ -149,9 +156,12 @@ if [ "${TETROMINO_SKIP_PYTHON:-0}" != 1 ]; then
 fi
 
 # ---- 5. observed host facts (never the lock) ------------------------------------
-"$PYTHON_BIN" - "$HOST_DIR" "$SUITE_DIR" "$ASSET" "$ASSET_URL" "$RELEASE" "$PLATFORM" "$FAMILY" "$PYVER" "$EXPECTED" <<'EOF'
+if [ "${TETROMINO_SKIP_SUITE:-0}" = 1 ]; then
+  log "done (software-only). Use: bash scripts/env.sh <command>"; exit 0
+fi
+"$PYTHON_BIN" - "$HOST_DIR" "$SUITE_DIR" "$ASSET" "$ASSET_URL" "$RELEASE" "$PLATFORM" "$FAMILY" "$PYVER" "$EXPECTED" "${TETROMINO_VENV:-.venv}" <<'EOF'
 import json, subprocess, sys, pathlib, datetime, platform as pf
-host_dir, suite, asset, url, release, plat, family, pyver, expected = sys.argv[1:]
+host_dir, suite, asset, url, release, plat, family, pyver, expected, venv = sys.argv[1:]
 def ver(cmd):
     try:
         out = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
@@ -162,7 +172,7 @@ b = pathlib.Path(suite) / "bin"
 doc = {
     "schema": "host-observation-v1", "platform": plat, "asset_family": family, "release": release, "asset": asset,
     "asset_url": url, "archive_sha256_observed": (pathlib.Path(suite) / ".bootstrap-sha256").read_text().strip(),
-    "archive_sha256_expected": expected, "python": pyver, "python_full": sys.version.split()[0],
+    "archive_sha256_expected": expected, "python": pyver, "python_full": sys.version.split()[0], "venv": venv,
     "os_release": pf.platform(), "cxx": ver(["c++", "--version"]),
     "verilator": ver([str(b / "verilator"), "--version"]), "yosys": ver([str(b / "yosys"), "-V"]),
     "nextpnr_ecp5": ver([str(b / "nextpnr-ecp5"), "--version"]),

@@ -10,7 +10,10 @@ root.  A job with zero commands is rejected.  The record stores each command's a
 elapsed time and log path, the test counts parsed from its output (pytest/cocotb/native lines),
 the named checks with their counts, and the source-closure hash from tools/identity.py.
 Status is 'passed' only if every command exited 0 and at least one check recorded a nonzero
-count; otherwise 'failed'.  --blocked "reason" records a blocked job without running anything.
+count; otherwise 'failed'.  --blocked "reason" records a blocked job: with no commands nothing
+runs; with commands they run and are recorded, and the status is 'blocked' (never 'passed') when
+they all succeed, 'failed' otherwise — local evidence for a gate whose decisive step (a remote
+run, a Mac) cannot be executed here.
 """
 from __future__ import annotations
 
@@ -137,7 +140,7 @@ def main() -> int:
         "recorded_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "commands": [], "checks": [], "artifacts": [], "limitations": list(opts["limitations"]), "note": opts["note"],
     }
-    if opts["blocked"]:
+    if opts["blocked"] and not groups:
         record["status"] = "blocked"
         record["limitations"].append(opts["blocked"])
         (job_dir / "summary.json").write_text(json.dumps(record, indent=1) + "\n")
@@ -167,7 +170,9 @@ def main() -> int:
     ok = all(r["exit_code"] == 0 for r in results) and all(c["ok"] for c in record["checks"]) and all(a["exists"] for a in record["artifacts"])
     if ok and not any_count and not record["checks"]:
         record["limitations"].append("no test counts were parsed from the command output")
-    record["status"] = "passed" if ok else "failed"
+    record["status"] = ("blocked" if opts["blocked"] else "passed") if ok else "failed"
+    if opts["blocked"]:
+        record["limitations"].append(f"blocked: {opts['blocked']}")
     (job_dir / "summary.json").write_text(json.dumps(record, indent=1) + "\n")
     print(f"[ugate] {job}: {record['status']} ({sum(r['elapsed_s'] for r in results):.1f}s) -> {job_dir}/summary.json")
     return 0 if ok else 1

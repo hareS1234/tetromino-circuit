@@ -2,6 +2,7 @@
 SHELL := /bin/bash
 ENV := bash scripts/env.sh
 PY := $(ENV) python
+PYTEST_ARGS ?=
 RUN_RTL := $(PY) tools/run_rtl.py
 
 # Hardware/policy configuration (validated by model/config.py in every tool)
@@ -52,13 +53,13 @@ streams: ## regenerate the committed piece streams
 	$(PY) tools/make_streams.py
 	$(PY) tools/make_streams.py --check
 test-geometry: ## E01 gate
-	$(PY) -m pytest tests/unit/test_pieces.py tests/unit/test_board.py -q
+	$(PY) -m pytest tests/unit/test_pieces.py tests/unit/test_board.py -q $(PYTEST_ARGS)
 test-reference: ## E02 gate: 40,500-case three-way differential and policy equivalence
-	$(PY) -m pytest tests/unit/test_game.py tests/unit/test_reference.py tests/unit/test_policy.py -q
+	$(PY) -m pytest tests/unit/test_game.py tests/unit/test_reference.py tests/unit/test_policy.py -q $(PYTEST_ARGS)
 test-bootstrap: ## U01: mocked-platform bootstrap tests
-	$(PY) -m pytest tests/unit/test_bootstrap.py -q
+	$(PY) -m pytest tests/unit/test_bootstrap.py -q $(PYTEST_ARGS)
 test-python: ## all pure-Python tests
-	$(PY) -m pytest tests/unit -q
+	$(PY) -m pytest tests/unit -q $(PYTEST_ARGS)
 demo-python: ## software replay and GIF (seed 2000, 250 pieces)
 	$(PY) tools/play.py --backend python --policy heuristic --seed 2000 --max-pieces 250 --out results/python_demo.jsonl
 	$(PY) tools/play.py --backend python --policy random_legal --seed 2000 --max-pieces 250 --out results/random_demo.jsonl
@@ -119,7 +120,7 @@ test-precision: ## every profile against its own reference (scorer tuples + full
 measure-precision:
 	$(PY) tools/measure_precision.py --split validation
 test-lookahead-reference:
-	$(PY) -m pytest tests/unit/test_lookahead.py -q
+	$(PY) -m pytest tests/unit/test_lookahead.py -q $(PYTEST_ARGS)
 test-lookahead-rtl:
 	$(RUN_RTL) --top tetris_core --test tb_lookahead --files-f rtl/files.f --param ARCH=1 --param BOARD_REPR=1 --param DEPTH=2
 	$(RUN_RTL) --top tetris_core --test tb_lookahead --files-f rtl/files.f --param ARCH=1 --param BOARD_REPR=1 --param DEPTH=1 --build-tag d1preview
@@ -154,9 +155,9 @@ check-release:
 
 # ---------------------------------------------------------------- U02 (identities, resume, summaries, gates)
 test-identities: ## U02: canonical identities and the invalidation matrix
-	$(PY) -m pytest tests/unit/test_identity.py -q
+	$(PY) -m pytest tests/unit/test_identity.py -q $(PYTEST_ARGS)
 test-result-schemas: ## U02: route/quality records, status classification, single-identity summaries, gates, runner
-	$(PY) -m pytest tests/unit/test_result_schemas.py tests/unit/test_runner.py tests/unit/test_bench_v2.py -q
+	$(PY) -m pytest tests/unit/test_result_schemas.py tests/unit/test_runner.py tests/unit/test_bench_v2.py -q $(PYTEST_ARGS)
 check-v1-results: ## U02: frozen v1 experiment validated by exact expected-job membership
 	$(PY) tools/check_v1_results.py
 upgrade-smoke: ## U02: short development preset — one real route + 50-state corpus + tiny v2 quality suite (resumable)

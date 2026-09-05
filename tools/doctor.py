@@ -57,8 +57,9 @@ def check_python(problems, facts, lock):
     supported = (lock or {}).get("python", {}).get("supported", ["3.11", "3.12"])
     if f"{v.major}.{v.minor}" not in supported:
         problems.append(f"python {'/'.join(supported)} required by the lock, running {v.major}.{v.minor}")
-    if not sys.executable.startswith(str(ROOT / ".venv")):
-        problems.append("not running inside .venv (use scripts/env.sh)")
+    venv = ROOT / os.environ.get("TETROMINO_VENV", ".venv")
+    if not sys.executable.startswith(str(venv)):
+        problems.append(f"not running inside {venv.name} (use scripts/env.sh)")
     for mod in ("pytest", "numpy", "matplotlib", "PIL", "cocotb", "cocotb_tools", "model"):
         try:
             m = importlib.import_module(mod)
