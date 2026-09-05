@@ -12,7 +12,7 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 | U04 A2 specification | passed | `docs/design_a2.md`, `architecture/a2_stages.json` (23 banks), `model/config.py` verified/declared/unsupported with Makefile ids from `python -m model.config`, `model/a2_token_model.py`; gate `make check-a2-spec`: 14 spec tests, stages 39/39, widths 5/5, identity 13/13, latency 16/16, A2 elaboration rejected 2/2 (`results/evidence/U04`, commit `034e3b9`) |
 | U05 compactor reference + formal | passed | `model/compaction.py`, `rtl/row_rank20.sv`, `rtl/line_clear_parallel.sv`, `sim/compactor_main.cpp`, `formal/{smoke,compactor}`; gate: test-prefix 15 passed, native exhaustive 1,048,576/1,048,576 masks, random 100,000/100,000 boards, formal smoke unbounded, miter **unbounded** (k-induction, boolector, 51 s), covers reached (`results/formal/*.json`, `results/evidence/U05`) |
 | U06 pipelined compactor | passed | `rtl/line_clear_pipe.sv` (P4–P12, shared `advance_i`), `rtl/line_clear_pipe_harness.sv`, `sim/compactor_pipe_main.cpp`, `tb/tb_clear_pipe.py`, `tools/synth_module.py`; gate: cocotb 4/4, native stream continuous 4096 (spacing 1, transfer 9 edges), random 4096 (0 mismatch/stability/spurious), stalls 8/8, back-to-back 300, reset 22/22, micro-synthesis 3283 LUT4 / 3482 FF / 0 DSP / no latch with match+select modules live (`results/evidence/U06`) |
-| U07 landing/merge front end | pending | |
+| U07 landing/merge front end | passed | `rtl/drop_merge_pipe.sv` (P0–P3), harness, `tb/tb_drop_merge_pipe.py`; gate: cocotb 5/5 (40,500 corpus tokens + fixtures, stalls/bubbles, reset at every occupancy), smoke synthesis 1019 LUT4 / 420 FF / 0 DSP / no latch (`results/evidence/U07`) |
 | U08 feature/score pipes | pending | |
 | U09 candidate pipeline | pending | |
 | U10 search + core integration | pending | |
@@ -29,8 +29,8 @@ Branch `upgrade/a2` from `v1.0` (`c66ad9b`). Evidence per job in `results/eviden
 
 ## Current
 
-* Last passing job: U06 (U03 is blocked on the remote run only; its local validation passed).
-* Current job: U07.
+* Last passing job: U07 (U03 is blocked on the remote run only; its local validation passed).
+* Current job: U08.
 * Active process/log: none.
-* Next command: `rtl/drop_merge_pipe.sv` (P0–P3), `tb/tb_drop_merge_pipe.py`, diagnostic file list; gate `make test-drop-merge-pipe` plus a smoke synthesis with no latches/DSPs.
+* Next command: `rtl/features_pipe.sv` (P13–P19), `rtl/score_pipe.sv` (P20–P22), `tb/tb_features_pipe.py`, `tb/tb_score_pipe.py`; gate `make test-features-pipe`, `make test-score-pipe`.
 * Blockers: remote CI (U03/U20) and Mac execution (U20) are environment blockers; A2 work is not blocked.
