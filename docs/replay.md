@@ -80,6 +80,11 @@ First, middle, and final inspection frames sit under `results/traces/frames/`. T
 middle frame catches all 23 banks occupied; its last frame shows an empty pipe, best id 16 at score
 −887, and the public response.
 
+`make render-showcase` cuts the two README animations from the longer saved games. The neon reel
+animates the straight drop between recorded positions and flashes the rows the replay actually
+cleared. The architecture race advances A0, A1, and A2 by the same 13,031-cycle budget. Replay paths
+are also tucked into each GIF's comment field, so `make check-viewer` can catch a swapped source.
+
 `tools/diagrams.py` also draws the static SVGs in `assets/diagrams/`: the top-level search path, the
 A0/A1 evaluator FSM, the grouped A2 pipe, a non-adjacent line-clear example, and four-lane ownership.
 Measured residency and latency values come from result files and the stage manifest, not from a

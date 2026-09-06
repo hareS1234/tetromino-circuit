@@ -37,7 +37,7 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         test-precision-v2 analyze-precision-v2 synth-scorer-study \
         streams-v2 test-benchmark-v2 test-statistics-v2 bench-v2 check-quality-v2 analyze-quality-v2 \
         measure-v2 check-hardware-v2 a2-stream-stats plots-v2 \
-        trace-a2-demo check-trace render-a2-demo check-viewer diagrams \
+        trace-a2-demo check-trace render-a2-demo render-showcase check-viewer diagrams \
         results-v2 check-report-v2 check-links check-claims \
         check-release-v2 fresh-clone-check test-release-v2
 
@@ -342,6 +342,8 @@ render-a2-demo: ## U18: GIFs + first/middle/last stills from the traces, the bun
 	$(PY) tools/build_viewer_demo.py --trace results/traces/a2_normal_search.json --out viewer/demo.html
 	$(PY) tools/diagrams.py
 	$(PY) tools/check_viewer.py
+render-showcase: ## arcade-style README GIFs cut from the saved A0/A1/A2 RTL replays
+	$(PY) tools/render_showcase.py
 check-viewer: ## U18: static accessibility/consistency checks of viewer/ and the bundled demo
 	$(PY) tools/check_viewer.py
 diagrams: ## U18: regenerate assets/diagrams/*.svg

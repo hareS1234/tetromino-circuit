@@ -10,8 +10,18 @@ import subprocess
 import sys
 from pathlib import Path
 
+from PIL import Image
+
 ROOT = Path(__file__).resolve().parents[1]
 VIEWER = ROOT / "viewer"
+SHOWCASES = {
+    "assets/showcase_neon.gif": ("results/replays/a2-cache-d1-p0-l1_seed2000_cap250.jsonl",),
+    "assets/showcase_race.gif": (
+        "results/replays/a0-bitmap-d1-p0-l1_seed2000_cap250.jsonl",
+        "results/replays/a1-cache-d1-p0-l1_seed2000_cap250.jsonl",
+        "results/replays/a2-cache-d1-p0-l1_seed2000_cap250.jsonl",
+    ),
+}
 
 
 def main() -> int:
@@ -72,6 +82,16 @@ def main() -> int:
     for gif in ("assets/a2_pipeline.gif", "assets/a2_stall_reset.gif", "assets/a2_last_candidate_wins.gif"):
         p = ROOT / gif
         chk(p.is_file() and 0 < p.stat().st_size < 5 * 1024 * 1024, f"{gif} missing or larger than 5 MB")
+    for gif, sources in SHOWCASES.items():
+        p = ROOT / gif
+        chk(p.is_file() and 0 < p.stat().st_size < 5 * 1024 * 1024, f"{gif} missing or larger than 5 MB")
+        if p.is_file():
+            with Image.open(p) as im:
+                comment = im.info.get("comment", b"")
+                if isinstance(comment, bytes):
+                    comment = comment.decode(errors="replace")
+                chk(getattr(im, "n_frames", 1) >= 100, f"{gif} is not an animation of at least 100 frames")
+                chk(all(source in comment for source in sources), f"{gif} does not name its replay source(s) in the GIF metadata")
     for meta in (ROOT / "results" / "traces" / "frames").glob("*/render.json"):
         d = json.loads(meta.read_text())
         chk((ROOT / d["trace"]).is_file() and (ROOT / d["gif"]).is_file() and len(d["stills"]) == 3, f"{meta.relative_to(ROOT)}: trace/gif/stills inconsistent")
