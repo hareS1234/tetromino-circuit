@@ -45,6 +45,14 @@ def parse_version(text: str):
     return (int(m.group(1)), int(m.group(2))) if m else None
 
 
+def is_under(path: str, directory: Path) -> bool:
+    try:
+        Path(path).resolve().relative_to(directory.resolve())
+        return True
+    except ValueError:
+        return False
+
+
 def check_python(problems, facts, lock):
     v = sys.version_info
     facts["python"] = f"{v.major}.{v.minor}.{v.micro} ({sys.executable})"
@@ -52,7 +60,7 @@ def check_python(problems, facts, lock):
     if f"{v.major}.{v.minor}" not in supported:
         problems.append(f"python {'/'.join(supported)} required by the lock, running {v.major}.{v.minor}")
     venv = ROOT / os.environ.get("TETROMINO_VENV", ".venv")
-    if not sys.executable.startswith(str(venv)):
+    if Path(sys.prefix).resolve() != venv.resolve():
         problems.append(f"not running inside {venv.name} (use scripts/env.sh)")
     for mod in ("pytest", "numpy", "matplotlib", "PIL", "cocotb", "cocotb_tools", "model"):
         try:
@@ -77,7 +85,7 @@ def check_python(problems, facts, lock):
 def check_hardware(problems, facts, lock):
     for exe in ("verilator", "yosys", "nextpnr-ecp5"):
         path = shutil.which(exe)
-        if path is None or not path.startswith(str(SUITE_BIN)):
+        if path is None or not is_under(path, SUITE_BIN):
             problems.append(f"{exe} must come from {SUITE_BIN} (found {path})")
             continue
         code, out = run([exe, "--version" if exe != "yosys" else "-V"])
