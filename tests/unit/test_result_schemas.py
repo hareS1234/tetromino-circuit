@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tools import bench, check_v1_results as v1check, pnr
+from tools import bench, check_hardware_v2 as hwcheck, check_v1_results as v1check, identity, pnr
 from tools.measure_matrix import ROUTE_CSV_FIELDS, derive_route_csv, expand_jobs, route_row
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -115,6 +115,30 @@ def test_real_route_records_follow_the_schema():
             assert d["timing"]["reported_fmax_mhz"] is not None and d["process"]["completed"]
         else:
             assert d["timing"]["reported_fmax_mhz"] is None
+
+
+def test_hardware_release_match_uses_the_recorded_netlist_hash():
+    cid = "a0-bitmap-d1-p0-l1"
+    tools = {"yosys": "Yosys test", "nextpnr-ecp5": "nextpnr test"}
+    m = {"schema": "hardware-matrix-v2", "name": "test", "top": "stream_wrapper", "dsp_policy": "nodsp",
+         "configurations": [cid], "targets_mhz": [50], "seeds": [11], "extra_jobs": [], "route_timeout_s": 600,
+         "route_timeout_overrides": {}}
+    synth = identity.synth_identity(cid, top=m["top"], dsp_policy=m["dsp_policy"], root=ROOT, tools=tools)
+    netlist_sha = "a" * 64
+    route = identity.route_identity(synth["synth_key"], netlist_sha, 50, 11, pnr.DEVICE, 600,
+                                    ["--lpf-allow-unconstrained"], pnr.ROUTE_SCRIPT_VERSION, ROOT, tools)
+    rec = {"schema": "route-record-v2", "configuration_id": cid, "target_mhz": 50.0, "seed": 11,
+           "synth_key": synth["synth_key"], "route_key": route["route_key"], "netlist_sha256": netlist_sha,
+           "yosys": tools["yosys"], "nextpnr": tools["nextpnr-ecp5"], "toolchain_id": identity.toolchain_identity(ROOT),
+           "top": m["top"], "params": synth["params"], "device": pnr.DEVICE, "dsp_policy": m["dsp_policy"],
+           "route_timeout_s": 600, "options": ["--lpf-allow-unconstrained"],
+           "io_constraints": "auto-allocated (--lpf-allow-unconstrained)", "script_version": pnr.ROUTE_SCRIPT_VERSION,
+           "attempt": {"number": 1}}
+    found, problems = hwcheck.resolve_route_records(m, [rec], root=ROOT, tools=tools)
+    assert problems == [] and found[0]["record"] is rec
+    rec["route_key"] = "b" * 64
+    found, problems = hwcheck.resolve_route_records(m, [rec], root=ROOT, tools=tools)
+    assert found[0]["record"] is None and "no record matches" in problems[0]
 
 
 def test_expand_jobs_is_deterministic_and_duplicate_free():
@@ -306,6 +330,7 @@ def test_ugate_requires_nonzero_counts_and_records_identities(tmp_path):
     s = json.loads((tmp_path / "T02" / "summary.json").read_text())
     assert s["status"] == "passed" and s["schema"] == "upgrade-evidence-v1" and len(s["commands"]) == 2
     assert len(s["source_sha256"]) == 64 and s["toolchain_id"].startswith("oss-cad-suite") and s["artifacts"][0]["exists"]
+    assert len(s["commands"][0]["log_sha256"]) == 64
     assert s["commands"][1]["counts"]["check_thing"] == "2/2"
     # a failing command fails the job even with counts present
     r = run_recorder("ugate.py", tmp_path, "T03", "--", "python", "-c", "print('3 passed'); raise SystemExit(2)")

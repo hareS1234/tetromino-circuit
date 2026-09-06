@@ -9,6 +9,7 @@ Each ``--`` begins a real command. Passing requires zero exit codes and a nonzer
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
 import json
 import os
 import re
@@ -84,7 +85,8 @@ def run_command(job_dir: Path, index: int, argv):
             sys.stdout.write(line)
         proc.wait()
     return {"argv": argv, "exit_code": proc.returncode, "elapsed_s": round(time.perf_counter() - t0, 2),
-            "log": str(log.relative_to(ROOT)) if log.is_relative_to(ROOT) else str(log), "counts": parse_counts("".join(lines))}
+            "log": str(log.relative_to(ROOT)) if log.is_relative_to(ROOT) else str(log),
+            "log_sha256": hashlib.sha256(log.read_bytes()).hexdigest(), "counts": parse_counts("".join(lines))}
 
 
 def main() -> int:

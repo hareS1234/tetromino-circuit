@@ -23,7 +23,8 @@
    "log": "results/evidence/U01/cmd00.log",
    "counts": {
     "pytest_passed": 11
-   }
+   },
+   "log_sha256": "3b3e49638647b5eae53084bf2b8e39bae278fcb2f28b9932130c84c61cb6d523"
   },
   {
    "argv": [
@@ -33,7 +34,8 @@
    "exit_code": 0,
    "elapsed_s": 2.72,
    "log": "results/evidence/U01/cmd01.log",
-   "counts": {}
+   "counts": {},
+   "log_sha256": "49688f691cceb19b169c0f551ed1d22969bc4eaa7a5baef245ae72e837f754fb"
   },
   {
    "argv": [
@@ -43,7 +45,8 @@
    "exit_code": 0,
    "elapsed_s": 0.71,
    "log": "results/evidence/U01/cmd02.log",
-   "counts": {}
+   "counts": {},
+   "log_sha256": "a883e240c5c13a26e8e9ae01187d8159b16f6908a38a08f66de368f434a33667"
   },
   {
    "argv": [
@@ -55,7 +58,8 @@
    "log": "results/evidence/U01/cmd03.log",
    "counts": {
     "pytest_passed": 316
-   }
+   },
+   "log_sha256": "60610f277b373729ad56e67ac0f9cd0e75b249dd678cb8fa2883ca71e8103a89"
   },
   {
    "argv": [
@@ -69,7 +73,8 @@
     "pytest_failed": 0,
     "rtl_total": 1,
     "rtl_failed": 0
-   }
+   },
+   "log_sha256": "217eaf34571db78fae130d4de1c751f560f6ec1d3ccd8184882cd2e54ab601af"
   }
  ],
  "checks": [

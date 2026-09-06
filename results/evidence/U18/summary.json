@@ -94,7 +94,8 @@
    "exit_code": 0,
    "elapsed_s": 0.45,
    "log": "results/evidence/U18/cmd00.log",
-   "counts": {}
+   "counts": {},
+   "log_sha256": "ad334c170b31a5d1861934f99a78000c1909af23e61b391ebd1f417fcf8d0326"
   },
   {
    "argv": [
@@ -108,7 +109,8 @@
     "check_trace_a2_last_candidate_wins": "580/580",
     "check_trace_a2_normal_search": "1108/1108",
     "check_trace_a2_stall_reset": "698/698"
-   }
+   },
+   "log_sha256": "0d9283059a44fd70b710c358f34e74a6ff290e51b2d84a450c0249773c4ca4fa"
   },
   {
    "argv": [
@@ -120,7 +122,8 @@
    "log": "results/evidence/U18/cmd02.log",
    "counts": {
     "check_viewer": "37/37"
-   }
+   },
+   "log_sha256": "c31ca119c3f30c1a735df7cc130c5145bf7b4ff4cff704c9bdbe867ccfac9a05"
   },
   {
    "argv": [
@@ -132,7 +135,8 @@
    "log": "results/evidence/U18/cmd03.log",
    "counts": {
     "pytest_passed": 439
-   }
+   },
+   "log_sha256": "ae356dfb0173b77e54e5ec355d82a347d33a8c885b4c294701d41d205befca9e"
   }
  ],
  "checks": [

@@ -324,7 +324,8 @@
    "log": "results/evidence/U15/cmd00.log",
    "counts": {
     "check_streams_v2": "120/120"
-   }
+   },
+   "log_sha256": "a4272c309fe7e70366c11eb5a7049dabca42b811bea5fc983fe4c36cb8f1ffb8"
   },
   {
    "argv": [
@@ -336,7 +337,8 @@
    "log": "results/evidence/U15/cmd01.log",
    "counts": {
     "pytest_passed": 438
-   }
+   },
+   "log_sha256": "9978fccb6697e72ec312389ef4165f0e0822dbeb7bad9ebf54d9a135b4694246"
   },
   {
    "argv": [
@@ -348,7 +350,8 @@
    "log": "results/evidence/U15/cmd02.log",
    "counts": {
     "pytest_passed": 15
-   }
+   },
+   "log_sha256": "3c2784b493f6b5977db70c7d49f17fed059f6c690bdf5bef01f5b47fce2016c5"
   },
   {
    "argv": [
@@ -360,7 +363,8 @@
    "log": "results/evidence/U15/cmd03.log",
    "counts": {
     "pytest_passed": 6
-   }
+   },
+   "log_sha256": "62baa5ecf7aee3fdd84ec7dfb9f742be12e2ebe63e76e6e07c530f5ff9a12163"
   },
   {
    "argv": [
@@ -371,7 +375,8 @@
    "exit_code": 0,
    "elapsed_s": 3.3,
    "log": "results/evidence/U15/cmd04.log",
-   "counts": {}
+   "counts": {},
+   "log_sha256": "d44868a8d6d626c37f348038dfa764193efd0105b92f8d8cd087fad2f0743794"
   },
   {
    "argv": [
@@ -385,7 +390,8 @@
    "log": "results/evidence/U15/cmd05.log",
    "counts": {
     "pytest_failed": 0
-   }
+   },
+   "log_sha256": "51eeb2941767e9403fa385a62ff8d0161a16fa3e3880f67fce0f289affcb9d9f"
   },
   {
    "argv": [
@@ -399,7 +405,8 @@
    "log": "results/evidence/U15/cmd06.log",
    "counts": {
     "pytest_failed": 0
-   }
+   },
+   "log_sha256": "417123e9aea3c56c73f2e9f99a13e701b794ada74f04e96f39e321d7dbd40f99"
   },
   {
    "argv": [
@@ -414,7 +421,8 @@
     "check_quality_v2_pilot_records": "120/120",
     "check_quality_v2_pilot_paired": "1/1",
     "check_quality_v2_pilot_analysis": "6/6"
-   }
+   },
+   "log_sha256": "90bfe1db3d6a0c82b702890193d12ee55557c4f51c6ca407b7de0308163e26d7"
   },
   {
    "argv": [
@@ -429,7 +437,8 @@
     "check_quality_v2_pilot50k_records": "40/40",
     "check_quality_v2_pilot50k_paired": "1/1",
     "check_quality_v2_pilot50k_analysis": "2/2"
-   }
+   },
+   "log_sha256": "f89c2f4cf5c6deb1161fb8c2d9c9b086ce0af08a213c1291b3993e56d091d56a"
   },
   {
    "argv": [
@@ -445,7 +454,8 @@
     "check_route_jobs": "45/45",
     "check_decision_files": "9/9",
     "check_v1_evidence": "20/20"
-   }
+   },
+   "log_sha256": "f63ebbb5aa0fc5136477d91d963aaefda314863380c5b1689e3097c488f8a84d"
   }
  ],
  "checks": [

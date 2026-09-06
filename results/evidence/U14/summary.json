@@ -58,7 +58,8 @@
    "log": "results/evidence/U14/cmd00.log",
    "counts": {
     "pytest_passed": 421
-   }
+   },
+   "log_sha256": "5a3f98b534beeb23bc478a1f5a14aafc4d5b567fe1656acf1381cb24c5d72ca3"
   },
   {
    "argv": [
@@ -76,7 +77,8 @@
     "check_a2_latency": "16/16",
     "check_a2_elaboration": "6/6",
     "check_a2_lane_guards": "5/5"
-   }
+   },
+   "log_sha256": "82cb73fcd097e0b05ebf69aa4b6329b4d52489856bc781347c048e6190484a0f"
   },
   {
    "argv": [
@@ -92,7 +94,8 @@
     "rtl_total": 24,
     "rtl_failed": 0,
     "native_decisions": 3000
-   }
+   },
+   "log_sha256": "c7f27e7f296eef39315b9dd3fa77c05a575d776c6e1f5d588b03119e6692ff71"
   },
   {
    "argv": [
@@ -105,7 +108,8 @@
    "log": "results/evidence/U14/cmd03.log",
    "counts": {
     "check_precision_sensitivity": "6/6"
-   }
+   },
+   "log_sha256": "e468bf94e1b5ff430806063ffb93cddccd8f709ca6e29a484e58ab1847682981"
   },
   {
    "argv": [
@@ -117,7 +121,8 @@
    "log": "results/evidence/U14/cmd04.log",
    "counts": {
     "check_scorer_study": "16/16"
-   }
+   },
+   "log_sha256": "cfab3ec90ce3736fa3e1b05dc60541c5c0a09a515ebe764c1b333595fa9ef5f1"
   },
   {
    "argv": [
@@ -133,7 +138,8 @@
     "check_route_jobs": "45/45",
     "check_decision_files": "9/9",
     "check_v1_evidence": "20/20"
-   }
+   },
+   "log_sha256": "f63ebbb5aa0fc5136477d91d963aaefda314863380c5b1689e3097c488f8a84d"
   }
  ],
  "checks": [

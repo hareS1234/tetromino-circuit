@@ -6,7 +6,7 @@ description: >-
   before extraction. A cold cache downloads the release asset directly (no GitHub API dependency).
 inputs:
   python-version:
-    description: Python version (must be one the lock lists as supported)
+    description: Python version whose major and minor release appears in the lock
     default: "3.12"
   hdl:
     description: install the OSS CAD Suite ("true") or only the Python environment ("false")

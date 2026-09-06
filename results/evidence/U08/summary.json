@@ -23,7 +23,8 @@
     "rtl_total": 3,
     "rtl_failed": 0,
     "check_synth_features_pipe": "3/3"
-   }
+   },
+   "log_sha256": "c9b93a8fbd962545a24a742d87a592728267da7e432b993b004d1158a5feb986"
   },
   {
    "argv": [
@@ -38,7 +39,8 @@
     "rtl_total": 3,
     "rtl_failed": 0,
     "check_synth_score_pipe": "3/3"
-   }
+   },
+   "log_sha256": "7e354f41e96543a893d36b26bbf727a9a707828ad4e8b749aae804882926644d"
   }
  ],
  "checks": [

@@ -43,7 +43,8 @@
     "check_a2_latency": "16/16",
     "check_a2_elaboration": "6/6",
     "check_a2_lane_guards": "5/5"
-   }
+   },
+   "log_sha256": "82cb73fcd097e0b05ebf69aa4b6329b4d52489856bc781347c048e6190484a0f"
   },
   {
    "argv": [
@@ -58,7 +59,8 @@
     "pytest_failed": 0,
     "rtl_total": 1,
     "rtl_failed": 0
-   }
+   },
+   "log_sha256": "57dcbb503791a3529dd9fff17873fd6a8aadc74971979c98e79f6ddaf991ac5f"
   },
   {
    "argv": [
@@ -73,7 +75,8 @@
     "pytest_failed": 0,
     "rtl_total": 1,
     "rtl_failed": 0
-   }
+   },
+   "log_sha256": "6bfabfcc95c80107b3421181d3c4189b1027e938653778a645c4674a43b5edec"
   },
   {
    "argv": [
@@ -90,7 +93,8 @@
    "log": "results/evidence/U13/cmd03.log",
    "counts": {
     "native_decisions": 1000
-   }
+   },
+   "log_sha256": "2f64e777c4539e1d9ebda29dd2eb4eb938eec31f4166ffe92eee6a68b10303e4"
   },
   {
    "argv": [
@@ -107,7 +111,8 @@
     "pytest_failed": 0,
     "rtl_total": 9,
     "rtl_failed": 0
-   }
+   },
+   "log_sha256": "e4ef769de5d4d5e4d11f5d20474a40e273fecf6af46ce7c191e2a87da0ea631f"
   },
   {
    "argv": [
@@ -121,7 +126,8 @@
    "exit_code": 0,
    "elapsed_s": 1.23,
    "log": "results/evidence/U13/cmd05.log",
-   "counts": {}
+   "counts": {},
+   "log_sha256": "ba8c530799c04e542c521e250fe29708e109de29c2d5f77b3e293fb5dd8eec07"
   }
  ],
  "checks": [

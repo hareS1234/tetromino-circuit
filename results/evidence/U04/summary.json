@@ -25,7 +25,8 @@
     "check_a2_identity": "13/13",
     "check_a2_latency": "16/16",
     "check_a2_elaboration": "2/2"
-   }
+   },
+   "log_sha256": "b0aeced5724d4fc91e5275b96625cbf267a3654b84925c6069fdea5b9c61389e"
   }
  ],
  "checks": [

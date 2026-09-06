@@ -228,7 +228,7 @@
    "manifest": "benchmarks/hardware_v2.json",
    "summary": "results/v2/summary/matrix_hardware-v2.json",
    "jobs": 84,
-   "identity": "route keys and native keys re-planned from the checked-out RTL by tools/check_hardware_v2.py"
+   "identity": "synthesis and native keys re-planned from the checked-out RTL; route keys checked against each record's netlist hash and locked settings by tools/check_hardware_v2.py"
   },
   "quality": {
    "protocol": "benchmarks/config_v2.json",

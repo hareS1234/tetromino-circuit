@@ -35,8 +35,11 @@ row does not pass. The `v2.0-a2` tag must wait for the successful verdict.
 Synthesis, route, and native identities include the tools' version strings. The Darwin build of the
 same OSS CAD Suite release reports different strings, so a Mac quite correctly plans different keys
 and cannot validate the recorded Linux routes. The manually dispatched `release-check` workflow runs
-the full validator on linux-x64, where those identities match. The Mac has a different job: reproduce
-the supported local path, inspect the demo, and leave a clean-clone record.
+the full validator on linux-x64 with Python 3.11.15, matching the recorded studies. The hardware check
+recalculates each synthesis identity from the current RTL and Linux tools. It then verifies the stored
+route key from that synthesis identity, the recorded netlist hash, and every route setting. It does not
+regenerate the netlist because Yosys writes absolute source paths into that output. The Mac has a
+different job: reproduce the supported local path, inspect the demo, and leave a clean-clone record.
 
 ## External check record
 

@@ -49,7 +49,8 @@
     "check_a2_reset": "50/50",
     "check_request_interval_matches_inferred": "200/200",
     "check_a2_latency_equation": "200/200"
-   }
+   },
+   "log_sha256": "aff420ccbee67c6fc1dd526952fe27f78b6b7ccbb00dcd5cea4fe71bd70c30ff"
   },
   {
    "argv": [
@@ -65,7 +66,8 @@
     "check_formal_control_cover": "1/1",
     "check_formal_reducer": "1/1",
     "check_formal_reducer_cover": "1/1"
-   }
+   },
+   "log_sha256": "5593d22dd8eac7cb057c8c35a0b6eb877793ba038293845bbd1296e70b1b0014"
   },
   {
    "argv": [
@@ -77,7 +79,8 @@
    "log": "results/evidence/U11/cmd02.log",
    "counts": {
     "check_mutations_killed": "12/12"
-   }
+   },
+   "log_sha256": "51f9b6bc8024422a6189ab9df077535dc984c5677299a050b39f4e9ccef50ad1"
   },
   {
    "argv": [
@@ -93,7 +96,8 @@
    "exit_code": 0,
    "elapsed_s": 1.27,
    "log": "results/evidence/U11/cmd03.log",
-   "counts": {}
+   "counts": {},
+   "log_sha256": "379787b35a43c5a08fc06e0f73ed0cbc4101749ec383bf0110c8c4945fa20afa"
   }
  ],
  "checks": [

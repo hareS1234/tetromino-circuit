@@ -12,11 +12,15 @@ jobs:
   release-check:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    env:
+      TETROMINO_HOST_DIR: build/host
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - uses: ./.github/actions/bootstrap
+        with:
+          python-version: "3.11.15"
       - run: make doctor
       - run: make check-release-v2
       - uses: actions/upload-artifact@v4

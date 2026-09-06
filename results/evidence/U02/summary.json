@@ -26,7 +26,8 @@
    "log": "results/evidence/U02/cmd00.log",
    "counts": {
     "pytest_passed": 35
-   }
+   },
+   "log_sha256": "98c5542be01ccd3cd0bf8e85f29ab10812a3e46019563c1d2724e8076810ecc6"
   },
   {
    "argv": [
@@ -38,7 +39,8 @@
    "log": "results/evidence/U02/cmd01.log",
    "counts": {
     "pytest_passed": 30
-   }
+   },
+   "log_sha256": "7b04cc4dfe36cf77d770a308fc30eb6fd063557634f33eea5cba9b7b10d9d5ef"
   },
   {
    "argv": [
@@ -54,7 +56,8 @@
     "check_route_jobs": "45/45",
     "check_decision_files": "9/9",
     "check_v1_evidence": "20/20"
-   }
+   },
+   "log_sha256": "f63ebbb5aa0fc5136477d91d963aaefda314863380c5b1689e3097c488f8a84d"
   },
   {
    "argv": [
@@ -66,7 +69,8 @@
    "log": "results/evidence/U02/cmd03.log",
    "counts": {
     "native_decisions": 50
-   }
+   },
+   "log_sha256": "96fa856d0b6d24eb10831afb126912f9c59e0e5a64d1f5701fe606c2c83f174d"
   }
  ],
  "checks": [

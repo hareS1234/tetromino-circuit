@@ -18,7 +18,8 @@
    "log": "results/evidence/U00/cmd00.log",
    "counts": {
     "check_inventory_consistency": "1/1"
-   }
+   },
+   "log_sha256": "78cca57d969a7cc2a2b6918d5acc5baaea802bef2089878b52806cdcd010e562"
   },
   {
    "argv": [
@@ -30,7 +31,8 @@
    "log": "results/evidence/U00/cmd01.log",
    "counts": {
     "pytest_passed": 305
-   }
+   },
+   "log_sha256": "3346c908820c908e156c3c46f1a38ca3e35aac735f3b3117dcbadf18fc52681f"
   }
  ],
  "checks": [

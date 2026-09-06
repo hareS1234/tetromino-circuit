@@ -21,7 +21,8 @@
    "log": "results/evidence/U03/cmd00.log",
    "counts": {
     "check_ci_workflow": "3/3"
-   }
+   },
+   "log_sha256": "1747a1caebf9582a27241cf079e461f8e64074afe49cc643265c44b45e88fd55"
   },
   {
    "argv": [
@@ -42,7 +43,8 @@
     "check_v1_evidence": "20/20",
     "check_ci_workflow": "3/3",
     "check_ci_job_fast": "10/10"
-   }
+   },
+   "log_sha256": "a9bbba0bd769ae1e95b04102f9c7e3ca9a59608e2bf700f4b0f4bd9c339edc40"
   },
   {
    "argv": [
@@ -61,7 +63,8 @@
     "rtl_failed": 0,
     "native_decisions": 350,
     "check_ci_job_hdl": "11/11"
-   }
+   },
+   "log_sha256": "3bbfc0e657179a258282536f7a556f1070198d382f08c4b576e5f711edff0348"
   },
   {
    "argv": [
@@ -78,7 +81,8 @@
    "counts": {
     "native_decisions": 50,
     "check_ci_job_heavy": "6/6"
-   }
+   },
+   "log_sha256": "76954cb93d9f5c875ce8704284983ce24c5368cf76c04000a66097450fbd91a8"
   }
  ],
  "checks": [

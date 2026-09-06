@@ -28,6 +28,7 @@ def write(root: Path, rel_path: str, content) -> Path:
 def good_evidence(job: str) -> dict:
     return {"schema": "upgrade-evidence-v1", "job": job, "status": "passed",
             "commands": [{"argv": ["make", "x"], "exit_code": 0, "elapsed_s": 1.0, "log": f"results/evidence/{job}/cmd00.log",
+                          "log_sha256": hashlib.sha256(b"12 passed\n").hexdigest(),
                           "counts": {"pytest_passed": 12}}],
             "checks": [{"name": "tests", "ok": True}], "artifacts": [], "limitations": [], "note": None}
 
@@ -75,9 +76,11 @@ def test_evidence_failure_modes(tree):
     e1 = good_evidence("U01"); e1["commands"] = []
     write(tree, "results/evidence/U01/summary.json", e1)
     e2 = good_evidence("U02"); e2["commands"][0]["exit_code"] = 2
+    e2["commands"][0]["log_sha256"] = hashlib.sha256(b"boom\n").hexdigest()
     write(tree, "results/evidence/U02/summary.json", e2)
     write(tree, "results/evidence/U02/cmd00.log", "boom\n")
     e3 = good_evidence("U03"); e3["commands"][0]["counts"] = {"pytest_passed": 0}; e3["checks"] = []
+    e3["commands"][0]["log_sha256"] = hashlib.sha256(b"0 passed\n").hexdigest()
     write(tree, "results/evidence/U03/summary.json", e3)
     write(tree, "results/evidence/U03/cmd00.log", "0 passed\n")
     e20 = good_evidence("U20"); e20["status"] = "blocked"; e20["limitations"] = ["blocked: no Mac"]
@@ -95,10 +98,25 @@ def test_evidence_failure_modes(tree):
 def test_evidence_status_must_be_declared_status(tree):
     m = manifest(evidence={"U05": {"status": ["passed"]}})
     e = good_evidence("U05"); e["status"] = "blocked"; e["limitations"] = ["blocked: x"]
+    e["commands"][0]["log_sha256"] = hashlib.sha256(b"x\n").hexdigest()
     write(tree, "results/evidence/U05/summary.json", e)
     write(tree, "results/evidence/U05/cmd00.log", "x\n")
     probs, _ = rel.check_evidence(tree, m)
     assert "evidence U05: status 'blocked' not in ['passed']" in probs
+
+
+def test_evidence_log_digest_survives_an_ignored_log(tree):
+    m = manifest(evidence={"U00": {"status": ["passed"]}})
+    ev = good_evidence("U00")
+    write(tree, "results/evidence/U00/summary.json", ev)
+    assert rel.check_evidence(tree, m) == ([], {"U00": "passed"})
+    write(tree, "results/evidence/U00/cmd00.log", "changed\n")
+    probs, _ = rel.check_evidence(tree, m)
+    assert probs == ["evidence U00: log results/evidence/U00/cmd00.log differs from its recorded SHA-256"]
+    ev["commands"][0].pop("log_sha256")
+    write(tree, "results/evidence/U00/summary.json", ev)
+    probs, _ = rel.check_evidence(tree, m)
+    assert "evidence U00: command log has no valid SHA-256 digest" in probs
 
 
 def test_platforms_blocked_is_not_satisfied_and_needs_reason_and_row(tree):
@@ -163,6 +181,15 @@ def test_tag_must_not_exist_while_blocked(tmp_path):
     assert rel.check_tag(tmp_path, m, [], []) == []
 
 
+def test_git_facts_keeps_the_first_letter_of_a_dirty_path(tmp_path):
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    write(tmp_path, "results/host/Linux-x86_64.json", "old\n")
+    subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True)
+    subprocess.run(["git", "-C", str(tmp_path), "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "x"], check=True)
+    write(tmp_path, "results/host/Linux-x86_64.json", "new\n")
+    assert rel.git_facts(tmp_path)["dirty_tracked"] == ["results/host/Linux-x86_64.json"]
+
+
 def test_real_manifest_structure():
     m = rel.load_manifest(ROOT)
     assert [f"U{i:02d}" for i in range(21)] == list(m["evidence"])
@@ -180,6 +207,12 @@ def test_real_manifest_structure():
         assert hashlib.sha256((ROOT / fi["path"]).read_bytes()).hexdigest() == fi["sha256"], f"{fi['path']} changed since the manifest was written"
     assert "results/v2/summary/matrix_hardware-v2.json" in m["required_artifacts"]
     assert m["expensive_measurements"]["hardware"]["jobs"] == 84
+
+
+def test_release_workflow_matches_the_recorded_runtime_and_keeps_host_facts_untracked():
+    text = (ROOT / ".github" / "workflows" / "release-check.yml").read_text()
+    assert 'python-version: "3.11.15"' in text
+    assert "TETROMINO_HOST_DIR: build/host" in text
 
 
 def test_structural_run_verdict_matches_exit_code():

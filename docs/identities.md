@@ -79,7 +79,9 @@ re-run through the tool and `results/` is refused as an output root.
 `tools/gate.py` and `tools/ugate.py` reject a gate with zero commands. `ugate` also requires every
 named check to have a nonzero count. Accepted forms include `N passed`, RTL totals, native decision
 matches, and `CHECK name ok/total`. Each record stores the git commit, tracked-file state, source
-closure, toolchain identity, commands, logs, artifacts, and limitations.
+closure, toolchain identity, commands, log digests, artifacts, and limitations. Command logs stay
+local because build output can contain machine-specific paths. Their SHA-256 digests remain in the
+tracked summaries, and a local log must match its digest when present.
 
 `tools/check_v1_results.py` names every expected v1 job from `benchmarks/config.json`: 640 quality
 games, 45 routes, 9 decision files, and E00–E19. It requires exact membership with no missing, extra, or
@@ -94,5 +96,5 @@ membership rule to the U-jobs and the v2 manifests.
 release manifest describes the scope of the measurements after the fact (which platforms executed,
 which are blocked) and is not an input to any of them, so flipping a row from blocked to executed must
 not make the recorded closures look stale. Tool identities are version strings, so the same suite
-release on another platform (the darwin build) yields different synthesis/route/native keys; validators
-that re-plan keys run where the measurements were made (`docs/release_v2.md`).
+release on another platform (the darwin build) yields different synthesis/route/native keys. Validators
+that recalculate tool-bound keys run where the measurements were made (`docs/release_v2.md`).

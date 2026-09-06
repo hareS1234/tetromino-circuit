@@ -49,7 +49,8 @@
    "counts": {
     "check_links": "43/43",
     "check_claims": "53/53"
-   }
+   },
+   "log_sha256": "5e83f4fade0aeb8bfd7b985b25f31f577d1038b6a18a3b91233085e86f801304"
   },
   {
    "argv": [
@@ -61,7 +62,8 @@
    "log": "results/evidence/U19/cmd01.log",
    "counts": {
     "check_links": "43/43"
-   }
+   },
+   "log_sha256": "1bf3aaf3e157551df5b38fb708b84cbf609e932eccda216b1aa15a1555dcb71b"
   },
   {
    "argv": [
@@ -73,7 +75,8 @@
    "log": "results/evidence/U19/cmd02.log",
    "counts": {
     "check_claims": "53/53"
-   }
+   },
+   "log_sha256": "7bae434239427016cda831fc88feb523611226df6c99f91b937c45fd9e6b85ef"
   },
   {
    "argv": [
@@ -83,7 +86,8 @@
    "exit_code": 0,
    "elapsed_s": 2.15,
    "log": "results/evidence/U19/cmd03.log",
-   "counts": {}
+   "counts": {},
+   "log_sha256": "1ad19fa5b4d43e6143e885f2990a9eb267af9fd00724779419ba7cedb544c6bf"
   },
   {
    "argv": [
@@ -99,7 +103,8 @@
     "check_route_jobs": "45/45",
     "check_decision_files": "9/9",
     "check_v1_evidence": "20/20"
-   }
+   },
+   "log_sha256": "f63ebbb5aa0fc5136477d91d963aaefda314863380c5b1689e3097c488f8a84d"
   },
   {
    "argv": [
@@ -111,7 +116,8 @@
    "log": "results/evidence/U19/cmd05.log",
    "counts": {
     "pytest_passed": 454
-   }
+   },
+   "log_sha256": "7479feb812709bc62cac82237c217db50d6e24cd172446f1cb1651d7427be1c6"
   }
  ],
  "checks": [
@@ -198,7 +204,7 @@
   }
  ],
  "limitations": [
-    "docs/author_notes.md keeps the open code-reading questions separate from measured results",
+  "docs/author_notes.md keeps the open code-reading questions separate from measured results",
   "LICENSE names 'Harry Song' as the copyright holder from the author's name; to be confirmed by the author"
  ],
  "note": null

@@ -36,7 +36,8 @@
     "check_links": "43/43",
     "check_claims": "53/53",
     "check_fresh_clone": "19/19"
-   }
+   },
+   "log_sha256": "6793eef145f26309c45c6cf5df790ae488666ab1693076895adf88970e6327a3"
   },
   {
    "argv": [
@@ -72,7 +73,8 @@
     "check_ci_workflow": "3/3",
     "check_ci_workflow_release_check": "1/1",
     "check_release_v2_executed_checks_passed": "1/1"
-   }
+   },
+   "log_sha256": "9a9c53d7c0749fe78804bb8967261b0764686b86f51e49266594949533106889"
   },
   {
    "argv": [
@@ -84,7 +86,8 @@
    "log": "results/evidence/U20/cmd02.log",
    "counts": {
     "pytest_passed": 13
-   }
+   },
+   "log_sha256": "9f2500c388316a88667e981c12129de592f1092d2ff6be693631e8a11aedad92"
   },
   {
    "argv": [
@@ -101,7 +104,8 @@
    "log": "results/evidence/U20/cmd03.log",
    "counts": {
     "pytest_passed": 1
-   }
+   },
+   "log_sha256": "35d86279d96ed65491ba8ff0748e1c8e7891711531404dc5d4b9cd6ae33de3ec"
   },
   {
    "argv": [
@@ -116,7 +120,8 @@
    "log": "results/evidence/U20/cmd04.log",
    "counts": {
     "check_ci_workflow": "3/3"
-   }
+   },
+   "log_sha256": "1747a1caebf9582a27241cf079e461f8e64074afe49cc643265c44b45e88fd55"
   },
   {
    "argv": [
@@ -133,7 +138,8 @@
    "log": "results/evidence/U20/cmd05.log",
    "counts": {
     "check_ci_workflow_release_check": "1/1"
-   }
+   },
+   "log_sha256": "b5217fafd20cc0586fc3e4e0515e40394b0f6469052e1e79709079183cbc2f8a"
   },
   {
    "argv": [
@@ -163,7 +169,8 @@
     "check_claims": "53/53",
     "check_ci_workflow": "3/3",
     "check_ci_job_fast": "16/16"
-   }
+   },
+   "log_sha256": "b399e33e86a75fdf2635e5efa698b062ba363ec59350e3a31f06c20bee8ff1b4"
   }
  ],
  "checks": [

@@ -125,7 +125,8 @@
    "exit_code": 0,
    "elapsed_s": 0.15,
    "log": "results/evidence/U17/cmd00.log",
-   "counts": {}
+   "counts": {},
+   "log_sha256": "4530d0f309f58cca580b44dd7648202908849461e7feb495743c91970267036c"
   },
   {
    "argv": [
@@ -139,7 +140,8 @@
     "check_hardware_v2_jobs": "84/84",
     "check_hardware_v2_decisions": "6/6",
     "check_hardware_v2_csv_current": "84/84"
-   }
+   },
+   "log_sha256": "059f6c21f5cb86acb20c9f72fd63a3aa9348b62528527679b8c25a41714f06b0"
   },
   {
    "argv": [
@@ -156,7 +158,8 @@
     "check_a2_reset": "50/50",
     "check_request_interval_matches_inferred": "200/200",
     "check_a2_latency_equation": "200/200"
-   }
+   },
+   "log_sha256": "95528339a3094a244c82bf971bd75df087e4cf2d2f48a7be7e47c0e0b16c8780"
   },
   {
    "argv": [
@@ -168,7 +171,8 @@
    "log": "results/evidence/U17/cmd03.log",
    "counts": {
     "check_figure_points": "127/127"
-   }
+   },
+   "log_sha256": "464882f3bb84fb5ab2d9f641f22504107ddacdf9fcdd284a6852c485d0ffe712"
   },
   {
    "argv": [
@@ -183,7 +187,8 @@
    "log": "results/evidence/U17/cmd04.log",
    "counts": {
     "check_figure_points": "127/127"
-   }
+   },
+   "log_sha256": "586f426205693f5455752c20147071c65624db76aca35a46f82b84b06c934afd"
   },
   {
    "argv": [
@@ -193,7 +198,8 @@
    "exit_code": 0,
    "elapsed_s": 0.3,
    "log": "results/evidence/U17/cmd05.log",
-   "counts": {}
+   "counts": {},
+   "log_sha256": "f98420e0ac566299d890ad9193bcb9642d4f7b8ef3b80854a11882d557eb0d0e"
   },
   {
    "argv": [
@@ -206,7 +212,8 @@
    "counts": {
     "check_links": "42/42",
     "check_claims": "53/53"
-   }
+   },
+   "log_sha256": "7a97dffb73a29a425394250a840aaf0f50918061fa8d194da489ff96d46f35fe"
   }
  ],
  "checks": [

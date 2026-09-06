@@ -22,7 +22,8 @@
     "pytest_failed": 0,
     "rtl_total": 4,
     "rtl_failed": 0
-   }
+   },
+   "log_sha256": "97b08a6b7a7ae4136814e7bc883e111af4957c9f1dcf4d00e8ed29fb5a0241e2"
   },
   {
    "argv": [
@@ -41,7 +42,8 @@
     "check_compactor_stream_stalls": "8/8",
     "check_compactor_stream_backtoback": "300/300",
     "check_compactor_stream_reset": "22/22"
-   }
+   },
+   "log_sha256": "4b27342cc1629aa1e201ea675ff81829d0fba8a95416ea46e9e878c2fc53e9de"
   },
   {
    "argv": [
@@ -60,7 +62,8 @@
     "check_compactor_stream_stalls": "8/8",
     "check_compactor_stream_backtoback": "300/300",
     "check_compactor_stream_reset": "22/22"
-   }
+   },
+   "log_sha256": "72fdfca628631158dc88211ddb2c4f8dc05cbcead0751bc3c0193cee76d09767"
   },
   {
    "argv": [
@@ -72,7 +75,8 @@
    "log": "results/evidence/U06/cmd03.log",
    "counts": {
     "check_synth_line_clear_pipe": "3/3"
-   }
+   },
+   "log_sha256": "bf43a8fc824b20904e7fde2d1bf0f32c800e1b57578dbc31ef13d45ef90d6346"
   }
  ],
  "checks": [

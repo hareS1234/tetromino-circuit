@@ -97,8 +97,17 @@ def check_evidence(root: Path, m: dict) -> tuple[list[str], dict]:
             if c.get("exit_code") != 0:
                 problems.append(f"evidence {job}: command {' '.join(c.get('argv', []))[:60]!r} exited {c.get('exit_code')}")
             log = c.get("log")
-            if log and not (root / log).is_file():
-                problems.append(f"evidence {job}: log {log} missing")
+            digest = c.get("log_sha256")
+            if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+                problems.append(f"evidence {job}: command log has no valid SHA-256 digest")
+            if log:
+                log_path = Path(log)
+                if not log_path.is_absolute():
+                    log_path = root / log_path
+                if log_path.is_file() and digest and sha256_file(log_path) != digest:
+                    problems.append(f"evidence {job}: log {log} differs from its recorded SHA-256")
+            else:
+                problems.append(f"evidence {job}: command has no log path")
         checks = d.get("checks") or []
         if checks and not all(ch.get("ok") for ch in checks if isinstance(ch, dict)):
             problems.append(f"evidence {job}: a named check is not ok")
@@ -286,7 +295,8 @@ def git_facts(root: Path) -> dict:
         r = subprocess.run(["git", "-C", str(root), *a], capture_output=True, text=True)
         return r.stdout.strip() if r.returncode == 0 else None
     head = g("rev-parse", "HEAD")
-    dirty = g("status", "--porcelain", "--untracked-files=no")
+    status = subprocess.run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=no"], capture_output=True, text=True)
+    dirty = status.stdout.rstrip("\n") if status.returncode == 0 else ""
     return {"head": head, "dirty_tracked": [ln[3:] for ln in (dirty or "").splitlines()], "tags": (g("tag") or "").split()}
 
 

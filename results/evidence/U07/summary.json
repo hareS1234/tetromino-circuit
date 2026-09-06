@@ -23,7 +23,8 @@
     "rtl_total": 5,
     "rtl_failed": 0,
     "check_synth_drop_merge_pipe": "3/3"
-   }
+   },
+   "log_sha256": "c5794b8ed7af5049ec1f06941d8c40f32580832dfb06280f5696832022f83e58"
   }
  ],
  "checks": [

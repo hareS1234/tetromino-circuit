@@ -20,7 +20,8 @@
    "log": "results/evidence/U05/cmd00.log",
    "counts": {
     "pytest_passed": 15
-   }
+   },
+   "log_sha256": "36fb4c427a342a2006e57131627347d0d74636efdc0154a3fd8c655796260d03"
   },
   {
    "argv": [
@@ -33,7 +34,8 @@
    "log": "results/evidence/U05/cmd01.log",
    "counts": {
     "check_compactor_exhaustive": "1048576/1048576"
-   }
+   },
+   "log_sha256": "c40a7d4c9a0a7b9e113bb1451335923b2bfb1660b043f09befa3da3dbd8ac5ba"
   },
   {
    "argv": [
@@ -48,7 +50,8 @@
    "log": "results/evidence/U05/cmd02.log",
    "counts": {
     "check_compactor_random": "100000/100000"
-   }
+   },
+   "log_sha256": "0623444482874dc3abd5d422aacb39c083fe682a3a300e2fb9a48c7c86d7c712"
   },
   {
    "argv": [
@@ -62,7 +65,8 @@
     "check_formal_smoke": "1/1",
     "check_formal_compactor": "1/1",
     "check_formal_compactor_cover": "1/1"
-   }
+   },
+   "log_sha256": "f420152fd921a9b43a3265f6d4b140e7c48174b8e6a6fe71d7de4e5d6830ae92"
   }
  ],
  "checks": [

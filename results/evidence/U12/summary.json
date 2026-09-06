@@ -22,7 +22,8 @@
    "log": "results/evidence/U12/cmd00.log",
    "counts": {
     "check_synth_stream_wrapper": "4/4"
-   }
+   },
+   "log_sha256": "dfa8a8c89eb24ad5efb1444cc997cb862e3c80c918d5ff696b39bc48ef935c68"
   },
   {
    "argv": [
@@ -37,7 +38,8 @@
     "rtl_total": 3,
     "rtl_failed": 0,
     "check_synth_features_pipe": "3/3"
-   }
+   },
+   "log_sha256": "5743161547d78735cc0056b1c1f4deda305ed17ab667328737d245f08c5c7bef"
   },
   {
    "argv": [
@@ -54,7 +56,8 @@
     "check_a2_traffic": "1733/1733",
     "check_a2_metadata": "201/201",
     "check_a2_reset": "50/50"
-   }
+   },
+   "log_sha256": "1aba5578d5d5a263fc0740d4a703bbfaff0bc80eb10c474c085e9d4c473a5a7b"
   },
   {
    "argv": [
@@ -70,7 +73,8 @@
    "log": "results/evidence/U12/cmd03.log",
    "counts": {
     "native_decisions": 1000
-   }
+   },
+   "log_sha256": "98e8e0cfe878009b81ade40a19630c935178fc55abcb184843d544da50b8ce28"
   }
  ],
  "checks": [
