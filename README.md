@@ -39,7 +39,7 @@ The final response arrives 63 cycles after the request.
 
 Open [`viewer/demo.html`](viewer/demo.html) to pause the trace and inspect individual pipeline stages.
 
-## Results at a glance
+## Results Summary
 
 - A2 needs a median of 46 cycles per decision on the common 1,000-board corpus. Its latency follows
   `N + 29`, where `N` is the legal candidate count.
@@ -71,7 +71,7 @@ Full tables are available in [`docs/results.md`](docs/results.md).
 All three cores implement the same `drop-v1.1` contract. The score is
 `76L − 51A − 36Q − 18U`. See [`docs/spec.md`](docs/spec.md) for the exact rules and tie-breaks.
 
-## Repository guide
+## Repo Guide
 
 | Topic | Files |
 |---|---|
@@ -171,7 +171,7 @@ release claims. Timeouts and failed timing runs remain visible in the published 
 
 ## Scope and limitations
 
-- The `drop-v1.1` game uses straight drops. Kicks, tucks, spins, hold, lock delay, gravity, hidden
+- The `drop-v1.1` game uses straight drops (very simple, I know). Kicks, tucks, spins, hold, lock delay, gravity, hidden
   rows, combos, garbage, and multiplayer are excluded.
 - Long quality runs use the bit-exact Python policy model. RTL decisions are checked against that
   model on shared corpora and saved replays.
