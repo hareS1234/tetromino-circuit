@@ -252,14 +252,14 @@
   {
    "family": "darwin-arm64",
    "host": "the maintainer's Apple-silicon Mac (demonstration machine)",
-   "status": "blocked",
-   "reason": "no Mac was reachable from the session that executed the jobs: the platform lock entry is unenrolled, and bootstrap, doctor, tests, smoke, the A2 native subset, the demo regeneration and the viewer/GIF inspection have not been run there"
+   "status": "executed",
+   "evidence": "results/evidence/U20/fresh_clone_darwin-arm64.json"
   },
   {
    "family": "remote-ci",
    "host": "GitHub Actions at the release commit",
-   "status": "blocked",
-   "reason": "no remote repository was available to the session; .github/workflows/ci.yml validates locally (tools/ci_local.py) but no successful remote run URL/SHA exists"
+   "status": "executed",
+   "evidence": "results/evidence/U20/remote_ci.json"
   }
  ],
  "gates": [
@@ -275,13 +275,13 @@
   },
   {
    "name": "mac-reproduction",
-   "status": "blocked",
-   "reason": "see platforms/darwin-arm64"
+   "status": "executed",
+   "evidence": "results/evidence/U20/fresh_clone_darwin-arm64.json"
   },
   {
    "name": "remote-ci-run",
-   "status": "blocked",
-   "reason": "see platforms/remote-ci"
+   "status": "executed",
+   "evidence": "results/evidence/U20/remote_ci.json"
   }
  ]
 }

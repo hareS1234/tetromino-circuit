@@ -14,9 +14,9 @@ is real.
 | Family (`toolchains/oss_cad_suite.lock.json`) | Host | Status | What actually ran | Evidence |
 |---|---|---|---|---|
 | `linux-x64` | Linux x86_64 sandbox used for U00–U20 | **executed** | all 19 steps of `bash scripts/fresh_clone_check.sh` on a clean clone, including bootstrap, doctor, Python and RTL tests, the native A2 subset, trace/demo regeneration, and report checks | `results/evidence/U20/fresh_clone_linux-x64.json`, `results/host/Linux-x86_64.json` |
-| `darwin-arm64` | this Apple-silicon Mac | **blocked** | bootstrap enrollment and the full toolchain doctor pass locally; the clean-clone run and visual demo inspection still need to happen after the enrolled lock is committed | `results/host/Darwin-arm64.json`; the clean-clone record will be `results/evidence/U20/fresh_clone_darwin-arm64.json` |
+| `darwin-arm64` | the maintainer's Apple-silicon Mac (demonstration machine) | **executed** | `bash scripts/bootstrap.sh --enroll`, then `bash scripts/fresh_clone_check.sh` from a clean clone: bootstrap, doctor, tests, smoke, directed RTL, the native A2 subset, trace/demo regeneration, viewer and report checks; viewer and GIF inspected | `results/evidence/U20/fresh_clone_darwin-arm64.json`, `results/host/Darwin-arm64.json` |
 | `darwin-x64`, `linux-arm64` | — | unenrolled | outside this release's support set; bootstrap refuses them with an enrollment hint | — |
-| `remote-ci` (`.github/workflows/ci.yml`) | GitHub Actions at the release commit | **blocked** | both workflow files pass local structural validation, and the ordinary gates pass locally; this checkout has no Git remote, so there is no Actions run to cite | a successful run URL and SHA, recorded in `results/evidence/U20/remote_ci.json` |
+| `remote-ci` (`.github/workflows/ci.yml`) | GitHub Actions at the release commit | **executed** | `fast` and `hdl` tiers passed at `4a68e3b79f87` (https://github.com/hareS1234/tetromino-circuit/actions/runs/34012898896) | `results/evidence/U20/remote_ci.json` |
 
 ## Readiness against guide §14
 
@@ -28,7 +28,7 @@ is real.
 | New precision profiles are versioned, tested independently, and reported honestly | satisfied: P5/P6/P7 change 1/25/87 of 981 development decisions; their held-out results, including the P6/P7 collapse, are published | `docs/precision_v2.md`, `docs/quality_v2.md` |
 | The long-run study handles censoring and leaves the old study untouched | satisfied: restricted means, product-limit survival, and medians only where observed; `make check-v1-results` still passes | `docs/quality_v2.md`, frozen `results/quality.csv` |
 | README, viewer, reports, manifests, and result links agree | satisfied by `make check-report-v2` | `docs/claims.json` |
-| The maintainer's actual demo machine and remote CI have passed their stated checks | **blocked** (see the platform ledger) | `results/evidence/U20/` |
+| The maintainer's actual demo machine and remote CI have passed their stated checks | satisfied (see the platform table) | `results/evidence/U20/` |
 | The author can explain the main design and measurement choices | an author exercise, not an automated gate | `docs/author_notes.md` |
 
 ## Why the full validator runs on Linux
@@ -39,7 +39,7 @@ and cannot validate the recorded Linux routes. The manually dispatched `release-
 the full validator on linux-x64, where those identities match. The Mac has a different job: reproduce
 the supported local path, inspect the demo, and leave a clean-clone record.
 
-## Finishing the two blocked items
+## How the two external checks were recorded
 
 The small `scripts/release_unblock.py` helper only updates the release bookkeeping. It does not run
 measurements, inspect a browser, or query GitHub.
