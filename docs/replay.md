@@ -1,37 +1,36 @@
 # Watching A2 think, one clock at a time (U18)
 
-The replay exists because staring at twenty-three banks of RTL is a rotten way to learn a pipeline.
-It shows tags moving, the running winner changing, and stalls or resets taking effect at the exact
-edge where the Verilated design saw them.
+The replay makes a twenty-three-bank RTL pipeline easier to follow. It shows tags moving, the running
+winner changing, and stalls or resets taking effect on the exact simulated edge.
 
-This is not a hand-drawn timing sketch. Occupancy, handshakes, compactor samples, and best-reducer
-registers come from RTL. Boards, features, and scores come from the literal-descent oracle and are
-joined to RTL tokens by tag. `tools/check_trace.py` checks that the marriage is sound.
+Occupancy, handshakes, compactor samples, and best-reducer registers come directly from RTL. Boards,
+features, and scores come from the literal-descent oracle. Tags join both sides of the trace, and
+`tools/check_trace.py` checks every match.
 
 ## The three traces
 
 All live under `results/traces/` and use schema `a2-trace-v1`.
 
-| File | Setup | What is interesting about it |
+| File | Setup | Focus |
 |---|---|---|
 | `a2_normal_search.json` | production `tetris_core`, corpus state 3 | 34 T-piece candidates, a line-clear option, six running-best changes, and the final response at `N + 29 = 63` cycles |
 | `a2_last_candidate_wins.json` | production core, corpus state 800 | the final dense I-piece candidate is the unique winner, which is a tidy trap for off-by-one reduction bugs |
 | `a2_stall_reset.json` | standalone `candidate_pipe` verification harness | fills all 23 banks, freezes nine edges behind `m_ready = 0`, releases work, flushes a full pipe on reset, then starts cleanly again |
 
-The last case is intentionally not sold as production behavior. `search_pipeline` ties `m_ready`
-high; the standalone interface is where output back-pressure can be demonstrated honestly. Fixture
-selection rules and the development-corpus source are recorded in each header.
+The last case demonstrates the standalone interface. Production `search_pipeline` ties `m_ready`
+high. The harness exposes output back-pressure without claiming it occurs in the production core.
+Each header records the fixture rules and development-corpus source.
 
 Every trace says which top, toolchain, source hash, stage-manifest hash, and native harness produced
 it. Cycles contain the control signals, bank tags, retiring token, running best, P9 keep/rank sample,
 P12 compacted-board sample, and either the core request/response state or the standalone harness
-phase. Candidate payloads are stored once and referenced by tag, which keeps the files large but not
-comically large.
+phase. Candidate payloads are stored once and referenced by tag. This keeps the files reasonably
+small.
 
 The harnesses use Verilator's `--public-flat-rw` to observe registers without touching production
 RTL. That flag is part of the native identity.
 
-## What the checker insists on
+## Checker requirements
 
 `make check-trace` verifies:
 
@@ -77,13 +76,13 @@ quietly drawn under some unrelated tag.
 - `assets/a2_stall_reset.gif`
 
 First, middle, and final inspection frames sit under `results/traces/frames/`. The normal trace's
-middle frame catches all 23 banks occupied; its last frame shows an empty pipe, best id 16 at score
+middle frame catches all 23 banks occupied. Its last frame shows an empty pipe, best id 16 at score
 −887, and the public response.
 
 `make render-showcase` cuts the two README animations from the longer saved games. The neon reel
 animates the straight drop between recorded positions and flashes the rows the replay actually
-cleared. The architecture race advances A0, A1, and A2 by the same 13,031-cycle budget. Replay paths
-are also tucked into each GIF's comment field, so `make check-viewer` can catch a swapped source.
+cleared. The architecture race advances A0, A1, and A2 by the same 13,031-cycle budget. Each GIF
+stores its replay path in the comment field. `make check-viewer` catches a swapped source.
 
 `tools/diagrams.py` also draws the static SVGs in `assets/diagrams/`: the top-level search path, the
 A0/A1 evaluator FSM, the grouped A2 pipe, a non-adjacent line-clear example, and four-lane ownership.

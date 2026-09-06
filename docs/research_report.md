@@ -9,7 +9,7 @@ numbers from `results/`; the dense tables in [`docs/results.md`](results.md) are
 ## 1. Problem and contract
 
 The game is fixed by `docs/spec.md` (`drop-v1.1`): a 10×20 board, seven tetrominoes with a fixed
-orientation table, and drop-only placement — a piece is chosen by rotation and column, falls
+orientation table, and drop-only placement: a piece is chosen by rotation and column, falls
 straight down until it rests, and locks. There are no kicks, tucks, spins, holds, timing or scoring
 rules beyond line count. A candidate is `candidate_id = 10·rotation + x`; the dense list of legal
 geometries has 9 entries for O, 17 for I, S and Z and 34 for T, J and L. The objective the hardware
@@ -29,8 +29,7 @@ are each exact with respect to their own definition and are compared as *policie
 
 The question of the study is architectural: given that the objective is fixed and cheap per
 candidate, what is the cheapest hardware that returns the exact best move quickly, and where do the
-obvious ways of buying speed — replicating evaluators, pipelining them, narrowing the arithmetic —
-stop paying?
+obvious ways of buying speed: replicating evaluators, pipelining them, narrowing the arithmetic: stop paying?
 
 ## 2. Measured bottleneck
 
@@ -52,8 +51,8 @@ candidates are all legal takes exactly `45·⌈N/L⌉ + 7 + L` cycles for `L` la
 
 Two observations shaped the hypothesis for A2. First, even a zero-cycle compactor leaves a serial
 evaluator near 17 cycles per candidate, because every stage waits for the previous one; the
-structure, not the compactor alone, is the limit. Second, all of the per-candidate work — landing,
-merge, clear, features, score — is a pure function of the immutable original board and the
+structure, not the compactor alone, is the limit. Second, all of the per-candidate work: landing,
+merge, clear, features, score: is a pure function of the immutable original board and the
 candidate, so candidates are independent and can be overlapped if each carries its own copy of the
 board through the stages. The hypothesis: a pipeline that accepts one candidate per cycle and
 replaces the iterative compactor with a prefix/select network should make the decision latency
@@ -62,9 +61,9 @@ to two or three replicated lanes. The measured outcome is in §5; the constant t
 
 ## 3. Architecture
 
-![F1a — request, cache, search, reduction and response](../assets/diagrams/architecture.svg)
+![F1a: request, cache, search, reduction and response](../assets/diagrams/architecture.svg)
 
-![F1b — a real RTL trace of the A2 pipeline on a 34-candidate board](../assets/a2_pipeline.gif)
+![F1b: a real RTL trace of the A2 pipeline on a 34-candidate board](../assets/a2_pipeline.gif)
 
 *Figure 1. (a) The core's request/cache/search/reduction/response path shared by all
 architectures; A2 replaces the lane array with `search_pipeline`. (b) One frame per clock edge of
@@ -74,8 +73,8 @@ public response arrives 63 cycles after the request. `viewer/demo.html` replays 
 
 **Context ownership.** One request owns one immutable context. The core latches `board`, `piece` and
 the fifty-bit height cache in its `IDLE`/`CACHE` states and refuses another request until the
-response is consumed, so everything a token reads from outside itself — heights at P0, the original
-board at P3 — cannot change while any token of the search is in flight. From P3 on each token carries
+response is consumed, so everything a token reads from outside itself: heights at P0, the original
+board at P3: cannot change while any token of the search is in flight. From P3 on each token carries
 its private merged board; the compactor and feature stages read no shared state at all. The hazard "a
 new board arrives while old candidates are in the pipe" is unreachable by construction, and the
 tests make the mechanism observable by scrambling the public inputs after acceptance (V12) and
@@ -120,15 +119,13 @@ hardest to reach by sampling (`docs/verification_a2.md`, V01–V14):
 * *Independent references.* The literal-descent model and the grid reference are kept separate;
   the RTL is never used to define expected values. Whole-core equivalence is tested on the 1,000-state
   v1 corpus and 2,000 development states for A2 (V11), and every v1 configuration on its own
-  corpora — 8,250 recorded v1 decisions in `results/decisions/`.
-* *Representative edge cases.* All 2^20 keep masks through the actual compactor HDL (V02), 100,000
-  arbitrary boards (V03), all 162 geometric candidates on 250 mixed boards (40,500 tokens, V04),
-  spawn under an overhang, height-20 columns, every scorer bound (V05), 4,096 back-to-back tokens
-  with spacing 1 (V06), 20 % input bubbles with 30 % output stalls (V07), reset at each of the 24
-  pipeline occupancies (V08), tag alignment with alternating geometry (V09), and the winner
-  hazards: all illegal, one legal, last wins, exact ties with the higher id first (V10).
+  corpora: 8,250 recorded v1 decisions in `results/decisions/`.
+* *Representative edge cases.* Checks cover all 2^20 keep masks and 100,000 arbitrary boards.
+  Geometry sees all 162 candidates on 250 mixed boards, including spawn under an overhang. Pipeline
+  tests send 4,096 consecutive tokens, add bubbles and stalls, and reset every occupancy. Metadata
+  and reducer tests cover alternating geometry, illegal candidates, last-winner cases, and ties.
 * *Block proofs.* Unbounded k-induction (SBY/boolector, pinned) of the compactor against an
-  independent running-index filter — status `unbounded` in `results/formal/compactor.json` — of the
+  independent running-index filter: status `unbounded` in `results/formal/compactor.json`: of the
   best reducer (dominance, provenance, monotonicity) and of the abstract 5-bank control discipline
   (token conservation, ordering, stall stability, reset flush). The proofs cover blocks, not the
   full core; no eventual-completion property is claimed under permanent stalls.
@@ -153,7 +150,7 @@ identical to the one-lane A1 record of the same corpus; only the cycle counts di
 
 ### 5.2 Area and decision latency
 
-![F2 — LUT4 area against projected decision latency at 50 MHz, exact configurations](../results/v2/figures/area_vs_latency.png)
+![F2: LUT4 area against projected decision latency at 50 MHz, exact configurations](../results/v2/figures/area_vs_latency.png)
 
 *Figure 2. Routed LUT4 count of each exact configuration against its projected median decision
 latency (median cycles on the common corpus divided by the 50 MHz constraint each route met; a
@@ -177,7 +174,7 @@ pipeline still wins by a wide margin (Figure 2): four lanes buy 3.36× for 3.48�
 
 ### 5.3 Replication scaling
 
-![F3 — cycles by candidate count and lane count](../results/v2/figures/cycles_by_family.png)
+![F3: cycles by candidate count and lane count](../results/v2/figures/cycles_by_family.png)
 
 *Figure 3. Median cycles per decision by dense candidate count N (9, 17, 34) for one, two and four
 lanes and for A2; the controller overhead (7 cycles plus one `REDUCE` cycle per lane) and the A2
@@ -186,17 +183,15 @@ fill/drain constant (29 cycles) are the intercepts. Companion panel: `lane_scali
 On the 654 states whose candidates are all legal the lane count is exactly `45·⌈N/L⌉ + 7 + L`: the
 ceiling (34 → 17 → 9 candidates per lane), the extra reduction cycles and the fixed overhead are
 the three visible reasons four lanes give 3.36× rather than 4× (per state 1.56×–3.74×, median 3.28×).
-Synthesis of the same source (`results/v2/lanes/synth_l1_l2_l4.json`, `synth_ecp5 -nodsp`) grows
-from 4,030 LUT4 / 2,220 FF for one lane to 6,773 FF for four, +1,518 flip-flops per added lane:
-each lane latches its own copy of the 200-bit board and 50-bit heights twice and holds its own merged
-and cleared boards, so at least 900 of the 1,518 are replicated storage that a shared height source
-does not remove. The lane-interaction witnesses the guide asked for are real: on 300 corpus states
+Synthesis grows from 4,030 LUT4 / 2,220 FF for one lane to 6,773 FF for four. Each added lane brings
+1,518 flip-flops. At least 900 hold replicated boards and heights. The lane-interaction witnesses
+remain useful: on 300 corpus states
 the winning lane finished strictly last in 95 cases, 74 winners were cross-lane ties decided by the
 lowest id, and 62 lane/state pairs had no legal candidate and had to be ignored by the reduction.
 
 ### 5.4 Clock sensitivity
 
-![F4 — routing outcomes per seed and clock target](../results/v2/figures/timing_outcomes.png)
+![F4: routing outcomes per seed and clock target](../results/v2/figures/timing_outcomes.png)
 
 *Figure 4. Outcome of every job of the 84-route release matrix (`benchmarks/hardware_v2.json`:
 six exact configurations × {50, 60, 80, 100} MHz × seeds {11, 12, 13}, plus P1 and P5–P7 at
@@ -207,16 +202,14 @@ netlist cannot route.*
 All 84 declared jobs have an outcome (`make check-hardware-v2`; protocol and tables in
 [`docs/hardware_v2.md`](hardware_v2.md)): 44 met their constraint, 32 routed
 but reported an fmax below it, 8 exhausted the budget, none errored; the run took 4.4 h of wall time
-on two cores (`results/evidence/U17/matrix_run.log`). The first result is that the constraint did not
-move the outcome: for every configuration and seed, nextpnr reported the *same* fmax at 50, 60, 80 and
-100 MHz (Figure 4, right panel), so the sweep measures each netlist's achievable clock per seed rather
-than a response to timing pressure — 50 and 60 MHz are met wherever routing completed and 80 and
-100 MHz fail everywhere. The v1 evaluators sit between 64 and 68 MHz reported (A0 64.70–66.09, A1
+on two cores (`results/evidence/U17/matrix_run.log`). For every configuration and seed, nextpnr
+reported the same fmax at 50, 60, 80, and 100 MHz. The sweep therefore compares one achievable clock
+per seed with four thresholds. Completed routes meet 50 and 60 MHz and miss 80 and 100 MHz. The v1 evaluators sit between 64 and 68 MHz reported (A0 64.70–66.09, A1
 65.67–67.90, two lanes 64.08–66.87); the A2 pipeline is the fastest netlist of the study at
 72.40–75.63 MHz over its three seeds at 6,104 LUT4 / 5,489 FF, so it evaluates one candidate per
 cycle *and* runs a higher clock than the serial evaluators. Four lanes routed on one seed only
 (seed 12: 63.24 MHz met at 50 and 60 MHz, failed at 80 and 100) and exhausted the 1,200 s budget on
-seeds 11 and 13 at every target — 8 of its 12 jobs — reproducing the U13 pilot's symptom (`router1`
+seeds 11 and 13 at every target: 8 of its 12 jobs: reproducing the U13 pilot's symptom (`router1`
 converging at about 100 overflowing nets per 1,000 s). The 50 MHz projection is therefore
 withheld for four lanes in `docs/results.md` §1.3 (one of three seeds), while every other
 configuration's projection stands on three met routes. The precision cores P1 and P5–P7 all meet
@@ -228,17 +221,15 @@ tree; 13.93 ns) and, after replacing the tree by a one-hot priority select with 
 register schedule, the `j → cand_rom → shape_rom → hsel` enumeration chain into the P0 height mux
 (13.10 ns, 76.36 MHz reported at seed 1). In the release matrix the same chain is the worst path in all 12 routed A2 records
 (`u_search.j` → candidate decode → P0 height select, category "A2 enumeration / reducer" in
-`docs/results.md` §1.2). The A1-family worst paths are the closed-form landing arithmetic in the drop
-unit (`u_drop.d_q` → `y`) in 42 of 52 routed records, the compactor's output register feeding the
-feature column encoders on 5 (A1 bitmap seed 13, P5 seed 12) and the lane's dense-index counter
-(`u_lane.j` → drop/merge decode) on the other 5 (two lanes seed 13, P1 seed 11);
-A0's is its row-by-row descent counter in all 12. The four-lane worst paths are inside one lane's
+`docs/results.md` §1.2). The A1 closed-form landing path is worst in 42 of 52 routed records. Five
+records end at the feature column encoders after compaction. The other five end in dense-index lane
+control. A0's row-by-row descent counter is worst in all 12 records. The four-lane worst paths are inside one lane's
 drop unit, not in the broadcast or the reduction, so the four-lane routing difficulty is congestion
 seen by the router, not a longer logic path seen by the timing analyser.
 
 ### 5.5 Policy sensitivity: quantization and long-horizon quality
 
-![F5 — quantization disagreement and held-out survival](../results/v2/figures/precision_quality.png)
+![F5: quantization disagreement and held-out survival](../results/v2/figures/precision_quality.png)
 
 *Figure 5. Left: the share of legal development-corpus decisions that P5, P6 and P7 change, and
 the share the integer certificate proves unchanged (`results/v2/precision/development/summary.json`).
@@ -253,11 +244,11 @@ changed 1, 25 and 87 of 981 legal decisions on the 1,000-state corpus (P5, P6, P
 as certified is certified soundly (asserted on every state), and each change is explained by its
 candidate table in `results/v2/precision/development/divergence_explanations.json`. The saving is
 small: the scorer alone falls from 97 to 28 LUT4 (P0 → P7, `synth_ecp5 -nodsp`), the whole A1 core
-from 4,030 to 3,883 LUT4 — a 3.6 % core saving that the quality study below shows to be a poor
+from 4,030 to 3,883 LUT4: a 3.6 % core saving that the quality study below shows to be a poor
 trade for P6 and P7.
 
 *Policy level (held-out streams, frozen before the run).* The powers-of-two profile P1 survives a
-restricted mean of 22,675 locked pieces against 11,846 for the exact baseline P0 — a paired
+restricted mean of 22,675 locked pieces against 11,846 for the exact baseline P0: a paired
 difference of +10,828 pieces (CI95 [7,082, 14,719]), P1 outlasting P0 on 64 of the 100 streams,
 with 13 of its games censored at the cap (2 for P0). P5 is indistinguishable from P0 (-762 pieces,
 interval spanning zero, 30 tied streams). P6 and P7 collapse to 2,226 and 680 pieces. The random
@@ -277,8 +268,8 @@ multi-context core, which the ownership argument of §3 deliberately excludes.
 **Routing and fan-out limits.** The failures at higher clocks are paths, not utilisation: A2's
 enumeration chain into the P0 height mux, and for four lanes the broadcast of the 200-bit board and
 50-bit heights to four evaluators plus the four-way best multiplexer. Four-lane routing was
-seed-dependent even at 50 MHz — seed 1 did not converge in 3,600 s while seed 2 met timing at
-65.96 MHz in 214 s (`docs/lanes.md` §5) — and the release matrix records 8 timeouts
+seed-dependent even at 50 MHz. Seed 1 did not converge in 3,600 s, while seed 2 met timing at
+65.96 MHz in 214 s (`docs/lanes.md` §5). The release matrix records 8 timeouts
 under its 1,200 s budget. Those timeouts are recorded outcomes of a seed and a budget; they are not
 evidence that the netlist cannot route, and the matrix keeps them rather than re-rolling seeds.
 
@@ -291,7 +282,7 @@ model closure hash before the held-out run, and `make check-quality-v2` rejects 
 protocol or model source differs from the summary's.
 
 **Where added hardware did not help.** Four lanes cost 3.48× the LUT4s and 3.05× the flip-flops
-for 3.36× the cycles — worse than linear on both axes and no better in clock. Narrowing the scorer
+for 3.36× the cycles: worse than linear on both axes and no better in clock. Narrowing the scorer
 saved at most 147 LUT4 of 4,030 while P6 and P7 destroy the policy; only P5 is a free saving, and it
 is 121 LUT4. The one change that paid was structural: overlapping independent candidates with a
 private board each, which turned 45 cycles per candidate into one and, at 50 MHz, a 46-cycle

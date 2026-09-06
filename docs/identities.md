@@ -42,20 +42,19 @@ One atomic JSON per job (`.part` file, then rename); parallel workers never appe
 * `synth-record-v2` in `build/synth/<key>/summary.json`; reuse requires the recorded `synth_key`
   and a netlist that still hashes to `netlist_sha256`.
 
-Derived artifacts under `results/v2/summary/` are rebuilt from the raw records on every run and
-sorted by complete key: `routes_<matrix>.csv` (every attempt of every job of the manifest, with a
-`current` column saying whether the record's identity is the one the present source and toolchain
-resolve to), `matrix_<matrix>.json` (expected jobs, planned route keys, latest status per job,
-counts), `quality.csv` and `quality_<suite>.json`.
+Derived artifacts under `results/v2/summary/` are rebuilt from raw records on every run. The
+`routes_<matrix>.csv` file contains every attempt and marks the identity that matches the current
+source and toolchain. `matrix_<matrix>.json` records expected jobs, planned keys, current status,
+and counts. Quality summaries live in `quality.csv` and `quality_<suite>.json`.
 
 ## Runner (`tools/measure_matrix.py`)
 
 Manifests (`hardware-matrix-v2`) list configurations × targets × seeds plus `extra_jobs`, one DSP
 policy, the route timeout and an optional decision-corpus block; `benchmarks/smoke_v2.json` is the
 development preset behind `make upgrade-smoke`, the release matrix is a separate explicit command
-(`make measure-matrix MANIFEST=…`). `plan` is a dry run (jobs, keys, reuse/run/retry), `run`
-resumes: a job whose latest record exists under its `route_key` is reused whatever its status —
-a completed failure is a result — and `--retry REASON --only <job>` records a distinct attempt.
+(`make measure-matrix MANIFEST=…`). `plan` is a dry run of jobs, keys, reuse, and retries. `run`
+reuses any record with the current `route_key`, including a completed failure. The command
+`--retry REASON --only <job>` records a distinct attempt.
 `results/v2/runner.lock` (pid, manifest, start) refuses a second orchestrator while the first is
 alive and clears a stale lock; `results/v2/runner.heartbeat.json` and the console get a status
 record at each job start/finish and a heartbeat at most 60 s apart (active job, elapsed, peak RSS,
@@ -64,12 +63,11 @@ A route runs in its own process group and is killed with its children when the b
 
 ## Summaries
 
-`tools/bench.py::summarise(rows, suite, source=…, protocol_sha256=…)` selects the suite's cap,
-requires every selected row to carry the one named source identity and the one protocol identity
-(`SummaryConflict` otherwise — the pre-U02 version combined rows from different `model/` versions
-silently), joins the exact expected stream ids (missing streams make a policy `incomplete` and list
-them; streams outside the suite are ignored), rejects duplicate rows that disagree, and computes the
-paired bootstrap against the suite baseline. The frozen v1 study is recomputed from
+`tools/bench.py::summarise(rows, suite, source=…, protocol_sha256=…)` selects the suite's cap and
+requires one source and protocol identity. A mismatch raises `SummaryConflict`. The function joins
+the exact expected stream ids and marks policies with missing streams as `incomplete`. It ignores
+streams outside the suite, rejects conflicting duplicates, and computes the paired bootstrap against
+the suite baseline. The frozen v1 study is recomputed from
 `results/quality.csv` with `--summarise-v1 precision|depth` and must equal
 `results/quality_summary.json` (`make check-v1-results`, 8/8 policies).
 
@@ -78,14 +76,13 @@ re-run through the tool and `results/` is refused as an output root.
 
 ## Gates and release membership
 
-`tools/gate.py` (v1 recorder) and `tools/ugate.py` (upgrade recorder) reject a gate with zero
-commands (status `failed`); `ugate` additionally requires every named check to have a nonzero
-count (`N passed`, `RTL tests: N total, 0 failed`, `native: all N decisions match`, `CHECK name ok/total`
-with `ok == total > 0`) and records the git commit (tracked-file dirtiness only), the source closure
-hash, the toolchain identity, commands with exit codes and logs, artifacts and limitations.
+`tools/gate.py` and `tools/ugate.py` reject a gate with zero commands. `ugate` also requires every
+named check to have a nonzero count. Accepted forms include `N passed`, RTL totals, native decision
+matches, and `CHECK name ok/total`. Each record stores the git commit, tracked-file state, source
+closure, toolchain identity, commands, logs, artifacts, and limitations.
 
-`tools/check_v1_results.py` names every expected v1 job from `benchmarks/config.json` — 640 quality
-games, 45 routes, 9 decision files, E00–E19 — and requires exact membership (no missing, extra or
+`tools/check_v1_results.py` names every expected v1 job from `benchmarks/config.json`: 640 quality
+games, 45 routes, 9 decision files, and E00–E19. It requires exact membership with no missing, extra, or
 duplicate jobs), one source and one toolchain identity, a committed summary equal to the
 recomputation, and evidence with nonempty commands and zero exit codes. `tools/check_release.py`
 uses it instead of the former minimum row counts. The v2 release validator (U20) applies the same

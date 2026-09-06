@@ -49,7 +49,7 @@ def path_category(path: str) -> str:
 
 def fmt(x, nd=1):
     if x is None:
-        return "—"
+        return "n/a"
     if isinstance(x, float):
         return f"{x:,.{nd}f}"
     return f"{x:,}"
@@ -67,13 +67,15 @@ def hardware_section() -> tuple[str, dict]:
         return "\n".join(out) + "\n", facts
     with open(csv_path) as fh:
         rows = [r for r in csv.DictReader(fh) if r.get("current") in ("True", "true", "1")]
-    out.append(f"ECP5 LFE5U-85F CABGA381 speed 6, Yosys `synth_ecp5 -nodsp`, nextpnr-ecp5 with `--freq` as the clock constraint and "
-               f"auto-allocated I/O; toolchain `{summary['toolchain_id']}`; one synthesis per configuration reused for every target and seed; "
-               f"route budget {m['route_timeout_s']} s ({', '.join(f'{k} {v} s' for k, v in m.get('route_timeout_overrides', {}).items())}). "
-               f"Raw: one `route-record-v2` per job under `results/v2/raw/routes/<route_key>.json`; derived CSV `results/v2/summary/routes_hardware-v2.csv` "
-               f"(current attempts only are summarised here; every attempt is in the CSV). Statuses: met = routed and the report passes the constraint, "
-               f"failed = routed but the reported fmax is below the constraint, timeout = the budget was exhausted (an observed resource limit, not proof "
-               f"the design cannot route). Counts: {summary['counts']}.")
+    out.append(f"The target is an ECP5 LFE5U-85F CABGA381 speed 6. Yosys uses `synth_ecp5 -nodsp`, and nextpnr-ecp5 uses "
+               f"`--freq` with auto-allocated I/O. Toolchain: `{summary['toolchain_id']}`. Each configuration is synthesized once and reused "
+               f"for every target and seed. The route budget is {m['route_timeout_s']} s "
+               f"({', '.join(f'{k} {v} s' for k, v in m.get('route_timeout_overrides', {}).items())}).")
+    out.append("")
+    out.append("Each raw job is a `route-record-v2` under `results/v2/raw/routes/`. The derived CSV is "
+               "`results/v2/summary/routes_hardware-v2.csv`. It includes every attempt; this report summarizes current attempts. "
+               "A met job passes its constraint. A failed job routed below the constraint. A timeout exhausted its declared budget. "
+               f"Counts: {summary['counts']}.")
     out.append("")
     # per configuration x target
     by = defaultdict(list)
@@ -91,7 +93,7 @@ def hardware_section() -> tuple[str, dict]:
         for t in targets:
             rs = by.get((cid, t), [])
             if not rs:
-                cells.append("—" if any(j["configuration"] == cid for j in m.get("extra_jobs", [])) else "not run")
+                cells.append("n/a" if any(j["configuration"] == cid for j in m.get("extra_jobs", [])) else "not run")
                 continue
             area = area or rs[0]
             met = sum(r["status"] == "routed_timing_met" for r in rs)
@@ -120,7 +122,7 @@ def hardware_section() -> tuple[str, dict]:
         for s in (11, 12, 13):
             r = rs50.get(s)
             if r is None:
-                cells.append("—")
+                cells.append("n/a")
             elif r["status"] == "route_timeout":
                 cells.append(f"timeout ({float(r['elapsed_s']):.0f} s)")
             else:
@@ -130,7 +132,7 @@ def hardware_section() -> tuple[str, dict]:
             for r in by.get((cid, t), []):
                 if r["status"] in ("routed_timing_met", "routed_timing_failed"):
                     cats[path_category(r.get("worst_path_from", ""))] += 1
-        cat_txt = ", ".join(f"{k} ×{v}" for k, v in sorted(cats.items(), key=lambda kv: -kv[1])) or "—"
+        cat_txt = ", ".join(f"{k} ×{v}" for k, v in sorted(cats.items(), key=lambda kv: -kv[1])) or "n/a"
         out.append(f"| `{cid}` | {' | '.join(cells)} | {cat_txt} |")
         facts.setdefault(cid, {})["fmax50"] = {s: (float(r["reported_fmax_mhz"]) if r["status"] != "route_timeout" else None) for s, r in rs50.items()}
         facts[cid]["met50"] = sum(r["status"] == "routed_timing_met" for r in rs50.values())
@@ -157,22 +159,23 @@ def hardware_section() -> tuple[str, dict]:
         met = facts.get(cid, {}).get("met50", 0)
         proj = f"{med / 50:.1f} µs (median cycles ÷ 50 MHz; {met}/3 seeds met)" if met == 3 else f"withheld ({met}/3 seeds met 50 MHz)"
         out.append(f"| `{cid}` | {meta.get('status')} {len(drows)}/{len(drows)} | {min(cyc)} | {med:g} | {statistics.mean(cyc):.1f} | {max(cyc)} | "
-                   + " / ".join(f"{statistics.median(byn[n]):g}" if n in byn else "—" for n in (9, 17, 34)) + f" | {proj} |")
+                   + " / ".join(f"{statistics.median(byn[n]):g}" if n in byn else "n/a" for n in (9, 17, 34)) + f" | {proj} |")
         facts.setdefault(cid, {})["median_cycles"] = med
     out.append("")
-    out.append("The projection is RTL-simulation cycles divided by a routed clock constraint on a device model; it is model-based, not a board "
-               "measurement, and is withheld where any of the three seeds did not meet 50 MHz. Timing failures and timeouts are outcomes of the "
-               "declared matrix, not missing work; missing/corrupt jobs would be reported by `make check-hardware-v2`.")
+    out.append("The projection divides RTL-simulation cycles by a routed clock constraint on a device model. It is withheld when "
+               "any seed misses 50 MHz. Timing failures and timeouts remain valid outcomes. `make check-hardware-v2` reports "
+               "missing or corrupt jobs.")
     out.append("")
     a2s = load_json("results/v2/raw/intervals/a2_candidate_stream.json")
     iv = load_json("results/v2/raw/intervals/a2-cache-d1-p0-l1.json")
     if a2s and iv:
         st = {s["phase"]: s for s in a2s["stats"]}
-        out.append(f"A2 candidate stream (`results/v2/raw/intervals/a2_candidate_stream.json`, standalone pipeline harness): {st['stream']['tokens']} back-to-back tokens with "
-                   f"acceptance spacing {st['stream']['accept_spacing']}, retirement spacing {st['stream']['retire_spacing']}, visible latency {st['stream']['visible_latency']}, "
-                   f"transfer {st['stream']['transfer_latency']}, occupancy max {st['stream']['occupancy_max']} (mean {st['stream']['occupancy_mean']}); under {a2s['bubbles_pct']} % bubbles / "
-                   f"{a2s['stalls_pct']} % stalls: acceptance spacing {st['traffic']['accept_spacing']}, occupancy mean {st['traffic']['occupancy_mean']}. "
-                   f"Request interval (`a2-cache-d1-p0-l1.json`): {iv['agree_with_inferred']}/{len(iv['pairs'])} measured pairs equal the inferred interval, R(N) = N + 31.")
+        out.append(f"The standalone A2 harness sends {st['stream']['tokens']} consecutive tokens. Acceptance spacing is "
+                   f"{st['stream']['accept_spacing']}, retirement spacing is {st['stream']['retire_spacing']}, and visible latency is "
+                   f"{st['stream']['visible_latency']}. Transfer latency is {st['stream']['transfer_latency']}; occupancy reaches "
+                   f"{st['stream']['occupancy_max']} with a mean of {st['stream']['occupancy_mean']}. With {a2s['bubbles_pct']}% bubbles and "
+                   f"{a2s['stalls_pct']}% stalls, acceptance spacing is {st['traffic']['accept_spacing']} and mean occupancy is "
+                   f"{st['traffic']['occupancy_mean']}. All {iv['agree_with_inferred']}/{len(iv['pairs'])} request pairs satisfy R(N) = N + 31.")
         out.append("")
     return "\n".join(out) + "\n", facts
 
@@ -194,13 +197,12 @@ def lanes_section() -> str:
         out.append("| Lanes (`results/v2/lanes/synth_l1_l2_l4.json`, `synth_ecp5 -nodsp`) | LUT4 | FF | CCU2C | FF added |")
         out.append("|---|---:|---:|---:|---:|")
         for r in syn["rows"]:
-            added = "—" if r["ff_added_vs_l1"] == 0 else f"+{r['ff_added_vs_l1']:,}"
+            added = "n/a" if r["ff_added_vs_l1"] == 0 else f"+{r['ff_added_vs_l1']:,}"
             out.append(f"| {r['lanes']} (`{r['configuration_id']}`) | {r['lut4']:,} | {r['ff']:,} | {r['ccu2c']:,} | {added} |")
         out.append("")
-    out.append("Cycles on the common corpus: `45·⌈N/L⌉ + 7 + L` when every candidate is legal (11 cycles per illegal candidate); Σ speed-up 1.91× "
-               "for two lanes and 3.36× for four (v1 records `results/decisions/a1-cache-d1-p0-l{1,2}_native_1000.csv`, U13 record under "
-               "`results/v2/raw/decisions/a1-cache-d1-p0-l4/`). Development routes of the four-lane core: seed 1 `route_timeout` at 1,200 s and 3,600 s, "
-               "seed 2 met 50 MHz at 65.96 MHz (`docs/lanes.md` §5).")
+    out.append("The common corpus follows `45·⌈N/L⌉ + 7 + L` when every candidate is legal. Each illegal candidate costs "
+               "11 cycles. Two lanes give a 1.91× total speed-up, and four lanes give 3.36×. In development routing, four-lane "
+               "seed 1 timed out at 1,200 s and 3,600 s. Seed 2 met 50 MHz at 65.96 MHz (`docs/lanes.md` §5).")
     return "\n".join(out) + "\n"
 
 
@@ -210,7 +212,7 @@ def precision_section() -> str:
     out = ["## 3. Coefficient quantization ladder (U14; `docs/precision_v2.md`)", ""]
     if s:
         out.append(f"Common-state sensitivity, development split (`{s['corpora'][0]['corpus']}`, {s['corpora'][0]['states']} states; "
-                   f"`{s['corpora'][1]['corpus']}`, {s['corpora'][1]['states']} states) — planning data, not a final evaluation:")
+                   f"`{s['corpora'][1]['corpus']}`, {s['corpora'][1]['states']} states). These are planning data:")
         out.append("")
         out.append("| Profile | coefficients | changed (corpus_d1) | changed (dev 2,000) | certified unchanged | not certified but unchanged | exact ties | ties introduced / broken | median exact gap changed / unchanged |")
         out.append("|---|---|---|---|---:|---:|---:|---|---|")
@@ -230,9 +232,9 @@ def precision_section() -> str:
         for k, c in st["cores"]["rows"].items():
             p = int(k[1:])
             r = sc.get(p, {})
-            out.append(f"| P{p} `{st['profiles'][k]['name']}` | {r.get('lut4', '—')} | {r.get('ff', '—')} | {r.get('ccu2c', '—')} | {c['lut4']:,} | {c['ff']:,} | {c['ccu2c']} | {c.get('delta_vs_p0', {}).get('lut4', 0):+d} |")
+            out.append(f"| P{p} `{st['profiles'][k]['name']}` | {r.get('lut4', 'n/a')} | {r.get('ff', 'n/a')} | {r.get('ccu2c', 'n/a')} | {c['lut4']:,} | {c['ff']:,} | {c['ccu2c']} | {c.get('delta_vs_p0', {}).get('lut4', 0):+d} |")
         ref = st["scorer_microbenchmarks"]["p0_constant_multiply_reference"]
-        out.append(f"| P0 with constant multiplies, DSP allowed (reference only) | {ref['lut4']} | {ref['ff']} | {ref['ccu2c']} | — | — | — | DSP {ref['dsp']} |")
+        out.append(f"| P0 with constant multiplies, DSP allowed (reference only) | {ref['lut4']} | {ref['ff']} | {ref['ccu2c']} | n/a | n/a | n/a | DSP {ref['dsp']} |")
         out.append("")
     return "\n".join(out) + "\n"
 
@@ -268,8 +270,8 @@ def quality_section() -> tuple[str, dict]:
             facts[k]["delta_pieces"] = rm["mean_diff"]
             facts[k]["delta_pieces_ci"] = rm["ci95"]
         out.append("")
-        out.append("Every median is reached within the horizon; restricted means are means to the cap (an estimate of the restricted mean, not of unbounded survival). "
-                   "The development pilot (seeds 10000–10019, `results/v2/summary/analysis_pilot.json`, `analysis_pilot50k.json`) is reported in `docs/quality_v2.md` §4 and was used only to size the study.")
+        out.append("Every median is reached within the horizon. Restricted means stop at the cap and do not estimate unbounded survival. "
+                   "The development pilot used seeds 10000–10019 only to size the study. `docs/quality_v2.md` §4 records it.")
         out.append("")
     return "\n".join(out) + "\n", facts
 
@@ -300,8 +302,9 @@ def verification_section() -> str:
         keys = [f"{k.replace('check_', '')} {v}" for k, v in counts.items() if k not in skip]
         out.append(f"| {job} {label} ({d['status']}) | {'; '.join(keys[:8])} | `results/evidence/{job}/summary.json` |")
     out.append("")
-    out.append("Timing journal of the A2 development routes (worst paths before/after the P14 regrouping, 71.77 → 76.36 MHz at the 50 MHz constraint, seed 1): "
-               "`docs/timing_journal.md`. Replay traces validated by `tools/check_trace.py`: `docs/replay.md`.")
+    out.append("The A2 timing journal records the worst paths around the P14 regrouping. Seed 1 improved from 71.77 to "
+               "76.36 MHz at the 50 MHz constraint (`docs/timing_journal.md`). `tools/check_trace.py` validates the replay "
+               "traces described in `docs/replay.md`.")
     return "\n".join(out) + "\n"
 
 
@@ -309,11 +312,11 @@ def build() -> str:
     hw, hwf = hardware_section()
     ql, qf = quality_section()
     head = ["# Results", "",
-            "Generated by `tools/write_report_v2.py` from the committed result files; do not edit by hand (`make check-report-v2` regenerates and compares). "
-            "Measurement definitions used throughout: **cycles** are RTL-simulation counts under the documented request/response protocol (Verilator, native driver); "
-            "**routed fmax** is nextpnr-ecp5's reported maximum frequency for the routed netlist on the LFE5U-85F device model with auto-allocated I/O — a model-based "
-            "figure, never a board measurement; a **projection** divides median cycles by a clock constraint that every seed met; **host wall time** is the runner "
-            "process's wall clock; **restricted mean** and **survival** follow the censoring definitions of `docs/quality_v2.md` §3. Every table names its raw source.", ""]
+            "`tools/write_report_v2.py` generates this file from committed records. `make check-report-v2` compares a fresh copy. "
+            "Cycles are RTL-simulation counts under the documented request/response protocol. Routed fmax is nextpnr-ecp5's "
+            "reported value for the LFE5U-85F device model with auto-allocated I/O. It is a model result, never a board "
+            "measurement. Projections use a clock constraint met by every seed. Host wall time belongs to the runner process. "
+            "Restricted mean and survival follow `docs/quality_v2.md` §3. Every table names its raw source.", ""]
     v1_block = v1.block(*v1.load())
     doc = "\n".join(head) + "\n" + hw + "\n" + lanes_section() + "\n" + precision_section() + "\n" + ql + "\n" + verification_section() + "\n"
     doc += ("## 6. Frozen v1 experiment (E00–E19)\n\nGenerated by `tools/write_report.py` from `results/implementation.csv`, `results/decisions/`, `results/quality.csv` and "

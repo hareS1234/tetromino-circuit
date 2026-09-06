@@ -1,7 +1,7 @@
 # Author notes
 
-This is the short version of the lab notebook: the choices that mattered, the evidence behind them,
-and a few questions worth revisiting before I call the design finished.
+These notes collect the choices that mattered, the evidence behind them, and a few ideas worth
+revisiting before I call the design finished.
 
 ## Measurement boundaries
 
@@ -9,9 +9,9 @@ Each numbered job has its commands, exit codes, and check counts under `results/
 progress logs name the last passing gate and the next one.
 
 There was no FPGA board in the loop. Hardware numbers are Yosys/nextpnr estimates for the ECP5
-device model, and the long game runs use the Python policy model. The Mac toolchain now enrolls and
-passes its doctor, but its clean-clone record and the remote CI run do not exist yet. That distinction
-is more important than making the project sound finished.
+device model. The long game runs use the Python policy model. The supported Mac toolchain passed a
+clean-clone check, and the remote `fast` and `hdl` jobs passed at the recorded commit. These results
+still describe a routed model and a software policy study, not measurements from a physical board.
 
 ## Decisions recorded during the build
 
@@ -23,18 +23,17 @@ is more important than making the project sound finished.
 | U12 | Replace the P14 maximum tree with a one-hot priority select; do not add a bank. | The first route put the worst path in the P14 comparator tree (13.93 ns). After the change it moved to candidate enumeration (13.10 ns, 76.36 MHz). | Reaching 80 MHz probably means registering `j → cand_rom → shape_rom → hsel`. |
 | U17 | Measure six configurations at four clocks and three seeds, plus P1/P5–P7 at 50 MHz. Keep four-lane timeouts as results. | Four-lane pilots ranged from a 214 s pass to a 3,600 s non-converging run. | Three seeds cannot tell placement luck from a repeatable fan-out problem. |
 
-## Questions for my own code-reading pass
+## Code-reading checklist
 
 1. Follow a candidate through `rtl/tetris_core.sv`, `rtl/search_pipeline.sv`, and
-   `rtl/candidate_pipe.sv`. Why does `advance = !rst && (!valid[22] || m_ready)` keep every bank in
-   step?
-2. Compare `model/game.py` with `tests/reference_grid.py`. Which is the oracle of record, and what
-   failure would the second implementation catch?
-3. Pick one route record and one quality record under `results/v2/raw/`. Which fields tie it to the
-   sources, tools, and protocol? What edit would make the checker reject it?
-4. The P1 result is surprising. What experiment would distinguish a lucky fixed policy from a
-   useful coefficient pattern?
+   `rtl/candidate_pipe.sv`. Confirm that `advance = !rst && (!valid[22] || m_ready)` keeps every bank
+   in step.
+2. Compare `model/game.py` with `tests/reference_grid.py`. Identify the oracle of record and the
+   failures that the second implementation can catch.
+3. Pick one route record and one quality record under `results/v2/raw/`. Trace their source, tool,
+   and protocol identities. Then make a temporary edit and confirm that the checker rejects it.
+4. Design an experiment that separates a lucky P1 policy from a useful coefficient pattern.
 
-Things worth considering after that pass: a coefficient search restricted to development streams,
-a shared board store for replicated lanes, one more A2 bank for the enumeration chain, and—at some
-point—the rather important business of putting it on a physical board.
+Later experiments could include a coefficient search restricted to development streams, a shared
+board store for replicated lanes, and one more A2 bank for the enumeration chain. A physical board
+would be fun too.

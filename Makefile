@@ -1,4 +1,4 @@
-# tetromino-circuit — every recipe runs through scripts/env.sh so fresh shells need no activation.
+# tetromino-circuit: every recipe runs through scripts/env.sh so fresh shells need no activation.
 SHELL := /bin/bash
 ENV := bash scripts/env.sh
 PY := $(ENV) python
@@ -38,7 +38,7 @@ CFG_ID := $(shell $(PY) -m model.config $(ARCH) $(BOARD_REPR) $(LANES) $(DEPTH) 
         streams-v2 test-benchmark-v2 test-statistics-v2 bench-v2 check-quality-v2 analyze-quality-v2 \
         measure-v2 check-hardware-v2 a2-stream-stats plots-v2 \
         trace-a2-demo check-trace render-a2-demo render-showcase check-viewer diagrams \
-        results-v2 check-report-v2 check-links check-claims \
+        results-v2 check-report-v2 check-links check-claims check-writing \
         check-release-v2 fresh-clone-check test-release-v2
 
 help:
@@ -175,7 +175,7 @@ test-result-schemas: ## U02: route/quality records, status classification, singl
 	$(PY) -m pytest tests/unit/test_result_schemas.py tests/unit/test_runner.py tests/unit/test_bench_v2.py -q $(PYTEST_ARGS)
 check-v1-results: ## U02: frozen v1 experiment validated by exact expected-job membership
 	$(PY) tools/check_v1_results.py
-upgrade-smoke: ## U02: short development preset — one real route + 50-state corpus + tiny v2 quality suite (resumable)
+upgrade-smoke: ## U02: short development preset: one real route + 50-state corpus + tiny v2 quality suite (resumable)
 	$(PY) tools/measure_matrix.py run --manifest benchmarks/smoke_v2.json
 	$(PY) tools/bench.py --suite smoke --config benchmarks/quality_smoke_v2.json --out-root results/v2
 
@@ -284,7 +284,7 @@ route-a2-dev: ## U12: synthesize the A2 wrapper (-nodsp), inspect the hierarchy,
 # ---------------------------------------------------------------- U14 (quantization ladder P5-P7)
 SPLIT ?= development
 QUANT_PROFILES := 5 6 7
-test-precision-v2: ## U14: P5-P7 — unit tests, scorer, A1 evaluator, 1,000-state native decision records, one short replay each
+test-precision-v2: ## U14: P5-P7: unit tests, scorer, A1 evaluator, 1,000-state native decision records, one short replay each
 	$(PY) -m pytest tests/unit/test_precision_v2.py -q $(PYTEST_ARGS)
 	for p in $(QUANT_PROFILES); do $(MAKE) --no-print-directory test-score PRECISION=$$p || exit 1; done
 	for p in $(QUANT_PROFILES); do $(MAKE) --no-print-directory test-candidate ARCH=1 BOARD_REPR=1 PRECISION=$$p || exit 1; done
@@ -362,9 +362,11 @@ check-links: ## U19: every relative link/image in the Markdown documents resolve
 	$(PY) tools/check_links.py
 check-claims: ## U19: every claim in docs/claims.json is recomputed from its source and found verbatim in its documents
 	$(PY) tools/check_claims.py
+check-writing: ## public prose rules
+	$(PY) tools/check_writing.py
 
 # ---------------------------------------------------------------- U20 (release)
-check-release-v2: ## U20: validate benchmarks/release_v2.json — frozen inputs, artifacts, evidence, measurement identities, sub-validators; creates nothing
+check-release-v2: ## U20: validate benchmarks/release_v2.json: frozen inputs, artifacts, evidence, measurement identities, sub-validators; creates nothing
 	$(PY) tools/check_release_v2.py --json build/release_v2_check.json
 fresh-clone-check: ## U20: clone, bootstrap and reproduce from scratch; records results/evidence/U20/fresh_clone_<family>.json (REUSE_ARCHIVE=1 skips the download)
 	bash scripts/fresh_clone_check.sh

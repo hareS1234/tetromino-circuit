@@ -16,7 +16,7 @@ cases that distinguish the rules. *Fix:* `drop-v1.1` entry from above; regressio
 ## 2. cocotb runner ignores `PYTHONPATH` (tooling)
 
 *Intended:* `tools/run_rtl.py` makes `tb/` and `model/` importable inside the simulator.
-*Observed:* `ModuleNotFoundError: tb_counter` — cocotb 2.0.1's runner exports `PYTHONPATH` from the
+*Observed:* `ModuleNotFoundError: tb_counter`: cocotb 2.0.1's runner exports `PYTHONPATH` from the
 parent's `sys.path`, not from the environment variable the manual's Appendix A sets.
 *Fix:* insert the directories into `sys.path` before `runner.test()`.
 
@@ -59,7 +59,7 @@ Renamed to `cell_bit`.
 ## Decisions worth knowing
 
 * The exact scorer is shift-add in production; DSP inference is reported as a measured alternative.
-* The compactor shifts rows (no variable indexing) — the same 22-cycle latency, smaller and DSP-free.
+* The compactor shifts rows (no variable indexing): the same 22-cycle latency, smaller and DSP-free.
 * `BOARD_REPR=0` re-profiles the latched board in a dedicated PROFILE cycle per candidate so the
   bitmap-versus-cache comparison is one cycle per candidate against one cycle per request, and the
   profile logic is inside each lane rather than shared.
@@ -71,8 +71,9 @@ Renamed to `cell_bit`.
 
 *Intended:* only a completed nextpnr run can report `timing_met`. *Observed:* seed 3 of the two-lane
 configuration did not converge (about 305 overused wires after 88,000 router iterations and 22 minutes,
-against 74–90 s for the other four seeds); when it was stopped, `tools/pnr.py` parsed the last
-"Max frequency" line in its log — a *placement-stage* estimate — and recorded `timing_met=True`.
+against 74–90 s for the other four seeds). When it stopped, `tools/pnr.py` parsed the last
+"Max frequency" line in its log, which was a *placement-stage* estimate. It then recorded
+`timing_met=True`.
 *Fix:* an incomplete run now records no frequency and `timing_met=False`; a 30-minute route budget
 records `route_timeout`; the affected row was corrected to `killed_no_convergence` in
 `results/implementation.csv` and `results/implementation_manifest.json` (44 of 45 attempts met timing).

@@ -1,21 +1,20 @@
 # v2 release notes and gate status (U20)
 
-The release manifest is `benchmarks/release_v2.json`; `make check-release-v2` is its rather fussy
-bouncer. The check does not generate evidence. It verifies frozen input hashes, required artifacts,
+The release manifest is `benchmarks/release_v2.json`. `make check-release-v2` is its strict
+validator. The check does not generate evidence. It verifies frozen input hashes, required artifacts,
 U00–U20 command records, measurement identities, exact result membership, report links, headline
 claims, and the local shape of both CI workflows.
 
-The last line is deliberately unambiguous: `OK — releasable`, `NOT RELEASABLE (blocked: …)`, or
-`FAIL`. A blocked row is not a soft pass, and the `v2.0-a2` tag must not exist until the first verdict
-is real.
+The final line is unambiguous: `OK: releasable`, `NOT RELEASABLE (blocked: …)`, or `FAIL`. A blocked
+row does not pass. The `v2.0-a2` tag must wait for the successful verdict.
 
 ## Platform ledger
 
-| Family (`toolchains/oss_cad_suite.lock.json`) | Host | Status | What actually ran | Evidence |
+| Family (`toolchains/oss_cad_suite.lock.json`) | Host | Status | Executed work | Evidence |
 |---|---|---|---|---|
 | `linux-x64` | Linux x86_64 sandbox used for U00–U20 | **executed** | all 19 steps of `bash scripts/fresh_clone_check.sh` on a clean clone, including bootstrap, doctor, Python and RTL tests, the native A2 subset, trace/demo regeneration, and report checks | `results/evidence/U20/fresh_clone_linux-x64.json`, `results/host/Linux-x86_64.json` |
 | `darwin-arm64` | the maintainer's Apple-silicon Mac (demonstration machine) | **executed** | `bash scripts/bootstrap.sh --enroll`, then `bash scripts/fresh_clone_check.sh` from a clean clone: bootstrap, doctor, tests, smoke, directed RTL, the native A2 subset, trace/demo regeneration, viewer and report checks; viewer and GIF inspected | `results/evidence/U20/fresh_clone_darwin-arm64.json`, `results/host/Darwin-arm64.json` |
-| `darwin-x64`, `linux-arm64` | — | unenrolled | outside this release's support set; bootstrap refuses them with an enrollment hint | — |
+| `darwin-x64`, `linux-arm64` | n/a | unenrolled | outside this release's support set; bootstrap refuses them with an enrollment hint | n/a |
 | `remote-ci` (`.github/workflows/ci.yml`) | GitHub Actions at the release commit | **executed** | `fast` and `hdl` tiers passed at `4a68e3b79f87` (https://github.com/hareS1234/tetromino-circuit/actions/runs/34012898896) | `results/evidence/U20/remote_ci.json` |
 
 ## Readiness against guide §14
@@ -31,7 +30,7 @@ is real.
 | The maintainer's actual demo machine and remote CI have passed their stated checks | satisfied (see the platform table) | `results/evidence/U20/` |
 | The author can explain the main design and measurement choices | an author exercise, not an automated gate | `docs/author_notes.md` |
 
-## Why the full validator runs on Linux
+## Linux release validation
 
 Synthesis, route, and native identities include the tools' version strings. The Darwin build of the
 same OSS CAD Suite release reports different strings, so a Mac quite correctly plans different keys
@@ -39,7 +38,7 @@ and cannot validate the recorded Linux routes. The manually dispatched `release-
 the full validator on linux-x64, where those identities match. The Mac has a different job: reproduce
 the supported local path, inspect the demo, and leave a clean-clone record.
 
-## How the two external checks were recorded
+## External check record
 
 The small `scripts/release_unblock.py` helper only updates the release bookkeeping. It does not run
 measurements, inspect a browser, or query GitHub.
@@ -59,8 +58,8 @@ measurements, inspect a browser, or query GitHub.
    ```
 
    The commit before `fresh_clone_check.sh` matters: a clean clone cannot see an uncommitted lock.
-   Enrollment and doctor have already passed on this Mac; the lock, host observation, and current
-   writing changes still need to be reviewed and committed before this step.
+   Enrollment and doctor have already passed on this Mac. Review and commit the lock, host
+   observation, and current writing changes before this step.
 
 2. Push the intended release commit and wait for both `checks` jobs (`fast` and `hdl`) to turn green.
    Open the run, confirm its checked-out SHA and job conclusions, then record what you inspected:
@@ -71,8 +70,7 @@ measurements, inspect a browser, or query GitHub.
    git commit -m "Record the remote CI run"
    ```
 
-   `ci-record` performs only basic string checks. A plausible-looking URL is not proof; the human
-   inspection above is part of the gate.
+   `ci-record` performs basic string checks. The gate also requires the human inspection above.
 
 3. Once both records are real, update the two rows and validate on Linux:
 
@@ -84,7 +82,7 @@ measurements, inspect a browser, or query GitHub.
    ```
 
    Dispatch Actions → `release-check` → Run workflow on `upgrade/a2`. Tag only if its
-   `make check-release-v2` step ends with `check-release-v2: OK — releasable`:
+   `make check-release-v2` step ends with `check-release-v2: OK: releasable`:
 
    ```bash
    git tag -a v2.0-a2 -m "A2 architecture study"

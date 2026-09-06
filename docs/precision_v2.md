@@ -2,9 +2,9 @@
 
 v1 measured four structural approximations of the scorer (P1–P4: powers of two, two terms per
 magnitude, capped holes, no bumpiness). U14 adds a *ladder* of coefficient-magnitude budgets that
-keeps every feature exact and only shrinks the coefficient magnitudes, so the question "how many
-bits does the heuristic's arithmetic need?" gets a measured answer rather than one structural
-data point. P0–P4 are untouched (ids, names, coefficients, tests, results).
+keeps every feature exact and only shrinks the coefficient magnitudes. The study measures the useful
+arithmetic width across several data points. P0–P4 are untouched (ids, names, coefficients, tests,
+results).
 
 ## 1. Profiles
 
@@ -17,8 +17,8 @@ data point. P0–P4 are untouched (ids, names, coefficients, tests, results).
 The magnitudes are generated, not chosen: `model.numeric.quantize_magnitudes(bits)` computes
 `q_i = round_half_up(w_i · M / 76)` with `M = 2^bits − 1` in integer arithmetic
 (`(2·w·M + 76) // 152`), and the module asserts the table above at import. A raw P5–P7 score is in
-its own units — the common positive scale 76/M is dropped because it does not change the argmax —
-so raw scores are never compared with P0 scores; `to_baseline_units` converts exactly (rational),
+its own units. The common positive scale 76/M is dropped because it does not change the argmax. Raw
+scores are never compared with P0 scores; `to_baseline_units` converts exactly (rational),
 and the fixture explanations carry both. `coeff_bits`, `levels`, `score_width` and `score_range`
 are analysis metadata on the `Profile` (`profile_metadata(p)`); the configuration identity stays
 `PRECISION`. The new profiles are supported on A1/cache/depth-one/one-lane only
@@ -29,22 +29,16 @@ elaboration.
 ## 2. Hardware
 
 `rtl/score.sv` gains one generate branch (`g_quant`) for P5–P7. The features are zero-extended into
-signed operands of the profile's sufficient width (14/12/11 bits, from the bounds A ≤ 200, Q ≤ 200,
-U ≤ 180, L ≤ 4 that the feature unit guarantees and a simulation-only assertion checks), the
-shift-add sum is formed at that width — P5: `15L = (L<<4)−L`, `10A = (A<<3)+(A<<1)`,
-`7Q = (Q<<3)−Q`, `4U = U<<2`; P6: `(L<<3)−L`, `(A<<2)+A`, `(Q<<1)+Q`, `U<<1`; P7: `(L<<1)+L`,
-`A<<1`, `Q`, `U` — and sign-extended onto the unchanged 32-bit public score port. Landing, merge,
+signed operands of sufficient width: 14, 12, or 11 bits. The feature bounds are A ≤ 200, Q ≤ 200,
+U ≤ 180, and L ≤ 4. Simulation assertions check those bounds. Each profile forms its shift-add sum
+at the selected width. The result is sign-extended onto the unchanged 32-bit score port. Landing, merge,
 clearing, features and the tie-break are the exact ones; there are no coefficient registers
 (elaboration constants).
 
-Verification (`make test-precision-v2`, evidence `results/evidence/U14`): the scorer against
-`model.numeric` at the range extremes and 1,000 random bounded tuples per profile
-(`make test-score PRECISION=5|6|7`); the A1 evaluator with intermediate-value checks on 16,200
-candidate cases per profile (`make test-candidate ARCH=1 BOARD_REPR=1 PRECISION=…`); the complete
-core on the 1,000 common corpus states per profile against the literal-descent reference with the
-same profile (`decision-record-v2` under `results/v2/raw/decisions/a1-cache-d1-p{5,6,7}-l1/`);
-one 100-piece RTL replay per profile checked move by move
-(`results/replays/a1-cache-d1-p{5,6,7}-l1_seed2000_cap100.jsonl`). The unit tests
+`make test-precision-v2` checks each scorer at the range limits and on 1,000 random tuples. The A1
+evaluator receives 16,200 candidate cases per profile with intermediate-value checks. Complete-core
+runs compare 1,000 common states with the matching literal-descent reference. One 100-piece RTL
+replay per profile is checked move by move. Evidence lives under `results/evidence/U14`. The unit tests
 (`tests/unit/test_precision_v2.py`) check the generated magnitudes against exact rationals, the
 metadata, the configuration guards, and every candidate score of the fixture states against the
 independent set-of-cells reference (`tests/reference_grid.py`).
@@ -70,12 +64,10 @@ structural profiles the same count is 41 (P1), 0 (P2), 58 (P3) and 428 (P4)
 (`results/precision_disagreement.json`, v1): the 4-bit ladder step is far gentler than any of
 them except P2, and the 2-bit step sits between P3 and P4.
 
-Score gaps (corpus_d1): the exact best-versus-runner-up gap of the states whose decision changed
-has median 2 (P5), 15 (P6), 15 (P7) P0 units against a median of 36 for the unchanged states
-(p90 571–586); the P0 score given up by the quantized choice has median 2 / 15 / 15 and maximum
-2 / 30 / 162 for P5 / P6 / P7 (dev corpus: 24 / 30 / 279), and in the changed states the exact
-winner is almost always the quantized runner-up (rank 1; rank 3 at worst on corpus_d1, 5 on the
-dev corpus for P7). Full distributions are in
+Changed states have small exact score gaps. Their median best-to-runner-up gaps are 2, 15, and 15 P0
+units for P5, P6, and P7. Unchanged states have a median gap of 36. The quantized choices give up a
+median P0 score of 2 / 15 / 15 and a maximum of 2 / 30 / 162. The exact winner is usually the
+quantized runner-up in changed states. Full distributions are in
 `results/v2/precision/development/summary.json`; per-state records regenerate with the tool
 (`states_<corpus>_p<k>.jsonl`, not committed).
 
@@ -87,7 +79,7 @@ For a quantized profile with `M` levels let `δ_i = 76·q_i − M·w_i` (P5: (0,
 `M·(S(g) − S(c)) > E(g) + E(c)` for every other legal `c`, then `S_q(g) > S_q(c)` for all of them
 and `g` is certified to survive the quantization (`model/sensitivity.py`; integer comparisons
 only). A failed certificate is "not certified", not "changed"; the table shows that most
-unchanged decisions are not certified (the bound is loose — `E` reaches 8,720 / 14,080 / 10,560
+unchanged decisions are not certified (the bound is loose: `E` reaches 8,720 / 14,080 / 10,560
 at the feature maxima) and that exact ties (192 states) are never certifiable. Soundness
 (certified ⇒ unchanged) is asserted for every state by the tool and by the unit test; the unit
 test also contains synthetic cases where the bound fails intentionally with the decision
@@ -114,7 +106,7 @@ line-clear reward outweighs the holes once the coefficients are coarse. Exact ga
 `results/v2/precision/scorer_study.json`, Yosys `synth_ecp5 -nodsp`, pinned suite.
 
 Registered scorer microbenchmarks (`score` module alone; `valid_o` and all 32 `score_o` bits are
-top-level ports and therefore observed — the FF counts below 33 are sign-extension copies merged
+top-level ports and therefore observed: the FF counts below 33 are sign-extension copies merged
 by `opt_merge` because they share one D input):
 
 | Profile | LUT4 | FF | CCU2C | DSP |
@@ -135,7 +127,7 @@ the v1 toolchain and are a different identity):
 
 | Core | LUT4 | FF | CCU2C | Δ LUT4 vs P0 | Δ FF | Δ CCU2C |
 |---|---|---|---|---|---|---|
-| `a1-cache-d1-p0-l1` | 4,030 | 2,220 | 342 | — | — | — |
+| `a1-cache-d1-p0-l1` | 4,030 | 2,220 | 342 | n/a | n/a | n/a |
 | `p1` | 3,941 | 2,130 | 324 | −89 | −90 | −18 |
 | `p2` | 4,041 | 2,220 | 342 | +11 | 0 | 0 |
 | `p3` | 4,058 | 2,216 | 363 | +28 | −4 | +21 |
@@ -150,7 +142,7 @@ scorer-only rows must not be read as core savings, and no DSP block appears in a
 core. Timing of the P5–P7 cores is not measured here (U17 routes them: twelve precision routes in
 `benchmarks/hardware_v2.json`).
 
-## 5. What this does and does not show
+## 5. Scope of the evidence
 
 Four-bit magnitudes change one decision in a thousand common states and cost nothing
 measurable; three bits change 2.5–3.9 %, two bits 9–11 %, with the changed states concentrated

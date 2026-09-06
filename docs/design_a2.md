@@ -1,4 +1,4 @@
-# A2 candidate pipeline — implementation specification (U04)
+# A2 candidate pipeline: implementation specification (U04)
 
 Status: **implemented and verified at the core level (U10)**. U04 began with a paper configuration;
 U10 promoted `a2-cache-d1-p0-l1` into `SUPPORTED` and admitted exactly `ARCH=2`, cached boards, one
@@ -64,18 +64,16 @@ every other id.
 
 ## 3. Context ownership (author's explanation)
 
-One request owns one immutable context: `board_q`, `piece_q` and `heights_q` are written only in
-`IDLE`/`CACHE` and the core cannot accept another request until the response has been consumed
-(`req_ready = state == IDLE`). Everything the pipeline reads from outside a token — the original
-heights at P0, the original board at P3 — therefore comes from a context that cannot change while
-any token of that search is in flight. From P3 onward each token carries its own private merged
-board, so no token ever reads another token's temporary board and the compactor and feature stages
-need no context at all. This is why a single context register is sufficient: the hazard "a new
-board arrives while old candidates are still in the pipe" cannot occur by construction, and the
-tests make it observable by changing the public `board_i/piece_i/next_piece_i` inputs while a
-request is latched (V12) and by asserting in the search controller that `start_i` is only accepted
-when idle and the pipeline is empty (`issued == retired`). A trace-only request counter
-distinguishes requests and resets in the simulator; the candidate `s_tag` carries the dense index.
+One request owns one immutable context. `board_q`, `piece_q`, and `heights_q` are written only in
+`IDLE` or `CACHE`. The core waits for the response to be consumed before accepting another request.
+P0 reads the original heights, and P3 reads the original board. Both values stay fixed while tokens
+are in flight.
+
+From P3 onward, each token carries its own merged board. The compactor and feature stages need no
+shared context. Tests change the public inputs while a request is latched and confirm that the stored
+context remains stable (V12). The search controller also accepts `start_i` only while idle and empty.
+A trace-only request counter distinguishes requests and resets. Candidate `s_tag` carries the dense
+index.
 
 ## 4. Candidate token interface (`rtl/candidate_pipe.sv`)
 
@@ -129,14 +127,13 @@ need.
 
 ![A2 grouped pipeline: candidate-private board data and the immutable original context](../assets/diagrams/a2_pipeline.svg)
 
-`architecture/a2_stages.json` records the 23 banks P0–P22 (guide §5.5): P0 decode/select, P1
-differences, P2 landing, P3 merge, P4 keep/prefix init, P5–P8 prefix strides 1/2/4/8, P9 stride
-16 + counts, P10 match bits, P11 five partial rows per destination, P12 compacted board, P13
-group codes/counts, P14 heights/occupied, P15 holes/differences, P16–P19 balanced sums, P20
-coefficient terms, P21 signed groups, P22 score. Each bank has `delay_edges = 1`; `out_bits` are
+`architecture/a2_stages.json` records the 23 banks P0–P22 (guide §5.5). P0–P3 handle decode,
+differences, landing, and merge. P4–P12 compute keep bits, prefix ranks, matches, row selection, and
+the compacted board. P13–P19 compute feature groups and balanced sums. P20–P22 compute the score.
+Each bank has `delay_edges = 1`; `out_bits` are
 register bits before optimization (P11's 1,000 partial-row bits and P10's 400 match bits are
 proposal counts, not mapped FF counts). Block boundaries: `drop_merge_pipe` P0–P3,
-`line_clear_pipe` P4–P12, `features_pipe` P13–P19, `score_pipe` P20–P22 — with no duplicated
+`line_clear_pipe` P4–P12, `features_pipe` P13–P19, `score_pipe` P20–P22: with no duplicated
 boundary registers (P3→P4 and P12→P13 are single register banks). Candidate critical paths:
 P0 height mux, P3 board fanout, P9 prefix arithmetic, P10 rank comparisons, P11 selection wiring,
 P14 encoders, and the best-result feedback outside the pipe. Adding a bank requires updating the
@@ -151,13 +148,11 @@ where each level reads only the previous level (`next[s] = prev[s] + (s >= strid
 computed as five groups of four sources (P11) then a balanced OR of five (P12). No procedural
 scatter `out[rank[s]] = row[s]` in the production datapath.
 
-Features (P13–P19, guide §7.2): fixed-wiring transpose; per 4-bit group `code = 0` (empty) or
-highest occupied position + 1 (1–4) and `count` 0–4; `height = 4*g + code_g` of the highest
-nonempty group (balanced select), `occupied = Σ counts` (balanced), `holes = height − occupied`
-(exact because every occupied cell is at or below the column top; assert `occupied <= height`),
-`|h[c] − h[c−1]|` in signed 7-bit arithmetic; sums padded to 16 leaves with widths 6/7/8/9 and
-bounds checked before exposing 8 bits. `tests/reference_grid.py` and `model/features.py` (direct
-hole counting) remain the oracles.
+Features (P13–P19, guide §7.2) begin with a fixed-wiring transpose. Each 4-bit group records its
+highest occupied position and population count. A balanced select finds the column height, and a
+balanced sum finds the occupied count. Holes equal height minus occupied cells. Signed 7-bit
+subtraction gives adjacent height differences. Sums use 16 padded leaves, with bounds checked before
+the 8-bit output. `tests/reference_grid.py` and `model/features.py` remain the oracles.
 
 Score (P20–P22, guide §7.3): `76 = 64+8+4`, `51 = 32+16+2+1`, `36 = 32+4`, `18 = 16+2` as widened
 shift-add terms on signed 32-bit intermediates; P21 forms `76L − 51A` and `36Q + 18U`; P22
@@ -207,20 +202,15 @@ and output capacity exists; all N tokens pass through all banks.
 | N + 29 | `rsp_valid` |
 
 Target decision latency `D(N) = N + 29`: 38 cycles for O, 46 for I/S/Z, 63 for T/J/L.
-**Measured (U10):** the native driver reports exactly 38 / 46 / 63 cycles on the 1,000-state v1
-corpus and the 2,000-state development corpus (min/median/max 38/46/63), and
-`tools/request_interval.py` measures 40 / 48 / 65 edges between two real acceptance edges with the
-second request offered during the first (`R(N) = D(N) + 2`), equal to the single-request inferred
-interval on 200 pairs. The measured count was not altered to fit the formula; the controller
-transitions are exactly those of the table.
+**Measured (U10):** the native driver reports exactly 38 / 46 / 63 cycles on both corpora.
+`tools/request_interval.py` measures 40 / 48 / 65 edges between two real acceptance edges. All 200
+pairs satisfy `R(N) = D(N) + 2`. These values follow directly from the controller transitions above.
 
-Why candidate II and request interval differ: the pipeline accepts one candidate per cycle, but
-the public core is single-outstanding, so a second board cannot be accepted before the first
-response is produced (D(N) edges), consumed (`RESPOND → IDLE`, +1) and `req_ready` is seen again
-(+1): `R(N) = D(N) + 2 = N + 31` with immediate consumption; the 32-bit wrapper adds its eight
-request words and three response words with controller gaps. One candidate per cycle is not one
-decision per cycle. The native driver's inferred `interval` measures the earliest eligible
-acceptance edge; U10 adds a batch harness with two real acceptance edges.
+Candidate initiation and request intervals measure different events. The pipeline accepts one
+candidate per cycle. The public core remains single-outstanding, so the next board waits for the
+first response and two controller edges. This gives `R(N) = D(N) + 2 = N + 31` with immediate
+consumption. The 32-bit wrapper adds its eight request words, three response words, and controller
+gaps. U10 checks the interval with a batch harness that records two real acceptance edges.
 
 ## 9. Verification plan pointers
 

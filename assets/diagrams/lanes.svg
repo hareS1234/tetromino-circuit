@@ -172,6 +172,6 @@
 <text x="747" y="255" text-anchor="middle" class="s mono m">15</text>
 <text x="787" y="255" text-anchor="middle" class="s mono m">16</text>
 <rect x="20" y="275" width="780" height="40" rx="4" fill="white" stroke="#1b9e77" stroke-dasharray="6,3"/>
-<text x="410.0" y="299.0" text-anchor="middle" class="b ">REDUCE: for rk in 0..3: take lane rk’s best if valid and (score higher, or equal with lower id) — then FINALIZE</text>
+<text x="410.0" y="299.0" text-anchor="middle" class="b ">REDUCE: for rk in 0..3, take lane rk’s best if valid and better; then FINALIZE</text>
 <text x="20" y="335" class="m">Measured: cycles = 45·⌈N/L⌉ + 7 + L when every candidate is legal (docs/lanes.md); the winning lane finished strictly last in 95 of 293 corpus cases, never changing the decision.</text>
 </svg>

@@ -71,7 +71,7 @@ def fsm():
     keys = {"DECODE": ["DECODE"], "DROP": ["DROP_START", "DROP_WAIT"], "MERGE": ["MERGE_START", "MERGE_WAIT"], "CLEAR": ["CLEAR_START", "CLEAR_WAIT"],
             "FEAT": ["FEAT_START", "FEAT_WAIT"], "SCORE": ["SCORE_START", "SCORE_WAIT"], "FINISH": ["FINISH"]}
     b = MARKER
-    b += f'<text x="20" y="26" class="b">Candidate evaluator FSM (candidate_eval, shared by A0 and A1) — measured cycles per legal candidate without a line clear</text>\n'
+    b += f'<text x="20" y="26" class="b">Candidate evaluator FSM (candidate_eval, shared by A0 and A1): measured cycles per legal candidate without a line clear</text>\n'
     b += f'<text x="20" y="44" class="m">Residency from results/stage_cycles_a0_repr0_p0.json (A0 bitmap) and results/stage_cycles_a1_repr1_p0.json (A1 cache), profile legal_no_clear: totals {a0["total"]} and {a1["total"]} cycles.</text>\n'
     x = 20
     for i, (name, sub) in enumerate(states):
@@ -115,7 +115,7 @@ def a2_pipeline():
             b += f'<text x="{bx + 11}" y="155" text-anchor="middle" class="s m">{bits}b</text>\n'
         x += w + 10
     b += arrow(170, 120, 200, 120)
-    notes = ["Each bank register holds one candidate’s private payload (merged board, keep bits, ranks, cleared board, features, score — bit widths under the banks)",
+    notes = ["Each bank register holds one candidate’s private payload (merged board, keep bits, ranks, cleared board, features, score; bit widths are under the banks)",
              "plus the metadata legal / y / id / tag / last. advance = !rst && (!valid[22] || m_ready): every bank moves together or none does; s_ready = advance;",
              "a reset clears every valid bit at one edge. search_pipeline issues dense candidates j = 0..N−1 (tag = j), best_reducer folds retirements in order; D(N) = N + 29."]
     for i, t in enumerate(notes):
@@ -175,7 +175,7 @@ def lanes():
     b += f'<text x="130" y="240" class="m">dense index j:</text>\n'
     for j in range(len(ids)):
         b += f'<text x="{130 + 40 * j + 17}" y="255" text-anchor="middle" class="s mono m">{j}</text>\n'
-    b += box(20, 275, 780, 40, "REDUCE: for rk in 0..3: take lane rk’s best if valid and (score higher, or equal with lower id) — then FINALIZE", None, fill="white", stroke=BEST, dash="6,3")
+    b += box(20, 275, 780, 40, "REDUCE: for rk in 0..3, take lane rk’s best if valid and better; then FINALIZE", None, fill="white", stroke=BEST, dash="6,3")
     b += f'<text x="20" y="335" class="m">Measured: cycles = 45·⌈N/L⌉ + 7 + L when every candidate is legal (docs/lanes.md); the winning lane finished strictly last in 95 of 293 corpus cases, never changing the decision.</text>\n'
     return svg(830, 350, b, "four-lane dense-index assignment and the deterministic reduction order")
 

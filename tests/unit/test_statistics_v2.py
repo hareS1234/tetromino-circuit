@@ -44,7 +44,7 @@ def test_survival_extremes_and_median():
 
 
 def test_survival_with_censoring_before_the_cap_uses_product_limit():
-    """Censoring away from the cap (not produced by the protocol, but the estimator must stay a valid KM)."""
+    """Keep the KM estimator valid when observations are censored before the cap."""
     cap = 50
     curve = kaplan_meier([5, 10, 20, 50], [True, False, True, False], cap)     # one game censored at 10
     assert curve[4] == 1 and curve[5] == Fraction(3, 4)

@@ -33,7 +33,7 @@ def main() -> int:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A2 pipeline replay — embedded demo ({doc['scenario']})</title>
+<title>A2 pipeline replay: embedded demo ({doc['scenario']})</title>
 <style>
 {css}
 </style>

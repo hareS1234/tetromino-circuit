@@ -2,8 +2,8 @@
 """Audit the v2 release manifest without manufacturing missing evidence.
 
 The checker re-plans expensive identities, verifies U00–U20 records, and runs the exact-membership
-subchecks. A blocked gate is still unsatisfied. ``--expect-blocked`` exists only for recording the
-honest U20 local result; it is not a back door to a release verdict.
+subchecks. A blocked gate remains unsatisfied. ``--expect-blocked`` records the honest U20 local
+result and cannot produce a release verdict.
 """
 from __future__ import annotations
 
@@ -238,8 +238,7 @@ def check_identities(root: Path, m: dict) -> list[str]:
             want = pipe_key if d.get("top") == "candidate_pipe" else core_key
             if d.get("native_key") != want:
                 problems.append(f"trace {rel}: native key {str(d.get('native_key'))[:12]} is not the live harness identity {want[:12]} (RTL or harness changed since the trace)")
-    # broad source closure: informative — reports identify the source used, and a difference is explained by
-    # the precise identities above (tools/docs may change without changing any measurement identity)
+    # Broad source closure is informative. The precise identities above decide validity.
     notes = []
     for label, rel in (("hardware", (hw or {}).get("summary")), ("quality", (q or {}).get("summary"))):
         if rel and (root / rel).is_file():
@@ -355,7 +354,7 @@ def main() -> int:
     if args.expect_blocked:
         print("check-release-v2: --expect-blocked was given but nothing is blocked; run without it for the release decision")
         return 1
-    print(f"check-release-v2: OK — releasable at {git['head']}")
+    print(f"check-release-v2: OK: releasable at {git['head']}")
     return 0
 
 

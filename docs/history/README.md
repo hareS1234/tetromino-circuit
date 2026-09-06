@@ -3,7 +3,7 @@
 The v1 phase of this repository (tags `v0.1-python` … `v1.0`, jobs E00–E19) was audited before the
 v2 upgrade (jobs U00–U20). The useful engineering records from that phase live here:
 
-| Document | What it is |
+| Document | Summary |
 |---|---|
 | `progress.md` | the v1 job log (last passing job, evidence pointers) |
 | `bugs.md`, `PROBLEMS_FOUND.md` | defects found and fixed during v1, and the audit of the first manual |

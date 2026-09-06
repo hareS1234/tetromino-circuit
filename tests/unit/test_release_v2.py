@@ -189,7 +189,7 @@ def test_structural_run_verdict_matches_exit_code():
     assert "CHECK release_v2_platforms_executed" in out
     verdicts = [ln for ln in out.splitlines() if ln.startswith("check-release-v2:")]
     assert len(verdicts) == 1
-    if "OK — releasable" in verdicts[0]:
+    if "OK: releasable" in verdicts[0]:
         assert r.returncode == 0 and "(blocked: none)" in out
     else:
         assert r.returncode != 0 and ("NOT RELEASABLE" in verdicts[0] or "FAIL" in verdicts[0])

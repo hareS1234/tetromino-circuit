@@ -340,7 +340,7 @@ def cmd_run(args) -> int:
                 print(f"[matrix] decisions {cid} x{dec['count']} (native)", flush=True)
                 meta = run_decisions(cid, int(dec["count"]))
                 dec_results[cid] = meta
-                print(f"[matrix] decisions {cid}: {meta['status']}{' (reused)' if meta.get('reused') else ''} — {meta['result']}", flush=True)
+                print(f"[matrix] decisions {cid}: {meta['status']}{' (reused)' if meta.get('reused') else ''}. {meta['result']}", flush=True)
         # summaries derived from every raw record of the manifest's jobs (all attempts, all identities)
         labels = {job_label(j) for j in expand_jobs(m)}
         records = [r for r in load_raw_records() if job_label({"configuration": r["configuration_id"], "target_mhz": r["target_mhz"],

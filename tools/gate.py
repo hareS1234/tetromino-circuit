@@ -101,7 +101,7 @@ def main() -> int:
                    "toolchain_id": toolchain_id(), "recorded_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                    "note": "rejected: a gate with zero commands is not evidence", "commands": [], "elapsed_s": 0.0}
         (job_dir / "summary.json").write_text(json.dumps(summary, indent=1) + "\n")
-        print(f"[gate] {job}: FAILED — zero commands supplied")
+        print(f"[gate] {job}: FAILED. Zero commands supplied")
         return 1
     results = [run_command(job_dir, i, cmd) for i, cmd in enumerate(groups)]
     status = "passed" if results and all(r["exit_code"] == 0 for r in results) else "failed"

@@ -86,7 +86,7 @@ def test_run_then_resume_reuses_by_identity(sandbox, capsys):
     summary = json.loads((root / "results" / "v2" / "summary" / "matrix_t.json").read_text())
     assert summary["counts"] == {"completed": 2, "reused": 0, "successes": 1, "failures": 1, "timeouts": 0, "errors": 0}
     assert set(summary["latest_status"].values()) == {"routed_timing_met", "routed_timing_failed"}
-    # second run: both records reused (the failure too — a completed failure is a result)
+    # The second run reuses both records. A completed failure is still a result.
     assert mm.cmd_run(Args()) == 0
     assert len(calls["routes"]) == 2
     summary = json.loads((root / "results" / "v2" / "summary" / "matrix_t.json").read_text())

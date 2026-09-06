@@ -107,7 +107,7 @@ def main() -> int:
         print(f"check-hardware-v2: INCOMPLETE ({len(problems)} problem(s)); timeouts and timing failures are outcomes, missing or "
               "erroring jobs are not")
         return 1
-    print(f"check-hardware-v2: OK — all {n} declared route jobs and {dec_ok} decision corpora accounted for")
+    print(f"check-hardware-v2: OK. All {n} declared route jobs and {dec_ok} decision corpora are accounted for")
     return 0
 
 

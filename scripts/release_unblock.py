@@ -74,10 +74,10 @@ def mark_executed() -> int:
             ci.get("conclusion") != "success" or set(ci.get("jobs", [])) != {"fast", "hdl"} or
             not re.fullmatch(r"https://github\.com/[^/]+/[^/]+/actions/runs/[0-9]+(?:/[^ ]*)?", ci.get("url", "")) or
             not re.fullmatch(r"[0-9a-fA-F]{7,40}", ci.get("sha", ""))):
-        print("the remote CI record is not a successful fast+hdl run — inspect GitHub and record it again")
+        print("the remote CI record is not a successful fast+hdl run. Inspect GitHub and record it again")
         return 1
     if not mac.get("ok") or mac.get("family") != "darwin-arm64":
-        print("the Mac fresh-clone record does not show every step passing (ok != true) — fix and re-run scripts/fresh_clone_check.sh")
+        print("the Mac fresh-clone record does not show every step passing (ok != true). Fix and re-run scripts/fresh_clone_check.sh")
         return 1
     m = load(MANIFEST)
     for pf in m["platforms"]:
@@ -105,7 +105,7 @@ def mark_executed() -> int:
         if ln.startswith("| The maintainer's actual demo machine and remote CI have passed their stated checks |"):
             lines[i] = "| The maintainer's actual demo machine and remote CI have passed their stated checks | satisfied (see the platform table) | `results/evidence/U20/` |"
         if ln == "## Finishing the two blocked items":
-            lines[i] = "## How the two external checks were recorded"
+            lines[i] = "## External check record"
     d.write_text("\n".join(lines) + "\n")
     u = ROOT / "docs" / "upgrade_progress.md"
     lines = u.read_text().splitlines()
@@ -123,7 +123,7 @@ def mark_executed() -> int:
         "* U20 is recorded as passed: the darwin-arm64 clean clone and the pinned remote `fast`/`hdl` run both have evidence.",
         f"* Remote run: `{ci['sha']}` ({ci['url']}).",
         "* Next: commit and push this bookkeeping, wait for the ordinary checks on that commit, then dispatch the Linux",
-        "  `release-check`. Only its `OK — releasable` verdict permits the `v2.0-a2` tag.",
+        "  `release-check`. Only its `OK: releasable` verdict permits the `v2.0-a2` tag.",
     ]
     u.write_text("\n".join(lines) + "\n")
 
@@ -138,8 +138,8 @@ def mark_executed() -> int:
                  "The separate `.github/workflows/release-check.yml` runs the full release validator on linux-x64. "
                  "That platform choice matters because the published route identities include Linux tool version strings. "
                  "Its full-history checkout is intentional too: the v1 validator checks tags.\n")
-    print("marked executed: benchmarks/release_v2.json, docs/release_v2.md, docs/upgrade_progress.md, and docs/ci.md — "
-          "commit, push, then dispatch the release-check workflow; tag v2.0-a2 only after it prints 'OK — releasable'")
+    print("marked executed: benchmarks/release_v2.json, docs/release_v2.md, docs/upgrade_progress.md, and docs/ci.md. "
+          "Commit and push, then dispatch the release-check workflow. Tag v2.0-a2 only after it prints 'OK: releasable'")
     return 0
 
 

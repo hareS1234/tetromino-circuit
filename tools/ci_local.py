@@ -2,7 +2,7 @@
 """Lint a workflow or replay its shell steps locally.
 
 GitHub-hosted actions are skipped, composite steps are expanded, and dispatch inputs use their
-defaults. A local pass is useful, but it is not a remote Actions run.
+defaults. A local pass catches local workflow errors. GitHub Actions still supplies the remote run.
 """
 from __future__ import annotations
 
@@ -154,12 +154,12 @@ def run_job(name: str, list_only: bool, event: str) -> int:
     for k, st in enumerate(steps, 1):
         label = f"[ci-local] {name} step {k}/{len(steps)}: {st['_name']}"
         if "uses" in st:
-            print(f"{label} — skipped ({st['uses']} needs the GitHub runtime)")
+            print(f"{label}: skipped ({st['uses']} needs the GitHub runtime)")
             skipped += 1
             continue
         ctx = {**st["_inputs"], "__event": event, "__outputs": outputs}
         if st.get("if") and substitute("${{ " + str(st["if"]) + " }}", ctx) != "true":
-            print(f"{label} — skipped (if: {st['if']})")
+            print(f"{label}: skipped (if: {st['if']})")
             skipped += 1
             continue
         cmd = substitute(st["run"], ctx)

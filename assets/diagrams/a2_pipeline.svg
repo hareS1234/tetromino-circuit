@@ -90,7 +90,7 @@
 <text x="877" y="110" text-anchor="middle" class="s mono">P22</text>
 <text x="877" y="155" text-anchor="middle" class="s m">61b</text>
 <line x1="170" y1="120" x2="200" y2="120" stroke="#222" stroke-width="1.2" marker-end="url(#a)"/>
-<text x="20" y="200" class="m">Each bank register holds one candidate’s private payload (merged board, keep bits, ranks, cleared board, features, score — bit widths under the banks)</text>
+<text x="20" y="200" class="m">Each bank register holds one candidate’s private payload (merged board, keep bits, ranks, cleared board, features, score; bit widths are under the banks)</text>
 <text x="20" y="216" class="m">plus the metadata legal / y / id / tag / last. advance = !rst &amp;&amp; (!valid[22] || m_ready): every bank moves together or none does; s_ready = advance;</text>
 <text x="20" y="232" class="m">a reset clears every valid bit at one edge. search_pipeline issues dense candidates j = 0..N−1 (tag = j), best_reducer folds retirements in order; D(N) = N + 29.</text>
 </svg>

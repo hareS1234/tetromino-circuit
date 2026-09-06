@@ -1,23 +1,18 @@
 # A small architecture study of a drop-only Tetris decision engine
 
-## 1. Research questions
+## 1. Study goals
 
-A Tetris decision is a bounded search: at most 34 candidate placements, each requiring a landing
-check, a merge, a line clear, feature extraction and a score. That is small enough to build several
-complete hardware organisations of it and measure them honestly, and rich enough that the
-organisation matters. The study asks four questions with one game, one heuristic and one toolchain
-held fixed:
+A Tetris decision is a bounded search over at most 34 placements. Each candidate needs a landing
+check, merge, line clear, feature extraction, and score. The problem is small enough to support
+several complete hardware designs, yet rich enough for the organization to matter. The study holds
+one game, heuristic, and toolchain fixed across four goals:
 
-1. **Datapath organisation.** How do area and latency change between a sequential evaluator that
-   reuses one bit-serial datapath (A0) and a parallel evaluator (A1) that computes heights, landing,
-   merge and features in a few cycles — while producing *identical decisions*?
-2. **Board access.** Does caching the exact column heights of the request board once per decision
-   (rather than deriving them for every candidate) change latency or area, again with identical
-   decisions?
-3. **Arithmetic.** When the heuristic's coefficients are quantised to shifts, or a scoring feature
-   is saturated or removed, how much logic is actually saved and how much playing strength is lost?
-4. **Search.** What does a second piece of lookahead cost in cycles and hardware, and does it help
-   under this heuristic on finite streams?
+1. **Datapath organisation.** Compare area and latency for a sequential evaluator (A0) and a parallel
+   evaluator (A1) while preserving every decision.
+2. **Board access.** Measure the effect of caching exact column heights once per decision.
+3. **Arithmetic.** Quantize the heuristic coefficients and remove selected features. Then measure
+   the logic savings and changes in playing strength.
+4. **Search.** Add one piece of lookahead and measure its cost and benefit on finite streams.
 
 Exact variants (questions 1, 2 and the two-lane replication) must preserve every decision, so their
 comparison is purely area versus cycles. Questions 3 and 4 change the policy, so each variant is
@@ -25,11 +20,11 @@ verified against its *own* bit-exact reference and then compared on held-out pie
 
 ## 2. The game, the variants, and the data
 
-**Game.** `drop-v1.1` (`docs/spec.md`): 10×20 board, no hidden rows, seven pieces with 2/1/4/2/2/4/4
-geometric orientations (162 candidates over all pieces, at most 34 per decision), entry from above
-the board with a straight drop, legality = the landed piece lies inside rows 0–19, simultaneous
-clear of full rows, post-clear features A (aggregate height), Q (holes), U (bumpiness), score
-`76L − 51A − 36Q − 18U` (coefficients from Lee, 2013), ties to the lower `candidate_id = 10·rotation + x`.
+**Game.** `drop-v1.1` uses a 10×20 board with no hidden rows (`docs/spec.md`). Its seven pieces have
+2/1/4/2/2/4/4 geometric orientations, for 162 candidates overall and at most 34 per decision. Pieces
+enter above the board and drop straight down. Full rows clear together. The post-clear features are
+aggregate height A, holes Q, and bumpiness U. The score is `76L − 51A − 36Q − 18U`, with coefficients
+from Lee (2013). Ties go to the lower `candidate_id = 10·rotation + x`.
 The entry-from-above rule replaced an earlier inside-board spawn that let a piece appear beneath an
 overhang (Section 7).
 
@@ -42,7 +37,7 @@ overhang (Section 7).
 **Hardware variants** (all behind the same ready/valid core interface and the same 32-bit streaming
 wrapper used for implementation):
 
-| Id | ARCH | Board | Lanes | Depth | Precision | What changes |
+| Id | ARCH | Board | Lanes | Depth | Precision | Change |
 |---|---|---|---|---|---|---|
 | `a0-bitmap-d1-p0-l1` | A0 | bitmap | 1 | 1 | exact | descent one row/cycle, one cell merged/cycle, 200-cell feature scan |
 | `a1-bitmap-d1-p0-l1` | A1 | bitmap | 1 | 1 | exact | ten parallel priority encoders per candidate, closed-form landing (two stages), one-hot mask merge, popcount/adder trees; reused 20-iteration compactor |
@@ -89,15 +84,15 @@ treated as independent. A game that reaches its cap is `cap_reached`, not a fail
 
 ### Three measured facts
 
-**Verification.** 8,250 complete-core decisions across 9 hardware configurations match the Python literal-descent reference (`results/decisions/*.csv`), plus three 250-piece RTL games per depth-one configuration checked against Python at every move (`results/replays/`).
+**Verification.** 8,250 complete-core decisions across 9 hardware configurations match the Python literal-descent reference (`results/decisions/*.csv`). Three 250-piece RTL games per depth-one configuration also match Python at every move (`results/replays/`).
 
 **Resources.** The fast exact engine with a height cache (`a1-cache-d1-p0-l1`) synthesizes to 4027 LUT4 and 2220 flip-flops on the ECP5 LFE5U-85F (Yosys `synth_ecp5`), with routed timing 5/5 met 50 MHz; Fmax 64.5–69.0 MHz (`results/implementation.csv`).
 
-**Latency.** Median 773 core cycles per decision on the corpus (A0 serial: 4719), projecting to 15.5 µs per decision at the timing-supported 50 MHz constraint; this is RTL-simulation cycle count divided by a routed clock constraint, not measured on a board.
+**Latency.** The corpus median is 773 core cycles per decision (A0 serial: 4719). The routed projection is 15.5 µs per decision at the timing-supported 50 MHz constraint. It divides simulated cycles by a clock constraint and is not a board measurement.
 
 ### Measured results (generated by `tools/write_report.py`; do not edit by hand)
 
-Source: `results/implementation.csv` (45 routing attempts, 44 met timing; ECP5 LFE5U-85F CABGA381 speed 6, 50 MHz target, seeds 1–5), `results/decisions/` (native Verilator driver on the committed corpora), `results/quality_summary.json` (Python bit-exact policies on held-out streams). RTL hash `ae34d12e7803250b`, toolchain `oss-cad-suite-2026-09-04-8fb2384c2f88`.
+Sources: `results/implementation.csv` contains 45 routing attempts, with 44 meeting timing. The target is an ECP5 LFE5U-85F CABGA381 speed 6 at 50 MHz across seeds 1–5. Decisions come from `results/decisions/`, and policy results come from `results/quality_summary.json`. RTL hash `ae34d12e7803250b`; toolchain `oss-cad-suite-2026-09-04-8fb2384c2f88`.
 
 | Configuration | LUT4 | FF | Routed timing (5 seeds) | Median cycles/decision | Max | Decisions checked |
 |---|---:|---:|---|---:|---:|---|
@@ -111,7 +106,7 @@ Source: `results/implementation.csv` (45 routing attempts, 44 met timing; ECP5 L
 | A1 cache, depth 2 (`a1-cache-d2-p0-l1`) | 4865 | 2849 | 5/5 met 50 MHz; Fmax 64.5–67.2 MHz | 13522 | 52469 | 250/250 match |
 | A1 cache, 2 lanes (`a1-cache-d1-p0-l2`) | 7453 | 3738 | 4/5 met 50 MHz; 1 did not converge; Fmax 63.8–66.0 MHz | 414 | 774 | 1000/1000 match |
 
-Projected decision latency (median cycles ÷ 50 MHz; model-based, not measured on a board): A0 serial, bitmap: 4719 cycles = 94.4 µs at a timing-supported 50 MHz; A1 fast, height cache: 773 cycles = 15.5 µs at a timing-supported 50 MHz; A1 cache, 2 lanes: 414 cycles; projection withheld because not every route seed completed with timing met.
+Projected decision latency uses median cycles ÷ 50 MHz. It is model-based and is not a board measurement. A0 serial, bitmap: 4719 cycles = 94.4 µs at a timing-supported 50 MHz. A1 fast, height cache: 773 cycles = 15.5 µs at a timing-supported 50 MHz. A1 cache, 2 lanes: 414 cycles; projection withheld because not every route seed completed with timing met.
 
 Held-out playing strength, precision study (`results/quality.csv`, experiment `precision`): streams 3000–3099, cap 2000 pieces, Python bit-exact policies backed by the RTL differential corpora above.
 
@@ -131,7 +126,7 @@ Depth study (`results/quality.csv`, experiment `depth`; predeclared smaller work
 | heuristic-d1-p0 | 195.3 | 196 | 194–199 | 95% | baseline | 773 |
 | heuristic-d2-p0 | 198.5 | 199 | 198–199 | 100% | +3.15 [+1.40, +5.70] | 13522 |
 
-Tournament (`results/tournament_report.json`): seed 2000, cap 100, actual RTL replays; lines A0 serial, bitmap 33, A1 fast, height cache 33, A1 cache, P1 powers_of_two 37, A1 cache, depth 2 37; first move differing from A0: A0 serial, bitmap never, A1 fast, height cache never, A1 cache, P1 powers_of_two 40, A1 cache, depth 2 2.
+Tournament (`results/tournament_report.json`): seed 2000, cap 100, actual RTL replays. Lines: A0 serial, bitmap 33, A1 fast, height cache 33, A1 cache, P1 powers_of_two 37, A1 cache, depth 2 37. First move differing from A0: A0 serial, bitmap never, A1 fast, height cache never, A1 cache, P1 powers_of_two 40, A1 cache, depth 2 2.
 
 <!-- results:end -->
 
@@ -153,7 +148,7 @@ and counters), and after it the reused compactor is 58% of what remains. A1 ther
 much further without redesigning the clear step, and it evaluates one candidate at a time: it is
 not, and is not reported as, a pipeline with initiation interval one.
 
-Two lanes double the evaluator and lane state and give a 1.87× speed-up for 1.85× the LUT4s — close
+Two lanes double the evaluator and lane state and give a 1.87× speed-up for 1.85× the LUT4s: close
 to linear because the dense candidate list splits the geometric candidates to within one and the
 per-candidate latency is nearly constant. Both lanes' local winners are reduced in a separate state
 with the global candidate-id tie-break; 53 corpus states had equal-score winners split across lanes
@@ -163,36 +158,30 @@ and all decisions were identical to one lane.
 
 ![board access](../assets/plots/board_access.png)
 
-With the bitmap alone, A1 profiles the latched request board in a dedicated cycle for every candidate
-(the PROFILE state); with the cache, the core profiles the board once after acceptance and broadcasts
-fifty height bits to the lane. The measured difference is exactly what the FSM predicts: one cycle per
-candidate saved against one cycle per request added — a median of 17 cycles per decision on the
-corpus (about 2%) — with the profile logic moving from inside the lane to the core and fifty extra
-flip-flops. Heights are lossy, so the cache can only replace the input-board profile that the landing
-formula needs; merge, clear and post-clear features still run on the bitmap, and the post-clear board
-is profiled again by the feature unit. The interesting version of this experiment is with more lanes,
-where one shared cache replaces one profile per lane.
+With the bitmap alone, A1 profiles the latched request board once per candidate. With the cache, the
+core profiles the board once after acceptance and broadcasts fifty height bits to the lane. The FSM
+predicts one saved cycle per candidate and one added cycle per request. The measured median improves
+by 17 cycles per decision, or about 2%. The profile logic moves into the core and adds fifty
+flip-flops. Merge, clear, and post-clear features still use the bitmap because heights lose detail.
+Additional lanes make the shared cache more useful because it replaces one profile per lane.
 
 ### 4.3 Arithmetic: coefficient quantisation and feature reduction
 
 ![precision](../assets/plots/precision_area_lines.png)
 ![divergence](../assets/plots/divergence_p1.png)
 
-Every profile is a structurally different scorer and feature unit, verified against its own
-reference (scorer boundaries and 1,000 tuples, the parallel feature unit, 16,200 evaluator
-candidates, 250 complete-core requests). Two results stand out. First, the area differences are
-small — a spread of about 2% of LUT4s across all five profiles — because the scorer is a tiny part of a
-design dominated by board storage, the compactor, and the merge mask; the manual's warning that
-"a change in coefficients does not guarantee fewer LUTs" is confirmed by measurement. The one place
-arithmetic *did* matter was the multiplier form of the exact scorer, which Yosys mapped to DSP slices
-(4 for the scorer alone, 12 with the index multiplies) until it was rewritten as shift-add; that is a
-tooling effect, not a precision effect, and it is recorded separately. Second, playing strength is
-insensitive to the coefficient quantisations: powers-of-two and two-term profiles are statistically
-indistinguishable from exact on 100 held-out streams (the two-term profile chose the *same* move as
-exact on every decision of every game), capping holes at 15 costs a little, and removing bumpiness
-destroys play. Bumpiness is the feature that keeps the surface flat enough for the next piece; the
-divergence figure shows the first move on seed 2000 where the power-of-two profile prefers a placement
-the exact profile ranks lower, and both trajectories are rendered in `assets/divergence_p0_vs_p1.gif`.
+Every profile has its own scorer, feature unit, and bit-exact reference. Checks cover scorer bounds,
+1,000 tuples, the parallel feature unit, 16,200 evaluator candidates, and 250 complete-core requests.
+
+Area varies by about 2% of LUT4s across all five profiles. Board storage, the compactor, and the merge
+mask dominate the design. The exact scorer's multiplier form did matter because Yosys mapped it to
+DSP slices. Rewriting the constants as shifts and adds removed that tool-specific cost.
+
+The coefficient changes have little effect on playing strength. The powers-of-two and two-term
+profiles are statistically indistinguishable from exact across 100 held-out streams. The two-term
+profile chooses the same move as exact throughout every game. Capping holes at 15 costs a little.
+Removing bumpiness destroys play. The divergence figure shows the first differing move on seed 2000,
+and `assets/divergence_p0_vs_p1.gif` renders both trajectories.
 
 ### 4.4 Search: depth one versus depth two
 
@@ -201,22 +190,20 @@ the exact profile ranks lower, and both trajectories are rendered in `assets/div
 Depth two multiplies the work by the number of legal leaves per root: the corpus median is about
 13,500 cycles and the worst case 52,469, against a derived FSM bound of about 52,700
 (34 roots × (44 + 1 cache + 34 leaves × 44)). Hardware cost is the B1 board and cache registers and the
-controller: about 20% more LUT4s and 28% more flip-flops than depth one. On the 20-stream, 500-piece
-paired study the lookahead improves lines by a small but statistically positive amount, mostly by
-avoiding the few early top-outs that cap censoring otherwise hides; the manual was right that the
-improvement is not guaranteed under this heuristic, and the size of the effect is bounded by the cap.
+controller: about 20% more LUT4s and 28% more flip-flops than depth one. On the paired study of 20
+streams and 500 pieces, lookahead gives a small positive improvement in lines. Most of the gain comes
+from avoiding a few early top-outs. The cap limits the size of the observed effect.
 
-## 5. Why the curves bend
+## 5. Sources of nonlinear scaling
 
-The cycle curve bends at the compactor because it is the one step whose parallel form is a genuinely
-different structure (a prefix-rank selection network or twenty registered stages) rather than a wider
-version of the sequential one; everything else — heights, landing, merge, features — has a
-combinational form of modest depth. The area curve is flat across arithmetic profiles because the
-state (200-bit boards in the core, each lane, the merge, the compactor and the depth-two branch) and
-the wide multiplexers dominate; the arithmetic is a rounding error, and changing it only moves
-decisions, not resources. Lanes scale almost linearly in both cycles and area because there is no
-shared resource between them except the candidate list and the final reduction. Caching helps by
-exactly the per-candidate work it removes and no more, which for one lane is one cycle.
+The cycle curve bends at the compactor because its parallel form needs a new structure. The options
+are a prefix-rank selection network or twenty registered stages. Heights, landing, merge, and
+features each have a modest combinational form.
+
+Board state and wide multiplexers dominate the area curve. Arithmetic changes can move decisions
+without moving resource counts very far. Lanes scale almost linearly in cycles and area because they
+share only the candidate list and final reduction. For one lane, caching removes exactly one cycle
+of work per candidate.
 
 ## 6. Limitations
 
@@ -233,8 +220,8 @@ The first specification put the piece *inside* the board at `y = 20 − height` 
 Nothing in a 40,500-case cross-check between two Python implementations caught it, because both
 shared the rule. A random-board audit found 806 cases in 570,000 where a J in rotation 3 (a three-tall
 bar with a one-cell nub) appeared with its nub beneath an overhang and slid down through space that
-a falling piece could never have reached. The fix — entry from y = 20 with above-board cells treated
-as empty and a final in-board check — made the landing height a closed form of the column heights,
+a falling piece could never have reached. The fix: entry from y = 20 with above-board cells treated
+as empty and a final in-board check: made the landing height a closed form of the column heights,
 which in turn made the A1 drop unit a two-stage arithmetic block instead of a twenty-iteration
 search. The regression fixture `spawn_under_overhang_J` and a separate set-of-cells oracle now guard
 the rule; `docs/history/bugs.md` lists the other six.

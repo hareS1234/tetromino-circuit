@@ -8,7 +8,7 @@ reduces the local winners in a separate state. v1 verified one and two lanes
 Every number below is from the commands listed in `results/evidence/U13/summary.json`; the frozen
 v1 files are untouched.
 
-## 1. What changed
+## 1. Design changes
 
 * `model/config.py`: `Config(1, 1, 4, 1, 0)` added to `SUPPORTED` (eleven verified identities;
   `V1_SUPPORTED_IDS` remains the frozen nine). Four lanes with the bitmap representation, depth two,
@@ -45,7 +45,7 @@ Counted over the run and required to be nonzero:
 |---|---|---|---|
 | cases with a move | 293 | 293 | 7 `no_move` states excluded from the winner statistics |
 | cross-lane ties | 74 | 58 | the maximal score is shared by candidates owned by different lanes; the global tie-break (lowest candidate id) decides |
-| winner lane finished strictly last | 95 | 134 | the winning lane's `active_cycles_o` is strictly greater than every other lane's — the strict witness the guide asks for |
+| winner lane finished strictly last | 95 | 134 | the winning lane's `active_cycles_o` is strictly greater than every other lane's: the strict witness the guide asks for |
 | winner lane finished last or tied | 156 | 230 | the former `>=` count, kept for comparison; it includes equal finish times |
 | invalid local bests | 62 | 17 | lane/state pairs where a lane owned no legal candidate (`best_valid_o = 0`) and must not influence the reduction |
 | unequal finish cases | 300 / 300 | 202 / 300 | states where the lanes' active cycle counts differ (four lanes always differ because 9, 17 and 34 do not divide by 4) |
@@ -86,17 +86,15 @@ synth records under `build/synth/<synth_key>/`):
 
 | Lanes | LUT4 | FF | CCU2C | LUT4 ratio | FF ratio | FF added |
 |---|---|---|---|---|---|---|
-| 1 | 4,030 | 2,220 | 342 | 1.00 | 1.00 | — |
+| 1 | 4,030 | 2,220 | 342 | 1.00 | 1.00 | n/a |
 | 2 | 7,345 | 3,738 | 642 | 1.82 | 1.68 | +1,518 |
 | 4 | 14,035 | 6,773 | 1,225 | 3.48 | 3.05 | +4,553 |
 
 The FF growth is 1,518 per added lane (1 → 2 → 4: +1,518, +3,035 = 2 × 1,518, within one flop).
-Reading `rtl/lane_player.sv` and `rtl/candidate_eval.sv` against that count: every lane latches
-its own copy of the 200-bit board and the 50-bit height cache in `lane_player` (`board_q`,
-`heights_q`) and again in its `candidate_eval` (`board_q`, `heights_q`), and its merge and clear
-units hold the 200-bit merged and cleared boards — at least 900 of the 1,518 flip-flops per added
-lane are replicated board/height storage; the rest are the candidate, feature, score, best and
-counter registers of the lane. Only the *source* of the heights is shared (the core profiles the
+Each lane stores a private 200-bit board and 50-bit height cache in `lane_player`. Its
+`candidate_eval` stores both values again. The merge and clear units also hold 200-bit boards. At
+least 900 of the 1,518 added flip-flops therefore hold replicated board or height data. Candidate,
+feature, score, best, and counter registers account for the remainder. Only the *source* of the heights is shared (the core profiles the
 latched board once and broadcasts fifty bits), which is why the FF ratio (3.05×) is a little below
 the LUT ratio (3.48×) but nowhere near a shared-storage design: shared source heights do not make
 the per-lane registers disappear, and the guide's caution is confirmed by the count rather than
@@ -111,25 +109,24 @@ auto-allocated I/O, `route-record-v2` records under `results/v2/raw/routes/<rout
 
 | Budget | Status | Placement estimate | Routed fmax | Wall | Record |
 |---|---|---|---|---|---|
-| 1,200 s | **`route_timeout`** — "declared route budget exhausted (a resource limit, not proof the design cannot route)" | 57.15 MHz (PASS at 50 MHz) | none (routing did not finish; no timing report) | 1,200.6 s, peak RSS 773 MB | `3137bdf7316a474f…json` |
+| 1,200 s | **`route_timeout`**: "declared route budget exhausted (a resource limit, not proof the design cannot route)" | 57.15 MHz (PASS at 50 MHz) | none (routing did not finish; no timing report) | 1,200.6 s, peak RSS 773 MB | `3137bdf7316a474f…json` |
 | 3,600 s | **`route_timeout`** again: `router1` still had 261 overflowing nets after 3,467 s of routing (from 436 at 2,080 s), converging but far too slowly for the budget | 57.15 MHz (same placement) | none | 3,601 s, peak RSS 791 MB | `1a652e90dca4bbd2…json` |
-| seed 2, 3,600 s | **`routed_timing_met`** — reported fmax **65.96 MHz** at the 50 MHz constraint; worst path 15.16 ns (6.34 logic + 8.82 routing) inside lane 3's fast drop unit (`u_drop.d_q[0]` → `y_o`, the closed-form landing arithmetic) | 63.16 MHz | 65.96 MHz | 214 s, peak RSS 824 MB | `a975dba249d57d66…json` |
+| seed 2, 3,600 s | **`routed_timing_met`**: reported fmax **65.96 MHz** at the 50 MHz constraint; worst path 15.16 ns (6.34 logic + 8.82 routing) inside lane 3's fast drop unit (`u_drop.d_q[0]` → `y_o`, the closed-form landing arithmetic) | 63.16 MHz | 65.96 MHz | 214 s, peak RSS 824 MB | `a975dba249d57d66…json` |
 
 Placement finished in 93 s with a 57.15 MHz estimate; `router1` was at an overflow of 950–1,935
-nets after 1,000 s (72,794 arcs) and still 261 after 3,467 s — converging at roughly 100 nets per
+nets after 1,000 s (72,794 arcs) and still 261 after 3,467 s: converging at roughly 100 nets per
 1,000 s, so a complete route of this seed would need on the order of 1.5–2 hours. That is the
 same symptom as the one non-converging two-lane seed in the v1 matrix
 (`results/implementation.csv`: 4/5 two-lane routes met 50 MHz). Seed 2 of the same netlist routed
-in 214 s and met 50 MHz at a reported 65.96 MHz, so the seed-1 outcome is a placement that
-`router1` cannot resolve within hours, not a property of the four-lane netlist; the v1 one-lane
-cores reported 62–69 MHz under the default DSP policy and the v1 toolchain (a different identity),
-so four lanes cost no clock rate in this one comparison. Both seed-1 timeouts stay on record as
-outcomes of their seed and budget, and the U17 matrix must expect that some four-lane seeds do not
+in 214 s and reported 65.96 MHz. Seed 1 therefore shows a placement that `router1` could not resolve
+within its budget. The v1 one-lane cores reported 62–69 MHz under a different toolchain and DSP
+identity. Within this limited comparison, four lanes did not reduce the reported clock. Both seed-1
+timeouts stay on record as outcomes of their seed and budget. The U17 matrix allows some four-lane seeds to
 route within its timeout. The likely cause is fan-out rather than utilisation (17 % of the
 85F's LUT4s): the core broadcasts the 200-bit latched board and the 50-bit heights to four
-evaluators, and each `REDUCE` input multiplexes four 44-bit best records. Nothing here is a timing
-result: no routed report exists for four lanes yet, and the timed-out record is kept as the
-outcome of this seed and budget. The multi-seed, multi-clock sweep is U17.
+evaluators, and each `REDUCE` input multiplexes four 44-bit best records. These development runs
+produced one timing result for seed 2 and two recorded timeouts for seed 1. The multi-seed,
+multi-clock sweep follows in U17.
 
 ## 6. Public protocol and replays
 

@@ -3,7 +3,7 @@
 Baseline inspected: branch `upgrade/a2` created from `master` at `c66ad9b` (tag `v1.0`); no
 remote configured; the delivered archive `tetromino-circuit.tar.gz` has SHA-256
 `48a4f256…ca50` as the guide records. The live checkout tracks 409 files; the archive omits the
-twelve `results/inspection/*.png` frames (committed at `dcc2131`) — an export discrepancy, the
+twelve `results/inspection/*.png` frames (committed at `dcc2131`): an export discrepancy, the
 files are present and unchanged here. Recount from the saved files: 45 unique (configuration, seed)
 routing attempts, 44 `routed` with timing met, one `killed_no_convergence` (A1/cache/two lanes,
 seed 3, 1,313.6 s); 640 unique held-out quality jobs from one source hash `66a5deeeb0c72b61`
@@ -17,7 +17,7 @@ Full numbers: `results/evidence/U00/inventory.json`.
 |---|---|---|
 | cocotb import path | already fixed in v1 (`tools/run_rtl.py` extends `sys.path`); regression with an out-of-tree working directory added in U01's test suite | `tests/unit/test_bootstrap.py` |
 | DSP inference | already fixed for v1 (shift-add); v2 makes the DSP policy an explicit identity field (`dsp_policy`) and the controlled study uses `-nodsp` | U02 `tools/identity.py`, U17 |
-| One-stage landing timing failure | preserved (`results/history/implementation_dev_history*.csv`, `docs/history/bugs.md` #5); consolidated by identity in U19 | — |
+| One-stage landing timing failure | preserved (`results/history/implementation_dev_history*.csv`, `docs/history/bugs.md` #5); consolidated by identity in U19 | n/a |
 | A1 serial per candidate | newly actionable: A2 candidate pipeline | U04–U12 |
 | P2 changed no decisions | wording corrected below; P2 preserved; P5–P7 added | U14 |
 | Capped quality study | newly actionable: protocol `quality-v2-bag50k` | U15–U16 |

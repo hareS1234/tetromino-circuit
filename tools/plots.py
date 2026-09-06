@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild the v1 figures from committed results—no simulation, no synthesis, no invented dots."""
+"""Rebuild the v1 figures from committed results. Run no simulations or synthesis."""
 from __future__ import annotations
 
 import csv

@@ -62,7 +62,7 @@ def collect(proto: dict, suite_name: str, out_root: Path, closure: str | None = 
     for (pk, seed), job in jobs.items():
         rec = have.get(job["key"])
         if failed_record_path(out_root, job["key"]).is_file() and (rec is None or rec.get("status") != "complete"):
-            problems.append(f"{pk} stream {seed}: failed job (raw/quality/{job['key'][:12]}….failed.json) — repair and re-run")
+            problems.append(f"{pk} stream {seed}: failed job (raw/quality/{job['key'][:12]}….failed.json). Repair and re-run")
             continue
         if rec is None:
             continue    # reported by check_paired as missing

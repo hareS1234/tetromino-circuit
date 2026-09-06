@@ -56,7 +56,8 @@ Open [`viewer/demo.html`](viewer/demo.html) to pause the trace and inspect indiv
   compactor, reducer, and pipeline control have unbounded formal proofs. Twelve planted RTL bugs are
   caught by named tests.
 
-The performance numbers come from RTL simulation and an FPGA device model. These results were not measured on a board.
+The performance numbers come from RTL simulation and an FPGA device model.
+They were not measured on a board.
 Full tables are available in [`docs/results.md`](docs/results.md).
 
 ## Architecture
@@ -99,6 +100,7 @@ python3 -m venv .venv
 bash scripts/env.sh python -m pytest tests/unit -q
 bash scripts/env.sh python tools/check_claims.py
 bash scripts/env.sh python tools/check_trace.py
+make check-writing
 ```
 
 The saved pipeline demo opens directly in a browser.
@@ -167,10 +169,10 @@ logs and exit codes live under `results/evidence/`.
 The validators reject stale identities, missing artifacts, incomplete matrices, and unsupported
 release claims. Timeouts and failed timing runs remain visible in the published tables.
 
-## Scope and limits
+## Scope and limitations
 
 - The `drop-v1.1` game uses straight drops. Kicks, tucks, spins, hold, lock delay, gravity, hidden
-  rows, combos, garbage, and multiplayer are outside its scope.
+  rows, combos, garbage, and multiplayer are excluded.
 - Long quality runs use the bit-exact Python policy model. RTL decisions are checked against that
   model on shared corpora and saved replays.
 - Cycle counts come from RTL simulation. Timing comes from nextpnr for an ECP5 LFE5U-85F device

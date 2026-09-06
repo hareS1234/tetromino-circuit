@@ -76,7 +76,7 @@ def test_links_and_anchors(tmp_path):
     problems, checked, external, n_docs = check_links.check(tmp_path)
     assert n_docs == 3 and external == 1 and checked == 8
     assert sorted(problems) == ["README.md: anchor #missing not in docs/b.md", "docs/a.md: anchor #nope not found", "docs/a.md: broken link c.md"]
-    assert check_links.slug("## `code` and *emphasis* — dash") == "code-and-emphasis--dash" or check_links.slug("`code` and *emphasis*") == "code-and-emphasis"
+    assert check_links.slug("`code` and *emphasis*: dash") == "code-and-emphasis-dash"
 
 
 def test_real_claims_file_is_well_formed():

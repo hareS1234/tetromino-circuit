@@ -1,4 +1,4 @@
-/* A2 pipeline replay viewer — plain JavaScript, no framework, no server state (U18, guide §12.1).
+/* A2 pipeline replay viewer. Plain JavaScript, no framework, and no server state (U18, guide §12.1).
    Reads an a2-trace-v1 file (results/traces/*.json): per-cycle bank valid/tag arrays, handshakes, best
    registers and compactor samples from the Verilated RTL, plus per-candidate reference payloads linked
    by tag.  Nothing shown is synthetic: token positions come from the trace records; playback freezes
@@ -30,11 +30,11 @@
     trace = doc; idx = 0; expanded = null;
     $("main").hidden = false;
     const req = doc.requests[0];
-    status(`${name}: ${doc.scenario} (${doc.scenario_kind || ""}) — ${doc.cycles.length} cycles, ${req.candidate_count} candidates, piece ${PIECES[req.piece]}`);
+    status(`${name}: ${doc.scenario} (${doc.scenario_kind || ""}). ${doc.cycles.length} cycles, ${req.candidate_count} candidates, piece ${PIECES[req.piece]}`);
     const jump = $("jump");
     jump.innerHTML = "";
     const add = (label, cyc) => { const o = document.createElement("option"); o.value = cyc; o.textContent = label; jump.appendChild(o); };
-    add("— events —", "");
+    add("events", "");
     const ev = doc.events || [];
     const firstOf = (k) => ev.find((e) => e.kind === k);
     const lastOf = (k) => [...ev].reverse().find((e) => e.kind === k);
@@ -97,14 +97,14 @@
     const dd = (k, v) => { const a = document.createElement("dt"); a.textContent = k; const b = document.createElement("dd"); b.textContent = v; meta.append(a, b); };
     dd("piece", PIECES[req.piece] + ` (${req.candidate_count} dense candidates)`);
     if (pl) {
-      dd("selected", `tag ${pl.tag}, candidate id ${pl.candidate_id} — ${sel.why}`);
+      dd("selected", `tag ${pl.tag}, candidate id ${pl.candidate_id}: ${sel.why}`);
       dd("placement", `rotation ${pl.rotation}, x ${pl.x}` + (pl.legal ? `, y ${pl.y}` : ""));
       dd("legal", pl.legal ? "yes" : "no (canonical y 0, score 0)");
     } else dd("selected", "none");
     if (req.response && trace.cycles.slice(0, idx + 1).some((cc) => cc.rsp_valid)) {
       const r = req.response;
       dd("response", r.no_move ? "no move" : `rotation ${r.rotation} x ${r.x} y ${r.y} score ${r.score}; ${r.cycles} cycles = N + 29`);
-    } else if (req.response === null) dd("response", "none — standalone harness, no core");
+    } else if (req.response === null) dd("response", "none; standalone harness with no core");
     // pipeline
     const pipe = $("pipe");
     pipe.innerHTML = "";
@@ -139,15 +139,15 @@
     });
     const st = $("pipe-state");
     const occ = c.banks.filter(Boolean).length;
-    st.innerHTML = c.rst ? `<span class="reset">RESET</span> — every valid bank cleared at this edge (${occ}/23 occupied after)` :
-      frozen ? `<span class="warn">STALL: advance = 0</span> — output blocked (m_ready = 0), tokens frozen in place, input not accepted; occupancy ${occ}/23` :
-      `advance = 1 — occupancy ${occ}/23` + (c.s ? `; accepted tag ${c.s.tag} (id ${c.s.id})${c.s.last ? " [last]" : ""}` : "") +
-      (c.m ? `; retired tag ${c.m.tag} (legal ${c.m.legal}, y ${c.m.y}, score ${c.m.score})${c.m.consumed === 0 ? " — NOT consumed (blocked)" : ""}` : "");
+    st.innerHTML = c.rst ? `<span class="reset">RESET</span>. Every valid bank cleared at this edge (${occ}/23 occupied after)` :
+      frozen ? `<span class="warn">STALL: advance = 0</span>. Output blocked (m_ready = 0); tokens frozen; input refused; occupancy ${occ}/23` :
+      `advance = 1; occupancy ${occ}/23` + (c.s ? `; accepted tag ${c.s.tag} (id ${c.s.id})${c.s.last ? " [last]" : ""}` : "") +
+      (c.m ? `; retired tag ${c.m.tag} (legal ${c.m.legal}, y ${c.m.y}, score ${c.m.score})${c.m.consumed === 0 ? "; blocked before consumption" : ""}` : "");
     renderDetail();
     // explanation
     const lines = [];
     if (pl && pl.legal) {
-      lines.push(`token ${pl.tag} (candidate id ${pl.candidate_id}) — reference model, linked by tag`);
+      lines.push(`token ${pl.tag} (candidate id ${pl.candidate_id}): reference model, linked by tag`);
       lines.push(`full rows: ${pl.full_rows.length ? pl.full_rows.join(", ") : "none"}    L = ${pl.lines}`);
       lines.push(`keep bits (rows 0..19): ${pl.keep.map((k) => (k ? "k" : "·")).join("")}`);
       lines.push(`inclusive ranks:        ${pl.ranks.map((r) => String(r).padStart(2)).join(" ")}`);
@@ -170,7 +170,7 @@
     else bb.innerHTML = "<b>current best</b><br>none yet (no legal candidate retired)";
     // timeline + label
     drawTimeline();
-    $("cycle-label").textContent = `cycle ${c.cycle} / ${trace.cycles.length}` + (c.phase ? ` — ${c.phase}` : "");
+    $("cycle-label").textContent = `cycle ${c.cycle} / ${trace.cycles.length}` + (c.phase ? `: ${c.phase}` : "");
     $("btn-play").textContent = playing ? "Pause" : "Play";
   }
 

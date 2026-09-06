@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A2 pipeline replay — tetromino-circuit</title>
+<title>A2 pipeline replay: tetromino-circuit</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
     </select>
     <button id="load-btn" type="button">Load</button>
     <label for="trace-file" class="file-label">or open a local trace: <input type="file" id="trace-file" accept=".json" aria-label="open a local trace JSON file"></label>
-    <span id="status" role="status" aria-live="polite">no trace loaded — serve the repository with <code>python -m http.server</code> and open viewer/index.html</span>
+    <span id="status" role="status" aria-live="polite">No trace loaded. Serve the repository with <code>python -m http.server</code>, then open viewer/index.html.</span>
   </div>
 </header>
 
@@ -33,7 +33,7 @@
       <dl id="cand-meta" class="meta"></dl>
     </div>
     <div class="region" id="pipe-region" aria-labelledby="pipe-title">
-      <h2 id="pipe-title">Pipeline — 23 banks in six blocks (click a block to expand its registers)</h2>
+      <h2 id="pipe-title">Pipeline: 23 banks in six blocks. Click a block to expand its registers.</h2>
       <div id="pipe" class="pipe" role="list"></div>
       <div id="pipe-state" class="state"></div>
       <div id="bank-detail" class="detail" aria-live="polite"></div>

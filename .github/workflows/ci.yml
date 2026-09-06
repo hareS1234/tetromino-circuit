@@ -42,6 +42,7 @@ jobs:
       - run: make check-viewer
       - run: make check-links
       - run: make check-claims
+      - run: make check-writing
       - run: bash scripts/env.sh python tools/ci_local.py --validate
       - uses: actions/upload-artifact@v4
         if: always()

@@ -15,10 +15,10 @@ effect; the only reason the manual's counter example would have worked is that i
 into `sys.path` before `runner.test()` (`tools/run_rtl.py`). The manual's choice of `test_dir=tb/`
 also drops `results.xml` into the source tree; the build directory is used instead.
 
-**2. "Multiplication by compile-time constants is a reasonable first implementation."** With
-Yosys `synth_ecp5` it is not: the exact scorer written with `*` mapped to 4 `MULT18X18D` blocks, and
+**2. "Multiplication by compile-time constants is a reasonable first implementation."** Under
+Yosys `synth_ecp5`, the exact scorer written with `*` mapped to 4 `MULT18X18D` blocks. The
 `10*y + x` index arithmetic in the drop, merge, feature and compactor units mapped to 8 more. That
-would have made the precision study meaningless — P0 would have hidden its arithmetic in DSP slices
+result would have undermined the precision study. P0 would have hidden its arithmetic in DSP slices
 while the shift-based profiles paid in LUTs. Fix: shift-add for the exact coefficients
 (76 = 64+8+4, 51 = 32+16+2+1, 36 = 32+4, 18 = 16+2), `(y<<3)+(y<<1)` for indices, and a compactor
 that shifts rows instead of indexing them. The multiply form is kept behind `USE_MULT` and measured:
@@ -52,7 +52,7 @@ OSS CAD Suite asset". In the build environment the GitHub REST API was blocked w
 `scripts/bootstrap.sh` constructs the asset URL from the pinned date and platform and never queries
 the API.
 
-## Design targets the manual flagged as uncertain — measured outcomes
+## Design targets the manual flagged as uncertain: measured outcomes
 
 **7. One-cycle closed-form landing fails timing on ECP5-6 at 50 MHz.** Section 7A.3 called the
 single registered stage "a design target, contingent on timing". It routed at 43.5 MHz (bitmap) and
@@ -125,7 +125,7 @@ removed.
 manual's own procedure cannot drive that editable install on Python 3.12 (whose venvs no longer ship
 setuptools). Fix: freeze with `--all` and pin both explicitly (`requirements.lock`).
 
-## Not problems (checked and confirmed)
+## Confirmed behavior
 
 The seven numerical fixtures, the J high-overhang regression, the orientation table, the score bounds,
 the empty-board winners and the O no-move board are all correct; cocotb 2.0.1 does require Verilator

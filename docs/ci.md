@@ -9,8 +9,8 @@ are intentionally different sizes.
 | `hdl` | every push and pull request | pinned Linux CAD tools, bootstrap checks, directed RTL, native A1/A2 corpora, A2 specification/stream/protocol checks, a trace replay, identity/schema checks, and the small upgrade smoke route | 90 min |
 | `heavy` | manual dispatch | the hardware manifest and quality suite named in the dispatch form; the defaults are tiny smoke inputs | 360 min |
 
-The split is mostly about blast radius. A typo should get a quick answer; routing 84 FPGA jobs should
-require a conscious click and an explicit manifest.
+The split keeps routine feedback quick. Routing 84 FPGA jobs requires a conscious click and an
+explicit manifest.
 
 Each job uploads useful scraps even on failure: JUnit XML, cocotb results, build logs, route records,
 v2 raw/summary files, and the host observation. Only the CAD archive is cached. Results are never
@@ -25,9 +25,9 @@ extracting it. The `fast` job passes `hdl: "false"`, which skips the CAD bundle 
 locked Python environment.
 
 CI uses Python 3.12; Python 3.11 is supported too. Both versions were exercised locally during U03.
-The workflow currently uses major action tags (`actions/checkout@v5`, `actions/setup-python@v5`,
-`actions/cache@v4`, and `actions/upload-artifact@v4`). Pin those to inspected commit SHAs after the
-first real remote run.
+The workflow uses reviewed major action tags: `actions/checkout@v5`, `actions/setup-python@v5`,
+`actions/cache@v4`, and `actions/upload-artifact@v4`. The local validator rejects unexpected action
+versions.
 
 ## Kicking the tyres locally
 
@@ -45,9 +45,8 @@ bash scripts/env.sh python tools/ci_local.py --job hdl
 bash scripts/env.sh python tools/ci_local.py --job heavy --event workflow_dispatch
 ```
 
-GitHub-hosted actions are skipped in this mode; composite shell steps are expanded and dispatch
-inputs use their defaults. This catches a surprising amount, but it is not a substitute for GitHub
-actually running the workflow.
+This mode skips GitHub-hosted actions. It expands composite shell steps and uses the default dispatch
+inputs. The check catches local workflow mistakes. GitHub Actions still provides the remote result.
 
 ## Remote status
 

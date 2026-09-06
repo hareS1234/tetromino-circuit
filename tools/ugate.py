@@ -140,13 +140,13 @@ def main() -> int:
         record["status"] = "blocked"
         record["limitations"].append(opts["blocked"])
         (job_dir / "summary.json").write_text(json.dumps(record, indent=1) + "\n")
-        print(f"[ugate] {job}: blocked — {opts['blocked']}")
+        print(f"[ugate] {job}: blocked. {opts['blocked']}")
         return 0
     if not groups:
         record["status"] = "failed"
         record["limitations"].append("no commands were supplied; a gate with zero commands is not evidence")
         (job_dir / "summary.json").write_text(json.dumps(record, indent=1) + "\n")
-        print(f"[ugate] {job}: FAILED — zero commands")
+        print(f"[ugate] {job}: FAILED. Zero commands")
         return 1
     results = [run_command(job_dir, k, g) for k, g in enumerate(groups)]
     record["commands"] = results

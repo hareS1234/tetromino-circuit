@@ -106,7 +106,7 @@ def render_frame(doc, idx, payload_by_tag, fig, axes):
     ax_pipe.text(0, -1.1, state, fontsize=8, color="black" if not frozen else ACCENT, weight="bold" if (frozen or c["rst"]) else "normal")
     occ = sum(1 for b in c["banks"] if b)
     ax_pipe.text(23.4, -1.1, f"occupancy {occ}/23", ha="right", fontsize=8, color=NEUTRAL)
-    ax_pipe.set_title(f"candidate pipeline — 23 banks, one global advance ({doc['scenario']})", fontsize=9)
+    ax_pipe.set_title(f"candidate pipeline: 23 banks, one global advance ({doc['scenario']})", fontsize=9)
     # ---- explanation ----
     ax_expl.axis("off")
     ax_expl.set_xlim(0, 10)
@@ -115,7 +115,7 @@ def render_frame(doc, idx, payload_by_tag, fig, axes):
     if pl is not None and pl["legal"]:
         keep = "".join("k" if k else "·" for k in pl["keep"])
         ranks = pl["ranks"]
-        lines += [f"token {pl['tag']} (id {pl['candidate_id']}) — reference explanation",
+        lines += [f"token {pl['tag']} (id {pl['candidate_id']}): reference explanation",
                   f"full rows: {pl['full_rows'] if pl['full_rows'] else 'none'}   L = {pl['lines']}",
                   f"keep (row 0..19): {keep}",
                   "ranks 0..9 : " + " ".join(f"{r:2d}" for r in ranks[:10]),
@@ -131,13 +131,13 @@ def render_frame(doc, idx, payload_by_tag, fig, axes):
     if pl is not None and pl["legal"]:
         pass
     elif pl is not None:
-        lines += [f"token {pl['tag']} (id {pl['candidate_id']}): illegal placement — canonical legal 0, y 0, score 0"]
+        lines += [f"token {pl['tag']} (id {pl['candidate_id']}): illegal placement; canonical legal 0, y 0, score 0"]
     else:
         lines += ["no token selected"]
     if "best" not in c:
         lines.append("standalone candidate_pipe harness: no reducer (verification scenario)")
         if c.get("phase"):
-            lines.append(f"story phase: {c['phase']}" + ("  — m_ready = 0 (output blocked)" if c.get("m_ready") == 0 else ""))
+            lines.append(f"story phase: {c['phase']}" + ("; m_ready = 0 (output blocked)" if c.get("m_ready") == 0 else ""))
     elif best["valid"]:
         bp = next((p for p in payload_by_tag.values() if p["candidate_id"] == best["id"]), None)
         lines.append(f"running best (RTL): id {best['id']} score {best['score']} y {best['y']}" + (f"  (tag {bp['tag']})" if bp else ""))
@@ -175,7 +175,7 @@ def render_frame(doc, idx, payload_by_tag, fig, axes):
     ax_time.text(0, 2, "retire ▼", fontsize=6.5, va="center", ha="right")
     ax_time.text(0, 1, "stall ■ / reset ✕", fontsize=6.5, va="center", ha="right")
     ax_time.text(n + 1, 0.2, f"cycle {c['cycle']} of {n}", fontsize=8, ha="right")
-    fig.suptitle(f"A2 candidate pipeline, real RTL trace — {doc['scenario']} ({doc.get('scenario_kind', '')}); piece {PIECE_NAMES[piece]}, "
+    fig.suptitle(f"A2 candidate pipeline, real RTL trace: {doc['scenario']} ({doc.get('scenario_kind', '')}); piece {PIECE_NAMES[piece]}, "
                  f"{req['candidate_count']} candidates", fontsize=10)
 
 
