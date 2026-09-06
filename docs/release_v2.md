@@ -15,7 +15,7 @@ row does not pass. The `v2.0-a2` tag must wait for the successful verdict.
 | `linux-x64` | Linux x86_64 sandbox used for U00–U20 | **executed** | all 19 steps of `bash scripts/fresh_clone_check.sh` on a clean clone, including bootstrap, doctor, Python and RTL tests, the native A2 subset, trace/demo regeneration, and report checks | `results/evidence/U20/fresh_clone_linux-x64.json`, `results/host/Linux-x86_64.json` |
 | `darwin-arm64` | the maintainer's Apple-silicon Mac (demonstration machine) | **executed** | `bash scripts/bootstrap.sh --enroll`, then `bash scripts/fresh_clone_check.sh` from a clean clone: bootstrap, doctor, tests, smoke, directed RTL, the native A2 subset, trace/demo regeneration, viewer and report checks; viewer and GIF inspected | `results/evidence/U20/fresh_clone_darwin-arm64.json`, `results/host/Darwin-arm64.json` |
 | `darwin-x64`, `linux-arm64` | n/a | unenrolled | outside this release's support set; bootstrap refuses them with an enrollment hint | n/a |
-| `remote-ci` (`.github/workflows/ci.yml`) | GitHub Actions at the release commit | **executed** | `fast` and `hdl` tiers passed at `4a68e3b79f87` (https://github.com/hareS1234/tetromino-circuit/actions/runs/34012898896) | `results/evidence/U20/remote_ci.json` |
+| `remote-ci` (`.github/workflows/ci.yml`) | GitHub Actions at the release commit | **executed** | `fast` and `hdl` tiers passed at `98d832071488` (https://github.com/hareS1234/tetromino-circuit/actions/runs/34015863263) | `results/evidence/U20/remote_ci.json` |
 
 ## Readiness against guide §14
 
