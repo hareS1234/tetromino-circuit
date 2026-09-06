@@ -3,7 +3,7 @@
  "manifest": "benchmarks/release_v2.json",
  "manifest_sha256": "c514819d8b3de4faa9de3a19a5ed9743b12e211af5b0c4822c3c270e4261b993",
  "git": {
-  "head": "87aafaec79ae524a076839e97a946d45d7a48e8b",
+  "head": "4f6f9a77dbbac396ac53d78dd88bf421221e1d8d",
   "dirty_tracked": [
    "esults/evidence/U20/fresh_clone_linux-x64.json",
    "results/evidence/U20/release_check.json",
@@ -49,7 +49,7 @@
  ],
  "problems": [],
  "notes": [
-  "note: hardware summary source closure 8a93f90eb814 != live 6f542fa3cba3 (measurement identities checked above)"
+  "note: hardware summary source closure 8a93f90eb814 != live 675ba274b971 (measurement identities checked above)"
  ],
  "subchecks": [
   "subcheck v1_release: exit 0; CHECK quality_jobs 640/640",

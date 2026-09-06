@@ -2,9 +2,9 @@
  "schema": "fresh-clone-check-v2",
  "family": "linux-x64",
  "ok": true,
- "clone_commit": "87aafaec79ae524a076839e97a946d45d7a48e8b",
- "clone_dir": "/tmp/tetromino-fresh.fY5I6v/tetromino-circuit",
- "recorded_utc": "2026-09-06T00:27:05Z",
+ "clone_commit": "4f6f9a77dbbac396ac53d78dd88bf421221e1d8d",
+ "clone_dir": "/tmp/tetromino-fresh.fEtpZf/tetromino-circuit",
+ "recorded_utc": "2026-09-06T00:33:41Z",
  "host": {
   "os": "Linux-6.18.44-fc-v24-x86_64-with-glibc2.39",
   "system": "Linux",
@@ -34,14 +34,14 @@
    "verilator": "Verilator 5.051 devel rev v5.050-309-g228635918 (mod)",
    "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
    "nextpnr_ecp5": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
-   "recorded_utc": "2026-09-06T00:24:07Z"
+   "recorded_utc": "2026-09-06T00:30:48Z"
   }
  },
  "steps": [
   {
    "name": "bootstrap",
    "exit_code": 0,
-   "elapsed_s": 36,
+   "elapsed_s": 30,
    "command": "bash scripts/bootstrap.sh"
   },
   {
@@ -53,13 +53,13 @@
   {
    "name": "test-python",
    "exit_code": 0,
-   "elapsed_s": 50,
+   "elapsed_s": 45,
    "command": "make test-python"
   },
   {
    "name": "smoke",
    "exit_code": 0,
-   "elapsed_s": 6,
+   "elapsed_s": 7,
    "command": "make smoke"
   },
   {
@@ -95,13 +95,13 @@
   {
    "name": "a2-core-subset",
    "exit_code": 0,
-   "elapsed_s": 9,
+   "elapsed_s": 8,
    "command": "make test-core ARCH=2 BOARD_REPR=1 COUNT=50 DRIVER=native"
   },
   {
    "name": "trace-a2-demo",
    "exit_code": 0,
-   "elapsed_s": 29,
+   "elapsed_s": 28,
    "command": "make trace-a2-demo"
   },
   {
@@ -113,7 +113,7 @@
   {
    "name": "render-a2-demo",
    "exit_code": 0,
-   "elapsed_s": 65,
+   "elapsed_s": 66,
    "command": "make render-a2-demo"
   },
   {

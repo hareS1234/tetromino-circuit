@@ -2,16 +2,16 @@
  "schema": "upgrade-evidence-v1",
  "job": "U20",
  "status": "blocked",
- "git_commit": "87aafaec79ae524a076839e97a946d45d7a48e8b-dirty",
+ "git_commit": "4f6f9a77dbbac396ac53d78dd88bf421221e1d8d-dirty",
  "git_modified_tracked": [
   "results/evidence/U20/release_check.json",
   "results/evidence/U20/summary.json"
  ],
  "git_untracked": [],
- "source_sha256": "6f542fa3cba35c89ae79d6cb7803a94937c342310e52383be62d1a71acbb6fa6",
+ "source_sha256": "675ba274b9710b8dd90a34099b16676f64451270ff52d3a557b3f3a4d67b600e",
  "configuration_id": "a2-cache-d1-p0-l1",
  "toolchain_id": "oss-cad-suite-2026-09-04",
- "recorded_utc": "2026-09-06T00:22:41Z",
+ "recorded_utc": "2026-09-06T00:30:16Z",
  "commands": [
   {
    "argv": [
@@ -19,10 +19,10 @@
     "scripts/fresh_clone_check.sh"
    ],
    "exit_code": 0,
-   "elapsed_s": 264.7,
+   "elapsed_s": 205.92,
    "log": "results/evidence/U20/cmd00.log",
    "counts": {
-    "pytest_passed": 456,
+    "pytest_passed": 457,
     "pytest_failed": 0,
     "rtl_total": 1,
     "rtl_failed": 0,
@@ -49,7 +49,7 @@
     "results/evidence/U20/release_check.json"
    ],
    "exit_code": 0,
-   "elapsed_s": 11.0,
+   "elapsed_s": 5.91,
    "log": "results/evidence/U20/cmd01.log",
    "counts": {
     "check_release_v2_frozen_inputs": "5/5",
@@ -80,10 +80,27 @@
     "test-release-v2"
    ],
    "exit_code": 0,
-   "elapsed_s": 0.66,
+   "elapsed_s": 0.64,
    "log": "results/evidence/U20/cmd02.log",
    "counts": {
     "pytest_passed": 13
+   }
+  },
+  {
+   "argv": [
+    "bash",
+    "scripts/env.sh",
+    "python",
+    "-m",
+    "pytest",
+    "tests/unit/test_release_unblock.py",
+    "-q"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.23,
+   "log": "results/evidence/U20/cmd03.log",
+   "counts": {
+    "pytest_passed": 1
    }
   },
   {
@@ -95,8 +112,8 @@
     "--validate"
    ],
    "exit_code": 0,
-   "elapsed_s": 0.06,
-   "log": "results/evidence/U20/cmd03.log",
+   "elapsed_s": 0.07,
+   "log": "results/evidence/U20/cmd04.log",
    "counts": {
     "check_ci_workflow": "3/3"
    }
@@ -113,7 +130,7 @@
    ],
    "exit_code": 0,
    "elapsed_s": 0.05,
-   "log": "results/evidence/U20/cmd04.log",
+   "log": "results/evidence/U20/cmd05.log",
    "counts": {
     "check_ci_workflow_release_check": "1/1"
    }
@@ -128,10 +145,10 @@
     "fast"
    ],
    "exit_code": 0,
-   "elapsed_s": 45.37,
-   "log": "results/evidence/U20/cmd05.log",
+   "elapsed_s": 44.97,
+   "log": "results/evidence/U20/cmd06.log",
    "counts": {
-    "pytest_passed": 456,
+    "pytest_passed": 457,
     "check_quality_jobs": "640/640",
     "check_quality_summary_recomputed": "8/8",
     "check_route_jobs": "45/45",
@@ -186,9 +203,10 @@
    "name": "validator tests",
    "count_key": "pytest_passed",
    "values": [
-    456,
+    457,
     13,
-    456
+    1,
+    457
    ],
    "ok": true
   },
@@ -231,12 +249,17 @@
   {
    "path": "docs/release_v2.md",
    "exists": true,
-   "bytes": 7155
+   "bytes": 7683
   },
   {
    "path": ".github/workflows/release-check.yml",
    "exists": true,
    "bytes": 1211
+  },
+  {
+   "path": "scripts/release_unblock.py",
+   "exists": true,
+   "bytes": 6951
   }
  ],
  "limitations": [
