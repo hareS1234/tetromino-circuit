@@ -1,16 +1,16 @@
 {
  "schema": "fresh-clone-check-v2",
  "family": "darwin-arm64",
- "ok": false,
- "clone_commit": "d6f70e6efb8094cc0771f932bcce91dc713a5573",
- "clone_dir": "/var/folders/6p/g3k2clxj18x46dj1xz91mp0m0000gn/T//tetromino-fresh.7bhdcb/tetromino-circuit",
- "recorded_utc": "2026-09-06T04:16:11Z",
+ "ok": true,
+ "clone_commit": "a8cc21993612e7d6981048986ed17515ccee9ca9",
+ "clone_dir": "/var/folders/6p/g3k2clxj18x46dj1xz91mp0m0000gn/T//tetromino-fresh.Em4f0z/tetromino-circuit",
+ "recorded_utc": "2026-09-06T04:52:08Z",
  "host": {
   "os": "macOS-15.6.1-arm64-arm-64bit-Mach-O",
   "system": "Darwin",
   "machine": "arm64",
   "cpu": "Apple M4",
-  "python": "3.11.15",
+  "python": "3.12.12",
   "compiler": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
   "tools": {
    "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
@@ -26,23 +26,131 @@
    "asset_url": "https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2026-09-04/oss-cad-suite-darwin-arm64-20260904.tgz",
    "archive_sha256_observed": "21c02252506ad636a24909fb42cbe6864123a98519e4daf91e060bdd7ef39db6",
    "archive_sha256_expected": "21c02252506ad636a24909fb42cbe6864123a98519e4daf91e060bdd7ef39db6",
-   "python": "3.11",
-   "python_full": "3.11.15",
+   "python": "3.12",
+   "python_full": "3.12.12",
    "venv": ".venv",
    "os_release": "macOS-15.6.1-arm64-arm-64bit",
    "cxx": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
    "verilator": "Verilator 5.051 devel rev v5.050-309-g228635918 (mod)",
    "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
    "nextpnr_ecp5": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
-   "recorded_utc": "2026-09-06T03:20:24Z"
+   "recorded_utc": "2026-09-06T04:47:23Z"
   }
  },
  "steps": [
   {
    "name": "bootstrap",
-   "exit_code": 1,
+   "exit_code": 0,
+   "elapsed_s": 58,
+   "command": "env PYTHON=python3.12 bash scripts/bootstrap.sh"
+  },
+  {
+   "name": "doctor",
+   "exit_code": 0,
+   "elapsed_s": 5,
+   "command": "bash scripts/env.sh python tools/doctor.py --profile full"
+  },
+  {
+   "name": "test-python",
+   "exit_code": 0,
+   "elapsed_s": 85,
+   "command": "make test-python"
+  },
+  {
+   "name": "smoke",
+   "exit_code": 0,
+   "elapsed_s": 10,
+   "command": "make smoke"
+  },
+  {
+   "name": "test-shapes",
+   "exit_code": 0,
+   "elapsed_s": 7,
+   "command": "make test-shapes"
+  },
+  {
+   "name": "demo-python",
+   "exit_code": 0,
+   "elapsed_s": 11,
+   "command": "make demo-python"
+  },
+  {
+   "name": "plots",
+   "exit_code": 0,
+   "elapsed_s": 3,
+   "command": "make plots"
+  },
+  {
+   "name": "report-v1",
+   "exit_code": 0,
    "elapsed_s": 0,
-   "command": "bash scripts/bootstrap.sh"
+   "command": "bash scripts/env.sh python tools/write_report.py --check"
+  },
+  {
+   "name": "check-a2-spec",
+   "exit_code": 0,
+   "elapsed_s": 10,
+   "command": "make check-a2-spec"
+  },
+  {
+   "name": "a2-core-subset",
+   "exit_code": 0,
+   "elapsed_s": 11,
+   "command": "make test-core ARCH=2 BOARD_REPR=1 COUNT=50 DRIVER=native"
+  },
+  {
+   "name": "trace-a2-demo",
+   "exit_code": 0,
+   "elapsed_s": 31,
+   "command": "make trace-a2-demo"
+  },
+  {
+   "name": "check-trace",
+   "exit_code": 0,
+   "elapsed_s": 1,
+   "command": "make check-trace"
+  },
+  {
+   "name": "render-a2-demo",
+   "exit_code": 0,
+   "elapsed_s": 106,
+   "command": "make render-a2-demo"
+  },
+  {
+   "name": "check-viewer",
+   "exit_code": 0,
+   "elapsed_s": 1,
+   "command": "make check-viewer"
+  },
+  {
+   "name": "report-v2",
+   "exit_code": 0,
+   "elapsed_s": 0,
+   "command": "bash scripts/env.sh python tools/write_report_v2.py --check"
+  },
+  {
+   "name": "check-links",
+   "exit_code": 0,
+   "elapsed_s": 0,
+   "command": "bash scripts/env.sh python tools/check_links.py"
+  },
+  {
+   "name": "check-claims",
+   "exit_code": 0,
+   "elapsed_s": 0,
+   "command": "bash scripts/env.sh python tools/check_claims.py"
+  },
+  {
+   "name": "trace-identity",
+   "exit_code": 0,
+   "elapsed_s": 0,
+   "command": "python3 -"
+  },
+  {
+   "name": "path-leaks",
+   "exit_code": 0,
+   "elapsed_s": 1,
+   "command": "bash -c ! grep -rn --include=\"*.py\" --include=\"*.sh\" --include=Makefile --exclude=check_release.py --exclude=fresh_clone_check.sh -E \"/home/[a-z]+/|/Users/[a-z]+/\" tools scripts tb model Makefile"
   }
  ]
 }
