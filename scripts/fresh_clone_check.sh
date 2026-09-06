@@ -19,9 +19,9 @@ if [ -n "${PYTHON:-}" ]; then
   BOOTSTRAP_PYTHON="$PYTHON"
 else
   BOOTSTRAP_PYTHON=""
-  for candidate in "$ROOT/.venv/bin/python" python3.12 python3.11 python3; do
+  for candidate in python3.12 python3.11 "$ROOT/.venv/bin/python" python3; do
     if command -v "$candidate" >/dev/null 2>&1 && "$candidate" -c 'import sys; raise SystemExit(sys.version_info[:2] not in ((3, 11), (3, 12)))'; then
-      BOOTSTRAP_PYTHON="$(command -v "$candidate")"
+      BOOTSTRAP_PYTHON="$candidate"
       break
     fi
   done
