@@ -51,11 +51,6 @@ actually running the workflow.
 
 ## Remote status
 
-This checkout has no Git remote, so there is no honest run URL or SHA to record. U03's original
-remote gate and U20's `remote-ci` row therefore remain blocked. Before release, the maintainer must
-push the intended commit, inspect both `fast` and `hdl`, pin the action revisions, and record the
-successful run as described in `docs/release_v2.md`.
+The pinned `fast` and `hdl` jobs passed at [`4a68e3b79f87`](https://github.com/hareS1234/tetromino-circuit/actions/runs/34012898896). The original U03 blocked record remains historical; U20 carries the live remote-run evidence.
 
-The separate `.github/workflows/release-check.yml` runs the full release validator on linux-x64.
-That platform choice matters: the published route identities include Linux tool version strings.
-Its full-history checkout is also intentional because the v1 validator checks tags.
+The separate `.github/workflows/release-check.yml` runs the full release validator on linux-x64. That platform choice matters because the published route identities include Linux tool version strings. Its full-history checkout is intentional too: the v1 validator checks tags.

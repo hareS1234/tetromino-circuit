@@ -2,7 +2,7 @@
 # linux-x64 toolchain that produced the published routes. Run this only after the Mac and remote-CI records
 # are committed. Full history is needed because the v1 validator checks release tags.
 name: release-check
-on:
+"on":
   workflow_dispatch:
 
 permissions:

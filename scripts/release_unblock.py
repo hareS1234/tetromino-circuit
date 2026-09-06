@@ -138,8 +138,8 @@ def mark_executed() -> int:
                  "The separate `.github/workflows/release-check.yml` runs the full release validator on linux-x64. "
                  "That platform choice matters because the published route identities include Linux tool version strings. "
                  "Its full-history checkout is intentional too: the v1 validator checks tags.\n")
-    print("marked executed: benchmarks/release_v2.json and the release/progress/CI docs — commit, push, then dispatch the "
-          "release-check workflow; tag v2.0-a2 only after it prints 'OK — releasable'")
+    print("marked executed: benchmarks/release_v2.json, docs/release_v2.md, docs/upgrade_progress.md, and docs/ci.md — "
+          "commit, push, then dispatch the release-check workflow; tag v2.0-a2 only after it prints 'OK — releasable'")
     return 0
 
 

@@ -9,7 +9,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageChops
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_CSV = {
@@ -38,7 +38,6 @@ def main() -> int:
     if len(dec) < 9:
         problems.append(f"expected decision CSVs for nine configurations, found {len(dec)}")
     insp = ROOT / "results" / "inspection"
-    insp.mkdir(parents=True, exist_ok=True)
     for rel in GIFS:
         p = ROOT / rel
         if not p.is_file():
@@ -53,7 +52,15 @@ def main() -> int:
             continue
         for tag, idx in (("first", 0), ("middle", n // 2), ("last", n - 1)):
             im.seek(idx)
-            im.convert("RGB").save(insp / f"{p.stem}_{tag}.png")
+            still = insp / f"{p.stem}_{tag}.png"
+            if not still.is_file():
+                problems.append(f"missing inspection still {still.relative_to(ROOT)}")
+                continue
+            actual = im.convert("RGB")
+            with Image.open(still) as saved:
+                expected = saved.convert("RGB")
+            if actual.size != expected.size or ImageChops.difference(actual, expected).getbbox() is not None:
+                problems.append(f"{still.relative_to(ROOT)} does not match the {tag} frame of {rel}")
     for name in PLOTS:
         p = ROOT / "assets" / "plots" / name
         if not p.is_file() or p.stat().st_size < 1000:
@@ -73,7 +80,7 @@ def main() -> int:
         for p in problems:
             print("  -", p)
         return 1
-    print(f"check-report: OK (results blocks current; {len(dec)} decision files; GIF frames extracted to results/inspection/)")
+    print(f"check-report: OK (results blocks current; {len(dec)} decision files; inspection stills match their GIF frames)")
     return 0
 
 

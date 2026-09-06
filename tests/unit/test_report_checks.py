@@ -1,7 +1,9 @@
 """Reader-facing numbers and links have to resolve to something real."""
 from __future__ import annotations
 
+import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -88,3 +90,13 @@ def test_real_claims_file_is_well_formed():
             assert d in check_claims.READER_FACING, f"{c['id']}: {d} is not a reader-facing document"
         if "divide_by" in c:
             assert ids.index(c["divide_by"]) < ids.index(c["id"]), f"{c['id']}: divide_by must be computed first"
+
+
+def test_report_check_does_not_rewrite_inspection_stills():
+    stills = sorted((ROOT / "results" / "inspection").glob("*.png"))
+    assert stills
+    before = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in stills}
+    run = subprocess.run([sys.executable, "tools/check_report.py"], cwd=ROOT, capture_output=True, text=True)
+    assert run.returncode == 0, run.stdout + run.stderr
+    after = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in stills}
+    assert after == before
