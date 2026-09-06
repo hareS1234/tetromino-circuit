@@ -1,9 +1,4 @@
-"""Slow, independent set-of-occupied-cells reference for drop-v1.1.
-
-Literal descent from anchor y=20 with above-board cells empty.  It does not use
-the bitboard helpers, the closed-form landing, or any packed representation, so
-it can catch a shared mistake in those implementations.
-"""
+"""Slow grid oracle. It avoids every bitboard shortcut on purpose."""
 from __future__ import annotations
 
 W, H = 10, 20

@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""Validation pilot for the numerical profiles (Python fast model, A1-equivalent policy):
-lines per game on validation streams, disagreement with exact on the corpus, and one explained
-divergence replay (first move on seed 2000 where a profile differs from exact) rendered as a
-two-panel tournament with the candidate scores at the divergence."""
+"""Pilot the numeric profiles and render one explained exact-vs-approximate fork."""
 from __future__ import annotations
 
 import argparse

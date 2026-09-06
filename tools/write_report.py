@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Fill the measured v1 results blocks of docs/results.md and docs/design.md from the frozen result files.
-
-Every number between <!-- results:start --> and <!-- results:end --> is derived here from
-results/*.csv|json; tools/check_report.py regenerates the blocks and fails if the committed
-documents differ, so a stale or hand-typed figure cannot survive.  --check only compares.
-"""
+"""Fill the generated v1 report blocks from frozen result files; ``--check`` only compares."""
 from __future__ import annotations
 
 import csv

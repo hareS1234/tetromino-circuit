@@ -1,5 +1,4 @@
-"""Policy equivalence: readable literal-descent policy vs accelerated model, depth 1 and 2,
-all precision profiles; baselines; stream determinism."""
+"""The fast and readable policies must make the same choices."""
 import random
 
 from model import fast, lookahead, policy

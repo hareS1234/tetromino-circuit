@@ -1,11 +1,10 @@
 # A pipelined candidate evaluator for drop-only Tetris: an architecture study with reproducible evidence
 
-*Every number in this report is recomputed from a file in `results/` by `tools/check_claims.py`
-(`docs/claims.json`) or is quoted from a generated table in [`docs/results.md`](results.md). Times are
-labelled: "cycles" are RTL-simulation clock cycles under the documented protocol; "routed" figures are
-nextpnr timing reports on the ECP5 LFE5U-85F device model with auto-allocated I/O; "wall" is host time.
-Nothing was measured on a board. The rules are a simplification of Tetris (`drop-v1.1`, §1) and no number
-here is comparable to workers playing other rules.*
+This is an architecture experiment with a Tetris-shaped workload, not a leaderboard entry. The
+rules are the deliberately small `drop-v1.1` game, and nothing was measured on a physical board.
+"Cycles" means RTL-simulation clocks, "routed" means nextpnr's ECP5 device-model report with
+auto-allocated I/O, and "wall" means host time. `tools/check_claims.py` recomputes the headline
+numbers from `results/`; the dense tables in [`docs/results.md`](results.md) are generated too.
 
 ## 1. Problem and contract
 

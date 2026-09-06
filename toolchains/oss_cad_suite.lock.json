@@ -25,9 +25,9 @@
   },
   "darwin-arm64": {
    "asset": "oss-cad-suite-darwin-arm64-20260904.tgz",
-   "sha256": null,
-   "status": "unenrolled",
-   "recorded": null
+   "sha256": "21c02252506ad636a24909fb42cbe6864123a98519e4daf91e060bdd7ef39db6",
+   "status": "verified",
+   "recorded": "enrolled on Darwin-arm64 at 2026-09-06T03:20:03Z"
   }
  },
  "platform_map": {

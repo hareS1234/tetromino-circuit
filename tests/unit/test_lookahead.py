@@ -1,7 +1,4 @@
-"""Depth-two reference (E13): the frozen 250-case corpus covers root/leaf ties, all-terminal
-fallback, no current move, differing previews, and late winning roots.  Verifies that S2 uses
-leaf-board penalties exactly once, that the accelerated model agrees, and that the committed
-expectations are current."""
+"""Depth-two search, including ties, dead leaves, and late-winning roots."""
 import json
 from pathlib import Path
 

@@ -1,6 +1,4 @@
-"""DEPTH=2 core: all 250 frozen board/current/preview cases against the exhaustive reference,
-preview ID 7 as a defined error, reset during the inner search, and the derived cycle bound.
-Compiled with DEPTH=1 the same module checks preview independence (IDs 0-7)."""
+"""Depth-two search against the exhaustive reference; at depth one, the preview must be inert."""
 import json
 import os
 

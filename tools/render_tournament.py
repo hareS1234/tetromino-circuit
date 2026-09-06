@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Render up to four replays side by side (2x2) as an animated tournament GIF.
-
---sync pieces (default): frame n shows every policy after the same n pieces of the
-  common stream; a topped-out board is frozen and labelled.
---sync cycles: each board advances by its recorded cumulative simulated cycles;
-  every replay must carry per-move RTL cycle counts.
-
-Hardware numbers (LUT4/FF) come only from an implementation manifest row whose
-configuration exactly matches the replay metadata; otherwise "not measured".
-"""
+"""Render up to four replays together, synchronized by pieces or recorded RTL cycles."""
 from __future__ import annotations
 
 import argparse

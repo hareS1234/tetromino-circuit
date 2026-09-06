@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the geometry artifacts shared by Python and RTL.
-
-Outputs (deterministic; re-running must produce no diff):
-  tests/fixtures/shapes.json      orientations, widths, heights, bottoms, dense candidate lists
-  rtl/generated/shape_case.svh    case body for shape_rom.sv
-  rtl/generated/cand_case.svh     case body for cand_rom.sv (dense candidate index -> candidate_id)
-"""
+"""Regenerate the shared Python/RTL piece geometry; a second run should be a no-op."""
 from __future__ import annotations
 
 import json

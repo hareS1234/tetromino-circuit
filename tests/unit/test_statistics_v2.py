@@ -1,4 +1,4 @@
-"""U15: censoring-aware statistics (model/survival.py) on synthetic data with known answers."""
+"""Survival statistics on small cases where the answer fits on paper."""
 from fractions import Fraction
 
 import pytest

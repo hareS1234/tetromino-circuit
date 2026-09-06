@@ -1,7 +1,4 @@
-"""U14: the coefficient-quantization ladder P5-P7 — deterministic magnitudes, metadata, the committed
-divergence fixtures against the independent literal-descent reference, the integer stability
-certificate (soundness on the development corpus, synthetic failing bounds) and the analysis tool's
-summary schema.  P0-P4 stay untouched."""
+"""Quantized coefficients, their known divergences, and the integer stability bound."""
 import json
 import subprocess
 import sys
@@ -27,7 +24,7 @@ FIXTURE = json.loads((ROOT / "tests" / "fixtures" / "precision_v2_divergences.js
 CORPUS = [json.loads(l) for l in (ROOT / "benchmarks" / "states" / "corpus_d1.jsonl").read_text().splitlines() if l.strip()]
 
 
-# ---- profiles ------------------------------------------------------------------------------------------------
+# Profiles
 
 def test_quantized_magnitudes_are_generated_exactly_as_specified():
     assert quantize_magnitudes(4) == (15, 10, 7, 4)
@@ -87,7 +84,7 @@ def test_raw_scores_are_not_baseline_units():
     assert score_profile((200, 200, 180), 0, 5) == -4120 and score_profile((0, 0, 0), 4, 7) == 12
 
 
-# ---- fixtures against the independent reference -------------------------------------------------------------------
+# Known divergences, checked against the grid oracle
 
 def independent_candidates(rows, piece):
     """Literal set-of-cells descent (tests/reference_grid.py): (candidate_id, lines, A, Q, U) per legal candidate."""
@@ -136,7 +133,7 @@ def test_every_candidate_score_matches_the_independent_reference_for_each_quanti
                 assert row[f"E_p{p}"] == sum(abs(d) * f for d, f in zip(coefficient_perturbations(p), (lines, a, q, u)))
 
 
-# ---- certificate -----------------------------------------------------------------------------------------------------
+# Stability certificate
 
 def test_perturbations_and_error_bound():
     assert coefficient_perturbations(5) == (0, -5, -8, 34)

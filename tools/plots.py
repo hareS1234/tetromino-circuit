@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild every figure from committed result files (no simulation or synthesis here).
-
-  assets/plots/area_vs_cycles.png        exact designs: LUT4 vs median decision cycles, projected latency
-  assets/plots/precision_area_lines.png  P0-P4: LUT4 vs held-out mean lines (cap 2,000) with IQR
-  assets/plots/depth_quality_cost.png    D1 vs D2 on the 20-stream, cap-500 paired study
-  assets/plots/board_access.png          bitmap vs exact height cache: cycles, LUT4, FF
-  assets/plots/fmax_seeds.png            routed Fmax per configuration across route seeds
-  assets/plots/divergence_p1.png         candidate scores at the first exact-vs-powers_of_two divergence
-  assets/plots/stage_cycles.png          where A0 and A1 spend a candidate's cycles
-"""
+"""Rebuild the v1 figures from committed results—no simulation, no synthesis, no invented dots."""
 from __future__ import annotations
 
 import csv

@@ -1,5 +1,4 @@
-"""U04: the A2 specification triple — stage manifest, configuration identity, abstract cycle model —
-plus the packed-row-order confirmation against the existing ROM/fixture conventions."""
+"""Keep the A2 manifest, cycle model, and configuration contract in agreement."""
 import json
 import random
 from pathlib import Path
@@ -15,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = json.loads((ROOT / "architecture" / "a2_stages.json").read_text())
 
 
-# ---- packed row order (guide U04 step 2) ---------------------------------------------------------------
+# Packed row order
 
 def test_packed_row_order_matches_reference_and_rtl_convention():
     rows = [0] * 20
@@ -42,7 +41,7 @@ def test_shape_rom_conventions_used_by_the_spec():
         assert all(0 <= i < 40 for i in ids)
 
 
-# ---- stage manifest -------------------------------------------------------------------------------------
+# Stage manifest
 
 def test_manifest_has_23_contiguous_single_delay_banks():
     st = MANIFEST["stages"]
@@ -74,7 +73,7 @@ def test_manifest_groups_tile_the_pipeline():
     assert "stride 16" in MANIFEST["stages"][9]["name"] and "match" in MANIFEST["stages"][10]["operation"]
 
 
-# ---- configuration identity ---------------------------------------------------------------------------------
+# Configuration identity
 
 def test_a2_identity_and_neighbours_are_unsupported():
     """Since U10 the exact A2 configuration is verified; every neighbouring A2 combination stays unsupported."""
@@ -112,7 +111,7 @@ def test_tools_refuse_unsupported_a2_neighbours():
         assert r.returncode != 0 and "not supported" in r.stderr, argv
 
 
-# ---- abstract cycle contract ----------------------------------------------------------------------------------
+# Abstract cycle contract
 
 def test_token_model_latencies_and_ii():
     s = tm.stream(4096)

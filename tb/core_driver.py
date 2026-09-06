@@ -1,9 +1,4 @@
-"""cocotb driver for tetris_core's ready/valid protocol with an independent edge counter.
-
-Timing convention (manually stepped clock, see common.py): inputs are presented while the
-clock is low; ready/valid are read before the rising edge; registered outputs are sampled
-after the rising edge settles.
-"""
+"""Ready/valid driver for the core, with an edge counter independent of the RTL."""
 from __future__ import annotations
 
 from common import cycle, fall, pack, rise, signed32

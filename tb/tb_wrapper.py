@@ -1,6 +1,4 @@
-"""Streaming wrapper: eight-word requests / three-word responses with pauses between every
-word, reset mid-packet, back-to-back packets, and decoded responses compared with the direct
-core's decision (Python reference) and cycle count (native driver results when available)."""
+"""The 32-bit packet wrapper under pauses, reset, and back-to-back traffic."""
 import json
 import os
 

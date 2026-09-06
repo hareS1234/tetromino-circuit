@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Play a complete game with the RTL core as the decision engine.
-
-    python tools/play_rtl.py --arch 0 --driver native --seed 2000 --max-pieces 250 --out results/rtl_demo.jsonl
-    python tools/play_rtl.py --arch 0 --driver cocotb --seed 2000 --max-pieces 50 --out results/rtl_cocotb.jsonl
-
-Every move is checked against the Python reference (same decision, same landing, same
-post-clear board) before it is applied.  The simulator process persists for the whole game.
-"""
+"""Play through the persistent RTL core, checking every move against Python before applying it."""
 from __future__ import annotations
 
 import argparse

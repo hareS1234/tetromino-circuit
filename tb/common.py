@@ -1,6 +1,4 @@
-"""Shared cocotb helpers: manually stepped clock, reset, start/busy/done transactions, and
-access to the Python reference model.  Inputs are presented while the clock is low; registered
-results are sampled after the rising edge has settled."""
+"""Cocotb clock and transaction helpers. Sample inputs before the edge, outputs after it."""
 from __future__ import annotations
 
 import json

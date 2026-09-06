@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Static checks of the replay viewer and its bundled demo (U18: accessibility and trace validation).
-
-    python tools/check_viewer.py
-
-Checks: the viewer files exist and reference each other; every control has an accessible name (aria-label,
-title or visible label text); canvases carry role="img" with labels; live regions exist; the bundled demo
-embeds the committed trace byte-for-byte (sha256 attribute), its embedded JSON is valid a2-trace-v1 and
-its cycle count matches; app.js parses (node --check when Node is available); the GIFs exist and are
-GitHub-sized (< 5 MB); the render metadata points at traces that exist.
-"""
+"""Sanity-check the replay viewer, its accessibility hooks, and its embedded trace."""
 from __future__ import annotations
 
 import hashlib

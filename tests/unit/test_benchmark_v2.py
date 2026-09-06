@@ -1,6 +1,4 @@
-"""U15: v2 long-horizon benchmark machinery — disjoint stream splits with content hashes, summary mode
-identical to replay mode, checkpoints that resume only on an exact identity match, crashes recorded as
-failed jobs, the held-out guard and the freeze record."""
+"""Long-run streams, checkpoints, failure records, and held-out-data guards."""
 import gzip
 import json
 import subprocess
@@ -21,7 +19,7 @@ from tools import bench  # noqa: E402
 PROTO = ROOT / "benchmarks" / "config_v2.json"
 
 
-# ---- streams ----------------------------------------------------------------------------------------------------
+# Streams
 
 def test_v2_splits_are_disjoint_from_v1_and_streams_verify():
     v1 = {s for r in SPLITS.values() for s in r}
@@ -60,7 +58,7 @@ def test_tampered_stream_is_rejected(tmp_path):
         streams_v2.load_stream_v2(root, 10001)
 
 
-# ---- protocol ----------------------------------------------------------------------------------------------------
+# Protocol
 
 def test_protocol_v2_checks_and_workloads():
     proto = bench.load_protocol(PROTO)
@@ -84,7 +82,7 @@ def test_protocol_v2_checks_and_workloads():
     assert any("does not match split" in p for p in bench.check_protocol(bad))
 
 
-# ---- summary mode, checkpoints, resume ---------------------------------------------------------------------------
+# Summary mode, checkpoints, and resume
 
 @pytest.mark.parametrize("policy,precision,cap", [("heuristic", 0, 600), ("heuristic", 7, 1500), ("random_legal", 0, 300)])
 def test_summary_mode_matches_replay_mode(policy, precision, cap):
@@ -162,7 +160,7 @@ def test_checkpoint_resumes_only_on_exact_identity(tmp_path):
     assert done["resumed_from"] == 200 and load_checkpoint(ck, ident) is None
 
 
-# ---- runner: records, failures, guards ---------------------------------------------------------------------------------
+# Runner records, failures, and guards
 
 def test_run_suite_summary_mode_records_and_crash_is_a_failed_job(tmp_path, monkeypatch):
     proto = bench.load_protocol(PROTO)

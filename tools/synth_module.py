@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Micro-synthesis of one module (Yosys synth_ecp5) with inspection checks (U06+).
-
-    python tools/synth_module.py --top line_clear_pipe --files-f rtl/files_compactor_pipe.f \
-        --expect-no-latch --expect-no-dsp --expect-ff-min 500 --expect-lut-min 1000
-
-Writes build/synth_module/<top>/{synth.ys,yosys.log,summary.json} and prints CHECK lines.  With
---noflatten the per-module statistics are kept so live submodule logic is visible (e.g. that the
-selection network survives optimization).  Not keyed by identity: this is an inspection step, the
-measured release synthesis goes through tools/synth.py.
-"""
+"""Micro-synthesize a module for structural inspection, not for release measurements."""
 from __future__ import annotations
 
 import argparse

@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
-"""Generate docs/results.md from the committed result files (U19).  Nothing here creates results.
-
-    python tools/write_report_v2.py            # rewrite docs/results.md
-    python tools/write_report_v2.py --check    # exit 1 if the committed file is stale
-
-Sections: measurement definitions; the v2 hardware matrix (routes per configuration and clock target,
-seed-level fmax, worst-path categories, area, cycles and the 50 MHz projection where timing was met);
-lane replication; the quantization ladder (common-state sensitivity, scorer/core area); the v2 quality
-study (restricted means, lines, cap hits, survival medians, paired intervals); A2 verification counts
-(formal, mutations, traces); and the frozen v1 tables (delegated to tools/write_report.py inside the
-`results:start/end` markers).  Every table names the raw file it is derived from.
-"""
+"""Rebuild ``docs/results.md`` from committed records; nothing here runs an experiment."""
 from __future__ import annotations
 
 import argparse

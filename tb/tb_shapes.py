@@ -1,4 +1,4 @@
-"""Shape ROM: all 32 piece/rotation inputs, including unsupported rotations and piece 7."""
+"""All 32 shape-ROM addresses, bad rotations included."""
 import cocotb
 from cocotb.triggers import Timer
 

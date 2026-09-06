@@ -44,7 +44,7 @@ NATIVE_FLAGS = ["--cc", "--exe", "--build", "--assert", "-O2", "--x-assign fast"
 DEVICE_ECP5_85F = {"device": "LFE5U-85F", "flag": "--85k", "package": "CABGA381", "speed": "6"}
 
 
-# ---- canonical serialization -------------------------------------------------------------------
+# Canonical serialization
 
 def canonical(obj) -> bytes:
     """Sorted keys, no whitespace, ASCII escapes, no NaN: the same object always gives the same bytes."""
@@ -77,7 +77,7 @@ def read_files_f(path: Path) -> list[str]:
     return out
 
 
-# ---- HDL closure ------------------------------------------------------------------------------------
+# HDL closure
 
 def hdl_closure(files_f: str = "rtl/files.f", include_dir: str = "rtl", root: Path = ROOT) -> dict:
     """Ordered source list from the .f file plus every transitively `include`d file, each hashed."""
@@ -102,7 +102,7 @@ def hdl_closure(files_f: str = "rtl/files.f", include_dir: str = "rtl", root: Pa
             "closure": sorted(records, key=lambda r: r["path"])}
 
 
-# ---- tool identities ------------------------------------------------------------------------------
+# Tool identities
 
 @functools.lru_cache(maxsize=None)
 def _tool_identity_cached(exe: str, root_str: str) -> str:
@@ -148,7 +148,7 @@ def _with_key(doc: dict, name: str) -> dict:
     return doc
 
 
-# ---- identities ----------------------------------------------------------------------------------------
+# Build and result identities
 
 def synth_identity(cfg, top: str = "stream_wrapper", files_f: str = "rtl/files.f", dsp_policy: str = "default",
                    script_version: str = SYNTH_SCRIPT_VERSION, root: Path = ROOT, tools: dict | None = None) -> dict:
@@ -206,7 +206,7 @@ def quality_identity(protocol: dict, policy: dict, stream_sha256: str, cap: int,
     return _with_key(doc, "quality_key")
 
 
-# ---- closures used by evidence records ------------------------------------------------------------------
+# Closures used by evidence records
 
 def model_closure_sha256(root: Path = ROOT) -> str:
     root = Path(root)

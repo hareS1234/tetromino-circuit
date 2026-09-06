@@ -30,7 +30,7 @@ Two files describe the toolchain and they have different roles:
 | Linux-x86_64 | linux-x64 | `oss-cad-suite-linux-x64-20260904.tgz` | verified: `8fb2384c…de44` (imported unchanged from v1; results/host/Linux-x86_64.json) |
 | Linux-aarch64, Linux-arm64 | linux-arm64 | `oss-cad-suite-linux-arm64-20260904.tgz` | unenrolled |
 | Darwin-x86_64 (Intel Mac) | darwin-x64 | `oss-cad-suite-darwin-x64-20260904.tgz` | unenrolled |
-| Darwin-arm64 (Apple silicon) | darwin-arm64 | `oss-cad-suite-darwin-arm64-20260904.tgz` | unenrolled |
+| Darwin-arm64 (Apple silicon) | darwin-arm64 | `oss-cad-suite-darwin-arm64-20260904.tgz` | verified (enrolled on the maintainer's Mac, U20) |
 
 The family is chosen from the real `uname` output (override with `TETROMINO_PLATFORM` for tests
 only); owning a Mac does not decide between Intel and Apple silicon. A download is compared only
@@ -50,9 +50,9 @@ never used for another platform and hash checking is never disabled.
 3. Every later bootstrap on that family verifies against the committed hash.
 
 macOS: the bootstrap removes `com.apple.quarantine` from the archive only when the attribute is
-present, and if `yosys -V` fails to execute after extraction it prints the suite's documented
-remedy (`./activate` in the extracted location) rather than editing anything outside `.tools/`.
-Real-Mac execution is part of U20 and is `blocked` until run on a Mac.
+present. If `yosys -V` still fails, it prints the suite's `./activate` remedy instead of fiddling
+with anything outside `.tools/`. Enrollment and doctor now pass on the Apple-silicon Mac; U20 stays
+blocked until that committed lock is exercised from a clean clone and the demo is inspected.
 
 ## Checks
 

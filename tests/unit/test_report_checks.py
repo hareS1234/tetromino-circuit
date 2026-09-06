@@ -1,4 +1,4 @@
-"""U19: the report checkers reject numbers the sources do not produce, placeholders and broken links."""
+"""Reader-facing numbers and links have to resolve to something real."""
 from __future__ import annotations
 
 import json

@@ -1,16 +1,9 @@
 #!/usr/bin/env python3
-"""Generate candidate-pipeline test vectors from the Python oracle (U09).
+"""Write A2 candidate vectors from the literal-descent oracle.
 
-    python tools/a2_vectors.py --out build/a2_vectors/dev.txt --contexts 60 --seed 2024 [--invalid 6]
-
-Format (text, one record per line):
-    # a2-vectors-v1 seed=<seed> contexts=<n>
-    C <board hex, 200 bits> <heights hex, 50 bits> <piece>
-    T <rotation> <x> <candidate_id> <legal> <y> <score>
-Every T line belongs to the preceding C line.  Expected values come from the literal-descent
-oracle (model/game.py), independent locking, direct hole counting (model/features.py) and the
-exact score; illegal candidates (including invalid rotations and out-of-range x) expect
-legal = 0, y = 0, score = 0.  The native harness assigns tags and last flags itself.
+``C`` rows hold the 200-bit board, 50-bit heights, and piece. Their following ``T`` rows hold
+rotation, x, candidate id, legality, landing y, and score. The native harness adds tags and
+last-candidate flags.
 """
 from __future__ import annotations
 

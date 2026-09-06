@@ -1,7 +1,4 @@
-"""Candidate evaluator (A0 or A1) differential test: legal, landing y, merged board, cleared
-board, features, lines, and score compared in that order and stopped at the first mismatch.
-Hand fixtures, all candidates on 100 mixed boards (16,200 cases), invalid rotation/x, and the
-cycle guard."""
+"""A0/A1 candidate evaluator against the oracle, including intermediate values."""
 import cocotb
 
 from common import ROOT, cycle, load_fixtures, pack, pack_heights, param, reset, rows_of, run_transaction, signed32, unpack

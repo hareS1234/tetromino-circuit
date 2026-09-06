@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
-"""Measure the public request interval with two real acceptance edges (U10 step 6, guide §10.4).
+"""Measure request-to-request spacing from two actual acceptance edges.
 
-    python tools/request_interval.py --arch 2 --board-repr 1 [--count 200]
-
-For each pair of corpus states the second request is offered while the first is in flight and the
-first response is consumed on the edge it appears; interval_measured is the number of rising edges
-between the two acceptance edges.  It is compared with the inferred single-request interval
-(cycles + 2 for this core) and, for A2, with the specification R(N) = D(N) + 2 = N + 31.  Decision
-latency (cycles) is reported separately; candidate II = 1 is not a decision rate.
+Candidate II=1 is not the same thing as decision rate; this tool keeps those numbers separate.
 """
 from __future__ import annotations
 

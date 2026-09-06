@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
-"""Run a job's gate commands and record results/evidence/E##/summary.json.
+"""Run and record a v1 E-job gate.
 
-    python tools/gate.py E01 -- make gen -- make test-geometry
+Usage: ``python tools/gate.py E01 -- make gen -- make test-geometry``
 
-Each "--"-separated group is one command (run through scripts/env.sh from the
-repository root).  All commands run even if an earlier one fails; the job status
-is 'passed' only when every exit code is zero.  Test counts are read from any
-pytest/cocotb summary lines found in the captured output.  A gate with zero commands
-is rejected (status 'failed'): an empty command list is not evidence.  This is the
-v1 recorder kept for the E-jobs; upgrade jobs use tools/ugate.py.
+Each ``--`` starts a command. All commands run, and a pass needs commands, zero exit codes, and
+non-empty test counts. Upgrade jobs use ``tools/ugate.py``.
 """
 from __future__ import annotations
 

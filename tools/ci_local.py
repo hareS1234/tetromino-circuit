@@ -1,16 +1,8 @@
 #!/usr/bin/env python3
-"""Validate the GitHub workflow and run a job's shell steps locally (U03).
+"""Lint a workflow or replay its shell steps locally.
 
-    python tools/ci_local.py --validate            # structure, action refs, Make targets, expressions
-    python tools/ci_local.py --job fast            # run every `run:` step of the job here, in order
-    python tools/ci_local.py --job hdl --list      # show the steps without running them
-    python tools/ci_local.py --workflow release-check.yml --validate   # another workflow file (default ci.yml)
-
-Local execution follows the workflow file literally: composite-action steps are expanded, `uses:`
-steps that need the GitHub runtime (checkout, setup-python, cache, upload-artifact) are skipped and
-reported, `${{ inputs.* }}` expressions take the workflow_dispatch defaults (or the job's `with:`),
-and `$GITHUB_OUTPUT` is emulated.  A local pass is evidence that the commands work on this host;
-it is not a remote run (U03's remote gate stays blocked until a runner executes the workflow).
+GitHub-hosted actions are skipped, composite steps are expanded, and dispatch inputs use their
+defaults. A local pass is useful, but it is not a remote Actions run.
 """
 from __future__ import annotations
 

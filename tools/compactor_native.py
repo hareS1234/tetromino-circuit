@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Build and run the native compactor harness (U05 V02/V03; U06 stream mode).
-
-    python tools/compactor_native.py --mode exhaustive          # all 2^20 keep masks (line_clear_parallel)
-    python tools/compactor_native.py --mode random --count 20000 --seed 1
-    python tools/compactor_native.py --mode stream ...          # U06: line_clear_pipe streaming harness
-"""
+"""Run the native compactor exhaustively, randomly, or as a stalled stream."""
 from __future__ import annotations
 
 import argparse

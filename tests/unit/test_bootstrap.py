@@ -1,8 +1,4 @@
-"""U01: platform-specific bootstrap behaviour with mocked platforms and a fake suite archive.
-
-Cases: matching hash, wrong hash, unsupported platform, unenrolled platform (with and without
---enroll), missing compiler, interrupted download, already-installed suite, and the cocotb
-out-of-tree working-directory regression."""
+"""Exercise the platform bootstrap with tiny fake CAD-suite archives."""
 import hashlib
 import io
 import json

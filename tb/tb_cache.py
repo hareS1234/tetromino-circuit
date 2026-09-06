@@ -1,6 +1,4 @@
-"""BOARD_REPR=1: the exact height cache built inside the core must equal the Python column
-heights of every request board, be rebuilt for every request, and never be used for a
-post-clear candidate's scoring (checked through decision equality with the bitmap variant)."""
+"""The cached heights must match the request board and be rebuilt for each request."""
 import json
 
 import cocotb

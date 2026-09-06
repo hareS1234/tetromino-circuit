@@ -9,12 +9,7 @@ from pathlib import Path
 
 
 def parse_stat(text: str) -> dict:
-    """Return {'total': n, 'cells': {type: count}} from the last statistics table of a Yosys log.
-
-    Handles both the classic "Number of cells:" format and the Yosys 0.4x+ format
-    ("      13 cells" followed by indented "       4   CCU2C" lines).  When a
-    hierarchy is present the table for the top module including submodules is used.
-    """
+    """Read the last Yosys statistics table, preferring counts that include submodules."""
     cells = {}
     total = None
     idx = text.rfind("Printing statistics")

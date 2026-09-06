@@ -1,19 +1,5 @@
 #!/usr/bin/env python3
-"""Build a 2,000-state depth-one development/evaluation corpus with explicit seeds and output (U10/U16).
-
-    python tools/make_corpus_v2.py --out benchmarks/states/corpus_d1_upgrade_dev.jsonl --seed-base 11000
-    python tools/make_corpus_v2.py --out benchmarks/states/corpus_d1_policy_v2.jsonl --seed-base 40000
-
-Predeclared category quotas (guide §8.2): 600 P0-trajectory states, 600 random-policy trajectory
-states, 400 generated high-stack/overhang/hole boards (labelled potentially unreachable) and 400
-structured edge cases (walls, wells, blocked spawns, equal scores, last-candidate winners,
-no-move).  Trajectory and generator seeds are seed_base .. seed_base+99 (checked against the
-committed stream splits 1000-1049, 2000-2019, 3000-3099 and the v1 corpus seed 20260905).  States
-are deduplicated by (packed board, current piece); generation continues until every quota is met
-or fails with an explanation.  The v1 helpers of tools/make_corpus.py are reused unchanged; the
-v1 default files are never rewritten.  A sidecar <out>.meta.json records generator/source hashes
-and the category, legal/no-move and unique-state counts.
-"""
+"""Build a seeded, quota-balanced 2,000-state corpus without touching the v1 fixtures."""
 from __future__ import annotations
 
 import argparse

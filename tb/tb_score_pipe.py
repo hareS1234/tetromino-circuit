@@ -1,6 +1,4 @@
-"""U08: score pipeline P20-P22 behind its harness — every bound of A/Q/U/L, 10,000 random tuples
-inside the declared bounds, signed comparisons between negative scores, illegal tokens
-canonicalized to zero, and stability through stalls."""
+"""Score-pipeline arithmetic and metadata, with stalls and signed edge cases."""
 from collections import deque
 
 import cocotb

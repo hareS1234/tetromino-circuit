@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Check every relative link and image reference in the repository's Markdown files (U19 gate `make check-links`).
-
-    python tools/check_links.py [--all]
-
-Scans README.md, NOTICE.md, PROJECT_NOTES.md, PROJECT_NOTES.md and docs/**/*.md (results/evidence JSON is not Markdown).
-A link `[text](path#anchor)` or image `![alt](path)` must point at an existing file (relative to the
-document) and, when an anchor is present and the target is Markdown, at a heading whose GitHub slug
-matches.  External links (http/https/mailto) are listed but not fetched.  Bare paths in backticks are
-not links and are not checked.
-"""
+"""Catch broken local Markdown links, images, and heading anchors."""
 from __future__ import annotations
 
 import re

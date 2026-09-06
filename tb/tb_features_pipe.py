@@ -1,6 +1,4 @@
-"""U08 (V05): feature pipeline P13-P19 behind its harness against direct hole counting
-(model/features.py): empty, all 200 one-hot positions, top-bit rows, columns of height 20, holes,
-checkerboards, and 10,000 arbitrary boards; tags/last alignment through stalls and reset."""
+"""Feature-pipeline values and metadata through stalls, reset, and ugly board shapes."""
 from collections import deque
 
 import cocotb

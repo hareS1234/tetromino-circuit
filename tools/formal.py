@@ -1,19 +1,5 @@
 #!/usr/bin/env python3
-"""Run an SBY target from formal/ with the pinned suite and record its actual status.
-
-    python tools/formal.py smoke                 # formal/smoke/smoke.sby
-    python tools/formal.py compactor             # formal/compactor/compactor.sby
-    python tools/formal.py compactor_cover       # formal/compactor/compactor_cover.sby
-
-Status is taken from SBY's summary, never from the return code alone:
-  unbounded  - "successful proof by k-induction" (prove mode)
-  bounded    - basecase passed to the configured depth but induction did not close (prove mode)
-  covered    - every cover statement reached (cover mode)
-  fail       - a counterexample exists (its trace path is recorded)
-  timeout    - SBY reported TIMEOUT
-Results go to results/formal/<target>.json with the summary lines and the log path; the SBY work
-directory is build/formal/<target>/ (proof logs and counterexample traces are preserved there).
-"""
+"""Run one SBY target and classify the proof from its summary, not just its exit code."""
 from __future__ import annotations
 
 import argparse

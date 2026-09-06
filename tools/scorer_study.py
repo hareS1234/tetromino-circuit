@@ -1,18 +1,5 @@
 #!/usr/bin/env python3
-"""Scorer-mapping study for the numerical profiles (U14, guide §9.3 last paragraph).
-
-    python tools/scorer_study.py                       # P0-P7 scorer microbenchmarks + A1/cache cores P0, P5-P7
-    python tools/scorer_study.py --cores 0,1,2,3,4,5,6,7
-
-Two separately reported measurements, never mixed:
-  * registered scorer microbenchmarks: `score` alone (rtl/files_score.f) per PRECISION, Yosys synth_ecp5
-    -nodsp, all 33 output bits (valid_o, score_o[31:0]) are top-level ports and therefore observed; the
-    P0 constant-multiply form (USE_MULT=1, DSP policy default) is included as the DSP reference;
-  * complete A1/cache/depth-one/one-lane cores (stream_wrapper, identity-keyed synth records via
-    tools/synth.py, -nodsp) per profile, LUT4/FF/CCU2C/DSP and the delta against P0.
-Scorer-only savings must not be read as full-core savings; the core numbers are the full-core numbers.
-Writes results/v2/precision/scorer_study.json (schema scorer-study-v1).
-"""
+"""Measure tiny scorers and complete A1 cores separately so their savings cannot be confused."""
 from __future__ import annotations
 
 import argparse

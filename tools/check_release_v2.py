@@ -1,30 +1,9 @@
 #!/usr/bin/env python3
-"""v2 release validator (U20 gate `make check-release-v2`): validates evidence and artifacts, creates nothing.
+"""Audit the v2 release manifest without manufacturing missing evidence.
 
-    python tools/check_release_v2.py                      # full validation against benchmarks/release_v2.json
-    python tools/check_release_v2.py --no-subchecks       # manifest/evidence/platform checks only (fast; tests)
-    python tools/check_release_v2.py --json build/release_v2_check.json
-
-The release manifest (schema release-manifest-v2) declares the exact scope of the release: the frozen
-inputs with their sha256, every artifact that must exist, the evidence records U00–U20 with the status
-each must carry, the expensive measurements whose recorded identities must correspond to the live
-sources, and the platform table (executed / blocked).  This validator
-
-  * never creates or repairs a measurement; a missing record is a problem, not a job to run;
-  * treats a *blocked* platform or gate as unsatisfied: the release is `not releasable` while any
-    blocked item remains, and the release tag must not exist while that is the case;
-  * requires each evidence record to carry real commands with exit code 0 and nonzero check counts
-    (an empty gate or a row-count-only gate is rejected by tools/ugate.py already; re-checked here);
-  * relates every expensive measurement to the live source through its *identity* (route keys and
-    native keys recomputed from the checked-out RTL, model closure for the quality study, manifest
-    hashes for the protocols) rather than through timestamps or a bare RTL hash;
-  * re-runs the exact-membership validators (v1 release, hardware matrix, quality study, traces,
-    viewer, report, links, claims) as sub-checks and reports their CHECK lines.
-
-Exit 0 only when no problem was found *and* no gate is blocked; exit 1 otherwise.  A blocked-only
-outcome is printed as `check-release-v2: NOT RELEASABLE (blocked: ...)` so it cannot be mistaken for
-a pass.  `--expect-blocked` (used only by the U20 evidence gate) returns 0 for exactly that blocked-only
-outcome so the local evidence can be recorded with status `blocked`; it is not a release decision.
+The checker re-plans expensive identities, verifies U00–U20 records, and runs the exact-membership
+subchecks. A blocked gate is still unsatisfied. ``--expect-blocked`` exists only for recording the
+honest U20 local result; it is not a back door to a release verdict.
 """
 from __future__ import annotations
 
@@ -57,7 +36,7 @@ def load_manifest(root: Path, rel: str = "benchmarks/release_v2.json") -> dict:
     return doc
 
 
-# ---- pure checks (no subprocesses; exercised by tests on temporary trees) --------------------------------
+# Pure checks (no subprocesses; unit tests use temporary trees)
 
 def check_frozen_inputs(root: Path, m: dict) -> list[str]:
     problems = []
@@ -199,7 +178,7 @@ def check_tag(root: Path, m: dict, blocked: list[str], problems_so_far: list[str
     return []
 
 
-# ---- identity checks against the live sources -------------------------------------------------------------
+# Identity checks against live sources
 
 def check_identities(root: Path, m: dict) -> list[str]:
     problems = []
@@ -270,7 +249,7 @@ def check_identities(root: Path, m: dict) -> list[str]:
     return problems + [f"note: {n}" for n in notes]
 
 
-# ---- sub-checks (the exact-membership validators) -----------------------------------------------------------
+# Exact-membership subchecks
 
 SUBCHECKS = [
     ("v1_release", [sys.executable, "tools/check_release.py"]),

@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Differential core tests on the committed corpus for one configuration.
-
-    python tools/test_core.py --arch 0 --count 50 --driver cocotb|native|both
-
-cocotb: runs tb/tb_core.py inside the simulator.  native: drives the persistent C++ harness.
-both: runs both and requires every response field and cycle count to agree.  Depth-two
-configurations use the depth-two corpus and the depth-two reference.  Per-decision rows are
-written to build/decisions/<config>_<driver>_<count>.csv (manual Section 7 columns) unless --out
-names a path; the frozen v1 corpora live in results/decisions/ and are not rewritten.
-"""
+"""Differential-test one core configuration with cocotb, the native driver, or both."""
 from __future__ import annotations
 
 import argparse

@@ -1,6 +1,4 @@
-"""U02: matrix runner v2 on a fake route function — resume by complete identity, documentation
-edits versus RTL edits, deliberate retries as distinct attempts, the runner lock, heartbeat and
-status, and the derived summary."""
+"""Matrix-runner resume, retry, locking, and heartbeat behavior with a fake router."""
 import hashlib
 import json
 import os

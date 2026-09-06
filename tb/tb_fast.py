@@ -1,6 +1,4 @@
-"""A1 datapath modules vs the oracle: column transpose, heights (0,15,16,19,20 and one-hot
-boards), hole masks and counts, closed-form landing on the full candidate corpus including the
-high-overhang regression, one-cycle mask merge, and two-stage parallel features."""
+"""A1's parallel datapath blocks against the slower, literal oracle."""
 import cocotb
 from cocotb.triggers import Timer
 

@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Render a replay JSONL to an animated GIF (and optionally the final frame as PNG).
-
-Layout: 240x480 board (24 px cells, screen row = 19 - y) plus a 280 px sidebar.
-Each move produces one frame showing the board before the move with the landed
-piece highlighted, so line clears are visible on the following frame.
-"""
+"""Turn a replay into a GIF, showing each landed piece just before its clear takes effect."""
 from __future__ import annotations
 
 import argparse

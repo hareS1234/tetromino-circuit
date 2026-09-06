@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
-"""Record the two U20 items that had to be executed by the maintainer (docs/release_v2.md, "Executing the blocked items").
+"""Bookkeeping for the two U20 checks that have to happen outside the dev container.
 
-    python3 scripts/release_unblock.py verify-lock      # after `bash scripts/bootstrap.sh --enroll` on the Mac: mark darwin-arm64 verified
-    python3 scripts/release_unblock.py ci-record URL SHA # write results/evidence/U20/remote_ci.json for a successful `checks` run
-    python3 scripts/release_unblock.py mark-executed     # flip the two platform rows + gates to executed once both records exist
-    python3 scripts/release_unblock.py status            # show what is still blocked
+Usage::
 
-Standard library only (runs with the system python3, before any venv exists).  Each command refuses to
-proceed when its precondition is missing, and edits only the release manifest, the lock status, and the
-two documents that state the platform status.  It never creates or modifies a measurement.
+    python3 scripts/release_unblock.py verify-lock
+    python3 scripts/release_unblock.py ci-record URL SHA
+    python3 scripts/release_unblock.py mark-executed
+    python3 scripts/release_unblock.py status
+
+The helper never runs a measurement. ``ci-record`` also does not query GitHub; it records a run that the
+maintainer has already inspected. See docs/release_v2.md before marking either gate executed.
 """
 from __future__ import annotations
 
 import json
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -47,11 +49,11 @@ def verify_lock() -> int:
 
 
 def ci_record(url: str, sha: str) -> int:
-    if not url.startswith("https://github.com/") or "/actions/runs/" not in url:
+    if not re.fullmatch(r"https://github\.com/[^/]+/[^/]+/actions/runs/[0-9]+(?:/[^ ]*)?", url):
         print("URL must be the GitHub Actions run page, e.g. https://github.com/<owner>/<repo>/actions/runs/<id>")
         return 1
-    if len(sha) < 7:
-        print("SHA must be the commit the run checked out (at least 7 hex characters)")
+    if not re.fullmatch(r"[0-9a-fA-F]{7,40}", sha):
+        print("SHA must be 7–40 hexadecimal characters from the commit the run checked out")
         return 1
     out = ROOT / EVIDENCE["remote-ci"]
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -68,6 +70,12 @@ def mark_executed() -> int:
         return 1
     ci = load(ROOT / EVIDENCE["remote-ci"])
     mac = load(ROOT / EVIDENCE["darwin-arm64"])
+    if (ci.get("schema") != "remote-ci-run-v1" or not ci.get("ok") or
+            ci.get("conclusion") != "success" or set(ci.get("jobs", [])) != {"fast", "hdl"} or
+            not re.fullmatch(r"https://github\.com/[^/]+/[^/]+/actions/runs/[0-9]+(?:/[^ ]*)?", ci.get("url", "")) or
+            not re.fullmatch(r"[0-9a-fA-F]{7,40}", ci.get("sha", ""))):
+        print("the remote CI record is not a successful fast+hdl run — inspect GitHub and record it again")
+        return 1
     if not mac.get("ok") or mac.get("family") != "darwin-arm64":
         print("the Mac fresh-clone record does not show every step passing (ok != true) — fix and re-run scripts/fresh_clone_check.sh")
         return 1
@@ -96,13 +104,41 @@ def mark_executed() -> int:
                         f"`fast` and `hdl` tiers passed at `{ci['sha'][:12]}` ({ci['url']}) | `{EVIDENCE['remote-ci']}` |")
         if ln.startswith("| The maintainer's actual demo machine and remote CI have passed their stated checks |"):
             lines[i] = "| The maintainer's actual demo machine and remote CI have passed their stated checks | satisfied (see the platform table) | `results/evidence/U20/` |"
+        if ln == "## Finishing the two blocked items":
+            lines[i] = "## How the two external checks were recorded"
     d.write_text("\n".join(lines) + "\n")
     u = ROOT / "docs" / "upgrade_progress.md"
-    t = u.read_text()
-    t = t.replace("| U20 Mac + remote release | **blocked** (darwin-arm64 Mac reproduction and remote-ci run not executed) — local gates passed |",
-                  f"| U20 Mac + remote release | passed (darwin-arm64 reproduction executed on the maintainer's Mac; remote-ci run `{ci['sha'][:12]}` recorded) |", 1)
-    u.write_text(t)
-    print("marked executed: benchmarks/release_v2.json, docs/release_v2.md, docs/upgrade_progress.md — commit, push, then dispatch the "
+    lines = u.read_text().splitlines()
+    for i, line in enumerate(lines):
+        if line.startswith("| U20 Mac + remote release |"):
+            lines[i] = ("| U20 Mac + remote release | passed "
+                        f"(darwin-arm64 reproduction executed; remote-ci run `{ci['sha'][:12]}` recorded) |")
+            break
+    else:
+        print("cannot find the U20 progress row")
+        return 1
+    current = lines.index("## Current")
+    lines = lines[:current + 1] + [
+        "",
+        "* U20 is recorded as passed: the darwin-arm64 clean clone and the pinned remote `fast`/`hdl` run both have evidence.",
+        f"* Remote run: `{ci['sha']}` ({ci['url']}).",
+        "* Next: commit and push this bookkeeping, wait for the ordinary checks on that commit, then dispatch the Linux",
+        "  `release-check`. Only its `OK — releasable` verdict permits the `v2.0-a2` tag.",
+    ]
+    u.write_text("\n".join(lines) + "\n")
+
+    c = ROOT / "docs" / "ci.md"
+    before, marker, _ = c.read_text().partition("## Remote status\n")
+    if not marker:
+        print("cannot find the CI remote-status section")
+        return 1
+    c.write_text(before + "## Remote status\n\n" +
+                 f"The pinned `fast` and `hdl` jobs passed at [`{ci['sha'][:12]}`]({ci['url']}). "
+                 "The original U03 blocked record remains historical; U20 carries the live remote-run evidence.\n\n"
+                 "The separate `.github/workflows/release-check.yml` runs the full release validator on linux-x64. "
+                 "That platform choice matters because the published route identities include Linux tool version strings. "
+                 "Its full-history checkout is intentional too: the v1 validator checks tags.\n")
+    print("marked executed: benchmarks/release_v2.json and the release/progress/CI docs — commit, push, then dispatch the "
           "release-check workflow; tag v2.0-a2 only after it prints 'OK — releasable'")
     return 0
 

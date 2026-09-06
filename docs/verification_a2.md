@@ -1,9 +1,9 @@
 # A2 verification matrix (U11)
 
-Each property of docs/design_a2.md maps to a test, proof or log. Counts are per check; several
-checks reuse the same inputs (the 1,000-state v1 corpus feeds V11, V13 and the request-interval
-measurement, the 250 mixed boards feed V04 twice) and are not independent unique states. Logs:
-`results/evidence/U05`–`U11/cmd*.log`; formal results: `results/formal/*.json`; mutations:
+This is the cross-reference between A2 promises and the thing that actually checks each promise.
+Counts are per check, not a boast about unique inputs: the 1,000-state v1 corpus feeds V11, V13,
+and the interval run, while V04 sees the same 250 mixed boards twice. Command logs live under
+`results/evidence/U05`–`U11`, formal records under `results/formal/`, and mutation results in
 `results/evidence/U11/mutations.json`.
 
 | ID | Property | Evidence | Where |

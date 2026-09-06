@@ -1,13 +1,5 @@
 #!/usr/bin/env python3
-"""Build and run a cocotb test module against a SystemVerilog top with Verilator.
-
-    python tools/run_rtl.py --top counter --test tb_counter --source rtl/learning/counter.sv
-    python tools/run_rtl.py --top tetris_core --test tb_core --files-f rtl/files.f --param ARCH=1
-
-Every distinct (top, parameters) pair gets its own build directory under build/.
-The test result XML is checked; zero collected tests or any failure exits nonzero.
-Extra key=value pairs passed with --env are exported to the simulator process.
-"""
+"""Run one cocotb module against a parameterized Verilator build and inspect its result XML."""
 from __future__ import annotations
 
 import argparse

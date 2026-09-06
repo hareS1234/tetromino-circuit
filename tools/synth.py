@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
-"""Yosys synth_ecp5 of a top module for one configuration, keyed by its complete synthesis identity.
-
-    python tools/synth.py --top stream_wrapper --arch 1 --board-repr 1
-    python tools/synth.py --top stream_wrapper --arch 1 --board-repr 1 --dsp-policy nodsp
-
-Output goes to build/synth/<synth_key>/ (synth_key from tools/identity.py: ordered rtl/files.f
-closure with generated includes, top, parameters, Yosys identity, DSP policy, script version).
-A directory whose summary.json carries the same synth_key and whose netlist.json still hashes to
-the recorded value is reused; nothing is keyed by mtimes.  --out creates a convenience symlink.
-Parameters are applied with `hierarchy -chparam` on the top and must be forwarded explicitly
-down the hierarchy by the RTL.
-"""
+"""Synthesize one ECP5 configuration and reuse it only when the full key and netlist hash agree."""
 from __future__ import annotations
 
 import argparse

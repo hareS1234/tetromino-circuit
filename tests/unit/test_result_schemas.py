@@ -1,9 +1,4 @@
-"""U02: result records, status classification, single-identity summaries, gates and release membership.
-
-Parser fixtures (tests/fixtures/pnr_logs) are trimmed real nextpnr-ecp5 logs: a routed pass, a
-routed timing failure (return code 1 with the report still written), a run killed before routing
-completed (placement-stage frequency line only), a completed log without a clock, and a log that
-ends at 'Routing complete.'."""
+"""Result schemas and the grimier corners of nextpnr status parsing."""
 import csv
 import json
 import os
@@ -27,7 +22,7 @@ def report(name):
     return pnr.parse_report(FIX / f"{name}_report.json")
 
 
-# ---- parser and classification -----------------------------------------------------------------------
+# Parser and status classification
 
 def test_success_log_and_report_agree():
     p = parsed("success")
@@ -85,7 +80,7 @@ def test_parse_report_handles_absent_or_invalid_files(tmp_path):
     assert report("success")["clocks"]["$glbnet$clk$TRELLIS_IO_IN"]["constraint_mhz"] == 50
 
 
-# ---- record schema and derived CSV ---------------------------------------------------------------------------
+# Records and derived CSV
 
 def fake_record(status="routed_timing_met", seed=1, attempt=1, fmax=66.49):
     return {"schema": "route-record-v2", "route_key": f"k{seed}{attempt}" * 8, "synth_key": "s" * 64, "analysis_key": "a" * 64,
@@ -131,7 +126,7 @@ def test_expand_jobs_is_deterministic_and_duplicate_free():
     assert jobs[-1]["configuration"] == "a1-cache-d1-p1-l1"
 
 
-# ---- summaries ---------------------------------------------------------------------------------------------------
+# Summaries
 
 SUITE = {"policies": [{"policy": "heuristic", "depth": 1, "precision": 0}, {"policy": "heuristic", "depth": 1, "precision": 1}],
          "streams": {"split": "test", "seeds": [3000, 3003]}, "cap": 100, "baseline": {"policy": "heuristic", "depth": 1, "precision": 0}}
@@ -199,7 +194,7 @@ def test_frozen_v1_results_validate_exactly():
                                                             "route_jobs": (45, 45), "decision_files": (9, 9), "v1_evidence": (20, 20)}
 
 
-# ---- release membership on a fake results tree ------------------------------------------------------------------------
+# Release membership on a fake result tree
 
 def fake_tree(tmp_path: Path) -> Path:
     root = tmp_path
@@ -283,7 +278,7 @@ def test_release_membership_rejects_missing_duplicate_foreign_and_empty_evidence
     assert any("E05: passed with zero commands" in p for p in problems)
 
 
-# ---- gate recorders ---------------------------------------------------------------------------------------------------------
+# Gate recorders
 
 def run_recorder(tool, tmp_path, *args):
     env = {**os.environ, "TETROMINO_EVIDENCE_DIR": str(tmp_path)}

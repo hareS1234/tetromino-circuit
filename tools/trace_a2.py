@@ -1,24 +1,8 @@
 #!/usr/bin/env python3
-"""Export cycle-by-cycle A2 traces from the real RTL (U18, guide §12.2; schema a2-trace-v1).
+"""Export the three cycle-by-cycle A2 stories from Verilated RTL.
 
-    python tools/trace_a2.py                         # the three stories into results/traces/
-    python tools/trace_a2.py --story normal-search   # one story
-
-Stories (fixtures are chosen by a declared development search over benchmarks/states/corpus_d1.jsonl
-in id order and the choice is recorded in the trace header; they are demonstrations, not held-out
-samples):
-  normal-search        production core (tetris_core, a2-cache-d1-p0-l1): the first state with a 34-candidate
-                       piece, at least one line-clearing candidate and at least three running-best updates
-  last-candidate-wins  production core: the first `last_candidate_winner` state whose winner is the final
-                       dense candidate (final reduction correctness)
-  stall-reset          verification scenario on the standalone candidate_pipe harness: occupied stages, a
-                       blocked output (m_ready low) and a reset flush — labelled as such; the production
-                       search never blocks m_ready
-Per-cycle records come from the Verilated model built with --public-flat-rw (bank valid/tag arrays,
-handshakes, best registers, compactor keep/rank/board samples); candidate payloads (boards, keep
-bits, inclusive ranks, cleared board, features, scores) are computed once per candidate by the
-literal-descent reference and linked by request/tag.  tools/check_trace.py validates the two views
-against each other and against the public response.
+The normal and last-winner stories use the production core. The stall/reset story is clearly marked
+as a standalone verification setup because production never blocks its candidate output.
 """
 from __future__ import annotations
 

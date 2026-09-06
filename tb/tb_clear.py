@@ -1,5 +1,4 @@
-"""Row compactor: 0-4 and 20 full rows, adjacent and non-adjacent, top/bottom rows, order
-preservation, random boards, reset."""
+"""Serial row compaction, with awkward full-row patterns and reset."""
 import cocotb
 
 from common import cycle, pack, reset, rng, run_transaction, unpack

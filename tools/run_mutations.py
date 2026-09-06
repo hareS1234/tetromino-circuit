@@ -1,16 +1,8 @@
 #!/usr/bin/env python3
-"""Deliberate mutation checks (guide §8.4, U11).
+"""Make one deliberate RTL mistake at a time and check that the right test notices.
 
-    python tools/run_mutations.py [--set tests/mutations/a2_mutations.json] [--only name,...]
-
-For each mutation: the edits are applied to the production file (each `old` must occur exactly
-once), the named test runs through scripts/env.sh, the file is restored (always, also on errors),
-and the outcome is classified:
-  killed      the test exited nonzero AND its output matches the kill signature (a behavioural failure)
-  tool_error  the test exited nonzero without the signature (compile/elaboration/runner error: not a kill)
-  survived    the test passed with the mutation in place
-The record results/evidence/U11/mutations.json keeps, per mutation, the first matching output line.
-A clean-tree check runs the working tree's git status before and after.
+A failing compiler is a tool error, not a killed mutation. Production files are restored even when
+a run goes sideways.
 """
 from __future__ import annotations
 

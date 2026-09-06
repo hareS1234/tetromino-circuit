@@ -1,8 +1,4 @@
-"""U02: complete job identities (guide §10.2).
-
-Canonical serialization, transitive HDL closure, and the invalidation matrix: every input that
-determines a result changes its key, a documentation-only edit changes nothing, and a parser
-change re-analyses instead of re-routing."""
+"""Job-key invalidation tests. Change an input, and only the right key should move."""
 import json
 from pathlib import Path
 
@@ -38,7 +34,7 @@ def synth(root, **kw):
     return ident.synth_identity(**args)
 
 
-# ---- canonical serialization -------------------------------------------------------------------
+# Canonical bytes
 
 def test_canonical_is_order_independent_and_compact():
     a = {"b": [1, 2, {"z": 1, "a": 2}], "a": "é", "c": 1.5}
@@ -57,7 +53,7 @@ def test_file_record_uses_relative_path_length_and_bytes(fake_root):
     assert rec == {"path": "rtl/params.svh", "bytes": 13, "sha256": ident.sha256_bytes(b"`define W 10\n")}
 
 
-# ---- closure ----------------------------------------------------------------------------------------
+# HDL closure
 
 def test_closure_follows_includes_and_keeps_order(fake_root):
     c = ident.hdl_closure("rtl/files.f", root=fake_root)
@@ -72,7 +68,7 @@ def test_real_repository_closure_includes_generated_headers():
     assert set(c["ordered"]) <= paths and len(c["closure"]) > len(c["ordered"])
 
 
-# ---- synth invalidation matrix ------------------------------------------------------------------------
+# Synthesis keys
 
 def test_synth_key_is_deterministic(fake_root):
     assert synth(fake_root)["synth_key"] == synth(fake_root)["synth_key"]
@@ -110,7 +106,7 @@ def test_tool_params_policy_script_change_synth_key(fake_root):
         synth(fake_root, dsp_policy="maybe")
 
 
-# ---- route / analysis ------------------------------------------------------------------------------------
+# Route and analysis keys
 
 def route(**kw):
     args = dict(synth_key="s" * 64, netlist_sha256="n" * 64, freq_mhz=50, seed=1, timeout_s=600, tools=TOOLS)
@@ -141,7 +137,7 @@ def test_parser_version_changes_analysis_not_route():
     assert a1["analysis_key"] != a2["analysis_key"]
 
 
-# ---- native --------------------------------------------------------------------------------------------------
+# Native simulation keys
 
 def test_native_key_covers_sources_driver_and_flags(fake_root):
     base = ident.native_identity(PARAMS, root=fake_root, tools=TOOLS)["native_key"]
@@ -155,7 +151,7 @@ def test_native_key_covers_sources_driver_and_flags(fake_root):
     assert ident.native_identity(PARAMS, root=fake_root, tools=TOOLS)["native_key"] != base
 
 
-# ---- quality ---------------------------------------------------------------------------------------------------
+# Quality-run keys
 
 def quality(**kw):
     args = dict(protocol={"name": "quality-v2-bag50k", "cap": 50000}, policy={"policy": "heuristic", "depth": 1, "precision": 0},
@@ -178,7 +174,7 @@ def test_quality_runtime_is_part_of_identity():
     assert quality(runtime={"python": "3.12.3"})["quality_key"] != quality()["quality_key"]
 
 
-# ---- repository-level ---------------------------------------------------------------------------------------------
+# Whole-repository closure
 
 def test_real_synth_identity_matches_documented_layout():
     doc = ident.synth_identity("a1-cache-d1-p0-l1", tools=TOOLS)

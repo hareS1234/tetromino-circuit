@@ -1,21 +1,9 @@
 #!/usr/bin/env python3
-"""Hardware matrix runner v2: identity-keyed synthesis, routing and decision corpora from a manifest.
+"""Plan, resume, and summarise the identity-keyed v2 hardware matrix.
 
-    python tools/measure_matrix.py plan   --manifest benchmarks/smoke_v2.json     # dry run: jobs, keys, reuse
-    python tools/measure_matrix.py run    --manifest benchmarks/smoke_v2.json     # run/resume
-    python tools/measure_matrix.py status                                         # lock, heartbeat, progress
-    python tools/measure_matrix.py run --manifest ... --only a0-bitmap-d1-p0-l1:50:1 --retry "reason"
-    python tools/measure_matrix.py decisions --config a1-cache-d1-p5-l1 --count 1000   # one decision record
-
-Manifest (schema hardware-matrix-v2): configurations x targets_mhz x seeds plus extra_jobs,
-one dsp_policy, top, route_timeout_s (optionally per-configuration route_timeout_overrides) and an
-optional decisions block.  Each route is keyed by its
-full route_key (tools/identity.py); a job whose latest record exists under that key is reused
-whatever its status (success or failure), and an intentional retry adds a distinct attempt with a
-reason.  Records are one atomic JSON per job under results/v2/raw/routes/; aggregate CSVs are
-derived from them (sorted by complete key) into results/v2/summary/.  A runner lock prevents two
-orchestrators on the same machine; a heartbeat is printed and written at most 60 s apart.
-The frozen v1 matrix (benchmarks/config.json, results/implementation.csv) is never touched.
+Completed outcomes are reused by full route key, including honest timing failures and timeouts.
+Retries need a reason and become separate attempts. A lock keeps two local runners from colliding;
+the v1 matrix is strictly off-limits.
 """
 from __future__ import annotations
 
@@ -55,7 +43,7 @@ def now_utc() -> str:
     return dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-# ---- manifest ---------------------------------------------------------------------------------------------
+# Manifest
 
 def load_manifest(path: Path) -> dict:
     doc = json.loads(path.read_text())
@@ -98,7 +86,7 @@ def job_timeout(m: dict, cid: str) -> int:
     return int(m.get("route_timeout_overrides", {}).get(cid, m["route_timeout_s"]))
 
 
-# ---- lock / heartbeat --------------------------------------------------------------------------------------
+# Runner lock and heartbeat
 
 def pid_alive(pid: int) -> bool:
     try:
@@ -140,7 +128,7 @@ def write_heartbeat(state: dict) -> None:
     tmp.replace(HEARTBEAT)
 
 
-# ---- summaries ---------------------------------------------------------------------------------------------
+# Summaries
 
 def route_row(rec: dict) -> dict:
     wp = (rec.get("timing") or {}).get("worst_path") or {}
@@ -157,11 +145,7 @@ def route_row(rec: dict) -> dict:
 
 
 def derive_route_csv(records: list[dict], path: Path, current_keys: dict | None = None) -> None:
-    """Deterministic derived artifact: every attempt of every record, sorted by complete key.
-
-    `current` is True when the record's route_key is the identity the current source/toolchain
-    resolves to for that job, False when it belongs to another identity (older source, other
-    toolchain), and empty when the job was not resolved in this invocation."""
+    """Write every route attempt, marking which key belongs to the current source and toolchain."""
     rows = []
     for r in records:
         row = route_row(r)
@@ -211,7 +195,7 @@ def eta_range(done: list[dict], remaining: list[dict]) -> dict | None:
     return {"low_s": round(lo), "high_s": round(hi), "comparable_jobs": len(done)}
 
 
-# ---- decisions -----------------------------------------------------------------------------------------------
+# Decision corpora
 
 def corpus_hash(depth: int, count: int) -> str:
     path = ROOT / "benchmarks" / "states" / ("corpus_d2.jsonl" if depth == 2 else "corpus_d1.jsonl")
@@ -251,7 +235,7 @@ def run_decisions(cid: str, count: int, force: bool = False) -> dict:
     return meta
 
 
-# ---- commands ----------------------------------------------------------------------------------------------------
+# Commands
 
 def plan(m: dict, only: set[str] | None, retry: str | None, do_synth: bool = True) -> list[dict]:
     """Resolve each job's identity (synthesis reused or run) and whether a record already exists."""

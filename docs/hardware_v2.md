@@ -1,10 +1,10 @@
 # v2 hardware matrix: serial reuse, replication and pipelining across clock constraints (U17)
 
-The release matrix is `benchmarks/hardware_v2.json` (schema `hardware-matrix-v2`), executed by
-`make measure-v2 MODE=run` (one sequential runner, resumable by full route identity, heartbeat
-≤ 60 s) and accounted for by `make check-hardware-v2`. The generated tables are in
-[`docs/results.md`](results.md) §1; the figures in `results/v2/figures/` carry per-point job keys
-(`*.points.json`). This document records the protocol, the outcomes and the worst-path categories.
+The manifest in `benchmarks/hardware_v2.json` is the shopping list; `make measure-v2 MODE=run` is
+the patient sequential runner; `make check-hardware-v2` makes sure nothing fell out of the cart.
+Runs resume only by full identity and leave a heartbeat at least once a minute. Generated tables
+live in [`docs/results.md`](results.md) §1, while every plotted point carries its job key in a
+neighbouring `*.points.json` file.
 
 ## 1. Protocol
 

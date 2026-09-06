@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""Play one game with a software policy and write a replay JSONL.
-
-    python tools/play.py --backend python --policy heuristic --seed 2000 --max-pieces 250 --out results/python_demo.jsonl
-"""
+"""Play one software-policy game and leave a JSONL replay."""
 from __future__ import annotations
 
 import argparse

@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""U00 baseline inventory: recount saved v1 results from their files, record identities, and
-report archive/live-checkout differences.  Writes results/evidence/U00/inventory.json and
-exits nonzero if the recount is internally inconsistent."""
+"""Recount the archived v1 results and note any live-checkout differences."""
 from __future__ import annotations
 
 import collections

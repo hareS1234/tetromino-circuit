@@ -1,8 +1,4 @@
-"""Three-way differential: set-of-cells oracle vs literal bitmap descent vs closed-form fast model.
-
-250 mixed boards x 162 geometric candidates = 40,500 cases.  The J high-overhang
-regression and the retired-rule disagreement counts are asserted explicitly.
-"""
+"""Grid, literal bitmap, and fast closed-form placement must agree."""
 import sys
 from pathlib import Path
 

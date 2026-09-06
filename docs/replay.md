@@ -1,84 +1,86 @@
-# Architecture replay: cycle-by-cycle traces of the A2 pipeline (U18)
+# Watching A2 think, one clock at a time (U18)
 
-The replay makes the pipeline visible before anyone opens the RTL. Everything it shows comes from
-the Verilated RTL itself — bank occupancy, tags, handshakes, the best-reducer registers, the
-compactor's keep bits, ranks and cleared board — sampled every clock edge; the candidate payloads
-(boards, features, scores) come from the literal-descent reference and are linked to the RTL tokens
-by tag. `tools/check_trace.py` proves the two views agree.
+The replay exists because staring at twenty-three banks of RTL is a rotten way to learn a pipeline.
+It shows tags moving, the running winner changing, and stalls or resets taking effect at the exact
+edge where the Verilated design saw them.
 
-## Traces (`results/traces/`, schema `a2-trace-v1`)
+This is not a hand-drawn timing sketch. Occupancy, handshakes, compactor samples, and best-reducer
+registers come from RTL. Boards, features, and scores come from the literal-descent oracle and are
+joined to RTL tokens by tag. `tools/check_trace.py` checks that the marriage is sound.
 
-| File | Scenario | Source | Story |
-|---|---|---|---|
-| `a2_normal_search.json` | `normal-search` | production core `tetris_core` (`a2-cache-d1-p0-l1`), `sim/trace_main.cpp` | corpus state 3 (piece T, 34 candidates, ≥ 30 legal, a line-clearing candidate, 6 running-best updates); 70 cycles; response rotation 1, x 6, y 0, score −887 in 63 cycles = N + 29 |
-| `a2_last_candidate_wins.json` | `last-candidate-wins` | production core | corpus state 800 (`last_candidate_winner`, piece I): the final dense candidate is the unique winner — the last retirement changes the best; 53 cycles, response in 46 cycles |
-| `a2_stall_reset.json` | `stall-reset` | standalone `candidate_pipe` harness, `sim/pipe_trace_main.cpp` (**verification scenario**) | 8 candidates issued; `m_ready` dropped — the elastic pipeline keeps advancing until P22 holds a token (23 in flight), then **freezes** for 9 edges (no acceptance, no movement); release retires 6; **reset** with 23 stages occupied clears every valid bit at one edge; 5 more candidates issued and drained |
+## The three traces
 
-The production search never blocks its output (`m_ready` is constant 1 inside `search_pipeline`),
-so the stall and the reset with occupied stages are demonstrated on the standalone candidate
-interface and labelled as such in the trace header (`scenario_kind`). Fixtures are chosen by a
-declared search over `benchmarks/states/corpus_d1.jsonl` in id order (rule recorded in the header,
-`fixture.selection`); they are demonstrations from the development corpus, not held-out samples.
+All live under `results/traces/` and use schema `a2-trace-v1`.
 
-Header fields: `schema`, `backend` (verilator-native), `top`, `native_key` (harness identity),
-`source_sha256`, `toolchain_id`, `configuration_id`, `stage_manifest_sha256`, `scenario`,
-`scenario_kind`, `sampling` ("handshakes pre-edge; registers post-edge"), `timing_projection`
-(`null`: cycles only, no clock is implied), `fixture`, `bank_names`, `stage_groups`. Each cycle
-record: `cycle`, `rst`, `advance`, `s` (accepted id/tag/last), `m` (retired id/tag/last/legal/y/
-score, plus `consumed` in the standalone trace), `banks` (23 entries: `{tag, id, last}` or null),
-`best` (production), `best_changed`, `p9` (`keep`, `ranks` of the token at P9), `p12` (cleared
-`board` of the token at P12), `req_accept`/`rsp_valid` (production) or `phase`/`m_ready`/
-`occupancy` (standalone). Candidate payloads are stored once per candidate under
-`requests[0].candidates` and linked by `tag` (= dense index); `events` lists request acceptance,
-candidate acceptances/retirements, best updates, resets, blocked-output cycles and the response.
+| File | Setup | What is interesting about it |
+|---|---|---|
+| `a2_normal_search.json` | production `tetris_core`, corpus state 3 | 34 T-piece candidates, a line-clear option, six running-best changes, and the final response at `N + 29 = 63` cycles |
+| `a2_last_candidate_wins.json` | production core, corpus state 800 | the final dense I-piece candidate is the unique winner, which is a tidy trap for off-by-one reduction bugs |
+| `a2_stall_reset.json` | standalone `candidate_pipe` verification harness | fills all 23 banks, freezes nine edges behind `m_ready = 0`, releases work, flushes a full pipe on reset, then starts cleanly again |
 
-The harnesses are built with `--public-flat-rw` (`tools/build_native.py build_harness(...,
-extra_flags)`) so the bank registers are read without touching the RTL; the flag is part of the
-harness identity (`native_key`).
+The last case is intentionally not sold as production behavior. `search_pipeline` ties `m_ready`
+high; the standalone interface is where output back-pressure can be demonstrated honestly. Fixture
+selection rules and the development-corpus source are recorded in each header.
 
-## Checker (`make check-trace`)
+Every trace says which top, toolchain, source hash, stage-manifest hash, and native harness produced
+it. Cycles contain the control signals, bank tags, retiring token, running best, P9 keep/rank sample,
+P12 compacted-board sample, and either the core request/response state or the standalone harness
+phase. Candidate payloads are stored once and referenced by tag, which keeps the files large but not
+comically large.
 
-For every trace: schema and stage-manifest hash; token conservation (every accepted tag retires
-once, or was in flight at a reset edge); acceptance-order retirement; movement (a token in bank i
-under `advance` is in bank i+1 next cycle, a token in P22 retires on the advance); stall stability
-(banks unchanged while `advance = 0`); reset flush (no valid bank after a reset edge); retired
-`legal/y/score/id` against the reference payload of the same tag; the RTL compactor's keep bits,
-inclusive ranks (P9) and cleared board (P12) against the reference for every legal token that
-passes those banks; the running best after each change against the reference running best; the
-final best and the public response against the oracle decision; `cycles = N + 29`. Current
-counts: normal-search 1,108/1,108, last-candidate-wins 580/580, stall-reset 698/698 checks.
+The harnesses use Verilator's `--public-flat-rw` to observe registers without touching production
+RTL. That flag is part of the native identity.
 
-## Viewer (`viewer/`, plain HTML/CSS/JS, no server state)
+## What the checker insists on
 
-`viewer/index.html` loads a trace served next to the repository (`python -m http.server` from the
-repository root, then open `viewer/index.html`) or a local file; `viewer/demo.html` is the bundled
-standalone demo with the normal-search trace and the stage manifest embedded (`make
-render-a2-demo`). Three regions: board with the selected candidate (hatched cells, dashed full
-rows) and its hypothetical merged board; the 23 banks in six functional blocks (landing, merge,
-ranks, select, features, score) with the tag of each occupied bank — click or press Enter on a
-block to list its banks and the registers each bank carries (from `architecture/a2_stages.json`);
-the explanation (full-row mask, keep bits, inclusive ranks, A/Q/U/L, score, the RTL retirement
-compared with the reference, the RTL P9/P12 samples) with the compacted board and the current best
-(dashed outline; the same outline marks the best token in the pipeline). A timeline shows accept
-and retire handshakes, advance/stall, reset and best updates; controls: play/pause, previous/next
-cycle (also arrow keys and space), speed, jump to request / first acceptance / first retirement /
-each best update / output blocked / pipeline frozen / reset / last result / response consumed,
-jump to a candidate tag, and a filter (all tokens, selected only, best only). The selected token is
-the one in P22 (about to retire), otherwise the newest in flight, otherwise the final winner once
-the search is complete; the final winner's board is never shown under other tokens. Playback shows
-the pipeline frozen when the trace says `advance = 0` and clears every token at the recorded reset
-edge. State is readable from labels and outlines, not colour alone; controls carry accessible
-names and the status/explanation/best panels are live regions (`make check-viewer`).
+`make check-trace` verifies:
 
-## GIFs and diagrams (`make render-a2-demo`)
+- schema, stage manifest, and reported source identity;
+- one retirement per accepted tag unless reset flushed it;
+- in-order movement and retirement;
+- completely stable banks while `advance = 0`;
+- no valid bank after reset;
+- RTL legality, landing y, score, and id against the matching oracle payload;
+- P9 keep bits/ranks and P12 cleared board against independent compaction;
+- every running-best change, final winner, and public response; and
+- the production response law `cycles = N + 29`.
 
-`assets/a2_pipeline.gif` (normal search, 70 frames), `assets/a2_last_candidate_wins.gif`,
-`assets/a2_stall_reset.gif`: one frame per clock edge of the trace, rendered by
-`tools/render_a2_demo.py` with the same three regions and timeline; first/middle/last stills under
-`results/traces/frames/<trace>/` (inspected: frame 1 shows the reset and empty pipeline, frame 36
-of the normal search shows 23/23 occupancy with token 6 in P22 and token 5 just retired
-(−1770 = reference), frame 70 shows the empty pipeline with the final best id 16 / −887 and the
-public response). Static SVG diagrams in `assets/diagrams/` (`tools/diagrams.py`): the
-request/cache/search/reduction/response architecture, the A0/A1 evaluator FSM with measured state
-residency (from `results/stage_cycles_*.json`), the grouped A2 pipeline with the immutable context,
-a compaction example with non-adjacent full rows, and the four-lane ownership/reduction.
+The committed totals are 1,108 checks for normal search, 580 for the last-candidate winner, and 698
+for stall/reset.
+
+## Browser viewer
+
+`viewer/index.html` can load a trace served from the repository root. `viewer/demo.html` is the same
+viewer with the normal trace bundled, so it also opens directly from disk.
+
+```bash
+python -m http.server
+# then open http://localhost:8000/viewer/
+```
+
+The left side shows the board and selected candidate. The middle shows 23 banks grouped as landing,
+merge, ranks, select, features, and score. The explanation panel follows full rows, keep bits, ranks,
+A/Q/U/L, score, the current best, and the RTL/reference comparison. The timeline marks acceptance,
+retirement, best updates, stalls, resets, and the public response.
+
+Keyboard controls, accessible names, labelled canvases, live regions, and non-colour state cues are
+covered by `make check-viewer`. The selected token is P22 when one is retiring, otherwise the newest
+in flight, otherwise the final winner. This rule matters: it prevents the winning board from being
+quietly drawn under some unrelated tag.
+
+## GIFs and static diagrams
+
+`make render-a2-demo` produces one frame per recorded edge:
+
+- `assets/a2_pipeline.gif`
+- `assets/a2_last_candidate_wins.gif`
+- `assets/a2_stall_reset.gif`
+
+First, middle, and final inspection frames sit under `results/traces/frames/`. The normal trace's
+middle frame catches all 23 banks occupied; its last frame shows an empty pipe, best id 16 at score
+−887, and the public response.
+
+`tools/diagrams.py` also draws the static SVGs in `assets/diagrams/`: the top-level search path, the
+A0/A1 evaluator FSM, the grouped A2 pipe, a non-adjacent line-clear example, and four-lane ownership.
+Measured residency and latency values come from result files and the stage manifest, not from a
+label typed into the picture.

@@ -1,7 +1,4 @@
-"""U06: pipelined compactor (P4-P12) behind the ready/valid harness — streamed boards with tags
-against the list-filter oracle, back-to-back all-full/no-full boards, output stalls, input
-bubbles, and reset at every occupancy.  Handshakes are sampled before the edge; registered
-outputs are compared on transfer (guide §8.2)."""
+"""Stream the pipelined compactor through stalls, bubbles, and every reset occupancy."""
 from collections import deque
 
 import cocotb

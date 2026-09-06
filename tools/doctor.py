@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Check the executable environment.  --profile python (software jobs) or full (hardware gate).
-
-The hardware profile validates the installed OSS CAD Suite against this platform's entry in
-toolchains/oss_cad_suite.lock.json (expected inputs) and requires the bootstrap's host observation
-under results/host/<platform>.json (observed facts).  The v1 toolchain.lock.json is historical and
-is reported, never enforced.
-"""
+"""Check either the Python environment or the full platform-locked CAD toolchain."""
 from __future__ import annotations
 
 import argparse

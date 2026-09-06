@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Bundle the static viewer with one trace embedded (U18): viewer/demo.html opens from the file system.
-
-    python tools/build_viewer_demo.py --trace results/traces/a2_normal_search.json --out viewer/demo.html
-
-The bundle inlines viewer/style.css and viewer/app.js and sets window.A2_EMBEDDED_TRACE; the trace's
-sha256 is recorded in a data attribute so tools/check_viewer.py can confirm the embedded data is the
-committed trace.
-"""
+"""Pack the CSS, JavaScript, and one hashed trace into the offline viewer demo."""
 from __future__ import annotations
 
 import argparse

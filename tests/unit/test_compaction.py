@@ -1,5 +1,4 @@
-"""U05 (make test-prefix): the prefix/select compaction reference against a locally written list
-filter, the explicit five-level dependency structure, hand fixtures, and random boards."""
+"""Prefix/select compaction against a deliberately boring local list filter."""
 import random
 
 import pytest
@@ -10,7 +9,6 @@ FULL = 0x3FF
 
 
 def local_filter(rows):
-    """Independent oracle written here: keep non-full rows in order, zero-pad the top."""
     kept = []
     for r in rows:
         if r != FULL:

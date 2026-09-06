@@ -7,6 +7,7 @@ VENV="$ROOT/${TETROMINO_VENV:-.venv}"
 export PATH="$VENV/bin:$ROOT/.tools/oss-cad-suite/bin:$PATH"
 export VIRTUAL_ENV="$VENV"
 export TETROMINO_ROOT="$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 # Verilator inside the suite needs its own share directory; the suite's wrapper sets it, keep any user override.
 cd "$ROOT"
 [ "$#" -gt 0 ] || { echo "usage: scripts/env.sh COMMAND [ARG ...]" >&2; exit 2; }

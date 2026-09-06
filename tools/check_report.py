@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the report against actual evidence: every results block is regenerated from the
-result files and must match the committed text; every referenced result file exists with the
-required columns; GIFs are real animations under the size budget and their first/middle/last
-frames are extracted for inspection; every plot exists.  Nothing here creates results."""
+"""Regenerate the report blocks and inspect its files and GIFs, without creating results."""
 from __future__ import annotations
 
 import csv

@@ -1,21 +1,9 @@
 #!/usr/bin/env python3
-"""nextpnr-ecp5 place and route keyed by the complete route identity (ECP5 85k, CABGA381, speed 6).
+"""Run identity-keyed nextpnr for the ECP5 experiment target.
 
-    python tools/pnr.py --arch 1 --board-repr 1 --seed 1 --freq 50
-    python tools/pnr.py --arch 0 --board-repr 0 --seed 1 --freq 200 --timeout 600
-
-Synthesis is reused or run through tools/synth.py (synth_key), then the route runs in
-build/route/<route_key>/ and its record is written atomically to results/v2/raw/routes/<route_key>.json
-(schema route-record-v2).  route_key covers synth_key, netlist hash, nextpnr identity, device,
-target frequency, seed, I/O constraint policy, options, timeout and script version; a parser
-change re-analyses the retained log under a new analysis_key instead of re-routing.
-
-Statuses (guide §10.3): routed_timing_met, routed_timing_failed, route_timeout, tool_error,
-cancelled.  Timing is parsed only from the final section after "Routing complete." (and the
---report JSON when present); a placement-stage frequency line never establishes routed timing.
-Return code zero alone is never the timing gate.  I/O is auto-allocated (--lpf-allow-unconstrained):
-this is an implementation experiment, not a board pinout.  Nothing is appended to the frozen v1
-results/implementation.csv.
+Only final routed timing counts; a placement estimate or zero exit code does not. Logs can be
+re-parsed under a new analysis key without routing again. I/O is auto-allocated, so this is an
+implementation experiment rather than a physical board pinout.
 """
 from __future__ import annotations
 
@@ -46,7 +34,7 @@ FMAX_RE = re.compile(r"^(?:Info|Warning|ERROR):\s+Max frequency for clock\s+'([^
 UTIL_RE = re.compile(r"^\s*Info:\s+(\S+):\s+(\d+)/\s*(\d+)", re.M)
 
 
-# ---- parsing (parser version PNR_PARSER_VERSION) -----------------------------------------------------
+# Parsing (versioned by PNR_PARSER_VERSION)
 
 def parse_route_log(text: str) -> dict:
     """Facts from a nextpnr log.  Only the section after 'Routing complete.' establishes routed timing."""
@@ -136,7 +124,7 @@ def classify(return_code: int | None, timed_out: bool, cancelled: bool, parsed: 
                        "placement_estimate_mhz": (parsed.get("placement_fmax") or {}).get("fmax_mhz")}}
 
 
-# ---- routing ---------------------------------------------------------------------------------------------
+# Routing
 
 def route_dir(key: str) -> Path:
     return ROOT / "build" / "route" / key

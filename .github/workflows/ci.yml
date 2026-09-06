@@ -1,9 +1,6 @@
-# Checks for tetromino-circuit (U03, extended in U20 with the A2 smoke/protocol/compactor checks).  Three tiers:
-#   fast  - pure-Python checks, no HDL tools (every push / pull request)
-#   hdl   - the Linux HDL gate: pinned OSS CAD Suite, directed RTL tests, native corpus, one real route
-#   heavy - manually triggered experiments from an explicit manifest/protocol (never a full matrix by default)
-# Action versions used (major tags; pin to commit SHAs in U20 once a remote run has been inspected):
-#   actions/checkout@v5, actions/setup-python@v5, actions/cache@v4, actions/upload-artifact@v4
+# Three speeds: quick Python checks, the regular HDL gate, and experiments started by hand.
+# Heavy runs take an explicit manifest so an innocent click cannot launch the full matrix.
+# Action references stay on major tags until the first remote run has been inspected and pinned.
 name: checks
 on:
   push:

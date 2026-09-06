@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Generate oracle vectors, build the native candidate-pipeline harness, run a phase (U09).
-
-    python tools/a2_native.py --phase all|stream|traffic|metadata|reset [--contexts 60] [--seed 2024]
-    python tools/a2_native.py --phase all --trace results/traces/a2_stall_reset.vcd
-"""
+"""Run the native A2 candidate-pipe checks, with oracle vectors made on the way."""
 from __future__ import annotations
 
 import argparse

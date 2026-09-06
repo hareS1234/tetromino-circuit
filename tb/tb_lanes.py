@@ -1,9 +1,4 @@
-"""LANES=L (2 or 4): identical decisions to the reference (hence to one lane), exact candidate
-ownership per lane (disjoint sets whose union is the dense list: O [3,2,2,2], N=17 [5,4,4,4],
-N=34 [9,9,8,8] for four lanes), cross-lane equal-score ties, invalid local bests, unequal finish
-times, and a strict witness where the global winner's lane finishes later than every other lane
-(counted separately from the >= tie count).  Per-lane counters are written to
-results/v2/lanes/lanes<L>_stats.json."""
+"""Lane ownership and global reduction when two or four A1 evaluators run together."""
 import json
 import os
 

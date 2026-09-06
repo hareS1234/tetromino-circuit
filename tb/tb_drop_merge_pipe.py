@@ -1,10 +1,4 @@
-"""U07 (V04): landing/merge front end P0-P3 behind its ready/valid harness.
-
-All 162 geometric candidates on the 250-board mixed corpus streamed under one context per board
-against literal descent and independent locking (legal flag, landing y, merged board); hand
-fixtures including the spawn-under-overhang regression; anchor height 20 and negative
-differences; four cells sharing one row; adjacent-cycle rotation/x changes; stalls, bubbles and
-reset at every occupancy.  Handshakes are sampled before the edge (guide §8.2)."""
+"""Landing/merge front end against literal descent and an independent lock operation."""
 from collections import deque
 
 import cocotb

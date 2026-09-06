@@ -1,54 +1,44 @@
 # Author notes
 
-*These notes are the author's to write, in the author's own words, after reviewing the RTL and the
-evidence. Nothing below invents a personal debugging story; the sections marked "to be written by
-the author" are deliberately left as instructions rather than filled in by the helper that executed
-the jobs.*
+This page keeps two things apart: facts recorded while the jobs ran, and the understanding I still
+need to put into my own words. The second part cannot be sensibly outsourced.
 
-## How this repository was made (provenance, stated plainly)
+## Provenance
 
-* The game contract (`drop-v1.1`), the v1 build manual (`docs/history/BUILD_MANUAL.md`) and the v2
-  upgrade guide (`docs/A2_UPGRADE_GUIDE.md`) were written with planning notes and revised after audits
-  (`docs/history/PROBLEMS_FOUND.md`, `docs/history/audit_response.md`).
-* The implementation jobs E00–E19 and U00–U20 were executed with Contributor in a cloud sandbox, one
-  job at a time, each closed by a gate whose commands, exit codes and counts are recorded under
-  `results/evidence/` (schemas `gate-v1` for v1 and `upgrade-evidence-v1` for v2). The progress logs
-  (`docs/history/progress.md`, `docs/upgrade_progress.md`) name the last passing job and the next
-  command at every step.
-* No FPGA board was used. Every hardware figure is a Yosys/nextpnr result on the ECP5 device model;
-  every quality figure comes from the Python model whose decisions passed their own-reference RTL
-  tests. The blocked items (a remote CI run, a Mac reproduction) are recorded as blocked, not done.
+The `drop-v1.1` contract, the v1 build manual, and the A2 upgrade guide were drafted with planning notes and
+then revised against the repository audits. Contributor ran the E00–E19 and U00–U20 implementation jobs
+in a cloud sandbox. Each job has its commands, exit codes, and check counts under
+`results/evidence/`; the progress logs name the last passing gate and the next one.
 
-## Decision records at the guide's checkpoints (executor's record, for the author to review)
+There was no FPGA board in the loop. Hardware numbers are Yosys/nextpnr estimates for the ECP5
+device model, and the long game runs use the Python policy model. The Mac toolchain now enrolls and
+passes its doctor, but its clean-clone record and the remote CI run do not exist yet. That distinction
+is more important than making the project sound finished.
 
-Guide §12.5 asks for brief notes after U04, U06, U10, U12 and U17: what was chosen, what evidence
-affected it, what remains uncertain. These are the records kept by the helper that executed
-the jobs; they are facts about the decisions, not the author's understanding.
+## Decisions recorded during the build
 
-| After | What was chosen | Evidence that affected it | Still uncertain |
+These are executor notes, not claims about what I personally understood at the time.
+
+| After | Decision | Evidence behind it | Loose end |
 |---|---|---|---|
-| U04 | 23 banks with one global `advance`, candidate-private boards from P3, prefix/select compaction, a one-register best feedback; A2 declared only as `Config(2, 1, 1, 1, 0)` | A1's residency (23 of 40 cycles in the 20-iteration compactor); the hazard argument in `docs/design_a2.md` §3 | whether 23 banks would route at 50 MHz (answered in U12: yes, 76 MHz at seed 1) |
-| U06 | five prefix strides + one match/select network instead of a scatter, verified exhaustively on all 2^20 keep masks and by an unbounded miter | the exhaustive native run and the k-induction proof both passed on the actual HDL | none for the block; whole-core equivalence rests on simulation (V11–V14) |
-| U10 | the public core stays single-outstanding; A2 occupies lane slot 0 and reuses the v1 `REDUCE/FINALIZE/RESPOND` path | measured `D(N) = N + 29` on 3,000 states and `R(N) = N + 31` on 200 request pairs | a multi-context core would raise throughput; excluded by the ownership argument, not measured |
-| U12 | one logic change (P14 maximum tree → one-hot priority select), no bank added | route 1 worst path was the P14 comparator tree (13.93 ns); route 2 moved it to the enumeration chain (13.10 ns, 76.36 MHz) | 80 MHz needs the `j → cand_rom → shape_rom → hsel` chain registered (one more bank; not made) |
-| U17 | six exact configurations × four clocks × three seeds plus the P1/P5–P7 cores at 50 MHz, `-nodsp`, 600 s budget with 1,200 s for four lanes; timeouts kept as outcomes | U13's four-lane routes (seed 1 non-converging at 3,600 s, seed 2 met in 214 s) fixed the four-lane budget and the "timeouts are outcomes" rule | whether the four-lane timeouts are placement luck or a fan-out property; not resolved by three seeds |
+| U04 | Use 23 banks, one global `advance`, candidate-private boards after P3, prefix/select compaction, and a one-register best feedback path. Declare only `Config(2, 1, 1, 1, 0)`. | A1 spends 23 of its 40 candidate cycles in the compactor; the ownership argument is in `docs/design_a2.md` §3. | Routing at 50 MHz was still unknown. U12 later reached 76 MHz on seed 1. |
+| U06 | Five prefix strides and a match/select network, not a procedural scatter. | The actual HDL passed all 2^20 keep masks and an unbounded miter proof. | Nothing local to the block; whole-core equivalence still relies on simulation. |
+| U10 | Keep the public core single-outstanding. Put A2 in lane slot 0 and reuse `REDUCE/FINALIZE/RESPOND`. | `D(N) = N + 29` on 3,000 states and `R(N) = N + 31` on 200 request pairs. | A multi-context core might improve board throughput, but it is a different ownership problem. |
+| U12 | Replace the P14 maximum tree with a one-hot priority select; do not add a bank. | The first route put the worst path in the P14 comparator tree (13.93 ns). After the change it moved to candidate enumeration (13.10 ns, 76.36 MHz). | Reaching 80 MHz probably means registering `j → cand_rom → shape_rom → hsel`. |
+| U17 | Measure six configurations at four clocks and three seeds, plus P1/P5–P7 at 50 MHz. Keep four-lane timeouts as results. | Four-lane pilots ranged from a 214 s pass to a 3,600 s non-converging run. | Three seeds cannot tell placement luck from a repeatable fan-out problem. |
 
-## What I checked myself — to be written by the author
+## Questions for my own code-reading pass
 
-Instructions, to be answered in the first person after reading the code:
+1. Follow a candidate through `rtl/tetris_core.sv`, `rtl/search_pipeline.sv`, and
+   `rtl/candidate_pipe.sv`. Why does `advance = !rst && (!valid[22] || m_ready)` keep every bank in
+   step?
+2. Compare `model/game.py` with `tests/reference_grid.py`. Which is the oracle of record, and what
+   failure would the second implementation catch?
+3. Pick one route record and one quality record under `results/v2/raw/`. Which fields tie it to the
+   sources, tools, and protocol? What edit would make the checker reject it?
+4. The P1 result is surprising. What experiment would distinguish a lucky fixed policy from a
+   useful coefficient pattern?
 
-1. Open `rtl/tetris_core.sv`, `rtl/search_pipeline.sv` and `rtl/candidate_pipe.sv`. Can you follow
-   a candidate from `s_valid` to `best_reducer` and explain why `advance = !rst && (!valid[22] ||
-   m_ready)` keeps every bank consistent? (`viewer/demo.html` replays a real trace.)
-2. Open `model/game.py` and `tests/reference_grid.py`. Why are two independent references kept, and
-   which one is the oracle of record?
-3. Pick one route record under `results/v2/raw/routes/` and one quality record under
-   `results/v2/raw/quality/`. Which fields make the record reproducible, and what would have to change
-   in the repository for `make check-hardware-v2` or `make check-quality-v2` to reject it?
-4. Which result surprised you (the U16 P1-versus-P0 outcome is a candidate), and what would you run
-   next to understand it?
-
-## What I would do differently — to be written by the author
-
-(coefficient search on the development streams; a shared board store for lanes; registering the
-`j → cand_rom → shape_rom → hsel` chain for A2 at 80 MHz; a physical board.)
+Things worth considering after that pass: a coefficient search restricted to development streams,
+a shared board store for replicated lanes, one more A2 bank for the enumeration chain, and—at some
+point—the rather important business of putting it on a physical board.

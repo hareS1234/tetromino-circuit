@@ -1,7 +1,4 @@
-"""U09: candidate_pipe protocol checks in cocotb (the volume tests run natively, tools/a2_native.py).
-Latency contract (visible 22 / transfer 23 / II 1), whole-pipeline freeze under an output stall,
-consume-and-accept on one edge, illegal tokens keeping order and last, and reset at every
-occupancy of the 23 banks."""
+"""Small protocol tests for the candidate pipe; the high-volume traffic runs natively."""
 from collections import deque
 
 import cocotb

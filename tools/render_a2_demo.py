@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
-"""Render an a2-trace-v1 file into a GitHub-viewable GIF plus first/middle/last PNG frames (U18 step 5-6).
-
-    python tools/render_a2_demo.py --trace results/traces/a2_normal_search.json --gif assets/a2_pipeline.gif
-    python tools/render_a2_demo.py --trace results/traces/a2_stall_reset.json --gif assets/a2_stall_reset.gif
-
-Every frame is one clock edge of the real RTL trace: the board with the token currently retiring (or the
-newest accepted token) drawn on it, the 23 banks grouped into six functional blocks with the tag of
-each occupied bank, the token's reference explanation (full rows, keep bits, inclusive ranks, cleared
-board, A/Q/U/L, score), the running best from the RTL (`best` registers) and a timeline with the
-handshakes, advance and reset.  State is readable from labels and outlines, not colour alone.  Frames
-are not synthetic: the pipeline occupancy, handshakes and best come from the trace records.
-"""
+"""Render a real A2 clock trace as an accessible GIF plus three inspection stills."""
 from __future__ import annotations
 
 import argparse
@@ -65,8 +54,7 @@ def render_frame(doc, idx, payload_by_tag, fig, axes):
     ax_board, ax_pipe, ax_expl, ax_time = axes
     for ax in axes:
         ax.clear()
-    # ---- selected token: the one in P22 after this edge (it retires on the next edge), else the newest
-    # token in flight, else none.  Banks are post-edge registers; `m` is the pre-edge retirement of this edge.
+    # Select P22 first, then the newest token in flight. Banks are post-edge; m retired pre-edge.
     sel_tag = None
     sel_why = ""
     best = c.get("best") or {"valid": 0, "score": 0, "id": -1, "y": 0}      # the standalone pipe harness has no reducer

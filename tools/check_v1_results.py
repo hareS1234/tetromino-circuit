@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the frozen v1 experiment against exact expected-job membership and its own identities.
-
-    python tools/check_v1_results.py            # prints CHECK lines; exit 1 on any problem
-
-The v1 files (benchmarks/config.json, results/quality.csv, results/quality_summary.json,
-results/implementation.csv, results/implementation_manifest.json, results/decisions/,
-results/evidence/E00-E19) are historical inputs and are never modified here.  Instead of minimum
-row counts, every expected job is named from the frozen protocol and must be present exactly once
-with one source/toolchain identity; the committed summary must equal a recomputation from the rows.
-"""
+"""Demand exact jobs, identities, and summaries from the read-only v1 experiment."""
 from __future__ import annotations
 
 import csv

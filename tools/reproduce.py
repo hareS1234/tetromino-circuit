@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""Resumable orchestrator of the documented release pipeline (no second implementation path:
-every step is an existing Make target or tool).  Steps whose outputs exist for the current
-source identity are skipped; a failed step stops the run and is reported."""
+"""Resume the documented release recipe using its existing Make targets and identity checks."""
 from __future__ import annotations
 
 import argparse

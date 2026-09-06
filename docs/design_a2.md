@@ -1,14 +1,12 @@
 # A2 candidate pipeline — implementation specification (U04)
 
-Status: **implemented and verified at the core level (U10)**; the U04 revision of this document
-declared `Config(2, 1, 1, 1, 0)` (`a2-cache-d1-p0-l1`) without sources. Since U10 the configuration
-is in `SUPPORTED`, `tetris_core`'s `CFG_OK` admits exactly `ARCH == 2 && BOARD_REPR == 1 &&
-LANES == 1 && DEPTH == 1 && PRECISION == 0`, and the measured latencies (§8) are recorded from RTL.
-Routing (U12) and the release matrix (U17) are separate evidence.
+Status: **implemented and verified at the core level (U10)**. U04 began with a paper configuration;
+U10 promoted `a2-cache-d1-p0-l1` into `SUPPORTED` and admitted exactly `ARCH=2`, cached boards, one
+lane, depth one, and P0 arithmetic. Routing is separate evidence from U12/U17.
 
-This document restates guide §4–§7 with the exact names used in this repository. The register
-schedule lives in `architecture/a2_stages.json`; the cycle contract is executable in
-`model/a2_token_model.py`; `make check-a2-spec` checks the three against each other.
+The prose here is only one leg of the spec. The register schedule lives in
+`architecture/a2_stages.json`, the executable cycle contract in `model/a2_token_model.py`, and
+`make check-a2-spec` makes all three agree. If they quarrel, the build stops.
 
 ## 1. Contracts that remain authoritative
 

@@ -1,5 +1,4 @@
-"""cocotb backend for a complete game: the host submits board/piece, checks the RTL answer
-against the Python reference, applies it, and repeats inside one simulation."""
+"""Play a whole game through one cocotb simulation, checking each move as it lands."""
 import os
 
 import cocotb

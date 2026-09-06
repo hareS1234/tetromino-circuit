@@ -1,6 +1,4 @@
-"""Protocol tests independent of game logic: held req_valid, busy-input changes, response stalls,
-requests while busy, resets in every major state, piece ID 7, preview independence at depth
-one, and the independent edge counter."""
+"""Ready/valid, backpressure, reset, and bad-input checks independent of game logic."""
 import cocotb
 
 from common import cycle, fall, load_fixtures, pack, param, reset, rise, rows_of

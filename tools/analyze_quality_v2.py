@@ -1,18 +1,9 @@
 #!/usr/bin/env python3
-"""Censoring-aware analysis of a v2 quality suite (U15/U16, guide §9.5).
+"""Analyse one v2 game suite without pretending capped games are ordinary failures.
 
-    python tools/analyze_quality_v2.py --config benchmarks/config_v2.json --suite bag50k            # analysis + figures
-    python tools/analyze_quality_v2.py --config benchmarks/config_v2.json --suite bag50k --check    # validation only
-
-Reads the per-game records of one suite (results/v2/raw/quality/<quality_key>.json), rejects
-incomplete paired sets, conflicting duplicates, failed jobs and foreign protocol/source identities,
-and reports per policy: restricted mean locked pieces (mean(min(T, C))), mean lines, cap-hit
-fraction, the product-limit survival curve with the cap and censoring marked, the median only if the
-curve crosses 1/2 within the horizon ("not reached by C" otherwise), and paired bootstrap intervals
-of every policy against the baseline (whole streams resampled, fixed seed).  A software crash is a
-failed job (raw/quality/<key>.failed.json) and blocks the analysis; it is never a censoring event.
-Writes results/v2/summary/analysis_<suite>.json (schema quality-analysis-v2) and
-results/v2/figures/survival_<suite>.png; for the held-out suite also results/v2/summary/quality.json.
+The paired-set checks are strict. Reports include restricted means, cap hits, product-limit
+survival, observed medians, and paired bootstrap intervals. A crashed game is a failed job, never a
+censoring event.
 """
 from __future__ import annotations
 

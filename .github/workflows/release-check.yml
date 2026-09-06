@@ -1,9 +1,6 @@
-# Release validation on the platform that produced the expensive measurements (U20).  The v2 identities
-# (synthesis/route/native keys) include the pinned tools' version strings, so `make check-release-v2` must
-# run on linux-x64 with the pinned OSS CAD Suite — this hosted runner — not on the maintainer's Mac, whose
-# darwin build of the same suite yields different keys.  Dispatch it after the Mac fresh-clone record and the
-# remote CI record are committed and benchmarks/release_v2.json marks them executed; a NOT RELEASABLE or FAIL
-# verdict fails the job.  Tags are checked by the v1 validator, hence the full-history checkout.
+# The measurement identities include tool version strings, so release validation belongs on the same
+# linux-x64 toolchain that produced the published routes. Run this only after the Mac and remote-CI records
+# are committed. Full history is needed because the v1 validator checks release tags.
 name: release-check
 on:
   workflow_dispatch:

@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""v1 release validator (manual Appendix D): checks recorded evidence and artifacts; creates nothing.
-
-Exact expected-job membership of the frozen v1 experiment (quality, routes, decisions, evidence)
-comes from tools/check_v1_results.py; no minimum row counts are used.  The v2 upgrade release
-(U-jobs, v2 manifests) is validated by check_release_v2 (U20).
-"""
+"""Validate the frozen v1 evidence by exact membership; never create or repair it."""
 from __future__ import annotations
 
 import json

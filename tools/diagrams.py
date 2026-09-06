@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the static SVG diagrams of docs/design.md and docs/design_a2.md (U18 step 5, guide §12.3).
-
-    python tools/diagrams.py            # writes assets/diagrams/*.svg
-
-Diagrams (plain SVG, neutral palette, text labels — no measurement is invented: residency numbers come
-from results/stage_cycles_*.json, latencies from architecture/a2_stages.json):
-  architecture.svg   request → latch/cache → search (A0 serial | A1 lanes | A2 pipeline) → reduction → response
-  fsm_a0_a1.svg      the candidate evaluator FSM (shared by A0 and A1) with measured state residency per candidate
-  a2_pipeline.svg    the 23 banks in six groups, the immutable context beside the per-token payload
-  compaction.svg     a compaction example with non-adjacent full rows: keep bits, inclusive ranks, preserved order
-  lanes.svg          four-lane dense-index ownership (N = 17 → [5,4,4,4]) and the deterministic REDUCE order
-"""
+"""Draw the architecture SVGs from recorded residency data and the A2 stage manifest."""
 from __future__ import annotations
 
 import json

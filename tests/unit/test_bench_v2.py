@@ -1,5 +1,4 @@
-"""U02: v2 quality runs write one atomic record per game keyed by quality_key, resume by identity,
-never touch the frozen v1 files, and summarise only rows of one source/protocol identity."""
+"""Quality records resume by identity without wandering into frozen v1 data."""
 import json
 from pathlib import Path
 

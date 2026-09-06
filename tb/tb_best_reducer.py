@@ -1,6 +1,4 @@
-"""U11 (V10): winner hazards on the reducer alone — all illegal, one legal, last wins, exact score
-ties (lower id wins whatever the arrival order, highest id first), signed comparisons between
-negative scores, clear between searches, and a randomized shadow model."""
+"""Reducer tie, sign, final-token, and clear hazards, plus a randomized shadow model."""
 import cocotb
 
 from common import cycle, fall, reset, rise, rng, signed32

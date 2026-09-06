@@ -1,5 +1,4 @@
-"""U20: the release validator rejects missing/changed inputs, empty or failed evidence, unrecorded platforms,
-and never counts a blocked item as satisfied (tools/check_release_v2.py)."""
+"""Release checks should fail closed on missing, changed, blocked, or bogus evidence."""
 from __future__ import annotations
 
 import hashlib

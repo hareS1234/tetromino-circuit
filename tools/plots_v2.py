@@ -1,19 +1,8 @@
 #!/usr/bin/env python3
-"""Architecture figures from the raw v2 records, every point traceable to a job key (U17 step 5-6).
+"""Plot v2 architecture results with a job key behind every point.
 
-    python tools/plots_v2.py --manifest benchmarks/hardware_v2.json          # figures + <figure>.points.json
-    python tools/plots_v2.py --manifest benchmarks/hardware_v2.json --verify # re-open every plotted point's record
-
-Figures (results/v2/figures/):
-  area_vs_latency.png      LUT4 (routed area of the 50 MHz seed-11 record, else any completed route of the
-                           configuration) against the median decision cycles of the 1,000-state corpus; the
-                           secondary axis converts cycles at 50 MHz only for configurations whose 50 MHz routes met
-                           timing (a conditional projection, labelled)
-  lane_scaling.png         one/two/four-lane cycles (median) and LUT4/FF
-  cycles_by_family.png     median cycles by dense candidate count N (9 / 17 / 34) per configuration
-  timing_outcomes.png      met / failed / timeout counts per configuration and clock target
-  fmax_by_seed.png         reported fmax per seed and target (routed records only)
-Missing measurements are left blank and listed in the points file; nothing is interpolated.
+Missing data stays missing, and the 50 MHz time projection appears only for routes that met 50 MHz.
+``--verify`` walks every points file back to its raw record.
 """
 from __future__ import annotations
 
@@ -94,7 +83,7 @@ def main() -> int:
     dec_count = int(m.get("decisions", {}).get("count", 1000))
     decisions = {cid: decision_stats(cid, dec_count) for cid in dec_cfgs}
 
-    # ---- 1. area vs decision latency at 50 MHz --------------------------------------------------------------
+    # 1. Area versus decision latency at 50 MHz
     points, missing = [], []
     fig, ax = plt.subplots(figsize=(8.0, 4.8))
     # label offsets so that near-coincident points (X1 and X2 differ by 13 LUT4) stay legible
@@ -130,7 +119,7 @@ def main() -> int:
     plt.close(fig)
     save_points("area_vs_latency", points, missing, m)
 
-    # ---- 2. lane scaling --------------------------------------------------------------------------------------
+    # 2. Lane scaling
     points, missing = [], []
     lanes_cfg = [("a1-cache-d1-p0-l1", 1), ("a1-cache-d1-p0-l2", 2), ("a1-cache-d1-p0-l4", 4)]
     fig, ax1 = plt.subplots(figsize=(7, 4.2))
@@ -165,7 +154,7 @@ def main() -> int:
     plt.close(fig)
     save_points("lane_scaling", points, missing, m)
 
-    # ---- 3. cycles by piece family ----------------------------------------------------------------------------
+    # 3. Cycles by piece family
     points, missing = [], []
     fig, ax = plt.subplots(figsize=(7.5, 4.2))
     fams = [9, 17, 34]
@@ -190,7 +179,7 @@ def main() -> int:
     plt.close(fig)
     save_points("cycles_by_family", points, missing, m)
 
-    # ---- 4. timing outcomes by clock constraint -------------------------------------------------------------------
+    # 4. Timing outcomes by clock constraint
     points, missing = [], []
     fig, ax = plt.subplots(figsize=(9, 4.5))
     colors = {"routed_timing_met": "tab:green", "routed_timing_failed": "tab:red", "route_timeout": "tab:grey"}
@@ -225,7 +214,7 @@ def main() -> int:
     plt.close(fig)
     save_points("timing_outcomes", points, missing, m)
 
-    # ---- 5. seed-level fmax ---------------------------------------------------------------------------------------
+    # 5. Seed-level fmax
     points, missing = [], []
     fig, ax = plt.subplots(figsize=(9, 4.5))
     x = 0

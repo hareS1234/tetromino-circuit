@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Build the committed 1,000-request differential corpus (depth one) and the 250-case
-depth-two corpus.  Each record stores concrete rows, piece(s), category and the expected
-decision from the literal-descent reference model.
-
-Depth-one categories: 300 heuristic-trajectory states, 300 random-trajectory states,
-200 generated high-stack/hole boards (labelled potentially unreachable), and 200 structured
-edge cases (walls, wells, blocked spawns, equal scores, last-candidate winners, no-move).
-"""
+"""Build the committed depth-one and depth-two differential corpora from the literal oracle."""
 from __future__ import annotations
 
 import argparse

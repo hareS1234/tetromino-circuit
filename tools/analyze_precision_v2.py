@@ -1,18 +1,9 @@
 #!/usr/bin/env python3
-"""Common-state decision sensitivity of the quantized profiles P5-P7 (U14, guide §9.2-9.3).
+"""Compare P5–P7 with exact P0 on the same boards.
 
-    python tools/analyze_precision_v2.py --split development            # corpus_d1 + upgrade dev corpus
-    python tools/analyze_precision_v2.py --split heldout                 # fresh v2 common-state corpus (U16)
-    python tools/analyze_precision_v2.py --explain                       # the two committed divergence fixtures
-
-For every state of a corpus and every quantized profile the exact (P0) and quantized winners are
-computed on the identical board and piece (model.sensitivity): disagreement, exact best-versus-
-runner-up gap, whether a tie was introduced or broken, the integer stability certificate
-M (S(g) - S(c)) > E(g) + E(c), and the P0 score given up by the quantized choice.  A difference
-in a free-running game after the boards have diverged is a different quantity and is not measured
-here.  Writes results/v2/precision/<split>/summary.json (schema precision-sensitivity-v1),
-states_<corpus>_p<k>.jsonl and a derived disagreement.csv.  The development split is the supplied
-planning corpus: it chose the ladder and must not be presented as an untouched final evaluation.
+This is a decision-sensitivity study, not a comparison of already-diverged games. It records ties,
+score gaps, sacrificed P0 score, and the integer stability certificate. Development data stays
+labelled as development data because it helped choose the ladder.
 """
 from __future__ import annotations
 

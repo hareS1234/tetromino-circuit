@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""Headline tournament: actual RTL replays (native Verilator driver, checked against Python at
-every move) for the frozen configurations on the frozen seed/cap, rendered 2x2 with the matching
-implementation manifest.  Also renders a cycle-synchronised version of the same replays."""
+"""Render the frozen RTL replays as piece- and cycle-synchronized four-way tournaments."""
 from __future__ import annotations
 
 import json

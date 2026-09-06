@@ -1,15 +1,5 @@
 #!/usr/bin/env python3
-"""Generate, check and decode the v2 long piece streams (U15).
-
-    python tools/streams_v2.py generate --split v2_development     # seeds 10000-10019, 50,001 pieces each
-    python tools/streams_v2.py generate --split v2_heldout         # seeds 20000-20099
-    python tools/streams_v2.py check                               # every manifest entry re-hashed and regenerated
-    python tools/streams_v2.py decode 10000 --head 30              # readable piece names
-
-Files: benchmarks/streams_v2/stream_<seed>.bin.gz (one byte per piece, gzip) and manifest.json
-(schema stream-manifest-v2, content hashes over the decoded bytes).  The v1 streams and manifest
-are not touched.
-"""
+"""Generate, re-hash, or peek inside the long v2 piece streams; leave v1 alone."""
 from __future__ import annotations
 
 import argparse

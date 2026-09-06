@@ -1,5 +1,4 @@
-"""A0 merge unit: exactly four previously-zero bits become one, for all legal fixtures and
-random legal placements; inputs are latched at start."""
+"""A0 merge behavior, including the easy-to-break same-row write case."""
 import cocotb
 
 from common import cycle, pack, reset, run_transaction, unpack

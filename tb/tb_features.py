@@ -1,6 +1,4 @@
-"""Feature extractor vs model.features: all 200 one-hot boards, the single-hole fixture,
-alternating tall/empty columns, and 500 generated boards.  A, Q, U checked individually;
-PRECISION 3 expects min(Q,15), PRECISION 4 expects U=0."""
+"""Feature extraction against direct Python counting, including the profile-specific caps."""
 import cocotb
 
 from common import pack, param, reset, run_transaction

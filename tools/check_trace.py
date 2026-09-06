@@ -1,17 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a2-trace-v1 files against their own consistency rules and the reference payloads (U18).
-
-    python tools/check_trace.py [results/traces/a2_*.json]
-
-Checks per trace: header (schema, manifest hash, source hash reported), token conservation (every
-accepted tag retires exactly once unless a reset flushed it while in flight), ordering (tags retire in
-acceptance order), movement (a token in bank i under advance is in bank i+1 next cycle), stall
-stability (no bank changes while advance is low), reset flush (no valid bank after a reset edge),
-retired values (legal, y, score, id) against the literal-descent payload of the same tag, the
-compactor's RTL keep bits / inclusive ranks / cleared board against the payload where sampled, the
-running best against the reference running best, the final best against the oracle decision and the
-public response (production traces), and the response cycle count against the trace.
-"""
+"""Check A2 traces for ordered motion, stalls, reset flushes, and reference agreement."""
 from __future__ import annotations
 
 import argparse

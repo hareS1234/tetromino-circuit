@@ -1,9 +1,10 @@
 # Result identities, resume and evidence (U02)
 
-Every cached build and every measurement in the v2 upgrade is keyed by a SHA-256 over canonical
-JSON (`tools/identity.py`: sorted keys, no whitespace, ASCII escapes, no NaN) of everything that
-determines it. File inputs enter as `{path, bytes, sha256}` records with repository-relative
-paths; mtimes are never used, and nothing is keyed by an RTL hash alone.
+A stale netlist that happens to have the right filename is a particularly boring way to ruin an
+experiment. v2 avoids that by hashing the complete recipe for every build and measurement as
+canonical JSON (`tools/identity.py`: sorted keys, no whitespace, ASCII escapes, no NaN). File inputs
+carry repository-relative paths, byte counts, and SHA-256 values. Modification times count for
+nothing, and an RTL hash by itself is never enough.
 
 | Key | Inputs | Where it is used |
 |---|---|---|

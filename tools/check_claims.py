@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
-"""Every headline number in the reader-facing documents resolves to a result file (U19 gate `make check-claims`).
-
-    python tools/check_claims.py            # verify docs/claims.json against the documents
-    python tools/check_claims.py --print    # print every claim's current value (to write the documents)
-
-docs/claims.json lists claims: an id, a source (JSON file + dotted path, or a CSV aggregate over one file or a
-pooled list of `files`), an optional arithmetic (`divide_by` another claim, `scale`, `abs`), a `format` (Python
-format spec) and the documents that must contain the formatted value verbatim.  The checker recomputes each
-value from the source, formats it and searches the documents; a document that states a number the sources do
-not produce fails the check, and so does a claim whose source cannot be computed.  It also rejects
-TODO/TBD/placeholder markers in the reader-facing summaries.
-"""
+"""Recompute every reader-facing headline number listed in ``docs/claims.json``."""
 from __future__ import annotations
 
 import argparse

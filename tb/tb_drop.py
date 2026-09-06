@@ -1,5 +1,4 @@
-"""A0 drop unit vs the literal-descent oracle: fixtures, walls/floor/tall columns, blocked entry,
-both overhang fixtures, and every orientation/x on 50 mixed boards (8,100 candidates)."""
+"""A0 descent against the literal oracle, especially walls, overhangs, and blocked entry."""
 import cocotb
 
 from common import cycle, load_fixtures, pack, reset, rows_of, run_transaction

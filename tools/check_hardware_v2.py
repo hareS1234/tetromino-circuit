@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
-"""Account for every declared job of a hardware matrix (U17 gate `make check-hardware-v2`).
-
-    python tools/check_hardware_v2.py --manifest benchmarks/hardware_v2.json
-
-For each of the manifest's route jobs the latest record under its full route identity must exist and
-carry a valid outcome — routed_timing_met, routed_timing_failed or route_timeout are all outcomes;
-tool_error, cancelled, a missing or corrupt record are incomplete work.  Every record is checked
-for internal consistency (identity fields, netlist hash of the reused synthesis, parser version,
-timing fields present iff routing completed) and the decision corpora of the manifest's decisions
-block must be matched records.  The derived CSV's `current` rows must correspond to the latest
-attempts.  Prints CHECK lines; exit 1 on incomplete work.
-"""
+"""Make sure every planned hardware job has one coherent, identity-matched outcome."""
 from __future__ import annotations
 
 import argparse

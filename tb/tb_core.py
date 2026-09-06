@@ -1,5 +1,4 @@
-"""Differential core test on the committed corpus.  TETROMINO_COUNT selects how many requests
-(default 50); TETROMINO_RESULTS names a JSON file receiving per-request cycles."""
+"""Drive the committed corpus through the core and compare every decision."""
 import json
 import os
 

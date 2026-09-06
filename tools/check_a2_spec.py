@@ -1,20 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the A2 specification triple: stage manifest, configuration identity, cycle contract (U04).
-
-    python tools/check_a2_spec.py [--rtl]      # --rtl also checks that A2 elaboration is rejected
-
-Checks (each printed as CHECK name ok/total):
-  stages      — 23 banks, contiguous indices, unique names, delay 1, field widths add up, metadata
-                carried on every bank from P2, group boundaries match the manifest
-  widths      — the input/output port widths of docs/design_a2.md §4 equal the manifest's fields
-  identity    — Config(2,1,1,1,0).id == "a2-cache-d1-p0-l1", declared not verified, neighbours rejected,
-                Makefile ids come from model.config
-  latency     — abstract token model: visible 22, transfer 23, II 1, D(N) = N + 29 for N in 9/17/34,
-                R(N) = D(N) + 2, order preserved with bubbles and stalls
-  elaboration — (--rtl) tetris_core with ARCH=2 fails to elaborate until U10 (V01)
-  lane_guards — (--rtl) the four-lane A1 elaborates (U13); four lanes with bitmap/depth two/approximate
-                profile and three lanes are rejected in RTL and in Python
-"""
+"""Cross-check A2's stage manifest, port widths, legal configurations, and cycle contract."""
 from __future__ import annotations
 
 import argparse

@@ -1,4 +1,4 @@
-"""Registered scorer vs model.numeric for the compiled PRECISION profile."""
+"""Registered scorer against the selected numerical profile."""
 import cocotb
 
 from common import cycle, param, reset, rng, signed32

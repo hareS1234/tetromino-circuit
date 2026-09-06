@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""Verify every approximate profile (PRECISION 1-4) against its own numerical reference:
-scorer boundaries + 1,000 tuples, parallel feature unit, A1 evaluator (16,200 candidate cases),
-and 250 complete-core requests (native).  Also records each profile's disagreement with the
-exact policy on the same corpus states as a policy outcome, not a failure."""
+"""Check P1–P4 against their own arithmetic; disagreement with P0 is an outcome, not a failure."""
 from __future__ import annotations
 
 import argparse

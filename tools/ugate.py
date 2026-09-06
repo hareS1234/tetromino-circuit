@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-"""Record upgrade-job evidence (schema upgrade-evidence-v1) by running real commands.
+"""Run and record a U-job gate.
 
-    python tools/ugate.py U05 --config a2-cache-d1-p0-l1 \
-        --check "prefix unit tests" --artifact results/x.json --limitation "bounded proof" \
-        -- make test-prefix -- make formal-compactor
+Usage: ``python tools/ugate.py U05 --config ID --check "what passed" -- make some-target``
 
-Every "--"-separated group is one command run through scripts/env.sh from the repository
-root.  A job with zero commands is rejected.  The record stores each command's argv, exit code,
-elapsed time and log path, the test counts parsed from its output (pytest/cocotb/native lines),
-the named checks with their counts, and the source-closure hash from tools/identity.py.
-Status is 'passed' only if every command exited 0 and at least one check recorded a nonzero
-count; otherwise 'failed'.  --blocked "reason" records a blocked job: with no commands nothing
-runs; with commands they run and are recorded, and the status is 'blocked' (never 'passed') when
-they all succeed, 'failed' otherwise — local evidence for a gate whose decisive step (a remote
-run, a Mac) cannot be executed here.
+Each ``--`` begins a real command. Passing requires zero exit codes and a nonzero recorded check.
+``--blocked`` records useful local work while keeping the external gate unmistakably blocked.
 """
 from __future__ import annotations
 

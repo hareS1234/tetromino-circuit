@@ -1,23 +1,9 @@
 #!/usr/bin/env python3
-"""Software game-quality studies with identity-keyed results and paired bootstrap statistics.
+"""Run the software quality studies and keep every game tied to its full identity.
 
-    python tools/bench.py --check-config                                   # frozen v1 protocol (benchmarks/config.json)
-    python tools/bench.py --check-config --config benchmarks/quality_smoke_v2.json
-    python tools/bench.py --suite smoke --config benchmarks/quality_smoke_v2.json --out-root results/v2
-    python tools/bench.py --summarise-v1 precision                        # recompute a frozen v1 summary from results/quality.csv
-    python tools/bench.py --config benchmarks/config_v2.json --mode dry-run           # workload counts, no games
-    python tools/bench.py --config benchmarks/config_v2.json --mode pilot             # development suites only
-    python tools/bench.py --config benchmarks/config_v2.json --mode freeze            # reproducibility record before held-out runs
-    python tools/bench.py --config benchmarks/config_v2.json --mode run --suite bag50k # summary mode, checkpoints, resume
-
-v2 protocols (schema quality-protocol-v2) write one atomic record per game to
-<out-root>/raw/quality/<quality_key>.json (quality_key from tools/identity.py: protocol content,
-policy/profile, stream hash, cap, model closure, runtime) and derive <out-root>/summary/quality.csv
-and <out-root>/summary/quality_<suite>.json from those records.  Nothing is appended to the frozen
-v1 files results/quality.csv and results/quality_summary.json; they are read only as historical inputs.
-
-`summarise` requires one explicit source identity and one protocol identity, joins the exact expected
-stream ids, and raises SummaryConflict on mixed sources, duplicate conflicting rows or foreign protocols.
+v2 writes one atomic record per game, then derives summaries from the exact expected stream set.
+Mixed sources, foreign protocols, or conflicting duplicates are errors. The frozen v1 files are
+read-only history.
 """
 from __future__ import annotations
 
@@ -64,7 +50,7 @@ def v1_source_hash() -> str:
     return h.hexdigest()[:16]
 
 
-# ---- protocols ------------------------------------------------------------------------------------------------
+# Protocols
 
 def load_protocol(path: Path) -> dict:
     doc = json.loads(path.read_text())
@@ -140,7 +126,7 @@ def check_protocol(cfg: dict) -> list[str]:
     return problems
 
 
-# ---- rows and identity ---------------------------------------------------------------------------------------
+# Rows and identities
 
 def policy_key(p: dict) -> str:
     return f"{p['policy']}-d{p['depth']}-p{p['precision']}"
@@ -195,7 +181,7 @@ def atomic_write_json(path: Path, doc: dict) -> None:
     tmp.replace(path)
 
 
-# ---- statistics -------------------------------------------------------------------------------------------------------
+# Statistics
 
 def paired_bootstrap(a, b, n, seed):
     """CI of mean(b - a) resampling stream ids jointly."""
@@ -212,10 +198,7 @@ def paired_bootstrap(a, b, n, seed):
 
 def summarise(rows: list[dict], suite: dict, *, source: str, protocol_sha256: str, resamples: int, bootstrap_seed: int,
               suite_name: str | None = None) -> dict:
-    """Summary over exactly the expected (policy, stream) jobs of one source and one protocol identity.
-
-    rows: normalised rows (see v1_rows / v2_row).  Raises SummaryConflict when a row of the selected
-    suite/cap carries another source or protocol identity, or when duplicates disagree."""
+    """Summarize the exact expected jobs; reject foreign identities and disagreeing duplicates."""
     lo, hi = suite["streams"]["seeds"]
     seeds = list(range(lo, hi + 1))
     cap = int(suite["cap"])
@@ -260,7 +243,7 @@ def summarise(rows: list[dict], suite: dict, *, source: str, protocol_sha256: st
     return out
 
 
-# ---- v2 execution ----------------------------------------------------------------------------------------------------------
+# v2 execution
 
 HEARTBEAT_S = 60
 
@@ -296,10 +279,7 @@ def load_freeze(out_root: Path, proto: dict) -> dict | None:
 
 
 def freeze_protocol(proto: dict, out_root: Path) -> dict:
-    """Reproducibility record written before held-out outcomes are produced (guide U15 step 3).
-
-    It records the canonical protocol content and hash, every input stream hash, the source identities
-    and the analysis definition at freeze time.  It is not proof that no human saw data."""
+    """Freeze the protocol, streams, sources, and analysis recipe before held-out runs."""
     body = {k: v for k, v in proto.items() if not k.startswith("_")}
     streams = {}
     manifest = load_manifest_v2(ROOT) if proto.get("streams_manifest") else None
@@ -385,11 +365,7 @@ def run_job(proto: dict, suite_name: str, pol: dict, seed: int, cap: int, out_ro
 
 def run_suite_v2(proto: dict, suite_name: str, out_root: Path, seeds: list[int] | None = None, cap: int | None = None,
                  mode: str = "replay", checkpoint_every: int = 1000, quiet: bool = False) -> dict:
-    """Run every (policy, stream) job of a suite that has no complete record; resume is by identity.
-
-    mode 'replay' keeps per-move records in memory (short games, the smoke suite); mode 'summary' streams
-    with checkpoints (long games).  Failed jobs are recorded under raw/quality/<key>.failed.json and counted;
-    the function never turns a crash into a game outcome."""
+    """Run missing suite jobs by identity; record crashes as failures, never game outcomes."""
     suite = proto["suites"][suite_name]
     lo, hi = suite["streams"]["seeds"]
     seeds = seeds if seeds is not None else list(range(lo, hi + 1))
