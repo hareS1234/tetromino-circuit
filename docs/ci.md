@@ -50,6 +50,6 @@ inputs. The check catches local workflow mistakes. GitHub Actions still provides
 
 ## Remote status
 
-The pinned `fast` and `hdl` jobs passed at [`f4a8bf8d5fc5`](https://github.com/hareS1234/tetromino-circuit/actions/runs/34015987600). The original U03 blocked record remains historical; U20 carries the live remote-run evidence.
+The pinned `fast` and `hdl` jobs passed at [`b081d4bf53d9`](https://github.com/hareS1234/tetromino-circuit/actions/runs/34017474589). The original U03 blocked record remains historical; U20 carries the live remote-run evidence.
 
 The separate `.github/workflows/release-check.yml` runs the full release validator on linux-x64. That platform choice matters because the published route identities include Linux tool version strings. Its full-history checkout is intentional too: the v1 validator checks tags.
