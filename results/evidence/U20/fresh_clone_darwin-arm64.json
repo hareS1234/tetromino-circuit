@@ -1,0 +1,48 @@
+{
+ "schema": "fresh-clone-check-v2",
+ "family": "darwin-arm64",
+ "ok": false,
+ "clone_commit": "d6f70e6efb8094cc0771f932bcce91dc713a5573",
+ "clone_dir": "/var/folders/6p/g3k2clxj18x46dj1xz91mp0m0000gn/T//tetromino-fresh.7bhdcb/tetromino-circuit",
+ "recorded_utc": "2026-09-06T04:16:11Z",
+ "host": {
+  "os": "macOS-15.6.1-arm64-arm-64bit-Mach-O",
+  "system": "Darwin",
+  "machine": "arm64",
+  "cpu": "Apple M4",
+  "python": "3.11.15",
+  "compiler": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+  "tools": {
+   "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+   "nextpnr_ecp5": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
+   "verilator": "Verilator 5.051 devel rev v5.050-309-g228635918 (mod)"
+  },
+  "host_observation": {
+   "schema": "host-observation-v1",
+   "platform": "Darwin-arm64",
+   "asset_family": "darwin-arm64",
+   "release": "2026-09-04",
+   "asset": "oss-cad-suite-darwin-arm64-20260904.tgz",
+   "asset_url": "https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2026-09-04/oss-cad-suite-darwin-arm64-20260904.tgz",
+   "archive_sha256_observed": "21c02252506ad636a24909fb42cbe6864123a98519e4daf91e060bdd7ef39db6",
+   "archive_sha256_expected": "21c02252506ad636a24909fb42cbe6864123a98519e4daf91e060bdd7ef39db6",
+   "python": "3.11",
+   "python_full": "3.11.15",
+   "venv": ".venv",
+   "os_release": "macOS-15.6.1-arm64-arm-64bit",
+   "cxx": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+   "verilator": "Verilator 5.051 devel rev v5.050-309-g228635918 (mod)",
+   "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+   "nextpnr_ecp5": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
+   "recorded_utc": "2026-09-06T03:20:24Z"
+  }
+ },
+ "steps": [
+  {
+   "name": "bootstrap",
+   "exit_code": 1,
+   "elapsed_s": 0,
+   "command": "bash scripts/bootstrap.sh"
+  }
+ ]
+}
