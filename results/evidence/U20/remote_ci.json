@@ -1,0 +1,13 @@
+{
+ "schema": "remote-ci-run-v1",
+ "url": "https://github.com/hareS1234/tetromino-circuit/actions/runs/34012898896",
+ "sha": "4a68e3b79f87f7154751954bbf4482fb82c5a943",
+ "ok": true,
+ "jobs": [
+  "fast",
+  "hdl"
+ ],
+ "conclusion": "success",
+ "workflow": ".github/workflows/ci.yml",
+ "recorded_by": "maintainer"
+}
