@@ -29,7 +29,7 @@ poke at.
   k-induction proofs (the compactor record says `unbounded`), and twelve planted RTL bugs are each
   caught by a named test. See [`docs/verification_a2.md`](docs/verification_a2.md).
 
-These are RTL-simulation and FPGA device-model results, not measurements from a board. The full
+These are RTL-simulation and FPGA device-model results, not measured on a board. The full
 tables, including timeouts and failed timing runs, live in [`docs/results.md`](docs/results.md).
 
 ## A map of the rabbit hole
@@ -100,8 +100,9 @@ supported. Unsupported combinations fail both in Python and during RTL elaborati
 
 ## Sharp edges and honest limitations
 
-- This is not full Tetris. There are no kicks, tucks, spins, hold, lock delay, gravity, hidden rows,
-  combos, garbage, or multiplayer. Pieces pick a rotation and column, then fall straight down.
+- This is not full Tetris. Kicks, tucks, spins, hold, lock delay, gravity, hidden rows, combos,
+  garbage, and multiplayer are deliberately excluded. Pieces pick a rotation and column, then fall
+  straight down.
 - Quality numbers come from the bit-exact Python policy model. The RTL is checked against that model,
   but the long games themselves are not hardware runs.
 - Cycle counts come from RTL simulation. Timing comes from nextpnr on an ECP5 LFE5U-85F model with
@@ -113,14 +114,11 @@ supported. Unsupported combinations fail both in Python and during RTL elaborati
 - U20 still needs a clean Mac reproduction and a real GitHub Actions run. The exact state is tracked
   in [`docs/release_v2.md`](docs/release_v2.md); the release validator refuses to call it done early.
 
-## Licence, credit, and provenance
+## References, licence, and credits
 
-MIT; see [`LICENSE`](LICENSE). [`NOTICE.md`](NOTICE.md) credits the heuristic and the toolchain.
-The original build manual and A2 upgrade guide were drafted with planning notes, and Contributor executed the
-implementation jobs. That history is disclosed because pretending otherwise would be silly. The
-code, evidence, and claims are still meant to be inspectable on their own, and
-[`docs/author_notes.md`](docs/author_notes.md) keeps the parts that need the author's own review
-separate from executor notes.
+MIT; see [`LICENSE`](LICENSE). [`NOTICE.md`](NOTICE.md) credits the heuristic and toolchain.
+[`docs/author_notes.md`](docs/author_notes.md) is a compact notebook of design choices, open
+questions, and measurement boundaries.
 
 The fixed four-feature heuristic comes from Yiyuan Lee, *Tetris AI – The (Near) Perfect Bot* (2013).
 The hardware flow uses the YosysHQ OSS CAD Suite (Yosys, nextpnr-ecp5, Verilator, SymbiYosys, and

@@ -14,18 +14,18 @@
   "summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)",
   "summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)",
   "summary: engine_0 (smtbmc boolector) returned pass",
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/reducer_cover/engine_0/trace0.vcd",
+  "summary: cover trace: build/formal/reducer_cover/engine_0/trace0.vcd",
   "summary:   reached cover statement reducer_proof._witness_.check_cover_reducer_proof_sv_76_124 at reducer_proof.sv:76.17-76.86",
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/reducer_cover/engine_0/trace1.vcd",
+  "summary: cover trace: build/formal/reducer_cover/engine_0/trace1.vcd",
   "summary:   reached cover statement reducer_proof._witness_.check_cover_reducer_proof_sv_74_112 at reducer_proof.sv:74.17-74.87",
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/reducer_cover/engine_0/trace2.vcd",
+  "summary: cover trace: build/formal/reducer_cover/engine_0/trace2.vcd",
   "summary:   reached cover statement reducer_proof._witness_.check_cover_reducer_proof_sv_75_119 at reducer_proof.sv:75.17-75.67",
   "DONE (PASS, rc=0)"
  ],
  "traces": [
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/reducer_cover/engine_0/trace0.vcd",
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/reducer_cover/engine_0/trace1.vcd",
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/reducer_cover/engine_0/trace2.vcd"
+  "summary: cover trace: build/formal/reducer_cover/engine_0/trace0.vcd",
+  "summary: cover trace: build/formal/reducer_cover/engine_0/trace1.vcd",
+  "summary: cover trace: build/formal/reducer_cover/engine_0/trace2.vcd"
  ],
  "workdir": "build/formal/reducer_cover",
  "log": "build/formal/reducer_cover/logfile.txt",

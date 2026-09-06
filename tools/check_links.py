@@ -33,7 +33,7 @@ def anchors_of(path: Path) -> set[str]:
 
 def check(root: Path) -> tuple[list[str], int, int, int]:
     """Return (problems, links checked, external links, documents scanned) for the Markdown under root."""
-    docs = [root / "README.md", root / "NOTICE.md", root / "PROJECT_NOTES.md", root / "PROJECT_NOTES.md"] + sorted((root / "docs").rglob("*.md"))
+    docs = [root / "README.md", root / "NOTICE.md"] + sorted((root / "docs").rglob("*.md"))
     problems, external, checked, n_docs = [], 0, 0, 0
     for doc in docs:
         if not doc.is_file():

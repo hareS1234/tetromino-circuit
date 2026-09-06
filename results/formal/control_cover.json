@@ -14,15 +14,15 @@
   "summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)",
   "summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)",
   "summary: engine_0 (smtbmc boolector) returned pass",
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/control_cover/engine_0/trace0.vcd",
+  "summary: cover trace: build/formal/control_cover/engine_0/trace0.vcd",
   "summary:   reached cover statement abstract_pipe._witness_.check_cover_abstract_pipe_sv_90_112 at abstract_pipe.sv:90.17-90.36",
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/control_cover/engine_0/trace1.vcd",
+  "summary: cover trace: build/formal/control_cover/engine_0/trace1.vcd",
   "summary:   reached cover statement abstract_pipe._witness_.check_cover_abstract_pipe_sv_91_115 at abstract_pipe.sv:91.17-91.74 step 7",
   "DONE (PASS, rc=0)"
  ],
  "traces": [
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/control_cover/engine_0/trace0.vcd",
-  "summary: cover trace: /home/user/tetromino-circuit/build/formal/control_cover/engine_0/trace1.vcd"
+  "summary: cover trace: build/formal/control_cover/engine_0/trace0.vcd",
+  "summary: cover trace: build/formal/control_cover/engine_0/trace1.vcd"
  ],
  "workdir": "build/formal/control_cover",
  "log": "build/formal/control_cover/logfile.txt",

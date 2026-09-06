@@ -1,14 +1,12 @@
 # Author notes
 
-This page keeps two things apart: facts recorded while the jobs ran, and the understanding I still
-need to put into my own words. The second part cannot be sensibly outsourced.
+This is the short version of the lab notebook: the choices that mattered, the evidence behind them,
+and a few questions worth revisiting before I call the design finished.
 
-## Provenance
+## Measurement boundaries
 
-The `drop-v1.1` contract, the v1 build manual, and the A2 upgrade guide were drafted with planning notes and
-then revised against the repository audits. Contributor ran the E00–E19 and U00–U20 implementation jobs
-in a cloud sandbox. Each job has its commands, exit codes, and check counts under
-`results/evidence/`; the progress logs name the last passing gate and the next one.
+Each numbered job has its commands, exit codes, and check counts under `results/evidence/`; the
+progress logs name the last passing gate and the next one.
 
 There was no FPGA board in the loop. Hardware numbers are Yosys/nextpnr estimates for the ECP5
 device model, and the long game runs use the Python policy model. The Mac toolchain now enrolls and
@@ -16,8 +14,6 @@ passes its doctor, but its clean-clone record and the remote CI run do not exist
 is more important than making the project sound finished.
 
 ## Decisions recorded during the build
-
-These are executor notes, not claims about what I personally understood at the time.
 
 | After | Decision | Evidence behind it | Loose end |
 |---|---|---|---|

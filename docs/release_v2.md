@@ -29,7 +29,7 @@ is real.
 | The long-run study handles censoring and leaves the old study untouched | satisfied: restricted means, product-limit survival, and medians only where observed; `make check-v1-results` still passes | `docs/quality_v2.md`, frozen `results/quality.csv` |
 | README, viewer, reports, manifests, and result links agree | satisfied by `make check-report-v2` | `docs/claims.json` |
 | The maintainer's actual demo machine and remote CI have passed their stated checks | **blocked** (see the platform ledger) | `results/evidence/U20/` |
-| The author can explain the guide's twelve review questions | an author exercise, not an automated gate | `docs/author_notes.md` |
+| The author can explain the main design and measurement choices | an author exercise, not an automated gate | `docs/author_notes.md` |
 
 ## Why the full validator runs on Linux
 

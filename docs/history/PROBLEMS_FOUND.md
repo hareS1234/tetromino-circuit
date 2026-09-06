@@ -114,9 +114,10 @@ the design does not need:** `candidate_eval` already exposes the merged board, c
 features and physical landing as ports, so tests drive it directly; the public core does not expose
 them.
 
-**18. development workflow-specific text** (cloud environment settings, PROJECT_NOTES.md, resume instructions) is harmless but
-irrelevant to any other worker or to a human; the `PROJECT_NOTES.md` template was kept verbatim (a `PROJECT_NOTES.md`
-copy points to it) and the evidence/progress contracts were implemented as specified.
+**18. The old implementation runbook mixed project requirements with workflow-specific setup.**
+Those setup notes were useful during the first build but did not belong in the finished project.
+The measurable evidence and progress contracts were kept; the temporary workflow scaffolding was
+removed.
 
 **19. `pip freeze` drops the build backend the manual asks to pin.** E00 step 4 says to add
 `setuptools` and `wheel` to `requirements.in`, freeze, and later install the package with

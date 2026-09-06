@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Fresh-clone reproduction (v1 manual 8.5, upgrade guide U20): clone the committed state into a
-# temporary directory, bootstrap from the committed locks, and run the release's reproduction steps
+# Fresh-clone reproduction: clone the committed state into a temporary directory, bootstrap from
+# the committed locks, and run the release's reproduction steps
 # from scratch: doctor, the Python tests, the smoke flow, directed RTL tests, the native A2 core
 # subset, the A2 trace/demo regeneration, the viewer and report checks.  Every step's exit code and
 # elapsed time, the host facts (OS, CPU, Python, compiler, tool versions) and the clone's commit are
@@ -15,7 +15,19 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/tetromino-fresh.XXXXXX")"
 COUNT="${FRESH_COUNT:-50}"
-FAMILY="$(python3 - "$ROOT" <<'EOF'
+if [ -n "${PYTHON:-}" ]; then
+  BOOTSTRAP_PYTHON="$PYTHON"
+else
+  BOOTSTRAP_PYTHON=""
+  for candidate in "$ROOT/.venv/bin/python" python3.12 python3.11 python3; do
+    if command -v "$candidate" >/dev/null 2>&1 && "$candidate" -c 'import sys; raise SystemExit(sys.version_info[:2] not in ((3, 11), (3, 12)))'; then
+      BOOTSTRAP_PYTHON="$(command -v "$candidate")"
+      break
+    fi
+  done
+fi
+[ -n "$BOOTSTRAP_PYTHON" ] || { echo "[fresh] Python 3.11 or 3.12 is required" >&2; exit 1; }
+FAMILY="$("$BOOTSTRAP_PYTHON" - "$ROOT" <<'EOF'
 import json, platform, sys
 lock = json.load(open(sys.argv[1] + "/toolchains/oss_cad_suite.lock.json"))
 print(lock["platform_map"].get(f"{platform.system()}-{platform.machine()}", "unsupported"))
@@ -98,7 +110,7 @@ print("[fresh] record ->", out)
 EOF
 }
 
-step bootstrap bash scripts/bootstrap.sh
+step bootstrap env PYTHON="$BOOTSTRAP_PYTHON" bash scripts/bootstrap.sh
 step doctor bash scripts/env.sh python tools/doctor.py --profile full
 step test-python make test-python
 step smoke make smoke

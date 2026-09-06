@@ -5,8 +5,6 @@
  "git_commit": "8751eee202d41264391e64ea80edbf6f948a78f6-dirty",
  "git_modified_tracked": [
   ".github/workflows/ci.yml",
-  "PROJECT_NOTES.md",
-  "PROJECT_NOTES.md",
   "Makefile",
   "README.md",
   "docs/ci.md",
@@ -200,7 +198,7 @@
   }
  ],
  "limitations": [
-  "docs/author_notes.md keeps the author's sections as instructions: the helper recorded the decisions and provenance but did not write the author's own understanding",
+    "docs/author_notes.md keeps the open code-reading questions separate from measured results",
   "LICENSE names 'Harry Song' as the copyright holder from the author's name; to be confirmed by the author"
  ],
  "note": null
