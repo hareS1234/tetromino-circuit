@@ -172,7 +172,10 @@ def test_real_manifest_structure():
         assert pf["status"] in ("executed", "blocked")
         if pf["status"] == "blocked":
             assert pf["reason"]
-    assert {pf["family"] for pf in m["platforms"] if pf["status"] == "blocked"} == {"darwin-arm64", "remote-ci"}
+    assert {pf["family"] for pf in m["platforms"] if pf["status"] == "blocked"} <= {"darwin-arm64", "remote-ci"}
+    for pf in m["platforms"]:
+        if pf["status"] == "executed":
+            assert pf.get("evidence"), f"{pf['family']}: executed without an evidence path"
     for fi in m["frozen_inputs"]:
         assert (ROOT / fi["path"]).is_file(), fi["path"]
         assert hashlib.sha256((ROOT / fi["path"]).read_bytes()).hexdigest() == fi["sha256"], f"{fi['path']} changed since the manifest was written"
@@ -180,13 +183,17 @@ def test_real_manifest_structure():
     assert m["expensive_measurements"]["hardware"]["jobs"] == 84
 
 
-def test_structural_run_reports_blocked_as_not_releasable():
-    """The real manifest, structural checks only: exit code is nonzero while platforms are blocked."""
+def test_structural_run_verdict_matches_exit_code():
+    """The real manifest, structural checks only: exactly one verdict line, and exit 0 iff it says releasable."""
     r = subprocess.run([sys.executable, "tools/check_release_v2.py", "--no-subchecks"], cwd=ROOT, capture_output=True, text=True)
     out = r.stdout
     assert "CHECK release_v2_platforms_executed" in out
-    assert r.returncode != 0
-    assert ("NOT RELEASABLE" in out) or ("FAIL" in out)
+    verdicts = [ln for ln in out.splitlines() if ln.startswith("check-release-v2:")]
+    assert len(verdicts) == 1
+    if "OK — releasable" in verdicts[0]:
+        assert r.returncode == 0 and "(blocked: none)" in out
+    else:
+        assert r.returncode != 0 and ("NOT RELEASABLE" in verdicts[0] or "FAIL" in verdicts[0])
 
 
 def test_expect_blocked_returns_zero_only_for_the_blocked_only_outcome():
@@ -195,3 +202,17 @@ def test_expect_blocked_returns_zero_only_for_the_blocked_only_outcome():
         assert r.returncode == 0 and "CHECK release_v2_executed_checks_passed 1/1" in r.stdout
     else:
         assert r.returncode != 0          # problems remain, or nothing is blocked (then the flag itself is refused)
+
+
+def test_release_manifest_is_not_part_of_the_source_closure(tmp_path):
+    """Editing the release scope (blocked -> executed) must not change the closure that relates the measurements."""
+    from tools.identity import SOURCE_EXCLUDE, source_closure_sha256
+    assert "benchmarks/release_v2.json" in SOURCE_EXCLUDE
+    (tmp_path / "benchmarks").mkdir()
+    (tmp_path / "benchmarks" / "hardware.json").write_text("{}")
+    (tmp_path / "benchmarks" / "release_v2.json").write_text('{"a": 1}')
+    before = source_closure_sha256(tmp_path)
+    (tmp_path / "benchmarks" / "release_v2.json").write_text('{"a": 2}')
+    assert source_closure_sha256(tmp_path) == before
+    (tmp_path / "benchmarks" / "hardware.json").write_text('{"changed": true}')
+    assert source_closure_sha256(tmp_path) != before

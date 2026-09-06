@@ -286,6 +286,7 @@ SUBCHECKS = [
     ("links", [sys.executable, "tools/check_links.py"]),
     ("claims", [sys.executable, "tools/check_claims.py"]),
     ("ci_workflow", [sys.executable, "tools/ci_local.py", "--validate"]),
+    ("ci_workflow_release", [sys.executable, "tools/ci_local.py", "--workflow", "release-check.yml", "--validate"]),
 ]
 
 

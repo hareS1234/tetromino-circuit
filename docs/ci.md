@@ -43,8 +43,11 @@ inputs at their defaults, `$GITHUB_OUTPUT` emulated) and prints `CHECK ci_job_<n
 No remote repository, GitHub credentials or `gh` are available in the environment that produced
 this branch, so the workflow has not run on GitHub. U03's remote gate is recorded as **blocked**
 in `results/evidence/U03/summary.json` (the local job executions are recorded there as supporting
-evidence). U20 added the A2 checks to the `fast` and `hdl` tiers and validated the workflow locally
-again, but the remote run itself remains **blocked** (`benchmarks/release_v2.json`, platform
+evidence). U20 added the A2 checks to the `fast` and `hdl` tiers, a manually dispatched
+`release-check` workflow (`.github/workflows/release-check.yml`: bootstrap, doctor, `make check-release-v2`
+on linux-x64 with a full-history checkout — the platform whose tool identities match the recorded
+measurements, see `docs/release_v2.md`) and validated both workflows locally again, but the remote run
+itself remains **blocked** (`benchmarks/release_v2.json`, platform
 `remote-ci`; `docs/release_v2.md`): whoever publishes the repository must push the release commit,
 inspect the run, fix concrete failures, pin the action SHAs, and record the run URL, commit SHA and
 conclusion in `results/evidence/U20/remote_ci.json` before `make check-release-v2` can report the

@@ -4,6 +4,7 @@
     python tools/ci_local.py --validate            # structure, action refs, Make targets, expressions
     python tools/ci_local.py --job fast            # run every `run:` step of the job here, in order
     python tools/ci_local.py --job hdl --list      # show the steps without running them
+    python tools/ci_local.py --workflow release-check.yml --validate   # another workflow file (default ci.yml)
 
 Local execution follows the workflow file literally: composite-action steps are expanded, `uses:`
 steps that need the GitHub runtime (checkout, setup-python, cache, upload-artifact) are skipped and
@@ -25,7 +26,8 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-WORKFLOW = ROOT / ".github" / "workflows" / "ci.yml"
+WORKFLOWS = ROOT / ".github" / "workflows"
+WORKFLOW = WORKFLOWS / "ci.yml"          # selected by --workflow at run time
 RUNTIME_ACTIONS = ("actions/checkout@", "actions/setup-python@", "actions/cache@", "actions/upload-artifact@")
 EXPR_RE = re.compile(r"\$\{\{\s*(.*?)\s*\}\}")
 
@@ -201,14 +203,20 @@ def main() -> int:
     ap.add_argument("--job", default=None)
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--event", default="push", help="github.event_name to emulate (push, pull_request, workflow_dispatch)")
+    ap.add_argument("--workflow", default="ci.yml", help="workflow file under .github/workflows/ (default ci.yml)")
     args = ap.parse_args()
+    global WORKFLOW
+    WORKFLOW = WORKFLOWS / args.workflow
+    if not WORKFLOW.is_file():
+        ap.error(f"no such workflow file: {WORKFLOW}")
     if not args.validate and not args.job:
         ap.error("--validate and/or --job required")
     if args.validate:
         problems = validate()
         wf = load_yaml(WORKFLOW)
         n = len(wf["jobs"])
-        print(f"CHECK ci_workflow {n - len({p.split(':')[0] for p in problems})}/{n}")
+        label = "ci_workflow" if args.workflow == "ci.yml" else f"ci_workflow_{Path(args.workflow).stem.replace('-', '_')}"
+        print(f"CHECK {label} {n - len({p.split(':')[0] for p in problems})}/{n}")
         if problems:
             print("ci-local: workflow validation FAILED")
             for p in problems:

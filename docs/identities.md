@@ -89,3 +89,12 @@ duplicate jobs), one source and one toolchain identity, a committed summary equa
 recomputation, and evidence with nonempty commands and zero exit codes. `tools/check_release.py`
 uses it instead of the former minimum row counts. The v2 release validator (U20) applies the same
 membership rule to the U-jobs and the v2 manifests.
+
+## Source closure exclusions (U20)
+
+`tools/identity.py::SOURCE_EXCLUDE` removes `benchmarks/release_v2.json` from the source closure: the
+release manifest describes the scope of the measurements after the fact (which platforms executed,
+which are blocked) and is not an input to any of them, so flipping a row from blocked to executed must
+not make the recorded closures look stale. Tool identities are version strings, so the same suite
+release on another platform (the darwin build) yields different synthesis/route/native keys; validators
+that re-plan keys run where the measurements were made (`docs/release_v2.md`).

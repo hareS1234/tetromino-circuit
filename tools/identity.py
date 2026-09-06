@@ -216,6 +216,8 @@ def model_closure_sha256(root: Path = ROOT) -> str:
 
 SOURCE_PATTERNS = ("model/*.py", "rtl/*.sv", "rtl/*.f", "rtl/generated/*.svh", "tb/*.py", "tools/*.py", "sim/*.cpp",
                    "tests/**/*.py", "tests/fixtures/*.json", "benchmarks/*.json", "Makefile", "scripts/*.sh")
+# declared *after* the measurements and describing their release scope, never an input to any of them
+SOURCE_EXCLUDE = ("benchmarks/release_v2.json",)
 
 
 def source_closure_sha256(root: Path = ROOT) -> str:
@@ -224,7 +226,7 @@ def source_closure_sha256(root: Path = ROOT) -> str:
     recs = []
     for pat in SOURCE_PATTERNS:
         for p in sorted(root.glob(pat)):
-            if p.is_file():
+            if p.is_file() and p.relative_to(root).as_posix() not in SOURCE_EXCLUDE:
                 recs.append(file_record(p, root))
     return sha256_of(recs)
 

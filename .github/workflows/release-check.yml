@@ -1,0 +1,32 @@
+# Release validation on the platform that produced the expensive measurements (U20).  The v2 identities
+# (synthesis/route/native keys) include the pinned tools' version strings, so `make check-release-v2` must
+# run on linux-x64 with the pinned OSS CAD Suite — this hosted runner — not on the maintainer's Mac, whose
+# darwin build of the same suite yields different keys.  Dispatch it after the Mac fresh-clone record and the
+# remote CI record are committed and benchmarks/release_v2.json marks them executed; a NOT RELEASABLE or FAIL
+# verdict fails the job.  Tags are checked by the v1 validator, hence the full-history checkout.
+name: release-check
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/bootstrap
+      - run: make doctor
+      - run: make check-release-v2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-check
+          path: |
+            build/release_v2_check.json
+            results/evidence/U20/**
+          if-no-files-found: ignore

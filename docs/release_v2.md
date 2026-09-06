@@ -33,19 +33,44 @@ never counted as satisfied, and the tag `v2.0-a2` must not exist while anything 
 | The maintainer's actual demo machine and remote CI have passed their stated checks | **blocked** (see the platform table) | `results/evidence/U20/` |
 | The author can explain the twelve questions of guide §12.5 | to be done by the author (`docs/author_notes.md`) | — |
 
+## Where the validator can run
+
+The v2 identities that relate the expensive measurements to the sources (synthesis, route and native
+keys; `docs/identities.md`) include the pinned tools' *version strings*. The darwin build of the same OSS
+CAD Suite release prints different strings, so on the Mac `make check-hardware-v2` re-plans different
+keys and reports the Linux route records as missing — that is the identity system doing its job, not a
+defect in the records. `make check-release-v2` is therefore run on linux-x64 with the pinned suite: the
+`release-check` workflow (`.github/workflows/release-check.yml`, manual dispatch, full-history checkout
+for the v1 tag check) does exactly that on a hosted runner and uploads `build/release_v2_check.json`.
+The Mac's job is the reproduction record (`scripts/fresh_clone_check.sh`), the demo inspection and the
+lock enrolment.
+
 ## Executing the blocked items
 
-On the Mac, from a clean clone of the release commit:
+1. **On the Mac** (Apple silicon), in `tetromino-circuit/` with Python 3.11 or 3.12 on `PATH` (or
+   `PYTHON=/path/to/python3.12`), Xcode command-line tools, `make`, `git`, `curl`:
 
-```bash
-bash scripts/bootstrap.sh --enroll          # records the darwin-arm64 asset hash in the lock for review
-bash scripts/fresh_clone_check.sh           # writes results/evidence/U20/fresh_clone_darwin-arm64.json
-open viewer/demo.html                       # inspect the replay; open assets/a2_pipeline.gif
-```
+   ```bash
+   PYTHON=python3.12 bash scripts/bootstrap.sh --enroll      # downloads the darwin-arm64 asset, records its sha256 in the lock
+   python3 - <<'EOF2'
+   import json, pathlib
+   p = pathlib.Path("toolchains/oss_cad_suite.lock.json"); d = json.loads(p.read_text())
+   d["assets"]["darwin-arm64"]["status"] = "verified"        # after comparing the recorded hash with the release page
+   p.write_text(json.dumps(d, indent=1) + "\n")
+   EOF2
+   git add toolchains/oss_cad_suite.lock.json results/host/Darwin-arm64.json && git commit -m "Enrol the darwin-arm64 toolchain asset"
+   REUSE_ARCHIVE=1 PYTHON=python3.12 bash scripts/fresh_clone_check.sh    # writes results/evidence/U20/fresh_clone_darwin-arm64.json
+   open viewer/demo.html                                    # inspect the replay; assets/a2_pipeline.gif is the GIF
+   ```
 
-Commit the enrolled lock entry, `results/host/darwin-arm64.json` and the evidence record, set the
-`darwin-arm64` row of `benchmarks/release_v2.json` to `executed` with that evidence path, and re-run
-`make check-release-v2`. For CI: push the release commit to the remote repository, let the `fast` and
-`hdl` tiers run, and record the successful run URL and SHA in `results/evidence/U20/remote_ci.json`
-(`{"schema": "remote-ci-run-v1", "url": …, "sha": …, "jobs": …}`), then set the `remote-ci` row to
-`executed`. Only when the validator prints `OK — releasable` is `git tag v2.0-a2` permitted.
+   Commit the record. The fresh clone must see the *committed* lock, hence the commit before the check.
+2. **Remote CI**: push the branch to the GitHub repository; the `checks` workflow (`fast` + `hdl`) runs on
+   push. Record the successful run in `results/evidence/U20/remote_ci.json`:
+
+   ```json
+   {"schema": "remote-ci-run-v1", "url": "https://github.com/<owner>/<repo>/actions/runs/<id>", "sha": "<commit>", "ok": true, "jobs": ["fast", "hdl"]}
+   ```
+3. **Mark both executed** in `benchmarks/release_v2.json` (platform rows `darwin-arm64` and `remote-ci`,
+   gate rows `mac-reproduction` and `remote-ci-run`: `"status": "executed"` plus the `evidence` path), update
+   the two rows of the platform table above, commit, push, and dispatch the `release-check` workflow at that
+   commit. Only when it prints `check-release-v2: OK — releasable` is `git tag v2.0-a2` permitted.
