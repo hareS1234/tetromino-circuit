@@ -47,30 +47,40 @@ lock enrolment.
 
 ## Executing the blocked items
 
-1. **On the Mac** (Apple silicon), in `tetromino-circuit/` with Python 3.11 or 3.12 on `PATH` (or
-   `PYTHON=/path/to/python3.12`), Xcode command-line tools, `make`, `git`, `curl`:
+`scripts/release_unblock.py` (standard library only) performs the bookkeeping steps and refuses to run
+ahead of its evidence; the measurements themselves come from `scripts/bootstrap.sh --enroll`,
+`scripts/fresh_clone_check.sh` and the GitHub run.
+
+1. **On the Mac** (Apple silicon), in `tetromino-circuit/`, with Xcode command-line tools, `make`,
+   `git`, `curl` and Python 3.11 or 3.12 (`PYTHON=/path/to/python3.12` if `python3` is another version):
 
    ```bash
-   PYTHON=python3.12 bash scripts/bootstrap.sh --enroll      # downloads the darwin-arm64 asset, records its sha256 in the lock
-   python3 - <<'EOF2'
-   import json, pathlib
-   p = pathlib.Path("toolchains/oss_cad_suite.lock.json"); d = json.loads(p.read_text())
-   d["assets"]["darwin-arm64"]["status"] = "verified"        # after comparing the recorded hash with the release page
-   p.write_text(json.dumps(d, indent=1) + "\n")
-   EOF2
-   git add toolchains/oss_cad_suite.lock.json results/host/Darwin-arm64.json && git commit -m "Enrol the darwin-arm64 toolchain asset"
-   REUSE_ARCHIVE=1 PYTHON=python3.12 bash scripts/fresh_clone_check.sh    # writes results/evidence/U20/fresh_clone_darwin-arm64.json
-   open viewer/demo.html                                    # inspect the replay; assets/a2_pipeline.gif is the GIF
+   bash scripts/bootstrap.sh --enroll                # downloads the darwin-arm64 asset (~740 MB), records its sha256 in the lock
+   python3 scripts/release_unblock.py verify-lock    # after comparing the hash with the release page: status -> verified
+   git add toolchains/oss_cad_suite.lock.json docs/toolchain.md results/host/Darwin-arm64.json
+   git commit -m "Enrol the darwin-arm64 toolchain asset"
+   REUSE_ARCHIVE=1 bash scripts/fresh_clone_check.sh # clean clone of that commit -> results/evidence/U20/fresh_clone_darwin-arm64.json
+   open viewer/demo.html assets/a2_pipeline.gif      # inspect the replay and the GIF
+   git add results/evidence/U20/fresh_clone_darwin-arm64.json && git commit -m "Record the Mac fresh-clone reproduction"
    ```
 
-   Commit the record. The fresh clone must see the *committed* lock, hence the commit before the check.
-2. **Remote CI**: push the branch to the GitHub repository; the `checks` workflow (`fast` + `hdl`) runs on
-   push. Record the successful run in `results/evidence/U20/remote_ci.json`:
+   The fresh clone must see the *committed* lock, hence the commit before the check.
+2. **Remote CI**: push the branch; the `checks` workflow (`fast` + `hdl`) runs on push. When both jobs are
+   green, record the run:
 
-   ```json
-   {"schema": "remote-ci-run-v1", "url": "https://github.com/<owner>/<repo>/actions/runs/<id>", "sha": "<commit>", "ok": true, "jobs": ["fast", "hdl"]}
+   ```bash
+   python3 scripts/release_unblock.py ci-record https://github.com/<owner>/<repo>/actions/runs/<id> <commit-sha>
+   git add results/evidence/U20/remote_ci.json && git commit -m "Record the remote CI run"
    ```
-3. **Mark both executed** in `benchmarks/release_v2.json` (platform rows `darwin-arm64` and `remote-ci`,
-   gate rows `mac-reproduction` and `remote-ci-run`: `"status": "executed"` plus the `evidence` path), update
-   the two rows of the platform table above, commit, push, and dispatch the `release-check` workflow at that
-   commit. Only when it prints `check-release-v2: OK — releasable` is `git tag v2.0-a2` permitted.
+3. **Mark both executed, validate on Linux, tag**:
+
+   ```bash
+   python3 scripts/release_unblock.py mark-executed  # release_v2.json, docs/release_v2.md, docs/upgrade_progress.md
+   git add -A && git commit -m "U20: Mac reproduction and remote CI recorded" && git push
+   ```
+
+   Then dispatch the `release-check` workflow on GitHub (Actions → release-check → Run workflow, branch
+   `upgrade/a2`). Only when its `make check-release-v2` step prints `check-release-v2: OK — releasable` is
+   `git tag -a v2.0-a2 -m "A2 architecture study" && git push origin v2.0-a2` permitted. Running
+   `make check-release-v2` on the Mac itself reports the Linux route records as missing (different tool
+   identities, see above) — that is expected, not a failure of the records.

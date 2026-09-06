@@ -3,9 +3,11 @@
  "manifest": "benchmarks/release_v2.json",
  "manifest_sha256": "c514819d8b3de4faa9de3a19a5ed9743b12e211af5b0c4822c3c270e4261b993",
  "git": {
-  "head": "a2aca56d7355b0c0dad1f9862fdf3cb00e1d0d7f",
+  "head": "87aafaec79ae524a076839e97a946d45d7a48e8b",
   "dirty_tracked": [
-   "esults/evidence/U20/fresh_clone_linux-x64.json"
+   "esults/evidence/U20/fresh_clone_linux-x64.json",
+   "results/evidence/U20/release_check.json",
+   "results/evidence/U20/summary.json"
   ],
   "tags": [
    "v0.1-python",
@@ -47,7 +49,7 @@
  ],
  "problems": [],
  "notes": [
-  "note: hardware summary source closure 8a93f90eb814 != live 16dd41c43d64 (measurement identities checked above)"
+  "note: hardware summary source closure 8a93f90eb814 != live 6f542fa3cba3 (measurement identities checked above)"
  ],
  "subchecks": [
   "subcheck v1_release: exit 0; CHECK quality_jobs 640/640",
@@ -62,7 +64,8 @@
   "subcheck report_v2: exit 0",
   "subcheck links: exit 0; CHECK links 43/43 (30 documents, 43 external links not fetched)",
   "subcheck claims: exit 0; CHECK claims 53/53",
-  "subcheck ci_workflow: exit 0; CHECK ci_workflow 3/3"
+  "subcheck ci_workflow: exit 0; CHECK ci_workflow 3/3",
+  "subcheck ci_workflow_release: exit 0; CHECK ci_workflow_release_check 1/1"
  ],
  "releasable": false
 }

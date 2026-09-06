@@ -2,17 +2,16 @@
  "schema": "upgrade-evidence-v1",
  "job": "U20",
  "status": "blocked",
- "git_commit": "a2aca56d7355b0c0dad1f9862fdf3cb00e1d0d7f-dirty",
+ "git_commit": "87aafaec79ae524a076839e97a946d45d7a48e8b-dirty",
  "git_modified_tracked": [
-  "results/evidence/U20/fresh_clone_linux-x64.json"
+  "results/evidence/U20/release_check.json",
+  "results/evidence/U20/summary.json"
  ],
- "git_untracked": [
-  "results/evidence/U20/release_check.json"
- ],
- "source_sha256": "16dd41c43d64c001821e19a490264dabea4c214ea9e14b250cdce9a2aaac8def",
+ "git_untracked": [],
+ "source_sha256": "6f542fa3cba35c89ae79d6cb7803a94937c342310e52383be62d1a71acbb6fa6",
  "configuration_id": "a2-cache-d1-p0-l1",
  "toolchain_id": "oss-cad-suite-2026-09-04",
- "recorded_utc": "2026-09-05T23:41:56Z",
+ "recorded_utc": "2026-09-06T00:22:41Z",
  "commands": [
   {
    "argv": [
@@ -20,10 +19,10 @@
     "scripts/fresh_clone_check.sh"
    ],
    "exit_code": 0,
-   "elapsed_s": 322.48,
+   "elapsed_s": 264.7,
    "log": "results/evidence/U20/cmd00.log",
    "counts": {
-    "pytest_passed": 455,
+    "pytest_passed": 456,
     "pytest_failed": 0,
     "rtl_total": 1,
     "rtl_failed": 0,
@@ -50,7 +49,7 @@
     "results/evidence/U20/release_check.json"
    ],
    "exit_code": 0,
-   "elapsed_s": 8.87,
+   "elapsed_s": 11.0,
    "log": "results/evidence/U20/cmd01.log",
    "counts": {
     "check_release_v2_frozen_inputs": "5/5",
@@ -71,6 +70,7 @@
     "check_links": "43/43",
     "check_claims": "53/53",
     "check_ci_workflow": "3/3",
+    "check_ci_workflow_release_check": "1/1",
     "check_release_v2_executed_checks_passed": "1/1"
    }
   },
@@ -80,10 +80,10 @@
     "test-release-v2"
    ],
    "exit_code": 0,
-   "elapsed_s": 0.95,
+   "elapsed_s": 0.66,
    "log": "results/evidence/U20/cmd02.log",
    "counts": {
-    "pytest_passed": 12
+    "pytest_passed": 13
    }
   },
   {
@@ -95,10 +95,27 @@
     "--validate"
    ],
    "exit_code": 0,
-   "elapsed_s": 0.1,
+   "elapsed_s": 0.06,
    "log": "results/evidence/U20/cmd03.log",
    "counts": {
     "check_ci_workflow": "3/3"
+   }
+  },
+  {
+   "argv": [
+    "bash",
+    "scripts/env.sh",
+    "python",
+    "tools/ci_local.py",
+    "--workflow",
+    "release-check.yml",
+    "--validate"
+   ],
+   "exit_code": 0,
+   "elapsed_s": 0.05,
+   "log": "results/evidence/U20/cmd04.log",
+   "counts": {
+    "check_ci_workflow_release_check": "1/1"
    }
   },
   {
@@ -111,10 +128,10 @@
     "fast"
    ],
    "exit_code": 0,
-   "elapsed_s": 60.9,
-   "log": "results/evidence/U20/cmd04.log",
+   "elapsed_s": 45.37,
+   "log": "results/evidence/U20/cmd05.log",
    "counts": {
-    "pytest_passed": 455,
+    "pytest_passed": 456,
     "check_quality_jobs": "640/640",
     "check_quality_summary_recomputed": "8/8",
     "check_route_jobs": "45/45",
@@ -169,9 +186,9 @@
    "name": "validator tests",
    "count_key": "pytest_passed",
    "values": [
-    455,
-    12,
-    455
+    456,
+    13,
+    456
    ],
    "ok": true
   },
@@ -184,18 +201,27 @@
     "3/3"
    ],
    "ok": true
+  },
+  {
+   "name": "release workflow valid",
+   "count_key": "check_ci_workflow_release_check",
+   "values": [
+    "1/1",
+    "1/1"
+   ],
+   "ok": true
   }
  ],
  "artifacts": [
   {
    "path": "results/evidence/U20/fresh_clone_linux-x64.json",
    "exists": true,
-   "bytes": 4272
+   "bytes": 4269
   },
   {
    "path": "results/evidence/U20/release_check.json",
    "exists": true,
-   "bytes": 2056
+   "bytes": 2221
   },
   {
    "path": "benchmarks/release_v2.json",
@@ -205,11 +231,16 @@
   {
    "path": "docs/release_v2.md",
    "exists": true,
-   "bytes": 5343
+   "bytes": 7155
+  },
+  {
+   "path": ".github/workflows/release-check.yml",
+   "exists": true,
+   "bytes": 1211
   }
  ],
  "limitations": [
-  "no tag was created: v2.0-a2 is permitted only when make check-release-v2 prints OK \u2014 releasable",
+  "no tag was created: v2.0-a2 is permitted only when make check-release-v2 prints OK \u2014 releasable (run on linux-x64, e.g. the release-check workflow, because tool identities differ per platform build)",
   "the local fast-tier run (tools/ci_local.py --job fast) is supporting evidence for the workflow, not a remote CI run",
   "blocked: the maintainer's Mac reproduction (darwin-arm64: lock entry unenrolled, nothing run there) and the remote CI run at the release commit (no remote repository, no run URL/SHA) were not executed; the Linux fresh-clone reproduction and the release validator's executed checks passed"
  ],

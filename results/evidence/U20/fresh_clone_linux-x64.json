@@ -2,14 +2,14 @@
  "schema": "fresh-clone-check-v2",
  "family": "linux-x64",
  "ok": true,
- "clone_commit": "a2aca56d7355b0c0dad1f9862fdf3cb00e1d0d7f",
- "clone_dir": "/tmp/tetromino-fresh.VnsdXj/tetromino-circuit",
- "recorded_utc": "2026-09-05T23:47:17Z",
+ "clone_commit": "87aafaec79ae524a076839e97a946d45d7a48e8b",
+ "clone_dir": "/tmp/tetromino-fresh.fY5I6v/tetromino-circuit",
+ "recorded_utc": "2026-09-06T00:27:05Z",
  "host": {
   "os": "Linux-6.18.44-fc-v24-x86_64-with-glibc2.39",
   "system": "Linux",
   "machine": "x86_64",
-  "cpu": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
   "python": "3.11.15",
   "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
   "tools": {
@@ -34,14 +34,14 @@
    "verilator": "Verilator 5.051 devel rev v5.050-309-g228635918 (mod)",
    "yosys": "Yosys 0.68+182 (git sha1 0bf55a858-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
    "nextpnr_ecp5": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)",
-   "recorded_utc": "2026-09-05T23:42:38Z"
+   "recorded_utc": "2026-09-06T00:24:07Z"
   }
  },
  "steps": [
   {
    "name": "bootstrap",
    "exit_code": 0,
-   "elapsed_s": 40,
+   "elapsed_s": 36,
    "command": "bash scripts/bootstrap.sh"
   },
   {
@@ -53,31 +53,31 @@
   {
    "name": "test-python",
    "exit_code": 0,
-   "elapsed_s": 63,
+   "elapsed_s": 50,
    "command": "make test-python"
   },
   {
    "name": "smoke",
    "exit_code": 0,
-   "elapsed_s": 9,
+   "elapsed_s": 6,
    "command": "make smoke"
   },
   {
    "name": "test-shapes",
    "exit_code": 0,
-   "elapsed_s": 10,
+   "elapsed_s": 6,
    "command": "make test-shapes"
   },
   {
    "name": "demo-python",
    "exit_code": 0,
-   "elapsed_s": 8,
+   "elapsed_s": 5,
    "command": "make demo-python"
   },
   {
    "name": "plots",
    "exit_code": 0,
-   "elapsed_s": 3,
+   "elapsed_s": 2,
    "command": "make plots"
   },
   {
@@ -89,19 +89,19 @@
   {
    "name": "check-a2-spec",
    "exit_code": 0,
-   "elapsed_s": 7,
+   "elapsed_s": 5,
    "command": "make check-a2-spec"
   },
   {
    "name": "a2-core-subset",
    "exit_code": 0,
-   "elapsed_s": 13,
+   "elapsed_s": 9,
    "command": "make test-core ARCH=2 BOARD_REPR=1 COUNT=50 DRIVER=native"
   },
   {
    "name": "trace-a2-demo",
    "exit_code": 0,
-   "elapsed_s": 46,
+   "elapsed_s": 29,
    "command": "make trace-a2-demo"
   },
   {
@@ -113,7 +113,7 @@
   {
    "name": "render-a2-demo",
    "exit_code": 0,
-   "elapsed_s": 118,
+   "elapsed_s": 65,
    "command": "make render-a2-demo"
   },
   {
